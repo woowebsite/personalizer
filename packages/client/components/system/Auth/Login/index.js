@@ -4,8 +4,6 @@ import { Form, Input, Button, Radio, Tooltip } from 'antd'
 import Link from 'next/link';
 import style from '../style.module.scss'
 
-@Form.create()
-@connect(({ user, settings }) => ({ user, authProvider: settings.authProvider, logo: settings.logo }))
 class Login extends React.Component {
   onSubmit = event => {
     event.preventDefault()
@@ -73,17 +71,11 @@ class Login extends React.Component {
             </Radio.Group>
           </div>
           <Form layout="vertical" hideRequiredMark onSubmit={this.onSubmit} className="mb-4">
-            <Form.Item>
-              {form.getFieldDecorator('email', {
-                initialValue: 'admin@mediatec.org',
-                rules: [{ required: true, message: 'Please input your e-mail address' }],
-              })(<Input size="large" placeholder="Email" />)}
+            <Form.Item name="email" initialValue='admin@mediatec.org' rules={[{ required: true, message: 'Please input your e-mail address' }]}>
+              <Input size="large" placeholder="Email" />
             </Form.Item>
-            <Form.Item>
-              {form.getFieldDecorator('password', {
-                initialValue: 'cleanui',
-                rules: [{ required: true, message: 'Please input your password' }],
-              })(<Input size="large" type="password" placeholder="Password" />)}
+            <Form.Item name="password" initialValue='cleanui' rules={[{ required: true, message: 'Please input your password' }]} >
+              <Input size="large" type="password" placeholder="Password" />
             </Form.Item>
             <Button
               type="primary"
@@ -110,4 +102,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login
+export default connect(({ user, settings }) => ({ user, authProvider: settings.authProvider, logo: settings.logo }))(Login)

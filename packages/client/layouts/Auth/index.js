@@ -17,8 +17,8 @@ const mapStateToProps = ({ settings }) => ({
   authPagesColor: settings.authPagesColor,
 })
 
-@connect(mapStateToProps)
-@withRouter
+
+// @withRouter
 class AuthLayout extends React.PureComponent {
   render() {
     const {
@@ -111,4 +111,4 @@ class AuthLayout extends React.PureComponent {
   }
 }
 
-export default AuthLayout
+export default connect(mapStateToProps)(AuthLayout)
