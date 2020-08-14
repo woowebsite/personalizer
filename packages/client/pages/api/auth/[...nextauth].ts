@@ -41,13 +41,13 @@ const options = {
     // Use JSON Web Tokens for session instead of database sessions.
     // This option can be used with or without a database for users/accounts.
     // Note: `jwt` is automatically set to `true` if no database is specified.
-    // jwt: false,
+    jwt: true,
     // Seconds - How long until an idle session expires and is no longer valid.
-    // maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, // 30 days
     // Seconds - Throttle how frequently to write to database to extend a session.
     // Use it to limit write operations. Set to 0 to always update the database.
     // Note: This option is ignored if using JSON Web Tokens
-    // updateAge: 24 * 60 * 60, // 24 hours
+    updateAge: 24 * 60 * 60, // 24 hours
     // Easily add custom properties to response from `/api/auth/session`.
     // Note: This should not return any sensitive information.
     /*
@@ -60,7 +60,7 @@ const options = {
 
   // JSON Web Token options
   jwt: {
-    // secret: 'my-secret-123', // Recommended (but auto-generated if not specified)
+    secret: 'my-secret-123', // Recommended (but auto-generated if not specified)
     // Custom encode/decode functions for signing + encryption can be specified.
     // if you want to override what is in the JWT or how it is signed.
     // encode: async ({ secret, key, token, maxAge }) => {},
