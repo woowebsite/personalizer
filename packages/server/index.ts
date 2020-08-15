@@ -19,7 +19,7 @@ async function main() {
 
 async function bootstrapClientApp(expressApp) {
   await nextApp.prepare();
-  expressApp.get('*', nextApp.getRequestHandler());
+  expressApp.all('*', nextApp.getRequestHandler());
 }
 
 async function bootstrapApolloServer(expressApp) {

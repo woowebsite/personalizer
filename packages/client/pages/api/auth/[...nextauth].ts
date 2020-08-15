@@ -24,10 +24,6 @@ const options = {
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
     }),
-    Providers.GitHub({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
   ],
   // The 'database' option should be a connection string or TypeORM
   // configuration object https://typeorm.io/#/connection-options
