@@ -1,5 +1,5 @@
 import express from 'express';
-
+import bodyParser from 'body-parser';
 import nextApp from '@monorepo/client';
 import apolloServer from '@monorepo/graphql';
 
@@ -18,8 +18,11 @@ async function main() {
 }
 
 async function bootstrapClientApp(expressApp) {
+  // expressApp.use(bodyParser.urlencoded({ extended: true }));
+  // expressApp.use(bodyParser.json())
+
   await nextApp.prepare();
-  expressApp.get('*', nextApp.getRequestHandler());
+  expressApp.all('*', nextApp.getRequestHandler());
 }
 
 async function bootstrapApolloServer(expressApp) {

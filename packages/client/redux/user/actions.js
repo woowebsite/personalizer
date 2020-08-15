@@ -1,8 +1,7 @@
-const actions = {
-  SET_STATE: 'user/SET_STATE',
-  LOGIN: 'user/LOGIN',
-  LOAD_CURRENT_ACCOUNT: 'user/LOAD_CURRENT_ACCOUNT',
-  LOGOUT: 'user/LOGOUT',
-}
+import { createAction, createActions } from 'redux-actions';
+import constants from './constants';
 
-export default actions
+export const setState = createAction(constants.SET_STATE)
+export const login = createAction(constants.LOGIN)
+export const loadCurrentAccount = createAction(constants.LOAD_CURRENT_ACCOUNT)
+export const logout = createAction(constants.LOGOUT)

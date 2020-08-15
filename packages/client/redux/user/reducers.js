@@ -1,4 +1,5 @@
-import actions from './actions'
+import { handleActions } from 'redux-actions';
+import * as actions from './actions'
 
 const initialState = {
   id: '',
@@ -10,11 +11,13 @@ const initialState = {
   loading: false,
 }
 
-export default function userReducer(state = initialState, action) {
-  switch (action.type) {
-    case actions.SET_STATE:
-      return { ...state, ...action.payload }
-    default:
-      return state
-  }
-}
+// As object key in handleActions:
+const userReducer = handleActions({
+  [actions.login]: (state, action) => ({
+    ...state, ...action.payload
+  }),
+  [actions.setState]: (state, action) => ({
+
+  })
+}, initialState);
+export default userReducer

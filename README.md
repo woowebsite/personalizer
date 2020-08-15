@@ -25,3 +25,23 @@ const server = new ApolloServer({
     sequelize.sync()
 });
 ```
+
+# Graphql
+Create User
+```ts
+createUser(data:{firstName:"Nghiem", lastName:"Tran", email:"admin@x.com", password: "1"}){
+    id
+    firstName
+    jwt
+  }
+```
+
+Query Company
+```ts
+query {
+  getCompany(where:{id:1}){
+    id,
+    name
+  }
+}
+```
