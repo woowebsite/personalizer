@@ -18,4 +18,5 @@ export const sequelize = new Sequelize({
 });
 export { User } from './user.model';
 export { Company } from './company.model';
+export { Album } from './album.model';
 
