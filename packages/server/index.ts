@@ -18,9 +18,6 @@ async function main() {
 }
 
 async function bootstrapClientApp(expressApp) {
-  // expressApp.use(bodyParser.urlencoded({ extended: true }));
-  // expressApp.use(bodyParser.json())
-
   await nextApp.prepare();
   expressApp.all('*', nextApp.getRequestHandler());
 }

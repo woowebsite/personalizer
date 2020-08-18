@@ -1,24 +1,24 @@
-type User {
+type Album {
   id: Int
-  email: String
-  firstName: String
-  lastName: String
-  company: Company
-  jwt: String @isAuthUser
+  name: String
+  description: String
+  user: User
 }
 
-input UserInput {
-    email: String
-    password: String
-    firstName: String
-    lastName: String
+input AlbumWhere {
+  id: Int
+}
+
+input AlbumInput {
+  name: String
+  description: String
+  userId: Int
 }
 
 type Query {
-   getUser: User @isAuth
-   loginUser(email: String!, password: String!): User
+  getAlbums(where: AlbumWhere, limit: Int, offset: Int): Album
 }
 
 type Mutation {
-   createUser(data: UserInput): User
+  createAlbum(data: AlbumInput): Album
 }

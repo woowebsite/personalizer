@@ -3,7 +3,7 @@ import { Album } from "../../models";
 import to from "await-to-js";
 
 export const Query = {
-  getAlbum: resolver(Album, {
+  getAlbums: resolver(Album, {
     before: async (findOptions, {}, { album }) => {
       findOptions.where = { id: album.id };
       return findOptions;
