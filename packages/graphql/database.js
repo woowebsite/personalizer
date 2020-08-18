@@ -7,7 +7,7 @@ const sequelize = new Sequelize('graphql', 'graphql', '123456', {
     port: '3306',
     dialect: 'mysql',
     define: {
-        freezeTableName: true,
+        freezeTableName: false,
     },
     pool: {
         max: 5,
