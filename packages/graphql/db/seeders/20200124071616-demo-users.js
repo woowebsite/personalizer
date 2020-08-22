@@ -9,7 +9,7 @@ module.exports = {
       email: "wooowebsite@gmail.com",
       email_verified: Date.now(),
       name: "Nghiem Tran",
-      password: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk1MDkwMDY0LCJleHAiOjE2MjY2NDc2NjR9.mAqh-moD4TkyRYZSoQA8fXa6cFev4Oo28W-EBWGYGD0"   //1
+      password: "$2b$10$QRdi.FleYan/H/X5aSnhrupIYJ0EpjtYQAg84EA7SyzgXMbtu8DFO"   //1
     }]);
   },
 

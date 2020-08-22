@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
 
 const QUERY = gql`
   query {
@@ -25,7 +26,8 @@ const options = {
         password: {  label: "Password", type: "password" }
       },
       authorize: async (credentials) => {
-        // Add logic here to look up the user from the credentials supplied
+        const { data, loading, error, refetch } = useQuery(QUERY);
+
         const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
   
         if (user) {
