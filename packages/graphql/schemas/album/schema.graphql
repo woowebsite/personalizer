@@ -1,0 +1,24 @@
+type Album {
+  id: Int
+  name: String
+  description: String
+  user: User
+}
+
+input AlbumWhere {
+  id: Int
+}
+
+input AlbumInput {
+  name: String
+  description: String
+  userId: Int
+}
+
+type Query {
+  getAlbums(where: AlbumWhere, limit: Int, offset: Int): Album
+}
+
+type Mutation {
+  createAlbum(data: AlbumInput): Album
+}

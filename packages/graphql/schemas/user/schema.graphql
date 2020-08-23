@@ -1,8 +1,7 @@
 type User {
   id: Int
   email: String
-  firstName: String
-  lastName: String
+  name: String
   company: Company
   jwt: String @isAuthUser
 }
@@ -10,8 +9,7 @@ type User {
 input UserInput {
     email: String
     password: String
-    firstName: String
-    lastName: String
+    name: String
 }
 
 type Query {
