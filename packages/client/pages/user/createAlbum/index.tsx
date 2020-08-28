@@ -8,7 +8,7 @@ import gql from "graphql-tag";
 
 const MUTATION = gql`
   mutation CreateAlbum ($name: String, $description: String) {
-    createAlbum(data: {name: $name,description: $description, userId: 1}) {
+    createAlbum(data: {name: $name,description: $description, userId: 5}) {
       id
     }
   }
