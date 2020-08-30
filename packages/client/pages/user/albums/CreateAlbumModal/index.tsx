@@ -1,35 +1,38 @@
-import React from "react";
-import { connect } from 'react-redux'
-import MainLayout from "layouts/Main";
+import React, { useState, useEffect } from "react";
+import { Modal, Form, Input, Button } from 'antd';
+
+// graphql
 import { withApollo } from "apollo/apollo";
-import { Form, Input, Button } from 'antd';
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import * as queries from "../queries";
 
-const MUTATION = gql`
-  mutation CreateAlbum ($name: String, $description: String) {
-    createAlbum(data: {name: $name,description: $description, userId: 5}) {
-      id
-    }
-  }
-`;
 
-const CreateAlbum = () => {
+const CreateAlbumModal = (props) => {
     const [form] = Form.useForm();
-    const [createAlbum, { data }] = useMutation(MUTATION);
+    const [createAlbum, { data }] = useMutation(queries.CREATE_ALBUM);
+
 
     const onSubmit = data => {
         form.validateFields().then(values => {
-            // dispatch(login(values));
             createAlbum({ variables: values })
+            props.setVisible(false);
         }).catch(errorInfo => {
             console.log('Error: ', errorInfo);
         })
     }
 
+    const onCancel = (e) => {
+        props.setVisible(false)
+        e.stopPropagation();
+    }
+
     return (
-        <MainLayout>
-            <h1>Create Album</h1>
+        <Modal
+            title={props.title}
+            visible={props.visible}
+            onOk={onSubmit}
+            onCancel={onCancel}
+        >
             <Form form={form}
                 id="createAlbumForm"
                 labelCol={{ span: 4 }}
@@ -50,9 +53,8 @@ const CreateAlbum = () => {
                     </Button>
                 </Form.Item>
             </Form>
-
-        </MainLayout>
+        </Modal>
     );
 };
 
-export default withApollo({ ssr: false })(CreateAlbum);
+export default withApollo({ ssr: false })(CreateAlbumModal);

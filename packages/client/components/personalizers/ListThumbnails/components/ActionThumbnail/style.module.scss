@@ -1,0 +1,16 @@
+.add{
+    width: 240px; 
+    height: 240px; 
+    border: 2px dashed #444444 !important;
+    display: flex !important;
+    
+    :global(.ant-card-body){
+        width: 100%;
+        display: flex;
+    }
+    :global(.anticon) {
+       align-self: center !important;
+       margin: 0 auto;
+       font-size: 24px;
+    }
+}
