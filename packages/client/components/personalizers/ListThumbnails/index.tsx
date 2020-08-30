@@ -1,30 +1,28 @@
 import { List, Card } from "antd";
 import Thumbnail from "./components/Thumbnail";
+import ActionThumbnail from "./components/ActionThumbnail";
 
-const data: any = [
-  {
-    title: "Title 1",
-  },
-  {
-    title: "Title 2",
-  },
-  {
-    title: "Title 3",
-  },
-  {
-    title: "Title 4",
-  },
-];
+
 
 const ListThumbnails = (props) => {
+  const renderItem = (item) => {
+    switch (item.type) {
+      case 'action':
+        return <ActionThumbnail title={item.title} />
+
+      default:
+        return <Thumbnail title={item.name} desc={item.description} />
+    }
+  }
   return (
     <List
       {...props}
       grid={{ gutter: 16, column: 4 }}
-      dataSource={data}
       renderItem={(item) => (
         <List.Item>
-          <Thumbnail title={item.title} />
+          {
+            renderItem(item)
+          }
         </List.Item>
       )}
     />

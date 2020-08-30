@@ -6,7 +6,8 @@ type Album {
 }
 
 input AlbumWhere {
-  id: Int
+  id: Int,
+  userId: Int
 }
 
 input AlbumInput {
@@ -16,6 +17,7 @@ input AlbumInput {
 }
 
 type Query {
+  getAlbum(where: AlbumWhere): Album
   getAlbums(where: AlbumWhere, limit: Int, offset: Int): Album
 }
 
