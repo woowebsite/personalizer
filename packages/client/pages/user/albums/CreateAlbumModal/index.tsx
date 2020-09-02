@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input, Button } from 'antd';
+import { Modal, Form, Input, Button, Upload, message } from 'antd';
 
 // graphql
 import { withApollo } from "apollo/apollo";
 import { useMutation } from "@apollo/react-hooks";
 import * as queries from "../queries";
+import UploadImage from "~/components/personalizers/Upload";
 
 
 const CreateAlbumModal = (props) => {
@@ -24,6 +25,18 @@ const CreateAlbumModal = (props) => {
     const onCancel = (e) => {
         props.setVisible(false)
         e.stopPropagation();
+    }
+
+    const onUploadImage = e => {
+        console.log('Upload event:', e);
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e && e.fileList;
+    };
+
+    const onSetImageUrl = url => {
+        form.setFieldsValue({ image: url })
     }
 
     return (
@@ -46,6 +59,10 @@ const CreateAlbumModal = (props) => {
 
                 <Form.Item name="description" label="Description">
                     <Input.TextArea />
+                </Form.Item>
+
+                <Form.Item name="image" label="Image" >
+                    <UploadImage setImageUrl={onSetImageUrl} />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 4 }}>
                     <Button form="createAlbumForm" type="primary" htmlType="submit">

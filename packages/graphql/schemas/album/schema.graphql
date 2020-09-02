@@ -2,6 +2,7 @@ type Album {
   id: Int
   name: String
   description: String
+  image: String
   user: User
 }
 
@@ -13,6 +14,7 @@ input AlbumWhere {
 input AlbumInput {
   name: String
   description: String
+  image: String
   userId: Int
 }
 

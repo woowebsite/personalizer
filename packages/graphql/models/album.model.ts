@@ -18,6 +18,9 @@ export class Album extends Model<Album> {
   @Column
   description: string;
 
+  @Column
+  image: string;
+
   @ForeignKey(() => User)
   @Column
   userId: number;
