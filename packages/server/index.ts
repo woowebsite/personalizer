@@ -23,7 +23,11 @@ async function bootstrapClientApp(expressApp) {
 }
 
 async function bootstrapApolloServer(expressApp) {
-  apolloServer.applyMiddleware({ app: expressApp });
+  apolloServer.applyMiddleware({
+    app: expressApp, bodyParserConfig: {
+      limit: '2mb'
+    }
+  });
 }
 
 main();
