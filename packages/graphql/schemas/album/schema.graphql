@@ -1,20 +1,26 @@
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
 type Album {
   id: Int
   name: String
   description: String
-  image: String
+  image: File
   user: User
 }
 
 input AlbumWhere {
-  id: Int,
+  id: Int
   userId: Int
 }
 
 input AlbumInput {
   name: String
   description: String
-  image: String
+  image: Upload
   userId: Int
 }
 
@@ -25,4 +31,5 @@ type Query {
 
 type Mutation {
   createAlbum(data: AlbumInput): Album
+  uploadFile(file: Upload!): File!
 }
