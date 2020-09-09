@@ -1,6 +1,7 @@
 import { resolver as rs } from "graphql-sequelize";
 import { Album } from "../../models";
 import to from "await-to-js";
+import * as fs from 'fs'
 
 export const Mutation = {
   createAlbum: rs(Album, {
@@ -24,19 +25,23 @@ export const Mutation = {
   }),
   async uploadFile(parent, { file }) {
     const {
-      stream,
       createReadStream,
       filename,
       mimetype,
       encoding,
     } = await file;
-    const st = createReadStream();
-    console.log("file", file);
 
     // 1. Validate file metadata.
+    console.log('filename', filename)
 
     // 2. Stream file contents into cloud storage:
     // https://nodejs.org/api/stream.html
+    fs.writeFile('images/' + filename, file, (err) => {
+      if (err) throw err;
+
+      // success case, the file was saved
+      console.log('File saved!');
+    })
 
     // 3. Record the file upload in your DB.
     // const id = await recordFile( … )
