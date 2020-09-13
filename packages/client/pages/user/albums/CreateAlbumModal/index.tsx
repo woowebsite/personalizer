@@ -29,17 +29,12 @@ const CreateAlbumModal = (props) => {
     e.stopPropagation();
   };
 
-  const onUploadImage = (e) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
 
-  const onSetImageUrl = (url) => {
-    uploadImage({ variables: { file: url } });
-    form.setFieldsValue({ image: url });
+  const onSetImageUrl = (file) => {
+    const image = uploadImage({ variables: { file } });
+    image.then((resp) => {
+      form.setFieldsValue({ image: resp.data.uploadFile.path });
+    })
   };
 
   return (
