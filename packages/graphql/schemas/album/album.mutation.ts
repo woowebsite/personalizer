@@ -36,10 +36,6 @@ export const Mutation = {
         throw err;
       }
       findOptions.where = { id: album.id };
-
-      //upload file
-      console.log("arg", args);
-
       return findOptions;
     },
     after: (album) => {

@@ -1,4 +1,6 @@
 type File {
+  id: String!
+  path: String!
   filename: String!
   mimetype: String!
   encoding: String!
@@ -8,7 +10,7 @@ type Album {
   id: Int
   name: String
   description: String
-  image: File
+  image: String
   user: User
 }
 
@@ -20,7 +22,7 @@ input AlbumWhere {
 input AlbumInput {
   name: String
   description: String
-  image: Upload
+  image: String
   userId: Int
 }
 
