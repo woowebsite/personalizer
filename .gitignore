@@ -15,6 +15,7 @@ dist/
 .vscode/
 .idea/
 .next/
+packages/server/images
 
 # Optional eslint cache
 .eslintcache
