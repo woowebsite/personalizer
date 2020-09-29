@@ -6,9 +6,14 @@ type Album {
   user: User
 }
 
+type PaginationInfo {
+  total: Int
+}
+
 input AlbumWhere {
   id: Int
-  userId: Int
+  userId: Int,
+  name: String
 }
 
 input AlbumInput {
@@ -20,7 +25,8 @@ input AlbumInput {
 
 type Query {
   getAlbum(where: AlbumWhere): Album
-  getAlbums(where: AlbumWhere, limit: Int, offset: Int): Album
+  getAlbums(where: AlbumWhere, limit: Int, offset: Int): [Album]
+  getPagination(where: AlbumWhere): PaginationInfo
 }
 
 type Mutation {

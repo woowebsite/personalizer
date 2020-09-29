@@ -1,10 +1,11 @@
+import { resolve } from "bluebird";
+import { GraphQLInt } from "graphql";
 import { resolver } from "graphql-sequelize";
 import { Album } from "../../models";
-import to from "await-to-js";
 
 export const Query = {
   getAlbum: resolver(Album, {
-    before: async (findOptions, {}, { album }) => {
+    before: async (findOptions, { }, { album }) => {
       findOptions.where = { id: album.id };
       return findOptions;
     },
@@ -12,13 +13,19 @@ export const Query = {
       return album;
     },
   }),
+
   getAlbums: resolver(Album, {
     before: async (findOptions, { where, limit, offset }) => {
       findOptions.where = where;
-      return findOptions;
-    },
-    after: (album) => {
-      return album;
+      findOptions.order = [['name', 'ASC']]
+      return findOptions
     },
   }),
+
+  getPagination: resolver(Album, {
+    after: async (result, args) => {
+      const total = await Album.count(args.where);
+      return { total };
+    }
+  })
 };

@@ -9,32 +9,35 @@ import { useQuery } from "@apollo/react-hooks";
 import * as queries from "./queries";
 
 
-const dataSource: Array<any> = [
-  {
-    title: "Add new album",
-    type: 'action'
-  },
-];
+let dataSource: Array<any> = [];
 
 const ManagementAlbums = () => {
-  const { data, loading, error, refetch } = useQuery(queries.GET_ALBUMS, {
-    variables: { userId: 5 }
+  const { data, loading, error, refetch, fetchMore } = useQuery(queries.GET_ALBUMS, {
+    variables: { where: { userId: 5 }, limit: PAGINGATION.pageSize, offset: 1 }
   });
 
-  if (data && data.getAlbums) dataSource.push(data.getAlbums)
+
+  if (data && data.getAlbums) {
+    dataSource = data.getAlbums
+  }
 
   return (
     <MainLayout>
       <h1>All Albums</h1>
-      <ListThumbnails
-        dataSource={dataSource}
-        pagination={{
-          onChange: (page) => {
-            console.log(page);
-          },
-          pageSize: PAGINGATION.pageSize,
-        }}
-      />
+      {data &&
+        <ListThumbnails
+          dataSource={dataSource}
+          pagination={{
+            onChange: (page) => {
+              return refetch({
+                where: { userId: 5 }, limit: PAGINGATION.pageSize, offset: page
+              });
+            },
+            pageSize: PAGINGATION.pageSize,
+            total: data.getPagination.total
+          }}
+        />
+      }
     </MainLayout>
   );
 };
