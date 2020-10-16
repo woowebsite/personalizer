@@ -18,7 +18,7 @@ const Login = (props) => {
     form.validateFields().then(values => {
       // dispatch(login(values));
       // signIn('credentials', { values })
-      signIn('credentials', { email: values.email, password: values.password })
+      const user =  signIn('credentials', { email: values.email, password: values.password })
     }).catch(errorInfo => {
       console.log('Error: ', errorInfo);
     })
