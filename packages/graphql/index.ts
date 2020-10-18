@@ -35,7 +35,8 @@ const server = new ApolloServer({
     let user = nreq.user;
 
     // Sync database
-    sequelize.sync({force: true})
+    // {force: true} if overried models
+    sequelize.sync()
     return {
       [EXPECTED_OPTIONS_KEY]: createContext(sequelize),
       user: user,

@@ -3,15 +3,8 @@ import Providers from 'next-auth/providers'
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import createApolloClient from 'apollo/apolloClient';
+import { LOGIN } from './queries'
 
-const QUERY = gql`
-  query LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password ) {
-      id
-      name
-    }
-  }
-`;
 
 const options = {
   site: process.env.VERCEL_URL,
@@ -30,8 +23,12 @@ const options = {
         const client = createApolloClient({}, undefined);
 
         try {
+          // You need to provide your own logic here that takes the credentials
+          // submitted and returns either a object representing a user or value
+          // that is false/null if the credentials are invalid.
+          // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
           const user = await client.query({
-            query: QUERY,
+            query: LOGIN,
             variables: credentials
           });
 

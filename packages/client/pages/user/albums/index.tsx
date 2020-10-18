@@ -8,6 +8,10 @@ import { withApollo } from "apollo/apollo";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "./queries";
 
+//Auth
+import { signIn, signOut, useSession } from 'next-auth/client'
+
+
 
 let dataSource: Array<any> = [];
 
@@ -21,8 +25,19 @@ const ManagementAlbums = () => {
     dataSource = data.getAlbums
   }
 
+  const [session] = useSession()
+
   return (
     <MainLayout>
+      {!session && <>
+        Not signed in <br />
+        <button >Sign in</button>
+      </>}
+      {session && <>
+        Signed in as {JSON.stringify(session)} <br />
+        <button >Sign out</button>
+      </>}
+
       <h1>All Albums</h1>
       {data &&
         <ListThumbnails
