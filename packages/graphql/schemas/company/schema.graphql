@@ -14,6 +14,7 @@ input CompanyInput {
 
 type Query {
   getCompany(where: CompanyWhere, limit: Int, offset: Int): Company
+  getCompanies: [Company]
 }
 
 type Mutation {

@@ -9,11 +9,14 @@ export const CREATE_ALBUM = gql`
 `;
 
 export const GET_ALBUMS = gql`
-  query GetAlbums($where: AlbumWhere) {
-    getAlbums(where: $where) {
+  query GetAlbums($where: AlbumWhere, $limit: Int, $offset: Int) {
+    getAlbums(where: $where, limit: $limit, offset: $offset) {
       id
       name
       description
+    }
+    getPagination(where: $where) {
+      total
     }
   }
 `;
