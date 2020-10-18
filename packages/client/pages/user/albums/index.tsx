@@ -25,18 +25,12 @@ const ManagementAlbums = () => {
     dataSource = data.getAlbums
   }
 
-  const [session] = useSession()
+  const [session, sessionLoading] = useSession();
 
   return (
     <MainLayout>
-      {!session && <>
-        Not signed in <br />
-        <button >Sign in</button>
-      </>}
-      {session && <>
-        Signed in as {JSON.stringify(session)} <br />
-        <button >Sign out</button>
-      </>}
+      {session && JSON.stringify(session)}
+      {sessionLoading}
 
       <h1>All Albums</h1>
       {data &&
