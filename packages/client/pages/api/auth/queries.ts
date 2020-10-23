@@ -6,6 +6,10 @@ export const LOGIN = gql`
       id
       name
       email
+      company {
+        id
+        name
+      }
     }
   }
 `;
