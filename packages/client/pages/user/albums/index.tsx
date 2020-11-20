@@ -20,9 +20,9 @@ const ManagementAlbums = (a) => {
     queries.GET_ALBUMS,
     {
       variables: {
-        where: { userId: 5 },
+        where: { userId: 2 },
         limit: PAGINGATION.pageSize,
-        offset: 1,
+        offset: 0,
       },
     }
   );
@@ -59,13 +59,13 @@ const ManagementAlbums = (a) => {
   );
 };
 
-ManagementAlbums.getInitialProps = async ({ ctx, apolloClient }) => {
-  const { req, res, pathname, query, store, isServer } = ctx;
-  // const cookies = req.headers.cookie.split(';')
-  req.cookies = cookies(ctx);
-  console.log('>req.cookies', req.cookies);
-  const token = await jwt.getToken({ req, secret: process.env.SECRET, raw: true });
-  console.log('JSON Web Token', token);
-};
+// ManagementAlbums.getInitialProps = async ({ ctx, apolloClient }) => {
+//   const { req, res, pathname, query, store, isServer } = ctx;
+//   // const cookies = req.headers.cookie.split(';')
+//   req.cookies = cookies(ctx);
+//   console.log('>req.cookies', req.cookies);
+//   const token = await jwt.getToken({ req, secret: process.env.SECRET, raw: true });
+//   console.log('JSON Web Token', token);
+// };
 
-export default withApollo({ ssr: true })(ManagementAlbums);
+export default withApollo({ ssr: false })(ManagementAlbums);
