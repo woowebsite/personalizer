@@ -17,6 +17,7 @@ const CreateAlbumModal = (props) => {
       .validateFields()
       .then((values) => {
         createAlbum({ variables: values });
+        props.reload();
         props.setVisible(false);
       })
       .catch((errorInfo) => {

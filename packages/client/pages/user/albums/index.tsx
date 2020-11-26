@@ -39,7 +39,6 @@ const ManagementAlbums = () => {
     }
   }
 
-
   return (
     <MainLayout>
       {/* {!session && (
@@ -58,6 +57,13 @@ const ManagementAlbums = () => {
       <h1>All Albums</h1>
       {data && (
         <ListThumbnails
+          reload={() => {
+            refetch({
+              where: { userId: 2 },
+              limit: PAGINGATION.pageSize,
+              offset: 0,
+            });
+          }}
           dataSource={dataSource}
           pagination={{
             onChange: (page) => {
