@@ -42,7 +42,7 @@ const Login = (props) => {
           <strong>Sign in to your account</strong>
         </div>
         <Form form={form} id="loginForm" layout="vertical" hideRequiredMark onFinish={onSubmit} className="mb-4">
-          <Form.Item name="email" initialValue='admin@x.com' rules={[{ required: true, message: 'Please input your e-mail address' }]}>
+          <Form.Item name="email" initialValue='wooowebsite@gmail.com' rules={[{ required: true, message: 'Please input your e-mail address' }]}>
             <Input size="large" placeholder="Email" />
           </Form.Item>
           <Form.Item name="password" initialValue='1' rules={[{ required: true, message: 'Please input your password' }]} >

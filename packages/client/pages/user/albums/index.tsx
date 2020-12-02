@@ -9,13 +9,12 @@ import { useQuery } from '@apollo/react-hooks';
 import * as queries from './queries';
 
 //Auth
-import cookies from 'next-cookies';
 import { signIn, signOut, useSession } from 'next-auth/client';
-import jwt from 'next-auth/jwt';
 
 let dataSource: Array<any> = [];
 
-const ManagementAlbums = (a) => {
+const ManagementAlbums = () => {
+  const [session] = useSession();
   const { data, loading, error, refetch, fetchMore } = useQuery(
     queries.GET_ALBUMS,
     {
@@ -27,25 +26,49 @@ const ManagementAlbums = (a) => {
     }
   );
 
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
   if (data && data.getAlbums) {
     dataSource = data.getAlbums;
-  }
 
-  const [session, sessionLoading] = useSession();
+    if (dataSource[0] && dataSource[0].type != 'action') {
+      dataSource.unshift({
+        type: 'action',
+      });
+    }
+  }
 
   return (
     <MainLayout>
-      {session && JSON.stringify(session)}
-      {sessionLoading}
+      {!session && (
+        <>
+          Not signed in <br />
+          <button onClick={signIn}>Sign in</button>
+        </>
+      )}
+      {session && (
+        <>
+          Signed in as {JSON.stringify(session)} <br />
+          <button onClick={signOut}>Sign out</button>
+        </>
+      )}
 
       <h1>All Albums</h1>
       {data && (
         <ListThumbnails
+          reload={() => {
+            refetch({
+              where: { userId: 2 },
+              limit: PAGINGATION.pageSize,
+              offset: 0,
+            });
+          }}
           dataSource={dataSource}
           pagination={{
             onChange: (page) => {
               return refetch({
-                where: { userId: 5 },
+                where: { userId: 2 },
                 limit: PAGINGATION.pageSize,
                 offset: page,
               });

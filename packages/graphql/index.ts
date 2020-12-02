@@ -1,12 +1,13 @@
 import express from 'express';
 import jwt from 'express-jwt';
 import { ApolloServer } from 'apollo-server-express';
-import { sequelize } from './models';
+import { sequelize, User } from './models';
 import { ENV } from './config';
 
 import { resolver as resolvers, schema, schemaDirectives } from './schemas';
 import { createContext, EXPECTED_OPTIONS_KEY } from 'dataloader-sequelize';
 import to from 'await-to-js';
+import { cookieToObj } from './utils/cookieUtil';
 
 // const app = express();
 
@@ -31,18 +32,21 @@ const server = new ApolloServer({
   schemaDirectives,
   playground: true,
   context: ({ req }) => {
-    let nreq = <any>req;
-    let user = nreq.user;
-
+    const tokens = cookieToObj(req.headers.cookie);
+    const sessionToken = tokens['next-auth.session-token'];
+    const user = new User();
+    user.getUserInfor(sessionToken);
+    
     // Sync database
     // {force: true} remove all data
-    // {alter: true} alter table 
-    sequelize.sync({alter: true, force: false})
+    // {alter: true} alter table
+    sequelize.sync({ alter: false });
+
     return {
       [EXPECTED_OPTIONS_KEY]: createContext(sequelize),
-      user: user,
+      // user: user,
     };
-  }
+  },
 });
 
-export default server
+export default server;

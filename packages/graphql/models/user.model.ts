@@ -1,5 +1,13 @@
-import { Table, Column, Model, HasMany, BelongsTo, ForeignKey, BeforeSave } from 'sequelize-typescript';
-import { Company } from "./company.model";
+import {
+  Table,
+  Column,
+  Model,
+  HasMany,
+  BelongsTo,
+  ForeignKey,
+  BeforeSave,
+} from 'sequelize-typescript';
+import { Company } from './company.model';
 import * as bcrypt from 'bcrypt';
 import to from 'await-to-js';
 import * as jsonwebtoken from 'jsonwebtoken';
@@ -7,13 +15,12 @@ import { ENV } from '../config';
 
 @Table({ timestamps: true })
 export class User extends Model<User> {
-
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
 
   @Column
   name: string;
-  
+
   @Column
   password: string;
 
@@ -69,11 +76,22 @@ export class User extends Model<User> {
     }
 
     return this;
-  };
+  }
+
+  getUserInfor(sessionToken) {
+    return 'x';
+  }
 
   getJwt() {
-    return 'Bearer ' + jsonwebtoken.sign({
-      id: this.id,
-    }, ENV.JWT_ENCRYPTION, { expiresIn: ENV.JWT_EXPIRATION });
+    return (
+      'Bearer ' +
+      jsonwebtoken.sign(
+        {
+          id: this.id,
+        },
+        ENV.JWT_ENCRYPTION,
+        { expiresIn: ENV.JWT_EXPIRATION }
+      )
+    );
   }
 }

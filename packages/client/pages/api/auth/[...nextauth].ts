@@ -33,10 +33,13 @@ const options = {
             variables: credentials,
           });
 
+          console.log('credentials', credentials);
+          
           if (user) {
             // Any object returned will be saved in `user` property of the JWT
             const session = user.data.loginUser;
-            return Promise.resolve(session);
+            return Promise.reject('/user/albums')        // Redirect to a URL
+            // return Promise.resolve(session);
           } else {
             // If you return null or false then the credentials will be rejected
             return Promise.resolve(null);
@@ -100,21 +103,17 @@ const options = {
   },
   callbacks: {
     session: async (session, user, sessionToken) => {
-      console.log('session', session);
       if (user && user.company) {
         session.user.companyId = user.company.id;
       }
       return Promise.resolve(session);
     },
-    jwt: async (token, user, account, profile, isNewUser) => {
-      if (user && user.company) {
-        token.companyId = user.company.id;
-      }
-      console.log('token', token);
-      console.log('user', user);
-      console.log('profile', profile);
-      return Promise.resolve(token);
-    },
+    // jwt: async (token, user, account, profile, isNewUser) => {
+    //   if (user && user.company) {
+    //     token.companyId = user.company.id;
+    //   }
+    //   return Promise.resolve(token);
+    // },
   },
   // JSON Web Token options
   jwt: {
