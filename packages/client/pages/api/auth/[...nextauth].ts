@@ -33,13 +33,10 @@ const options = {
             variables: credentials,
           });
 
-          console.log('credentials', credentials);
-          
           if (user) {
             // Any object returned will be saved in `user` property of the JWT
             const session = user.data.loginUser;
-            return Promise.reject('/user/albums')        // Redirect to a URL
-            // return Promise.resolve(session);
+            return Promise.resolve(session);
           } else {
             // If you return null or false then the credentials will be rejected
             return Promise.resolve(null);

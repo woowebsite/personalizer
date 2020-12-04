@@ -15,7 +15,8 @@ export const Query = {
   }),
 
   getAlbums: resolver(Album, {
-    before: async (findOptions, { where, limit, offset }) => {
+    before: async (findOptions, { where, limit, offset }, context) => {
+      // context.currentUser
       findOptions.where = where;
       findOptions.order = [['name', 'ASC']]
       return findOptions
