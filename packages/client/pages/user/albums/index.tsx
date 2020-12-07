@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Pagination } from 'antd';
 import MainLayout from 'layouts/Main';
 import ListThumbnails from 'components/personalizers/ListThumbnails';
 import PAGINGATION from 'constants/paginations';
@@ -15,29 +16,28 @@ let dataSource: Array<any> = [];
 
 const ManagementAlbums = () => {
   const [session] = useSession();
-  const { data, loading, error, refetch, fetchMore } = useQuery(
-    queries.GET_ALBUMS,
-    {
-      variables: {
-        where: { userId: 2 },
-        limit: PAGINGATION.pageSize,
-        offset: 0,
-      },
-    }
-  );
+  const { data, loading, error, refetch } = useQuery(queries.GET_ALBUMS, {
+    variables: {
+      where: { userId: 2 },
+      limit: PAGINGATION.pageSize,
+      offset: 0,
+    },
+  });
 
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+  // if (loading) return 'Loading...';
+  // if (error) return `Error! ${error.message}`;
 
   if (data && data.getAlbums) {
     dataSource = data.getAlbums;
-
-    if (dataSource[0] && dataSource[0].type != 'action') {
-      dataSource.unshift({
-        type: 'action',
-      });
-    }
   }
+
+  const onPagingChange = (page) => {
+    return refetch({
+      where: { userId: 2 },
+      limit: PAGINGATION.pageSize,
+      offset: (page - 1) * PAGINGATION.pageSize,
+    });
+  };
 
   return (
     <MainLayout>
@@ -56,27 +56,14 @@ const ManagementAlbums = () => {
 
       <h1>All Albums</h1>
       {data && (
-        <ListThumbnails
-          reload={() => {
-            refetch({
-              where: { userId: 2 },
-              limit: PAGINGATION.pageSize,
-              offset: 0,
-            });
-          }}
-          dataSource={dataSource}
-          pagination={{
-            onChange: (page) => {
-              return refetch({
-                where: { userId: 2 },
-                limit: PAGINGATION.pageSize,
-                offset: page,
-              });
-            },
-            pageSize: PAGINGATION.pageSize,
-            total: data.getPagination.total,
-          }}
-        />
+        <>
+          <ListThumbnails addAction dataSource={dataSource} />
+          <Pagination
+            onChange={onPagingChange}
+            pageSize={PAGINGATION.pageSize}
+            total={data.getPagination.total}
+          />
+        </>
       )}
     </MainLayout>
   );
