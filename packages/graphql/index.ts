@@ -1,13 +1,16 @@
 import express from 'express';
 import jwt from 'express-jwt';
 import { ApolloServer } from 'apollo-server-express';
-import { sequelize } from './models';
+import { sequelize, User } from './models';
 import { ENV } from './config';
+import { getSession } from 'next-auth/client';
 
 import { resolver as resolvers, schema, schemaDirectives } from './schemas';
 import { createContext, EXPECTED_OPTIONS_KEY } from 'dataloader-sequelize';
 import to from 'await-to-js';
+import { cookieToObj } from './utils/cookieUtil';
 
+const secret = process.env.SECRET;
 // const app = express();
 
 // const authMiddleware = jwt({
@@ -30,19 +33,28 @@ const server = new ApolloServer({
   resolvers,
   schemaDirectives,
   playground: true,
-  context: ({ req }) => {
-    let nreq = <any>req;
-    let user = nreq.user;
+  context: async ({ req }) => {
+    const session = await getSession({ req });
+
+    if (!session || !session.user)
+      throw new Error('you must be logged in to query this schema');
+
+    const currentUser = await User.findOne({
+      where: { email: session.user.email },
+    })
+      .then((x) => x.dataValues)
+      .catch((e) => console.log('Error: ', e));
 
     // Sync database
     // {force: true} remove all data
-    // {alter: true} alter table 
-    sequelize.sync({alter: false})
+    // {alter: true} alter table
+    sequelize.sync({ alter: false });
+
     return {
       [EXPECTED_OPTIONS_KEY]: createContext(sequelize),
-      user: user,
+      currentUser,
     };
-  }
+  },
 });
 
-export default server
+export default server;

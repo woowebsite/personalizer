@@ -5,6 +5,11 @@ export const LOGIN = gql`
     loginUser(email: $email, password: $password ) {
       id
       name
+      email
+      company {
+        id
+        name
+      }
     }
   }
 `;

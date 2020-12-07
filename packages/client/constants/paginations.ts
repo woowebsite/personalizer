@@ -1,5 +1,5 @@
 const PAGINGATION = {
-  pageSize: 3,
+  pageSize: 4,
 };
 
 export default PAGINGATION;

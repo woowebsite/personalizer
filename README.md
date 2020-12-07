@@ -13,7 +13,7 @@ yarn install
 yarn dev
 ```
 
-open `http://localhost:3000`
+open `http://localhost:3001`
 
 
 # SQL Sequelizer
@@ -62,4 +62,5 @@ Run seed
 Go to `graphql` folder and run command line
 ```console
 npx sequelize-cli db:seed --seed 20200822034804-demo-company.js
+npx sequelize-cli db:seed --seed 20200124071616-demo-users.js
 ```
