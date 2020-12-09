@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Form, Input, Button, Upload, message } from "antd";
+import React, { useState, useEffect } from 'react';
+import { Modal, Form, Input, Button, Upload, message } from 'antd';
+import UploadImage from 'components/personalizers/Upload';
 
 // graphql
-import { withApollo } from "apollo/apollo";
-import { useMutation } from "@apollo/react-hooks";
-import * as queries from "../queries";
-import UploadImage from "~/components/personalizers/Upload";
+import { withApollo } from 'apollo/apollo';
+import withMutation from 'shared/withMutation';
+import * as queries from '../queries';
+import { useMutation } from '@apollo/react-hooks';
 
 const CreateAlbumModal = (props) => {
   const [form] = Form.useForm();
-  const [uploadImage, { image }] = useMutation(queries.UPLOAD_FILE);
-  const [createAlbum, { data }] = useMutation(queries.CREATE_ALBUM);
+  const [uploadImage] = withMutation(queries.UPLOAD_FILE);
+  const [createAlbum] = withMutation(queries.CREATE_ALBUM);
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     form
       .validateFields()
       .then((values) => {
@@ -21,7 +22,7 @@ const CreateAlbumModal = (props) => {
         props.setVisible(false);
       })
       .catch((errorInfo) => {
-        console.log("Error: ", errorInfo);
+        console.log('Error: ', errorInfo);
       });
   };
 
@@ -30,13 +31,12 @@ const CreateAlbumModal = (props) => {
     e.stopPropagation();
   };
 
-
   const onSetImageUrl = (file) => {
     const promise = uploadImage({ variables: { file } });
     promise.then((resp) => {
       const imgUrl = resp.data.uploadFile.path;
       form.setFieldsValue({ image: imgUrl });
-    })
+    });
   };
 
   return (
@@ -48,21 +48,21 @@ const CreateAlbumModal = (props) => {
     >
       <Form
         form={form}
-        id="createAlbumForm"
+        id='createAlbumForm'
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
         onFinish={onSubmit}
-        layout="horizontal"
+        layout='horizontal'
       >
-        <Form.Item name="name" label="Name">
+        <Form.Item name='name' label='Name'>
           <Input />
         </Form.Item>
 
-        <Form.Item name="description" label="Description">
+        <Form.Item name='description' label='Description'>
           <Input.TextArea />
         </Form.Item>
 
-        <Form.Item name="image" label="Image">
+        <Form.Item name='image' label='Image'>
           <UploadImage setImageUrl={onSetImageUrl} />
         </Form.Item>
       </Form>

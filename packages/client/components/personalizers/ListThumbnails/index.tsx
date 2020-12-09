@@ -1,9 +1,11 @@
-import { List, Card } from 'antd';
+import { List, Pagination } from 'antd';
 import Thumbnail from './components/Thumbnail';
 import ActionThumbnail from './components/ActionThumbnail';
 
+import PAGINGATION from 'constants/paginations';
+
 const ListThumbnails = (props) => {
-  const { dataSource, ...others } = props;
+  const { dataSource, dataPaging, onPagingChange, ...others } = props;
 
   // Add a Thumbnail enable
   if (props.addAction) {
@@ -24,12 +26,19 @@ const ListThumbnails = (props) => {
     }
   };
   return (
-    <List
-      {...others}
-      dataSource={dataSource}
-      grid={{ gutter: 16, column: 4 }}
-      renderItem={(item) => <List.Item>{renderItem(item)}</List.Item>}
-    />
+    <>
+      <List
+        {...others}
+        dataSource={dataSource}
+        grid={{ gutter: 16, column: 4 }}
+        renderItem={(item) => <List.Item>{renderItem(item)}</List.Item>}
+      />
+      <Pagination
+        onChange={onPagingChange}
+        pageSize={dataPaging.pageSize || PAGINGATION.pageSize}
+        total={dataPaging.total}
+      />
+    </>
   );
 };
 
