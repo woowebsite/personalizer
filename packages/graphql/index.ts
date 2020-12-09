@@ -35,15 +35,14 @@ const server = new ApolloServer({
   playground: true,
   context: async ({ req }) => {
     const session = await getSession({ req });
-
-    if (!session || !session.user)
-      throw new Error('you must be logged in to query this schema');
-
-    const currentUser = await User.findOne({
-      where: { email: session.user.email },
-    })
-      .then((x) => x.dataValues)
-      .catch((e) => console.log('Error: ', e));
+    let currentUser;
+    if (session && session.user) {
+      currentUser = await User.findOne({
+        where: { email: session.user.email },
+      })
+        .then((x) => x.dataValues)
+        .catch((e) => console.log('Error: ', e));
+    }
 
     // Sync database
     // {force: true} remove all data
