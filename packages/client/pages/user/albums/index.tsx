@@ -8,11 +8,7 @@ import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from './queries';
 
-//Auth
-import { signIn, signOut, useSession } from 'next-auth/client';
-
 const ManagementAlbums = () => {
-  const [session] = useSession();
   const { data, refetch } = withQuery(queries.GET_ALBUMS, {
     variables: {
       where: { userId: 2 },
@@ -23,25 +19,13 @@ const ManagementAlbums = () => {
 
   return (
     <MainLayout>
-      {!session && (
-        <>
-          Not signed in <br />
-          <button onClick={signIn}>Sign in</button>
-        </>
-      )}
-      {session && (
-        <>
-          Signed in as {JSON.stringify(session)} <br />
-          <button onClick={signOut}>Sign out</button>
-        </>
-      )}
-
       <h1>All Albums</h1>
       {data && (
         <ListThumbnails
-          addAction
+          allowAddMore
           dataSource={data.getAlbums}
           dataPaging={data.getPagination}
+          onReload={() => refetch()}
           onPagingChange={(page) =>
             refetch({
               where: { userId: 2 },
