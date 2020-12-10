@@ -6,7 +6,6 @@ import UploadImage from 'components/personalizers/Upload';
 import { withApollo } from 'apollo/apollo';
 import withMutation from 'shared/withMutation';
 import * as queries from '../queries';
-import { useMutation } from '@apollo/react-hooks';
 
 const CreateAlbumModal = (props) => {
   const [form] = Form.useForm();
@@ -17,9 +16,10 @@ const CreateAlbumModal = (props) => {
     form
       .validateFields()
       .then((values) => {
-        createAlbum({ variables: values });
-        props.reload();
-        props.setVisible(false);
+        createAlbum({ variables: values }).finally(() => {
+          props.onFinish();
+          props.setVisible(false);
+        });
       })
       .catch((errorInfo) => {
         console.log('Error: ', errorInfo);

@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const CREATE_ALBUM = gql`
   mutation CreateAlbum($name: String, $description: String, $image: String) {
-    createAlbum(data: { name: $name, description: $description, userId: 2, image: $image }) {
+    createAlbum(data: { name: $name, description: $description, image: $image }) {
       id
     }
   }
