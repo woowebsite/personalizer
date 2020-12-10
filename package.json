@@ -10,6 +10,9 @@
     "start": "yarn workspace @monorepo/server run start",
     "dev": "export $(cat .env | xargs) && yarn workspace @monorepo/server run dev"
   },
+  "resolutions": {
+    "fs-capacitor": "^6.2.0"
+  },
   "private": true,
   "workspaces": [
     "packages/*"
