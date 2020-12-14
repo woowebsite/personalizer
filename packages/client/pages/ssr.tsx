@@ -4,25 +4,34 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { withApollo } from 'apollo/apollo';
 
-const QUERY = gql`
-  query GetHello {
-    hello
-  }
-`;
+import * as queries from 'pages/user/albums/queries';
 
-const SSR = () => {
-  const { data, loading, error, refetch } = useQuery(QUERY);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
+const SSR = ({ props }) => {
+  console.log(props.data);
   return (
     <div>
       <h1>This should be rendered on server side</h1>
-      <pre>Data: {data.hello}</pre>
-      <button onClick={() => refetch()}>Refetch</button>
+      <pre>Data: {JSON.stringify(props.data)}</pre>
     </div>
   );
+};
+
+SSR.getInitialProps = async ({ ctx }) => {
+  const { apolloClient } = ctx;
+  const result = await apolloClient.query({
+    query: queries.GET_ALBUMS,
+    variables: {
+      where: { userId: 2 },
+      limit: 4,
+      offset: 0,
+    },
+  });
+
+  return {
+    props: {
+      data: result.data,
+    },
+  };
 };
 
 export default withApollo({ ssr: true })(SSR);
