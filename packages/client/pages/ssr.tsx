@@ -1,7 +1,4 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-// import Layout from 'layouts/components/Layout';
-import gql from 'graphql-tag';
 import { withApollo } from 'apollo/apollo';
 
 import * as queries from 'pages/user/albums/queries';
