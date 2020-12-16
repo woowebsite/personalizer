@@ -1,9 +1,8 @@
-import { all } from 'redux-saga/effects'
-import user from './user/sagas'
-import menu from './menu/sagas'
-import albums from './albums/sagas'
-import settings from './settings/sagas'
+import { all } from 'redux-saga/effects';
+import user from './user/sagas';
+import menu from './menu/sagas';
+import albums from './albums/sagas';
 
 export default function* rootSaga() {
-  yield all([user(), menu(), settings(), albums()])
+  yield all([user(), menu(), albums()]);
 }

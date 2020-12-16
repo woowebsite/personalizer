@@ -1,8 +1,9 @@
-@import 'components/kit-core/mixins.scss';;
-
-//////////////////////////////////////////////////////////////////////////////////////////
-/* AUTH */
+.loginWrap {
+  max-width: 32rem;
+  margin: 100px auto;
+}
 
 .container {
   padding: rem(50) rem(30);
+  padding: 15px;
 }

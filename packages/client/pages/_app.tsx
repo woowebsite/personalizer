@@ -7,6 +7,8 @@ import withReduxSaga from 'next-redux-saga';
 import createStore from '../store';
 
 import 'antd/dist/antd.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../assets/antd-custom.scss';
 
 class MyApp extends React.Component<AppProps & AppInitialProps> {
   static async getInitialProps({ Component, ctx }) {
