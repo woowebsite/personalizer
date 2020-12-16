@@ -1,9 +1,54 @@
-import NextAuth from 'next-auth'
-import Providers from 'next-auth/providers'
+import NextAuth from 'next-auth';
+import Providers from 'next-auth/providers';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+import createApolloClient from 'apollo/apolloClient';
+import { LOGIN } from './queries';
 
 const options = {
   site: process.env.VERCEL_URL,
   providers: [
+    Providers.Credentials({
+      // The name to display on the sign in form (e.g. 'Sign in with...')
+      name: 'Credentials',
+      // The credentials is used to generate a suitable form on the sign in page.
+      // You can specify whatever fields you are expecting to be submitted.
+      // e.g. domain, username, password, 2FA token, etc.
+      credentials: {
+        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        password: { label: 'Password', type: 'password' },
+      },
+      authorize: async (credentials) => {
+        const client = createApolloClient({}, undefined);
+
+        try {
+          // You need to provide your own logic here that takes the credentials
+          // submitted and returns either a object representing a user or value
+          // that is false/null if the credentials are invalid.
+          // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
+          // credentials.email = 'wooowebsite@gmail.com';
+          // credentials.password = '1';
+          const user = await client.query({
+            query: LOGIN,
+            variables: credentials,
+          });
+
+          if (user) {
+            // Any object returned will be saved in `user` property of the JWT
+            const session = user.data.loginUser;
+            return Promise.resolve(session);
+          } else {
+            // If you return null or false then the credentials will be rejected
+            return Promise.resolve(null);
+            // You can also Reject this callback with an Error or with a URL:
+            // return Promise.reject(new Error('error message')) // Redirect to error page
+            // return Promise.reject('/path/to/redirect')        // Redirect to a URL
+          }
+        } catch (error) {
+          console.log('error', error.networkError.result.errors);
+        }
+      },
+    }),
     Providers.Email({
       // SMTP connection string or nodemailer configuration object https://nodemailer.com/
       server: process.env.EMAIL_SERVER,
@@ -24,10 +69,6 @@ const options = {
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
     }),
-    Providers.GitHub({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
   ],
   // The 'database' option should be a connection string or TypeORM
   // configuration object https://typeorm.io/#/connection-options
@@ -36,7 +77,7 @@ const options = {
   // * You need to install an appropriate node_module for your database!
   // * The email sign in provider requires a database but OAuth providers do not
   database: process.env.DATABASE_URL,
-
+  secret: process.env.SECRET,
   session: {
     // Use JSON Web Tokens for session instead of database sessions.
     // This option can be used with or without a database for users/accounts.
@@ -57,10 +98,23 @@ const options = {
     }
     */
   },
-
+  callbacks: {
+    session: async (session, user, sessionToken) => {
+      if (user && user.company) {
+        session.user.companyId = user.company.id;
+      }
+      return Promise.resolve(session);
+    },
+    // jwt: async (token, user, account, profile, isNewUser) => {
+    //   if (user && user.company) {
+    //     token.companyId = user.company.id;
+    //   }
+    //   return Promise.resolve(token);
+    // },
+  },
   // JSON Web Token options
   jwt: {
-    secret: 'my-secret-123', // Recommended (but auto-generated if not specified)
+    // secret: 'my-secret-123', // Recommended (but auto-generated if not specified)
     // Custom encode/decode functions for signing + encryption can be specified.
     // if you want to override what is in the JWT or how it is signed.
     // encode: async ({ secret, key, token, maxAge }) => {},
@@ -82,7 +136,7 @@ const options = {
   allowSignin: async (user, account) => {
     // Return true if user / account is allowed to sign in.
     // Return false to display an access denied message.
-    return true
+    return true;
   },
 
   // You can define custom pages to override the built-in pages
@@ -98,8 +152,8 @@ const options = {
   // Additional options
   // secret: 'abcdef123456789' // Recommended (but auto-generated if not specified)
   // debug: true, // Use this option to enable debug messages in the console
-}
+};
 
-const Auth = (req, res) => NextAuth(req, res, options)
+const Auth = (req, res) => NextAuth(req, res, options);
 
-export default Auth
+export default Auth;

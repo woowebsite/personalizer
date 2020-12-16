@@ -9,13 +9,14 @@ input CompanyWhere {
 }
 
 input CompanyInput {
-    name: String
+  name: String
 }
 
 type Query {
-   getCompany(where: CompanyWhere, limit: Int, offset: Int): Company
+  getCompany(where: CompanyWhere, limit: Int, offset: Int): Company
+  getCompanies: [Company]
 }
 
 type Mutation {
-   createCompany(data: CompanyInput): Company
+  createCompany(data: CompanyInput): Company
 }

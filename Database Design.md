@@ -2,8 +2,7 @@
 - userId
 - username
 - password
-- firstName
-- lastName
+- name
 
 2. Orders
 - orderId

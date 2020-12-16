@@ -1,0 +1,34 @@
+type Album {
+  id: Int
+  name: String
+  description: String
+  image: String
+  user: User
+}
+
+type PaginationInfo {
+  total: Int
+}
+
+input AlbumWhere {
+  id: Int
+  userId: Int,
+  name: String
+}
+
+input AlbumInput {
+  name: String
+  description: String
+  image: String
+  userId: Int
+}
+
+type Query {
+  getAlbum(where: AlbumWhere): Album
+  getAlbums(where: AlbumWhere, limit: Int, offset: Int): [Album]
+  getPagination(where: AlbumWhere): PaginationInfo
+}
+
+type Mutation {
+  createAlbum(data: AlbumInput): Album
+}

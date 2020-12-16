@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import nextApp from '@monorepo/client';
 import apolloServer from '@monorepo/graphql';
 
-const PORT = process.env.PORT || '3000';
+const PORT = process.env.PORT || '3001';
 
 async function main() {
   const app = express();
@@ -18,15 +18,17 @@ async function main() {
 }
 
 async function bootstrapClientApp(expressApp) {
-  // expressApp.use(bodyParser.urlencoded({ extended: true }));
-  // expressApp.use(bodyParser.json())
-
   await nextApp.prepare();
   expressApp.all('*', nextApp.getRequestHandler());
 }
 
 async function bootstrapApolloServer(expressApp) {
-  apolloServer.applyMiddleware({ app: expressApp });
+  apolloServer.applyMiddleware({
+    app: expressApp,
+    bodyParserConfig: {
+      limit: '2mb',
+    },
+  });
 }
 
 main();
