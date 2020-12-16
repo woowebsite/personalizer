@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import Login from 'components/system/Auth/Login'
-import AuthLayout from "../layouts/Auth";
+// import AuthLayout from "../layouts/Auth";
 
 
 class SystemLogin extends React.Component {
@@ -9,9 +9,9 @@ class SystemLogin extends React.Component {
         return (
             <div>
                 <Helmet title="Login" />
-                <AuthLayout>
+                {/* <AuthLayout> */}
                     <Login />
-                </AuthLayout>
+                {/* </AuthLayout> */}
             </div>
         )
     }
