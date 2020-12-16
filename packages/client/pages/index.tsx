@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { withApollo } from "../apollo/apollo";
-import MainLayout from "../layouts/Main";
+import BasicLayout from "../layout/BasicLayout";
 
 const QUERY = gql`
   query {
@@ -20,11 +20,11 @@ const NOSSR = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <MainLayout>
+    <BasicLayout>
       <h1>This should be rendered on client side</h1>
       <pre>Data: {data.getCompany.name}</pre>
       <button onClick={() => refetch()}>Refetch</button>
-    </MainLayout>
+    </BasicLayout>
   );
 };
 

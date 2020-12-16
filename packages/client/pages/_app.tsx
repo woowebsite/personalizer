@@ -6,7 +6,6 @@ import withReduxSaga from 'next-redux-saga';
 
 import createStore from '../store';
 
-import '../assets/global.scss';
 import 'antd/dist/antd.css';
 
 class MyApp extends React.Component<AppProps & AppInitialProps> {

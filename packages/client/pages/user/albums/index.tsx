@@ -1,5 +1,5 @@
 import React from 'react';
-import MainLayout from 'layouts/Main';
+import BasicLayout from 'layout/BasicLayout';
 import ListThumbnails from 'components/personalizers/ListThumbnails';
 import PAGINGATION from 'constants/paginations';
 
@@ -18,7 +18,7 @@ const ManagementAlbums = () => {
   });
 
   return (
-    <MainLayout>
+    <BasicLayout>
       <h1>All Albums</h1>
       {data && (
         <ListThumbnails
@@ -35,7 +35,7 @@ const ManagementAlbums = () => {
           }
         />
       )}
-    </MainLayout>
+    </BasicLayout>
   );
 };
 

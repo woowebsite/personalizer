@@ -1,7 +1,4 @@
 /* eslint-disable */
-// const withLess = require('@zeit/next-less')
-// const withCss = require('@zeit/next-css')
-// const withSass = require('@zeit/next-sass')
 const lessToJS = require('less-vars-to-js')
 const fs = require('fs')
 const path = require('path')
@@ -21,12 +18,6 @@ module.exports = {
   sassOptions: {
     includePaths: [
       path.resolve(__dirname, 'antd/dist/antd.css'),
-      path.resolve(__dirname, './assets/global.scss'),
-      path.resolve(__dirname, './components/styles/css/layout.scss'),
-      path.resolve(__dirname, './components/kit-core'),
-      path.resolve(__dirname, './components/kit-vendors'),
-      path.resolve(__dirname, './components/kit-widgets'),
-      path.resolve(__dirname, './components/styles'),
     ],
   },
   cssModules: true,
