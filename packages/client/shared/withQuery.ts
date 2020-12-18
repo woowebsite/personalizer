@@ -1,5 +1,5 @@
 import { OperationVariables, QueryResult } from '@apollo/react-common';
-import { QueryHookOptions, useQuery } from '@apollo/react-hooks';
+import { QueryHookOptions, useQuery } from '@apollo/client';
 import { DocumentNode } from 'graphql';
 import NProgress from 'nprogress';
 import { notification } from 'antd';

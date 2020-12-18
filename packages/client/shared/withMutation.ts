@@ -3,7 +3,7 @@ import {
   MutationHookOptions,
   MutationTuple,
   useMutation,
-} from '@apollo/react-hooks';
+} from '@apollo/client';
 import { DocumentNode } from 'graphql';
 import NProgress from 'nprogress';
 import { notification } from 'antd';

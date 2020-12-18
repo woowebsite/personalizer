@@ -2,7 +2,7 @@ import { Card } from "antd";
 
 const { Meta } = Card;
 
-const Thumbnail = ({ title, desc }) => {
+const Thumbnail = ({ title, desc, localName }) => {
   return (
     <Card
       hoverable
@@ -14,7 +14,7 @@ const Thumbnail = ({ title, desc }) => {
         />
       }
     >
-      <Meta title={title} description={desc} />
+      <Meta title={title + localName} description={desc} />
     </Card>
   );
 };

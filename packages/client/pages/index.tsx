@@ -1,8 +1,8 @@
-import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import { withApollo } from "../apollo/apollo";
-import BasicLayout from "../layout/BasicLayout";
+import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from '@apollo/client';
+import { withApollo } from '../apollo/apollo';
+import BasicLayout from '../layout/BasicLayout';
 
 const QUERY = gql`
   query {

@@ -6,19 +6,17 @@ import PAGINGATION from 'constants/paginations';
 
 const ListThumbnails = (props) => {
   const { dataSource, dataPaging, onPagingChange, ...others } = props;
-
+  const listThumbnails = [...dataSource];
   // Add a Thumbnail enable
   if (props.allowAddMore) {
-    if (dataSource[0] && dataSource[0].type != 'action') {
-      dataSource.unshift({
+    if (listThumbnails[0] && listThumbnails[0].type != 'action') {
+      listThumbnails.unshift({
         type: 'action',
       });
     }
   }
-  console.log('List thumbnails render...');
 
   const renderItem = (item) => {
-
     switch (item.type) {
       case 'action':
         return (
@@ -26,14 +24,20 @@ const ListThumbnails = (props) => {
         );
 
       default:
-        return <Thumbnail title={item.name} desc={item.description} />;
+        return (
+          <Thumbnail
+            title={item.name}
+            desc={item.description}
+            localName={item.localName}
+          />
+        );
     }
   };
   return (
     <>
       <List
         {...others}
-        dataSource={dataSource}
+        dataSource={listThumbnails}
         grid={{ gutter: 16, column: 4 }}
         renderItem={(item) => <List.Item>{renderItem(item)}</List.Item>}
       />
