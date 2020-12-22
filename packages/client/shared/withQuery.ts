@@ -6,7 +6,7 @@ import { notification } from 'antd';
 
 function withQuery<TData = any, TVariables = OperationVariables>(
   query: DocumentNode,
-  options: QueryHookOptions
+  options?: QueryHookOptions
 ) {
   const result = useQuery(query, options);
   const { data, loading, error, refetch } = result;

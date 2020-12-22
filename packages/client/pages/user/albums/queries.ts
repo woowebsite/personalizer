@@ -24,6 +24,16 @@ export const GET_ALBUMS = gql`
   }
 `;
 
+export const GET_ALBUM = gql`
+  query GetAlbum($where: AlbumWhere) {
+    getAlbum(where: $where) {
+      id
+      name
+      description
+    }
+  }
+`
+
 export const UPLOAD_FILE = gql`
   mutation uploadFile($file: Upload!) {
     uploadFile(file: $file) {
