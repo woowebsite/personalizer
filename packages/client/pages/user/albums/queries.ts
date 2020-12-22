@@ -16,6 +16,7 @@ export const GET_ALBUMS = gql`
       id
       name
       description
+      image
       localName @client
     }
     getPagination(where: $where) {

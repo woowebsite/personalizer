@@ -26,6 +26,8 @@ const ListThumbnails = (props) => {
       default:
         return (
           <Thumbnail
+            url={item.url}
+            image={item.image}
             title={item.name}
             desc={item.description}
             localName={item.localName}

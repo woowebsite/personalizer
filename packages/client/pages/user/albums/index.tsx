@@ -24,7 +24,10 @@ const ManagementAlbums = () => {
       {data && (
         <ListThumbnails
           allowAddMore
-          dataSource={data.getAlbums}
+          dataSource={data.getAlbums.map((x) => ({
+            url: `/user/album/${x.id}`,
+            ...x,
+          }))}
           dataPaging={data.getPagination}
           onReload={() => refetch()}
           onPagingChange={(page) =>
