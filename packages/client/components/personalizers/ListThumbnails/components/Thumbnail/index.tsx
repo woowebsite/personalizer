@@ -5,7 +5,10 @@ const { Meta } = Card;
 
 const Thumbnail = ({ title, desc, image, url, localName }) => {
   return (
-    <Link href={url}>
+    <Link
+      href='/user/album/1'
+      // href={url}
+    >
       <Card
         hoverable
         style={{ width: 240 }}

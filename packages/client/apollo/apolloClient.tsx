@@ -4,6 +4,8 @@ import fetch from 'isomorphic-unfetch';
 import { createUploadLink } from 'apollo-upload-client';
 
 export default function createApolloClient(initialState, ctx) {
+  console.log('initialState', initialState);
+  
   const cache = new InMemoryCache({
     typePolicies: {
       Album: {
