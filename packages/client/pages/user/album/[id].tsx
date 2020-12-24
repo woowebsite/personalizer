@@ -50,7 +50,6 @@ const AlbumDetail = () => {
 AlbumDetail.getInitialProps = async ({ ctx }) => {
   const { apolloClient } = ctx;
   const { cache } = apolloClient;
-  console.log('cache', apolloClient.extract());
 };
 
 export default withApollo({ ssr: true })(AlbumDetail);

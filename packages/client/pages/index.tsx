@@ -1,6 +1,5 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { withApollo } from '../apollo/apollo';
 import BasicLayout from '../layout/BasicLayout';
 
