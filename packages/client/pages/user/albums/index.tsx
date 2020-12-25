@@ -15,16 +15,15 @@ const ManagementAlbums = ({ props }) => {
 
   const { data, refetch } = props.result;
 
-
   return (
     <BasicLayout>
       <h1>All Albums</h1>
-      <Link href="/user/album/18">Image</Link>
       {data && (
         <ListThumbnails
           allowAddMore
           dataSource={data.getAlbums.map((x) => ({
             url: `/user/album/${x.id}`,
+            href: `/user/album/[id]`,
             ...x,
           }))}
           dataPaging={data.getPagination}

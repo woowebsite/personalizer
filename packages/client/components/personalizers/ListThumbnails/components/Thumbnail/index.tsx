@@ -3,9 +3,9 @@ import Link from 'next/link';
 
 const { Meta } = Card;
 
-const Thumbnail = ({ title, desc, image, url, localName }) => {
+const Thumbnail = ({ title, desc, image, url, href, localName }) => {
   return (
-    <Link as={url} href={url}>
+    <Link as={url} href={href}>
       <Card
         hoverable
         style={{ width: 240 }}

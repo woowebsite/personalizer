@@ -9,38 +9,22 @@ import { withApollo } from 'apollo/apollo';
 import * as queries from './queries';
 import { useRouter } from 'next/dist/client/router';
 
-const AlbumDetail = () => {
+const AlbumDetail = ({ props }) => {
+  if (!props.result) return <>Loading...</>;
+
   const router = useRouter();
   const { id } = router.query;
 
-  // Query
-  const albumId = parseInt(id.toString());
-  const { data, refetch } = useQuery(queries.GET_ALBUM, {
-    variables: {
-      where: { id: albumId, userId: 2 },
-      limit: PAGINGATION.pageSize,
-      offset: 0,
-    },
-  });
-
-  const client = useApolloClient();
-  client.writeQuery({
-    query: queries.GET_ALBUM,
-    variables: {
-      where: { id: albumId, userId: 2 },
-      limit: PAGINGATION.pageSize,
-      offset: 0,
-    },
-    data,
-  });
+  const { album } = props.result;
 
   return (
     <BasicLayout>
-      {data && (
+      {JSON.stringify(props.result)}
+      {album && (
         <>
-          <h1>{data.getAlbum.name}</h1>
-          <p>{data.getAlbum.description}</p>
-          <img alt='example' width='100%' src={data.getAlbum.image} />
+          <h1>{album.name}</h1>
+          <p>{album.description}</p>
+          <img alt='example' width='100%' src={album.image} />
         </>
       )}
     </BasicLayout>
@@ -50,6 +34,33 @@ const AlbumDetail = () => {
 AlbumDetail.getInitialProps = async ({ ctx }) => {
   const { apolloClient } = ctx;
   const { cache } = apolloClient;
+  const { id: albumId } = ctx.query;
+
+  let result = apolloClient.readQuery({
+    query: queries.GET_ALBUM,
+    variables: {
+      where: { id: albumId, userId: 2 },
+    },
+  });
+  console.log('ctx.query', ctx.query);
+
+  if (!result) {
+    const { data, refetch } = await apolloClient.query({
+      query: queries.GET_ALBUM,
+      variables: {
+        where: { id: parseInt(albumId), userId: 2 },
+        limit: PAGINGATION.pageSize,
+        offset: 0,
+      },
+    });
+    result = data;
+  }
+
+  return {
+    props: {
+      result,
+    },
+  };
 };
 
 export default withApollo({ ssr: true })(AlbumDetail);

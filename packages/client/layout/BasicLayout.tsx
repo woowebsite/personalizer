@@ -35,9 +35,6 @@ const BasicLayout = (props) => {
               <Menu.Item key='2'>
                 <Link href='/user/albums'>Albums</Link>
               </Menu.Item>
-              <Menu.Item key='3'>
-                <Link href='/user/album' as='/user/album/1'>Album 1</Link>
-              </Menu.Item>
               <Menu.Item key='4'>option3</Menu.Item>
             </SubMenu>
             <SubMenu key='sub2' icon={<LaptopOutlined />} title='subnav 2'>
