@@ -1,5 +1,5 @@
 import React from 'react';
-import BasicLayout from 'layout/BasicLayout';
+import withUserLayout from 'layout/UserLayout';
 import ListThumbnails from 'components/personalizers/ListThumbnails';
 import PAGINGATION from 'constants/paginations';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ const ManagementAlbums = ({ props }) => {
   const { data, refetch } = props.result;
 
   return (
-    <BasicLayout>
+    <>
       <h1>All Albums</h1>
       {data && (
         <ListThumbnails
@@ -30,18 +30,19 @@ const ManagementAlbums = ({ props }) => {
           onReload={() => refetch()}
           onPagingChange={(page) =>
             refetch({
-              where: { userId: 2 },
+              where: { userId: 3 },
               limit: PAGINGATION.pageSize,
               offset: (page - 1) * PAGINGATION.pageSize,
             })
           }
         />
       )}
-    </BasicLayout>
+    </>
   );
 };
 ManagementAlbums.getInitialProps = async ({ ctx }) => {
-  const { apolloClient } = ctx;
+  const { apolloClient, currentUser } = ctx;
+
   const result = await apolloClient.query({
     query: queries.GET_ALBUMS,
     variables: {
@@ -68,4 +69,4 @@ ManagementAlbums.getInitialProps = async ({ ctx }) => {
     },
   };
 };
-export default withApollo({ ssr: true })(ManagementAlbums);
+export default withUserLayout(withApollo({ ssr: true })(ManagementAlbums));

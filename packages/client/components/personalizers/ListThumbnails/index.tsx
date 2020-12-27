@@ -9,7 +9,7 @@ const ListThumbnails = (props) => {
   const listThumbnails = [...dataSource];
   // Add a Thumbnail enable
   if (props.allowAddMore) {
-    if (listThumbnails[0] && listThumbnails[0].type != 'action') {
+    if ((listThumbnails[0] && listThumbnails[0].type != 'action') || listThumbnails.length === 0) {
       listThumbnails.unshift({
         type: 'action',
       });
