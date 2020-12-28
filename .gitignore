@@ -22,3 +22,5 @@ packages/server/images
 
 # Optional REPL history
 .node_repl_history
+
+*.lock
