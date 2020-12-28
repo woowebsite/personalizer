@@ -4,9 +4,9 @@ import { resolver } from "graphql-sequelize";
 import { Album } from "../../models";
 
 export const Query = {
-  getAlbum: resolver(Album, {
-    before: async (findOptions, { }, { album }) => {
-      findOptions.where = { id: album.id };
+  album: resolver(Album, {
+    before: async (findOptions, { where }, { album }) => {
+      findOptions.where = where;
       return findOptions;
     },
     after: (album) => {

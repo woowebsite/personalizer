@@ -1,14 +1,16 @@
 import React from 'react';
-import BasicLayout from 'layout/BasicLayout';
+import withUserLayout from 'layout/UserLayout';
 import ListThumbnails from 'components/personalizers/ListThumbnails';
 import PAGINGATION from 'constants/paginations';
+import Link from 'next/link';
 
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from './queries';
 
-const ManagementAlbums = () => {
+const ManagementAlbums = ({ props }) => {
+
   const { data, refetch } = withQuery(queries.GET_ALBUMS, {
     variables: {
       where: { userId: 2 },
@@ -18,12 +20,16 @@ const ManagementAlbums = () => {
   });
 
   return (
-    <BasicLayout>
+    <>
       <h1>All Albums</h1>
       {data && (
         <ListThumbnails
           allowAddMore
-          dataSource={data.getAlbums}
+          dataSource={data.getAlbums.map((x) => ({
+            url: `/user/album/${x.id}`,
+            href: `/user/album/[id]`,
+            ...x,
+          }))}
           dataPaging={data.getPagination}
           onReload={() => refetch()}
           onPagingChange={(page) =>
@@ -35,8 +41,8 @@ const ManagementAlbums = () => {
           }
         />
       )}
-    </BasicLayout>
+    </>
   );
 };
 
-export default withApollo({ ssr: false })(ManagementAlbums);
+export default withUserLayout(withApollo({ ssr: false })(ManagementAlbums));

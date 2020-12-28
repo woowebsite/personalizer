@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import createApolloClient from 'apollo/apolloClient';
 import { LOGIN } from './queries';

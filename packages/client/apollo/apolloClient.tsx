@@ -1,10 +1,27 @@
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import fetch from 'isomorphic-unfetch';
 import { createUploadLink } from 'apollo-upload-client';
 
 export default function createApolloClient(initialState, ctx) {
+  const cache = new InMemoryCache({
+    typePolicies: {
+      Album: {
+        fields: {
+          localName: {
+            read(_, { variables }) {
+              // Return the cached name, transformed to upper case
+              // return name.toUpperCase();
+              return 'xxx';
+            },
+          },
+        },
+      },
+      Product: {
+        keyFields: ['upc'],
+      },
+    },
+  }).restore(initialState);
+  
   return new ApolloClient({
     ssrMode: Boolean(ctx),
     link: new createUploadLink({
@@ -12,6 +29,6 @@ export default function createApolloClient(initialState, ctx) {
       credentials: 'same-origin',
       fetch,
     }),
-    cache: new InMemoryCache().restore(initialState),
+    cache,
   });
 }
