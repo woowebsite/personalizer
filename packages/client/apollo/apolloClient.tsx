@@ -1,11 +1,8 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { HttpLink } from 'apollo-link-http';
 import fetch from 'isomorphic-unfetch';
 import { createUploadLink } from 'apollo-upload-client';
 
 export default function createApolloClient(initialState, ctx) {
-  console.log('initialState', initialState);
-  
   const cache = new InMemoryCache({
     typePolicies: {
       Album: {
@@ -32,7 +29,6 @@ export default function createApolloClient(initialState, ctx) {
       credentials: 'same-origin',
       fetch,
     }),
-    // cache: new InMemoryCache().restore(initialState),
     cache,
   });
 }
