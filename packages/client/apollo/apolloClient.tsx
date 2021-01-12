@@ -1,6 +1,7 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 import fetch from 'isomorphic-unfetch';
 import { createUploadLink } from 'apollo-upload-client';
+import { RestLink } from 'apollo-link-rest';
 
 export default function createApolloClient(initialState, ctx) {
   const cache = new InMemoryCache({
@@ -21,14 +22,19 @@ export default function createApolloClient(initialState, ctx) {
       },
     },
   }).restore(initialState);
-  
+
+  const uploadLink = new createUploadLink({
+    uri: process.env.GRAPHQL_URI, // must be absolute
+    credentials: 'same-origin',
+    fetch,
+  });
+  const restLink = new RestLink({
+    uri: process.env.MOCK_URI || '',
+  });
+
   return new ApolloClient({
     ssrMode: Boolean(ctx),
-    link: new createUploadLink({
-      uri: process.env.GRAPHQL_URI, // must be absolute
-      credentials: 'same-origin',
-      fetch,
-    }),
+    link: ApolloLink.from([restLink, uploadLink]),
     cache,
   });
 }
