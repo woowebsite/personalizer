@@ -9,6 +9,9 @@ const themeVariables = lessToJS(
 )
 
 module.exports = {
+  env: {
+    mockApi: 'https://5eb3d8ee974fee0016ecdba0.mockapi.io/api/v1'
+  },
   lessLoaderOptions: {
     lessOptions: {
       javascriptEnabled: true,

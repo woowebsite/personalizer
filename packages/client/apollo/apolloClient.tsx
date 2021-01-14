@@ -28,8 +28,9 @@ export default function createApolloClient(initialState, ctx) {
     credentials: 'same-origin',
     fetch,
   });
+
   const restLink = new RestLink({
-    uri: process.env.MOCK_URI || '',
+    uri: process.env.mockApi
   });
 
   return new ApolloClient({
