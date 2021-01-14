@@ -44,11 +44,14 @@ const ListThumbnails = (props) => {
         grid={{ gutter: 16, column: 4 }}
         renderItem={(item) => <List.Item>{renderItem(item)}</List.Item>}
       />
-      <Pagination
-        onChange={onPagingChange}
-        pageSize={dataPaging.pageSize || PAGINGATION.pageSize}
-        total={dataPaging.total}
-      />
+
+      {dataPaging &&
+        <Pagination
+          onChange={onPagingChange}
+          pageSize={dataPaging.pageSize || PAGINGATION.pageSize}
+          total={dataPaging.total}
+        />
+      }
     </>
   );
 };
