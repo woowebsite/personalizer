@@ -1,8 +1,10 @@
 export const en = {
   common: {
     menu: {
-      subnav1: {
-        accounts: 'Accounts',
+      accounts: {
+        title: 'Accounts',
+        allAccounts: 'All accounts',
+        createAccount: 'Create an account',
       },
     },
   },
