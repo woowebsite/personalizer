@@ -5,7 +5,7 @@ import UploadImage from 'components/personalizers/Upload';
 // graphql
 import { withApollo } from 'apollo/apollo';
 import withMutation from 'shared/withMutation';
-import * as queries from '../queries';
+import * as queries from 'pages/user/albums/queries';
 
 const CreateAlbumModal = (props) => {
   const [form] = Form.useForm();

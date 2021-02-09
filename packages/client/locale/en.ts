@@ -25,4 +25,21 @@ export const en = {
       },
     },
   },
+  '/user/albums': {
+    title: 'All album',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add album'
+      }
+    },
+    tableAccount: {
+      columns: {
+        id: 'Id',
+        name: 'Name',
+        age: 'Age',
+        createdAt: 'Created At',
+      },
+    },
+  }
 };

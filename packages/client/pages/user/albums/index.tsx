@@ -7,7 +7,7 @@ import Link from 'next/link';
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from './queries';
+import * as queries from 'definitions/album-definitions';
 
 const ManagementAlbums = ({ props }) => {
 
