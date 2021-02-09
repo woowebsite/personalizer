@@ -10,12 +10,12 @@ export default function getMenuData() {
         {
           title: 'menu.accounts.allAccounts',
           key: 'dashboard',
-          url: '/dashboard/alpha',
+          url: '/admin/accounts',
         },
         {
           title: 'menu.accounts.createAccount',
           key: 'dashboardBeta',
-          url: '/dashboard/beta',
+          url: '/admin/accounts/create',
         },
       ],
     },

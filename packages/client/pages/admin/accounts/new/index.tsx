@@ -3,12 +3,11 @@ import { Layout, Button, PageHeader } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
-import AccountTable from 'features/AccountTable';
 
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from 'definitions/user-definitions';
+import * as queries from '../queries';
 
 const { Content } = Layout;
 
@@ -20,6 +19,7 @@ const ManagementMembers = (props) => {
       <PageHeader
         className='mb-4 pl-0 pr-0'
         title={messages.title}
+        onBack={history.back}
         subTitle={messages.subTitle}
         extra={[
           <Button key='3'>Operation</Button>,
@@ -30,7 +30,7 @@ const ManagementMembers = (props) => {
         ]}
       />
       <Content>
-        {data && data.users && <AccountTable dataSource={data.users} />}
+        dsdsd
       </Content>
     </>
   );

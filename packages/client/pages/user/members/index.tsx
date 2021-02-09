@@ -5,7 +5,7 @@ import ListThumbnails from 'components/personalizers/ListThumbnails';
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from './queries';
+import * as queries from 'definitions/user-definitions';
 
 const ManagementMembers = ({ props }) => {
   const { data, refetch } = withQuery(queries.GET_USERS);

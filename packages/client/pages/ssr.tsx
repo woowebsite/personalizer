@@ -1,7 +1,7 @@
 import React from 'react';
 import { withApollo } from 'apollo/apollo';
 
-import * as queries from 'pages/user/albums/queries';
+import * as queries from 'definitions/album-definitions';
 
 const SSR = ({ props }) => {
   console.log(props.data);
