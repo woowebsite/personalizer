@@ -40,7 +40,7 @@ const withAdminLayout = (WrappedComponent) => (props) => {
               minHeight: 280,
             }}
           >
-            <WrappedComponent {...props} />
+            <WrappedComponent messages={messages} {...props} />
           </Content>
         </Layout>
       </Layout>
