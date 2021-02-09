@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import { useQuery } from '@apollo/react-hooks';
 import createApolloClient from 'apollo/apolloClient';
-import { LOGIN } from './queries';
+import { LOGIN } from 'definitions/user-definitions';
 
 const options = {
   site: process.env.VERCEL_URL,

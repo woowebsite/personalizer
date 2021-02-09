@@ -5,7 +5,7 @@ import PAGINGATION from 'constants/paginations';
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from './queries';
+import * as queries from 'definitions/album-definitions';
 import { useRouter } from 'next/dist/client/router';
 
 const AlbumDetail = () => {

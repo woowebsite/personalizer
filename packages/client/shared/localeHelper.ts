@@ -25,7 +25,7 @@ export function flattenMessages(nestedMessages, prefix = '') {
  */
 export default function messages(locale, locales, pathname) {
   const localePage = locales[locale];
-  const messagesPage = localePage[pathname];
+  const messagesPage = flattenMessages(localePage[pathname]);
   const messagesCommon = flattenMessages(localePage['common']);
   const messages = { ...messagesPage, ...messagesCommon };
 

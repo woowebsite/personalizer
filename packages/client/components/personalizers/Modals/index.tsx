@@ -4,7 +4,7 @@ import Loadable from 'react-loadable';
 const modalsProvider = {
     ['CREATE_ALBUM']: (props) => {
         const Component = Loadable({
-            loader: () => import('pages/user/albums/CreateAlbumModal'),
+            loader: () => import('features/CreateAlbumModal'),
             loading: () => <p>Loading...</p>,
         })
         return <Component {...props} />

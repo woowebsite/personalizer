@@ -9,6 +9,37 @@ export const en = {
     },
   },
   '/admin/accounts': {
-    title: 'Account management',
+    title: 'All accounts',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add account'
+      }
+    },
+    tableAccount: {
+      columns: {
+        id: 'Id',
+        name: 'Name',
+        age: 'Age',
+        createdAt: 'Created At',
+      },
+    },
   },
+  '/user/albums': {
+    title: 'All album',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add album'
+      }
+    },
+    tableAccount: {
+      columns: {
+        id: 'Id',
+        name: 'Name',
+        age: 'Age',
+        createdAt: 'Created At',
+      },
+    },
+  }
 };
