@@ -9,7 +9,7 @@ export const en = {
     },
   },
   '/admin/accounts': {
-    title: 'Account management',
+    title: 'All accounts',
     subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {

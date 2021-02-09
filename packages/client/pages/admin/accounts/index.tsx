@@ -1,31 +1,16 @@
 import React from 'react';
-import withAdminLayout from 'layout/AdminLayout';
+import { Layout, Button, PageHeader } from 'antd';
 
 // components
+import withAdminLayout from 'layout/AdminLayout';
 import AccountTable from './AccountTable';
 
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from './queries';
-import { Layout, Col, Row, Button, PageHeader } from 'antd';
 
 const { Content } = Layout;
-
-const routes = [
-  {
-    path: 'index',
-    breadcrumbName: 'First-level Menu',
-  },
-  {
-    path: 'first',
-    breadcrumbName: 'Second-level Menu',
-  },
-  {
-    path: 'second',
-    breadcrumbName: 'Third-level Menu',
-  },
-];
 
 const ManagementMembers = (props) => {
   const { data, refetch } = withQuery(queries.GET_USERS);
@@ -34,8 +19,6 @@ const ManagementMembers = (props) => {
     <>
       <PageHeader
         className='mb-4 pl-0 pr-0'
-        ghost={true}
-        breadcrumb={{ routes }}
         title={messages.title}
         subTitle={messages.subTitle}
         extra={[
