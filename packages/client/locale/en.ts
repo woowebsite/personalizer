@@ -10,5 +10,13 @@ export const en = {
   },
   '/admin/accounts': {
     title: 'Account management',
+    tableAccount: {
+      columns: {
+        id: 'Id',
+        name: 'Name',
+        age: 'Age',
+        createdAt: 'Created At',
+      },
+    },
   },
 };
