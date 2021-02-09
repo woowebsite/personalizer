@@ -10,6 +10,12 @@ export const en = {
   },
   '/admin/accounts': {
     title: 'Account management',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add account'
+      }
+    },
     tableAccount: {
       columns: {
         id: 'Id',

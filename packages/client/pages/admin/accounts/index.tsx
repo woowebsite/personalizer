@@ -8,13 +8,47 @@ import AccountTable from './AccountTable';
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from './queries';
+import { Layout, Col, Row, Button, PageHeader } from 'antd';
+
+const { Content } = Layout;
+
+const routes = [
+  {
+    path: 'index',
+    breadcrumbName: 'First-level Menu',
+  },
+  {
+    path: 'first',
+    breadcrumbName: 'Second-level Menu',
+  },
+  {
+    path: 'second',
+    breadcrumbName: 'Third-level Menu',
+  },
+];
 
 const ManagementMembers = (props) => {
   const { data, refetch } = withQuery(queries.GET_USERS);
+  const { messages, t } = props;
   return (
     <>
-      <h1>{props.messages.title}</h1>
-      {data && data.users && <AccountTable dataSource={data.users} />}
+      <PageHeader
+        className='mb-4 pl-0 pr-0'
+        ghost={true}
+        breadcrumb={{ routes }}
+        title={messages.title}
+        subTitle={messages.subTitle}
+        extra={[
+          <Button key='3'>Operation</Button>,
+          <Button key='2'>Operation</Button>,
+          <Button key='1' type='primary'>
+            {t('pageHeader.buttons.create')}
+          </Button>,
+        ]}
+      />
+      <Content>
+        {data && data.users && <AccountTable dataSource={data.users} />}
+      </Content>
     </>
   );
 };
