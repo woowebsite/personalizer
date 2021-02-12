@@ -9,6 +9,7 @@ import AccountTable from 'features/AccountTable';
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from 'definitions/user-definitions';
+import RedirectButton from '~/components/RedirectButton';
 
 const { Content } = Layout;
 
@@ -24,9 +25,9 @@ const ManagementMembers = (props) => {
         extra={[
           <Button key='3'>Operation</Button>,
           <Button key='2'>Operation</Button>,
-          <Button key='1' type='primary'>
+          <RedirectButton type='primary' url={'/admin/accounts/new'}>
             {t('pageHeader.buttons.create')}
-          </Button>,
+          </RedirectButton>,
         ]}
       />
       <Content>

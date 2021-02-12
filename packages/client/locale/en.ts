@@ -13,8 +13,8 @@ export const en = {
     subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
-        create: 'Add account'
-      }
+        create: 'Add account',
+      },
     },
     tableAccount: {
       columns: {
@@ -25,13 +25,24 @@ export const en = {
       },
     },
   },
+  '/admin/accounts/new': {
+    title: 'Create an account',
+    formCreateAccount: {
+      label: {
+        name: 'Name',
+        description: 'Description',
+        avatar: 'Avatar',
+        role: 'Role',
+      },
+    },
+  },
   '/user/albums': {
     title: 'All album',
     subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
-        create: 'Add album'
-      }
+        create: 'Add album',
+      },
     },
     tableAccount: {
       columns: {
@@ -41,5 +52,5 @@ export const en = {
         createdAt: 'Created At',
       },
     },
-  }
+  },
 };

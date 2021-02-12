@@ -1,12 +1,22 @@
 import { gql } from '@apollo/client';
 
-export const GET_USERS = gql`
-  query GetUsers {
+export const GET_REST_USERS = gql`
+  query ApiUsers {
     users @rest(type: "User", path: "/users",  method: "GET") {
       id
       name
       avatar
       age
+    }
+  }
+`;
+export const GET_USERS = gql`
+  query GetUsers {
+    users {
+      id
+      name
+      image
+      email
     }
   }
 `;

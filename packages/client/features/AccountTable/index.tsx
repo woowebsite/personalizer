@@ -33,10 +33,10 @@ export const columns: ColumnsType<any> = [
 
 const AccountTable = (props) => {
   const { formatMessage } = useIntl();
-  const f = (id) => formatMessage({ id });
+  const t = (id) => formatMessage({ id });
 
   columns.map((c) => {
-    c.title = f(c.title);
+    c.title = t(c.title);
     return c;
   });
   return <Table columns={columns} dataSource={props.dataSource} />;

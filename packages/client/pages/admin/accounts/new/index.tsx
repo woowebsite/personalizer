@@ -1,36 +1,28 @@
 import React from 'react';
-import { Layout, Button, PageHeader } from 'antd';
+import { Layout, PageHeader } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
 
 // graphql
-import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from '../queries';
+import AccountCreateForm from '~/features/AccountCreateForm';
 
 const { Content } = Layout;
 
 const ManagementMembers = (props) => {
-  const { data, refetch } = withQuery(queries.GET_USERS);
-  const { messages, t } = props;
+  const { messages } = props;
+  const onFinish = () => {};
   return (
     <>
       <PageHeader
         className='mb-4 pl-0 pr-0'
         title={messages.title}
-        onBack={history.back}
+        onBack={() => window.history.back()}
         subTitle={messages.subTitle}
-        extra={[
-          <Button key='3'>Operation</Button>,
-          <Button key='2'>Operation</Button>,
-          <Button key='1' type='primary'>
-            {t('pageHeader.buttons.create')}
-          </Button>,
-        ]}
       />
       <Content>
-        dsdsd
+        <AccountCreateForm onFinish={onFinish} />
       </Content>
     </>
   );
