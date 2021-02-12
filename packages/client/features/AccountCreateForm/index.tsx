@@ -1,33 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { Modal, Form, Input, Button, Upload, message } from 'antd';
-import UploadImage from 'components/personalizers/Upload';
 import { useIntl } from 'react-intl';
 
 // components
+import UploadImage from 'components/personalizers/Upload';
 import ComboBox from 'components/ComboBox';
+import useTranslate from 'hooks/useTranslate';
+
 // graphql
 import withQuery from 'shared/withQuery';
-import { withApollo } from 'apollo/apollo';
 import withMutation from 'shared/withMutation';
 import * as queries from 'definitions/album-definitions';
 import * as userQueries from 'definitions/user-definitions';
 
-const AccountCreateForm = (props) => {
+interface IProps {}
+const AccountCreateForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
   const { data } = withQuery(userQueries.GET_USERS);
   const [form] = Form.useForm();
   const { formatMessage } = useIntl();
-  const t = (id) => formatMessage({ id });
+  const t = (id, values?) => formatMessage({ id }, values);
   const [uploadImage] = withMutation(queries.UPLOAD_FILE);
-  const [createAlbum] = withMutation(queries.CREATE_ALBUM);
+  const [createUser] = withMutation(userQueries.CREATE_USER);
 
   /// EVENTS
+  useImperativeHandle(ref, () => ({
+    onSubmit,
+  }));
+
   const onSubmit = () => {
     form
       .validateFields()
       .then((values) => {
-        createAlbum({ variables: values }).finally(() => {
-          props.onFinish();
+        console.log('values', values);
+        createUser({ variables: values }).finally(() => {
+          // callback
+          console.log('create callback');
         });
       })
       .catch((errorInfo) => {
@@ -47,21 +55,29 @@ const AccountCreateForm = (props) => {
     <Form
       form={form}
       id='accountCreateForm'
-      className={"shadow-sm p-3 bg-white pt-5 rounded"}
+      className={'shadow-sm p-3 bg-white pt-5 rounded'}
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 14 }}
       onFinish={onSubmit}
       layout='horizontal'
     >
-      <Form.Item name='name' label={t('formCreateAccount.label.name')}>
+      <Form.Item
+        name='name'
+        rules={[
+          {
+            required: true,
+            message: useTranslate('validator.required', {
+              name: 'formCreateAccount.label.name',
+            }),
+          },
+        ]}
+        label={t('formCreateAccount.label.name')}
+      >
         <Input />
       </Form.Item>
 
-      <Form.Item
-        name='description'
-        label={t('formCreateAccount.label.description')}
-      >
-        <Input.TextArea />
+      <Form.Item name='email' label={t('formCreateAccount.label.email')}>
+        <Input type='email' />
       </Form.Item>
 
       <Form.Item name='role' label={t('formCreateAccount.label.role')}>
@@ -75,6 +91,6 @@ const AccountCreateForm = (props) => {
       </Form.Item>
     </Form>
   );
-};
+});
 
 export default AccountCreateForm;

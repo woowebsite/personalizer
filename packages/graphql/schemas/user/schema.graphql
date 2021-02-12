@@ -11,17 +11,18 @@ input UserWhere {
 }
 
 input UserInput {
-    email: String
-    password: String
-    name: String
+  name: String
+  email: String
+  password: String
+  image: String
 }
 
 type Query {
-   getUser: User @isAuth
-   users(where: UserWhere, limit: Int, offset: Int): [User]
-   loginUser(email: String!, password: String!): User
+  getUser: User @isAuth
+  users(where: UserWhere, limit: Int, offset: Int): [User]
+  loginUser(email: String!, password: String!): User
 }
 
 type Mutation {
-   createUser(data: UserInput): User
+  createUser(data: UserInput): User
 }

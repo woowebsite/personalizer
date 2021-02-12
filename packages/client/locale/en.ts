@@ -7,6 +7,13 @@ export const en = {
         createAccount: 'Create an account',
       },
     },
+    validator: {
+      required: 'Please input {name}',
+    },
+    buttons: {
+      discard: 'Discard',
+      save: 'Save',
+    },
   },
   '/admin/accounts': {
     title: 'All accounts',
@@ -32,6 +39,7 @@ export const en = {
         name: 'Name',
         description: 'Description',
         avatar: 'Avatar',
+        email: 'Email',
         role: 'Role',
       },
     },

@@ -4,12 +4,12 @@ import { Layout, Button, PageHeader } from 'antd';
 // components
 import withAdminLayout from 'layout/AdminLayout';
 import AccountTable from 'features/AccountTable';
+import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from 'definitions/user-definitions';
-import RedirectButton from '~/components/RedirectButton';
 
 const { Content } = Layout;
 

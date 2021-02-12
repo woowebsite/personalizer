@@ -1,8 +1,9 @@
-import React from 'react';
-import { Layout, PageHeader } from 'antd';
+import React, { useRef } from 'react';
+import { Layout, PageHeader, Button } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
+import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
@@ -11,18 +12,30 @@ import AccountCreateForm from '~/features/AccountCreateForm';
 const { Content } = Layout;
 
 const ManagementMembers = (props) => {
-  const { messages } = props;
-  const onFinish = () => {};
+  const { messages, t } = props;
+  const formRef: any = React.createRef();
+
+  const onSave = () => {
+    formRef.current?.onSubmit();
+  };
   return (
     <>
       <PageHeader
         className='mb-4 pl-0 pr-0'
         title={messages.title}
         onBack={() => window.history.back()}
+        extra={[
+          <RedirectButton url={'/admin/accounts'}>
+            {t('buttons.discard')}
+          </RedirectButton>,
+          <Button onClick={onSave} type='primary'>
+            {t('buttons.save')}
+          </Button>,
+        ]}
         subTitle={messages.subTitle}
       />
       <Content>
-        <AccountCreateForm onFinish={onFinish} />
+        <AccountCreateForm ref={formRef} />
       </Content>
     </>
   );

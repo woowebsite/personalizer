@@ -21,6 +21,16 @@ export const GET_USERS = gql`
   }
 `;
 
+export const CREATE_USER = gql`
+  mutation CreateUser($name: String, $image: String, $email: String) {
+    createUser(data: {name: $name, image: $image, email: $email}) {
+      name
+      image
+      email
+    }
+  }
+`;
+
 export const LOGIN = gql`
   query LoginUser($email: String!, $password: String!) {
     loginUser(email: $email, password: $password ) {
