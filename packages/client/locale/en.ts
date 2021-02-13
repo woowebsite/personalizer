@@ -14,6 +14,23 @@ export const en = {
       discard: 'Discard',
       save: 'Save',
     },
+    userTable: {
+      columns: {
+        id: 'Id',
+        name: 'Name',
+        age: 'Age',
+        createdAt: 'Created At',
+      },
+    },
+    userCreateform: {
+      label: {
+        name: 'Name',
+        description: 'Description',
+        avatar: 'Avatar',
+        email: 'Email',
+        role: 'Role',
+      },
+    },
   },
   '/admin/accounts': {
     title: 'All accounts',
@@ -23,26 +40,9 @@ export const en = {
         create: 'Add account',
       },
     },
-    tableAccount: {
-      columns: {
-        id: 'Id',
-        name: 'Name',
-        age: 'Age',
-        createdAt: 'Created At',
-      },
-    },
   },
   '/admin/accounts/new': {
     title: 'Create an account',
-    formCreateAccount: {
-      label: {
-        name: 'Name',
-        description: 'Description',
-        avatar: 'Avatar',
-        email: 'Email',
-        role: 'Role',
-      },
-    },
   },
   '/user/albums': {
     title: 'All album',

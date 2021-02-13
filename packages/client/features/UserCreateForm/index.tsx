@@ -14,7 +14,7 @@ import * as queries from 'definitions/album-definitions';
 import * as userQueries from 'definitions/user-definitions';
 
 interface IProps {}
-const AccountCreateForm = forwardRef<any, IProps>((props, ref) => {
+const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
   const { data } = withQuery(userQueries.GET_USERS);
   const [form] = Form.useForm();
@@ -54,7 +54,7 @@ const AccountCreateForm = forwardRef<any, IProps>((props, ref) => {
   return (
     <Form
       form={form}
-      id='accountCreateForm'
+      id='UserCreateForm'
       className={'shadow-sm p-3 bg-white pt-5 rounded'}
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 14 }}
@@ -67,30 +67,30 @@ const AccountCreateForm = forwardRef<any, IProps>((props, ref) => {
           {
             required: true,
             message: useTranslate('validator.required', {
-              name: 'formCreateAccount.label.name',
+              name: 'userCreateform.label.name',
             }),
           },
         ]}
-        label={t('formCreateAccount.label.name')}
+        label={t('userCreateform.label.name')}
       >
         <Input />
       </Form.Item>
 
-      <Form.Item name='email' label={t('formCreateAccount.label.email')}>
+      <Form.Item name='email' label={t('userCreateform.label.email')}>
         <Input type='email' />
       </Form.Item>
 
-      <Form.Item name='role' label={t('formCreateAccount.label.role')}>
+      <Form.Item name='role' label={t('userCreateform.label.role')}>
         {data && data.users && (
           <ComboBox dataSource={data.users} valueField='id' textField='name' />
         )}
       </Form.Item>
 
-      <Form.Item name='avatar' label={t('formCreateAccount.label.avatar')}>
+      <Form.Item name='avatar' label={t('userCreateform.label.avatar')}>
         <UploadImage setImageUrl={onSetImageUrl} />
       </Form.Item>
     </Form>
   );
 });
 
-export default AccountCreateForm;
+export default UserCreateForm;

@@ -3,18 +3,15 @@ import { Layout, Button, PageHeader } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
-import AccountTable from 'features/AccountTable';
+import UserTable from 'features/UserTable';
 import RedirectButton from '~/components/RedirectButton';
 
 // graphql
-import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from 'definitions/user-definitions';
 
 const { Content } = Layout;
 
 const ManagementMembers = (props) => {
-  const { data, refetch } = withQuery(queries.GET_USERS);
   const { messages, t } = props;
   return (
     <>
@@ -31,7 +28,7 @@ const ManagementMembers = (props) => {
         ]}
       />
       <Content>
-        {data && data.users && <AccountTable dataSource={data.users} />}
+        <UserTable />
       </Content>
     </>
   );

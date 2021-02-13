@@ -2,36 +2,41 @@ import { ColumnsType } from 'antd/lib/table';
 import { Table } from 'antd';
 import { useIntl } from 'react-intl';
 
+import * as queries from 'definitions/user-definitions';
+import withQuery from 'shared/withQuery';
+
 export const columns: ColumnsType<any> = [
   {
-    title: 'tableAccount.columns.id',
+    title: 'userTable.columns.id',
     dataIndex: 'id',
     key: 'id',
     align: 'center',
   },
   {
-    title: 'tableAccount.columns.name',
+    title: 'userTable.columns.name',
     dataIndex: 'name',
     key: 'name',
     width: '25%',
     render: (text) => <span className='text-capitalize'>{text}</span>,
   },
   {
-    title: 'tableAccount.columns.age',
+    title: 'userTable.columns.age',
     dataIndex: 'age',
     key: 'age',
     width: '25%',
     render: (text) => <span className='text-capitalize'>{text}</span>,
   },
   {
-    title: 'tableAccount.columns.createdAt',
+    title: 'userTable.columns.createdAt',
     dataIndex: 'createdAt',
     key: 'createdAt',
     render: (text) => <span className='text-uppercase'>{text}</span>,
   },
 ];
 
-const AccountTable = (props) => {
+const UserTable = (props) => {
+  const { data, refetch } = withQuery(queries.GET_USERS);
+
   const { formatMessage } = useIntl();
   const t = (id) => formatMessage({ id });
 
@@ -39,7 +44,9 @@ const AccountTable = (props) => {
     c.title = t(c.title);
     return c;
   });
-  return <Table columns={columns} dataSource={props.dataSource} />;
+  return (
+    <>{data && data.users && <Table columns={columns} dataSource={data.users} />}</>
+  );
 };
 
-export default AccountTable;
+export default UserTable;

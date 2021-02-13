@@ -7,11 +7,11 @@ import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
-import AccountCreateForm from '~/features/AccountCreateForm';
+import UserCreateForm from '~/features/UserCreateForm';
 
 const { Content } = Layout;
 
-const ManagementMembers = (props) => {
+const ManagementUsers = (props) => {
   const { messages, t } = props;
   const formRef: any = React.createRef();
 
@@ -35,10 +35,10 @@ const ManagementMembers = (props) => {
         subTitle={messages.subTitle}
       />
       <Content>
-        <AccountCreateForm ref={formRef} />
+        <UserCreateForm ref={formRef} />
       </Content>
     </>
   );
 };
 
-export default withAdminLayout(withApollo({ ssr: false })(ManagementMembers));
+export default withAdminLayout(withApollo({ ssr: false })(ManagementUsers));
