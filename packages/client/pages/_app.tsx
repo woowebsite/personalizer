@@ -13,8 +13,7 @@ import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/antd-custom.scss';
 
-// locale
-import * as locales from '../locale';
+
 
 class MyApp extends React.Component<AppProps & AppInitialProps> {
   static async getInitialProps({ Component, ctx }) {
@@ -37,7 +36,7 @@ class MyApp extends React.Component<AppProps & AppInitialProps> {
         <IntlProvider
           locale={locale}
           defaultLocale={defaultLocale}
-          messages={messages(locale, locales, pathname)}
+          messages={messages(locale, pathname)}
         >
           <Component {...pageProps} />
         </IntlProvider>

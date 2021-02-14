@@ -1,37 +1,57 @@
 export const en = {
   common: {
     menu: {
-      accounts: {
-        title: 'Accounts',
-        allAccounts: 'All accounts',
-        createAccount: 'Create an account',
+      users: {
+        title: 'Users',
+        allUsers: 'All users',
+        createUser: 'Create an user',
       },
     },
-  },
-  '/admin/accounts': {
-    title: 'All accounts',
-    subTitle: 'This is subtitle',
-    pageHeader: {
-      buttons: {
-        create: 'Add account'
-      }
+    validator: {
+      required: 'Please input {name}',
     },
-    tableAccount: {
+    buttons: {
+      discard: 'Discard',
+      save: 'Save',
+    },
+    userTable: {
       columns: {
         id: 'Id',
         name: 'Name',
         age: 'Age',
+        image: 'Image',
         createdAt: 'Created At',
       },
     },
+    userCreateform: {
+      label: {
+        name: 'Name',
+        description: 'Description',
+        image: 'Image',
+        email: 'Email',
+        role: 'Role',
+      },
+    },
+  },
+  '/admin/users': {
+    title: 'All users',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add user',
+      },
+    },
+  },
+  '/admin/users/new': {
+    title: 'Create an user',
   },
   '/user/albums': {
     title: 'All album',
     subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
-        create: 'Add album'
-      }
+        create: 'Add album',
+      },
     },
     tableAccount: {
       columns: {
@@ -41,5 +61,5 @@ export const en = {
         createdAt: 'Created At',
       },
     },
-  }
+  },
 };

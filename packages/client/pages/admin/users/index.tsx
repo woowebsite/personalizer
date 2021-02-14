@@ -3,34 +3,32 @@ import { Layout, Button, PageHeader } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
+import UserTable from 'features/UserTable';
+import RedirectButton from '~/components/RedirectButton';
 
 // graphql
-import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from '../queries';
 
 const { Content } = Layout;
 
 const ManagementMembers = (props) => {
-  const { data, refetch } = withQuery(queries.GET_USERS);
   const { messages, t } = props;
   return (
     <>
       <PageHeader
         className='mb-4 pl-0 pr-0'
         title={messages.title}
-        onBack={history.back}
         subTitle={messages.subTitle}
         extra={[
           <Button key='3'>Operation</Button>,
           <Button key='2'>Operation</Button>,
-          <Button key='1' type='primary'>
+          <RedirectButton type='primary' url={'/admin/accounts/new'}>
             {t('pageHeader.buttons.create')}
-          </Button>,
+          </RedirectButton>,
         ]}
       />
       <Content>
-        dsdsd
+        <UserTable />
       </Content>
     </>
   );

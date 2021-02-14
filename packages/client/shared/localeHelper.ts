@@ -1,3 +1,6 @@
+// locale
+import * as locales from '../locale';
+
 /**
  * this function use to flatten the object nested in language json file
  * @param nestedMessages
@@ -23,11 +26,13 @@ export function flattenMessages(nestedMessages, prefix = '') {
 /**
  * Combine common and locale by pathname
  */
-export default function messages(locale, locales, pathname) {
-  const localePage = locales[locale];
-  const messagesPage = flattenMessages(localePage[pathname]);
-  const messagesCommon = flattenMessages(localePage['common']);
-  const messages = { ...messagesPage, ...messagesCommon };
+export default function messages(locale, pathname) {
+  const languagePackage = locales[locale];
 
+  const messagesPage = languagePackage[pathname]
+    ? flattenMessages(languagePackage[pathname])
+    : {};
+  const messagesCommon = flattenMessages(languagePackage['common']);
+  const messages = { ...messagesPage, ...messagesCommon };
   return messages;
 }
