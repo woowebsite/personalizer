@@ -1,21 +1,21 @@
 export default function getMenuData() {
   return [
     {
-      title: 'menu.accounts.title',
+      title: 'menu.users.title',
       key: 'dashboards',
       icon: 'fe fe-home',
       roles: ['admin'],
       count: 4,
       children: [
         {
-          title: 'menu.accounts.allAccounts',
+          title: 'menu.users.allUsers',
           key: 'dashboard',
-          url: '/admin/accounts',
+          url: '/admin/users',
         },
         {
-          title: 'menu.accounts.createAccount',
+          title: 'menu.users.createUser',
           key: 'dashboardBeta',
-          url: '/admin/accounts/create',
+          url: '/admin/users/create',
         },
       ],
     },
