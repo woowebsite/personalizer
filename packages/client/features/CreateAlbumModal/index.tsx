@@ -34,8 +34,8 @@ const CreateAlbumModal = (props) => {
   const onSetImageUrl = (file) => {
     const promise = uploadImage({ variables: { file } });
     promise.then((resp) => {
-      const imgUrl = resp.data.uploadFile.path;
-      form.setFieldsValue({ image: imgUrl });
+      const { filename } = resp.data.uploadFile;
+      form.setFieldsValue({ image: filename });
     });
   };
 

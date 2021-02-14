@@ -46,8 +46,8 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
   const onSetImageUrl = (file) => {
     const promise = uploadImage({ variables: { file } });
     promise.then((resp) => {
-      const imgUrl = resp.data.uploadFile.path;
-      form.setFieldsValue({ image: imgUrl });
+      const { filename } = resp.data.uploadFile;
+      form.setFieldsValue({ image: filename });
     });
   };
 
@@ -86,7 +86,7 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
         )}
       </Form.Item>
 
-      <Form.Item name='avatar' label={t('userCreateform.label.avatar')}>
+      <Form.Item name='image' label={t('userCreateform.label.image')}>
         <UploadImage setImageUrl={onSetImageUrl} />
       </Form.Item>
     </Form>

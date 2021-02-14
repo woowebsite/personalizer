@@ -20,11 +20,11 @@ export const columns: ColumnsType<any> = [
     render: (text) => <span className='text-capitalize'>{text}</span>,
   },
   {
-    title: 'userTable.columns.age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'userTable.columns.image',
+    dataIndex: 'image',
+    key: 'image',
     width: '25%',
-    render: (text) => <span className='text-capitalize'>{text}</span>,
+    render: (image) => <img className="img-fluid img-thumbnail w-50" alt={image} src={'/images/' + image} />,
   },
   {
     title: 'userTable.columns.createdAt',
@@ -45,7 +45,11 @@ const UserTable = (props) => {
     return c;
   });
   return (
-    <>{data && data.users && <Table columns={columns} dataSource={data.users} />}</>
+    <>
+      {data && data.users && (
+        <Table columns={columns} dataSource={data.users} />
+      )}
+    </>
   );
 };
 

@@ -19,6 +19,7 @@ export const en = {
         id: 'Id',
         name: 'Name',
         age: 'Age',
+        image: 'Image',
         createdAt: 'Created At',
       },
     },
@@ -26,7 +27,7 @@ export const en = {
       label: {
         name: 'Name',
         description: 'Description',
-        avatar: 'Avatar',
+        image: 'Image',
         email: 'Email',
         role: 'Role',
       },
