@@ -1,10 +1,10 @@
 export const en = {
   common: {
     menu: {
-      accounts: {
-        title: 'Accounts',
-        allAccounts: 'All accounts',
-        createAccount: 'Create an account',
+      users: {
+        title: 'Users',
+        allUsers: 'All users',
+        createUser: 'Create an user',
       },
     },
     validator: {
@@ -33,17 +33,17 @@ export const en = {
       },
     },
   },
-  '/admin/accounts': {
-    title: 'All accounts',
+  '/admin/users': {
+    title: 'All users',
     subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
-        create: 'Add account',
+        create: 'Add user',
       },
     },
   },
-  '/admin/accounts/new': {
-    title: 'Create an account',
+  '/admin/users/new': {
+    title: 'Create an user',
   },
   '/user/albums': {
     title: 'All album',
