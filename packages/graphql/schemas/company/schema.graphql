@@ -1,7 +1,6 @@
 type Company {
   id: Int
   name: String
-  users: [User]
 }
 
 input CompanyWhere {

@@ -9,6 +9,6 @@ export class Company extends Model<Company> {
   @Column
   name: string;
 
-  @HasMany(() => User)
-  users: User[];
+  // @HasMany(() => User)
+  // users: User[];
 }
