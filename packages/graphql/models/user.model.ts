@@ -33,7 +33,7 @@ export class User extends Model<User> {
 
   @ForeignKey(() => Role)
   @Column
-  roleId: number;
+  role_id: number;
 
   @BelongsTo(() => Role)
   role: Role;

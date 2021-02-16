@@ -4,6 +4,9 @@ import { useQuery } from '@apollo/react-hooks';
 import createApolloClient from 'apollo/apolloClient';
 import { LOGIN } from 'definitions/user-definitions';
 
+import Adapters from 'next-auth/adapters';
+import Models from 'models';
+
 const options = {
   site: process.env.VERCEL_URL,
   providers: [
@@ -69,6 +72,11 @@ const options = {
       clientSecret: process.env.TWITTER_SECRET,
     }),
   ],
+  adapter: Adapters.TypeORM.Adapter(process.env.DATABASE_URL, {
+    models: {
+      User: Models.User,
+    },
+  }),
   // The 'database' option should be a connection string or TypeORM
   // configuration object https://typeorm.io/#/connection-options
   //
