@@ -20,6 +20,7 @@ export const en = {
         name: 'Name',
         age: 'Age',
         image: 'Image',
+        email: 'Email',
         createdAt: 'Created At',
       },
     },

@@ -23,7 +23,7 @@ input UserInput {
 }
 
 type Query {
-  getUser: User @isAuth
+  user(id: Int): User 
   users(where: UserWhere, limit: Int, offset: Int): [User]
   loginUser(email: String!, password: String!): User
 }

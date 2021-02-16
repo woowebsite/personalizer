@@ -7,6 +7,7 @@ import EmptyImage from 'components/EmptyImage';
 
 import * as queries from 'definitions/user-definitions';
 import withQuery from 'shared/withQuery';
+import Link from 'next/link';
 
 export const columns: ColumnsType<any> = [
   {
@@ -21,6 +22,15 @@ export const columns: ColumnsType<any> = [
     key: 'name',
     width: '25%',
     render: (text) => <span className='text-capitalize'>{text}</span>,
+  },
+  {
+    title: 'userTable.columns.email',
+    dataIndex: 'email',
+    key: 'email',
+    width: '25%',
+    render: (text, record) => {
+      return <Link href={`/admin/users/${record.id}`}>{text}</Link>;
+    },
   },
   {
     title: 'userTable.columns.image',
@@ -62,7 +72,7 @@ const UserTable = (props) => {
   return (
     <>
       {data && data.users && (
-        <Table columns={columns} dataSource={data.users} />
+        <Table rowKey='id' columns={columns} dataSource={data.users} />
       )}
     </>
   );
