@@ -1,4 +1,5 @@
 import Adapters from 'next-auth/adapters';
+import RoleType from './RoleType';
 
 // Extend the built-in models using class inheritance
 export default class User extends Adapters.TypeORM.Models.User.model {
@@ -18,6 +19,7 @@ export const UserSchema = {
     roleId: {
       type: 'int',
       nullable: true,
+      default: RoleType.Developer
     },
   },
 };
