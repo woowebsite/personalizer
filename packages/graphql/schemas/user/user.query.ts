@@ -18,8 +18,8 @@ export const Query = {
       findOptions.order = [['name', 'ASC']];
       return findOptions;
     },
-    after: (user) => {
-      return user;
+    after: (users) => {
+      return users;
     },
   }),
   loginUser: resolver(User, {

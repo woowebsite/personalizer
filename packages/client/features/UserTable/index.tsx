@@ -28,7 +28,7 @@ export const columns: ColumnsType<any> = [
   },
   {
     title: 'userTable.columns.createdAt',
-    dataIndex: 'createdAt',
+    dataIndex: 'created_at',
     key: 'createdAt',
     render: (text) => <span className='text-uppercase'>{text}</span>,
   },

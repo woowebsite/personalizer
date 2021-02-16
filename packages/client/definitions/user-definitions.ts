@@ -17,6 +17,7 @@ export const GET_USERS = gql`
       name
       image
       email
+      created_at
     }
   }
 `;

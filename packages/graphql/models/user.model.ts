@@ -1,6 +1,7 @@
 import { Table, Column, Model } from 'sequelize-typescript';
 
-@Table({ timestamps: true })
+// timestamps = false : Use from NextAuth are created_at, updated_at
+@Table({ timestamps: false })
 export class User extends Model<User> {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
@@ -16,4 +17,10 @@ export class User extends Model<User> {
 
   @Column
   image: string;
+  
+  @Column
+  created_at: Date;
+  
+  @Column
+  updated_at: Date;
 }
