@@ -6,6 +6,7 @@ type User {
   name: String
   image: String
   created_at: Date
+  updated_at: Date
   email_verified: Date
 }
 

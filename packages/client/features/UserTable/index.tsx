@@ -1,6 +1,9 @@
 import { ColumnsType } from 'antd/lib/table';
-import { Table } from 'antd';
+import { Table, Image } from 'antd';
 import { useIntl } from 'react-intl';
+
+// components
+import EmptyImage from 'components/EmptyImage';
 
 import * as queries from 'definitions/user-definitions';
 import withQuery from 'shared/withQuery';
@@ -24,7 +27,19 @@ export const columns: ColumnsType<any> = [
     dataIndex: 'image',
     key: 'image',
     width: '25%',
-    render: (image) => <img className="img-fluid img-thumbnail w-50" alt={image} src={'/images/' + image} />,
+    render: (image) => {
+      if (image) {
+        return (
+          <Image
+            className='img-fluid img-thumbnail w-50'
+            alt={image}
+            src={'/images/' + image}
+          />
+        );
+      }
+
+      return <EmptyImage width={50} height={50} />;
+    },
   },
   {
     title: 'userTable.columns.createdAt',
