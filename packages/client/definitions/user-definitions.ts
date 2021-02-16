@@ -38,7 +38,7 @@ export const LOGIN = gql`
       id
       name
       email
-      company {
+      role {
         id
         name
       }

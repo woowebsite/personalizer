@@ -1,0 +1,22 @@
+type Role {
+  id: Int
+  name: String
+  users: [User]
+}
+
+input RoleWhere {
+  id: Int
+}
+
+input RoleInput {
+  name: String
+}
+
+type Query {
+  getRole(where: RoleWhere, limit: Int, offset: Int): Role
+  getRoles: [Role]
+}
+
+type Mutation {
+  createRole(data: RoleInput): Role
+}

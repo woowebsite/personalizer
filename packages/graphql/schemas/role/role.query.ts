@@ -1,10 +1,10 @@
 import { resolver } from 'graphql-sequelize';
-import { Company } from '../../models';
+import { Role } from '../../models';
 import to from 'await-to-js';
 
 export const Query = {
-    getCompany: resolver(Company),
-    getCompanies: resolver(Company, {
+    getRole: resolver(Role),
+    getRoles: resolver(Role, {
         before: async (findOptions, { where, limit, offset }) => {
             return findOptions
         },

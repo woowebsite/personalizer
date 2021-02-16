@@ -99,14 +99,14 @@ const options = {
   },
   callbacks: {
     session: async (session, user, sessionToken) => {
-      if (user && user.company) {
-        session.user.companyId = user.company.id;
+      if (user && user.role) {
+        session.user.roleId = user.role.id;
       }
       return Promise.resolve(session);
     },
     // jwt: async (token, user, account, profile, isNewUser) => {
-    //   if (user && user.company) {
-    //     token.companyId = user.company.id;
+    //   if (user && user.role) {
+    //     token.roleId = user.role.id;
     //   }
     //   return Promise.resolve(token);
     // },

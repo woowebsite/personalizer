@@ -5,7 +5,7 @@ import BasicLayout from '../layout/BasicLayout';
 
 const QUERY = gql`
   query {
-    getCompany(where: { id: 1 }) {
+    getRole(where: { id: 1 }) {
       id
       name
     }
