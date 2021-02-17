@@ -27,6 +27,9 @@ export function flattenMessages(nestedMessages, prefix = '') {
  * Combine common and locale by pathname
  */
 export default function messages(locale, pathname) {
+  console.log('locale', locale);
+  console.log('pathname', pathname);
+  
   const languagePackage = locales[locale];
 
   const messagesPage = languagePackage[pathname]

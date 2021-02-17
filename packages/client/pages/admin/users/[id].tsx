@@ -1,24 +1,60 @@
 import React from 'react';
-import BasicLayout from 'layout/BasicLayout';
-import PAGINGATION from 'constants/paginations';
+import { Layout, Button, PageHeader } from 'antd';
+
+// components
+import withAdminLayout from 'layout/AdminLayout';
+import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from 'definitions/user-definitions';
 import { useRouter } from 'next/dist/client/router';
+import UserCreateForm from '~/features/UserCreateForm';
 
-const UserDetail = () => {
+const { Content } = Layout;
+
+const UserDetail = (props) => {
+  // DECLARE
+  const { messages, t } = props;
   const router = useRouter();
   const { id } = router.query;
 
-  const { data, refetch } = withQuery(queries.GET_USER, {
+  const { data, loading, refetch } = withQuery(queries.GET_USER, {
     variables: {
       id: parseInt(id.toString()),
     },
   });
 
-  return <BasicLayout>{data && JSON.stringify(data)}</BasicLayout>;
+  if (loading) {
+    return null;
+  }
+
+  const title = data.user.name || 'Unknow name';
+
+  // RENDER
+  return (
+    <>
+      <PageHeader
+        className='mb-4 pl-0 pr-0'
+        title={title}
+        subTitle={messages.subTitle}
+        extra={[
+          <Button key='3'>Duplicate</Button>,
+          <Button key='2'>Operation</Button>,
+          <RedirectButton type='primary' url={'/admin/accounts/new'}>
+            {t('pageHeader.buttons.save')}
+          </RedirectButton>,
+        ]}
+      />
+      <Content>
+        <UserCreateForm>
+          
+        </UserCreateForm>
+
+      </Content>
+    </>
+  );
 };
 
-export default withApollo({ ssr: false })(UserDetail);
+export default withAdminLayout(withApollo({ ssr: false })(UserDetail));

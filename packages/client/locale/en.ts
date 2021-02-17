@@ -46,6 +46,14 @@ export const en = {
   '/admin/users/new': {
     title: 'Create an user',
   },
+  '/admin/users/[id]': {
+    title: 'Update user',
+    pageHeader: {
+      buttons: {
+        save: 'Save',
+      },
+    },
+  },
   '/user/albums': {
     title: 'All album',
     subTitle: 'This is subtitle',
