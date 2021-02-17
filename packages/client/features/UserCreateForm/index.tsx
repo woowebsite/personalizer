@@ -4,11 +4,11 @@ import { useIntl } from 'react-intl';
 
 // components
 import UploadImage from 'components/personalizers/Upload';
-import ComboBox from 'components/ComboBox';
+import ComboBox from '~/features/ComboBox';
+import ComboBoxType from '~/features/ComboBox/ComboBoxType';
 import useTranslate from 'hooks/useTranslate';
 
 // graphql
-import withQuery from 'shared/withQuery';
 import withMutation from 'shared/withMutation';
 import * as queries from 'definitions/album-definitions';
 import * as userQueries from 'definitions/user-definitions';
@@ -16,7 +16,6 @@ import * as userQueries from 'definitions/user-definitions';
 interface IProps {}
 const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
-  const { data } = withQuery(userQueries.GET_USERS);
   const [form] = Form.useForm();
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
@@ -81,9 +80,7 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item name='role' label={t('userCreateform.label.role')}>
-        {data && data.users && (
-          <ComboBox dataSource={data.users} valueField='id' textField='name' />
-        )}
+          <ComboBox type={ComboBoxType.User} valueField='id' textField='email' />
       </Form.Item>
 
       <Form.Item name='image' label={t('userCreateform.label.image')}>
