@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as userQueries from 'definitions/user-definitions';
 
 import ComboBoxType from './ComboBoxType';

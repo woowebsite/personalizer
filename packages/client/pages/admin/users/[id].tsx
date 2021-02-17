@@ -48,10 +48,7 @@ const UserDetail = (props) => {
         ]}
       />
       <Content>
-        <UserCreateForm>
-          
-        </UserCreateForm>
-
+        <UserCreateForm id={parseInt(id.toString())} />
       </Content>
     </>
   );

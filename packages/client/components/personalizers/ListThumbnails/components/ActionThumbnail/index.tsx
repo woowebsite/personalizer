@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import styles from './style.module.scss';

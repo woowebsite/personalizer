@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import UploadImage from 'components/personalizers/Upload';
 

@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import { useIntl } from 'react-intl';
 
@@ -10,22 +10,43 @@ import useTranslate from 'hooks/useTranslate';
 
 // graphql
 import withMutation from 'shared/withMutation';
+import withQuery from 'shared/withQuery';
 import * as queries from 'definitions/album-definitions';
 import * as userQueries from 'definitions/user-definitions';
 
-interface IProps {}
+interface IProps {
+  id: number;
+}
 const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
-  const [form] = Form.useForm();
   const { formatMessage } = useIntl();
+  const { id: userId } = props;
   const t = (id, values?) => formatMessage({ id }, values);
   const [uploadImage] = withMutation(queries.UPLOAD_FILE);
   const [createUser] = withMutation(userQueries.CREATE_USER);
+  const [form] = Form.useForm();
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
     onSubmit,
   }));
+
+  if (props.id) {
+    const { data, loading, refetch } = withQuery(userQueries.GET_USER, {
+      variables: {
+        id: userId,
+      },
+    });
+
+    if (!loading) {
+      form.setFields([
+        { name: ['role'], value: 1 },
+        { name: ['name'], value: data.user.name },
+        { name: ['email'], value: data.user.email },
+        { name: ['image'], value: data.user.image },
+      ]);
+    }
+  }
 
   const onSubmit = () => {
     form
@@ -80,7 +101,7 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item name='role' label={t('userCreateform.label.role')}>
-          <ComboBox type={ComboBoxType.User} valueField='id' textField='email' />
+        <ComboBox type={ComboBoxType.User} valueField='id' textField='email' />
       </Form.Item>
 
       <Form.Item name='image' label={t('userCreateform.label.image')}>
