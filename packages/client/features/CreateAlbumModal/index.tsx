@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Form, Input, Button, Upload, message } from 'antd';
-import UploadImage from 'components/personalizers/Upload';
+import UploadImage from '~/components/UploadImage';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
