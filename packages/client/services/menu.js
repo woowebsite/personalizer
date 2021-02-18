@@ -15,7 +15,7 @@ export default function getMenuData() {
         {
           title: 'menu.users.createUser',
           key: 'dashboardBeta',
-          url: '/admin/users/create',
+          url: '/admin/users/new',
         },
       ],
     },
