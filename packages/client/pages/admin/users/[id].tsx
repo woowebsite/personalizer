@@ -17,6 +17,7 @@ const { Content } = Layout;
 const UserDetail = (props) => {
   // DECLARE
   const { messages, t } = props;
+  const formRef: any = React.createRef();
   const router = useRouter();
   const { id } = router.query;
 
@@ -30,9 +31,14 @@ const UserDetail = (props) => {
     return null;
   }
 
-  const title = data.user.name || 'Unknow name';
+  // EVENTS
+  const onSave = () => {
+    formRef.current?.onSubmit();
+  };
 
+  
   // RENDER
+  const title = data.user.name || 'Unknow name';
   return (
     <>
       <PageHeader
@@ -42,13 +48,13 @@ const UserDetail = (props) => {
         extra={[
           <Button key='3'>Duplicate</Button>,
           <Button key='2'>Operation</Button>,
-          <RedirectButton type='primary' url={'/admin/accounts/new'}>
-            {t('pageHeader.buttons.save')}
-          </RedirectButton>,
+          <Button onClick={onSave} type='primary'>
+            {t('buttons.save')}
+          </Button>,
         ]}
       />
       <Content>
-        <UserForm id={parseInt(id.toString())} />
+        <UserForm ref={formRef} id={parseInt(id.toString())} />
       </Content>
     </>
   );

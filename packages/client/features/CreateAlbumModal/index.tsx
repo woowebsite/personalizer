@@ -9,7 +9,6 @@ import * as queries from 'definitions/album-definitions';
 
 const CreateAlbumModal = (props) => {
   const [form] = Form.useForm();
-  const [uploadImage] = withMutation(queries.UPLOAD_FILE);
   const [createAlbum] = withMutation(queries.CREATE_ALBUM);
 
   const onSubmit = () => {
@@ -31,12 +30,8 @@ const CreateAlbumModal = (props) => {
     e.stopPropagation();
   };
 
-  const onSetImageUrl = (file) => {
-    const promise = uploadImage({ variables: { file } });
-    promise.then((resp) => {
-      const { filename } = resp.data.uploadFile;
-      form.setFieldsValue({ image: filename });
-    });
+  const onSetImageUrl = (filename) => {
+    form.setFieldsValue({ image: filename });
   };
 
   return (

@@ -11,7 +11,6 @@ import useTranslate from 'hooks/useTranslate';
 // graphql
 import withMutation from 'shared/withMutation';
 import withQuery from 'shared/withQuery';
-import * as queries from 'definitions/album-definitions';
 import * as userQueries from 'definitions/user-definitions';
 
 interface IProps {
@@ -22,7 +21,6 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
   const { formatMessage } = useIntl();
   const { id: userId } = props;
   const t = (id, values?) => formatMessage({ id }, values);
-  const [uploadImage] = withMutation(queries.UPLOAD_FILE);
   const [createUser] = withMutation(userQueries.CREATE_USER);
   const [form] = Form.useForm();
 
@@ -63,12 +61,8 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
       });
   };
 
-  const onSetImageUrl = (file) => {
-    const promise = uploadImage({ variables: { file } });
-    promise.then((resp) => {
-      const { filename } = resp.data.uploadFile;
-      form.setFieldsValue({ image: filename });
-    });
+  const onSetImageUrl = (filename) => {
+    form.setFieldsValue({ image: filename });
   };
 
   return (
