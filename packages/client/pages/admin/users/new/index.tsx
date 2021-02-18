@@ -25,7 +25,7 @@ const ManagementUsers = (props) => {
         title={messages.title}
         onBack={() => window.history.back()}
         extra={[
-          <RedirectButton url={'/admin/accounts'}>
+          <RedirectButton url={'/admin/users'}>
             {t('buttons.discard')}
           </RedirectButton>,
           <Button onClick={onSave} type='primary'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import withMutation from 'shared/withMutation';
@@ -23,10 +23,19 @@ function beforeUpload(file) {
 }
 
 const UploadImage = (props) => {
+  console.log('props', props);
   // DECLARES
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [uploadImage] = withMutation(queries.UPLOAD_FILE);
+
+  // EFFECT
+  useEffect(
+    () => {
+      setImageUrl(props.value);
+    },
+    [props.value]
+  );
 
   // EVENTS
   const onSetImageUrl = (file) => {
@@ -59,6 +68,7 @@ const UploadImage = (props) => {
       <div className='ant-upload-text'>Upload</div>
     </div>
   );
+
   return (
     <Upload
       name='avatar'
@@ -69,7 +79,11 @@ const UploadImage = (props) => {
       onChange={handleChange}
     >
       {imageUrl ? (
-        <img src={imageUrl} alt='avatar' style={{ width: '100%' }} />
+        <img
+          src={'/images/' + imageUrl}
+          alt='avatar'
+          style={{ width: '100%' }}
+        />
       ) : (
         uploadButton
       )}

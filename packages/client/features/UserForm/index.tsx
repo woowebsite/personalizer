@@ -3,7 +3,7 @@ import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import { useIntl } from 'react-intl';
 
 // components
-import UploadImage from 'components/personalizers/Upload';
+import UploadImage from '~/components/UploadImage';
 import ComboBox from '~/features/ComboBox';
 import ComboBoxType from '~/features/ComboBox/ComboBoxType';
 import useTranslate from 'hooks/useTranslate';
