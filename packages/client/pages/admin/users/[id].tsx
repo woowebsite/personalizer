@@ -10,7 +10,7 @@ import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from 'definitions/user-definitions';
 import { useRouter } from 'next/dist/client/router';
-import UserCreateForm from '~/features/UserCreateForm';
+import UserForm from '~/features/UserForm';
 
 const { Content } = Layout;
 
@@ -48,7 +48,7 @@ const UserDetail = (props) => {
         ]}
       />
       <Content>
-        <UserCreateForm id={parseInt(id.toString())} />
+        <UserForm id={parseInt(id.toString())} />
       </Content>
     </>
   );

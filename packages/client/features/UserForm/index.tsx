@@ -15,7 +15,7 @@ import * as queries from 'definitions/album-definitions';
 import * as userQueries from 'definitions/user-definitions';
 
 interface IProps {
-  id: number;
+  id?: number;
 }
 const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
@@ -40,10 +40,10 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
 
     if (!loading) {
       form.setFields([
-        { name: ['role'], value: 1 },
-        { name: ['name'], value: data.user.name },
-        { name: ['email'], value: data.user.email },
-        { name: ['image'], value: data.user.image },
+        { name: 'role', value: data.user.role },
+        { name: 'name', value: data.user.name },
+        { name: 'email', value: data.user.email },
+        { name: 'image', value: data.user.image },
       ]);
     }
   }
