@@ -1,5 +1,6 @@
 import React from 'react';
 import * as userQueries from 'definitions/user-definitions';
+import * as roleQueries from 'definitions/role-definitions';
 
 import ComboBoxType from './ComboBoxType';
 import { Select } from 'antd';
@@ -11,25 +12,25 @@ const { Option } = Select;
 const ComboBox = ({ type, textField, valueField, ...others }) => {
   // defines
   let dataSource = [];
-  let query = userQueries.GET_USERS;
+  let query;
   switch (type) {
     case ComboBoxType.User:
       query = userQueries.GET_USERS;
       break;
-    case ComboBoxType.Product:
-      query = userQueries.GET_USERS;
+    case ComboBoxType.Role:
+      query = roleQueries.GET_ROLES;
       break;
   }
 
   // query
-  const { data, loading } = withQuery(userQueries.GET_USERS);
+  const { data, loading } = withQuery(query);
   if (loading) return <Select {...others} />;
   switch (type) {
     case ComboBoxType.User:
       dataSource = data.users;
       break;
-    case ComboBoxType.Product:
-      dataSource = data.products;
+    case ComboBoxType.Role:
+      dataSource = data.roles;
       break;
   }
 

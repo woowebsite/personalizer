@@ -40,7 +40,7 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
 
     if (!loading) {
       form.setFields([
-        { name: 'role', value: data.user.role },
+        { name: 'role', value: data.user.role.id },
         { name: 'name', value: data.user.name },
         { name: 'email', value: data.user.email },
         { name: 'image', value: data.user.image },
@@ -101,7 +101,7 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item name='role' label={t('userCreateform.label.role')}>
-        <ComboBox type={ComboBoxType.User} valueField='id' textField='email' />
+        <ComboBox type={ComboBoxType.Role} valueField='id' textField='name' />
       </Form.Item>
 
       <Form.Item name='image' label={t('userCreateform.label.image')}>

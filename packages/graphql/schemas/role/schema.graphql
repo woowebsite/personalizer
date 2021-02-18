@@ -13,8 +13,8 @@ input RoleInput {
 }
 
 type Query {
-  getRole(where: RoleWhere, limit: Int, offset: Int): Role
-  getRoles: [Role]
+  role(where: RoleWhere, limit: Int, offset: Int): Role
+  roles(where: RoleWhere, limit: Int, offset: Int): [Role]
 }
 
 type Mutation {

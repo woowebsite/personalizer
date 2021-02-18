@@ -1,5 +1,6 @@
 enum ComboBoxType {
   User = 1,
+  Role,
   Product,
 }
 
