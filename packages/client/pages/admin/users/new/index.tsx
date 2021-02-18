@@ -7,7 +7,7 @@ import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
-import UserCreateForm from '~/features/UserCreateForm';
+import UserForm from '~/features/UserForm';
 
 const { Content } = Layout;
 
@@ -35,7 +35,7 @@ const ManagementUsers = (props) => {
         subTitle={messages.subTitle}
       />
       <Content>
-        <UserCreateForm ref={formRef} />
+        <UserForm ref={formRef} />
       </Content>
     </>
   );

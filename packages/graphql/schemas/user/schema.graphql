@@ -1,13 +1,18 @@
+scalar Date
+
 type User {
   id: Int
   email: String
   name: String
-  company: Company
   image: String
+  created_at: Date
+  updated_at: Date
+  email_verified: Date
+  role: Role
 }
 
 input UserWhere {
-  companyId: Int
+  roleId: Int
 }
 
 input UserInput {
@@ -18,7 +23,7 @@ input UserInput {
 }
 
 type Query {
-  getUser: User @isAuth
+  user(id: Int): User 
   users(where: UserWhere, limit: Int, offset: Int): [User]
   loginUser(email: String!, password: String!): User
 }

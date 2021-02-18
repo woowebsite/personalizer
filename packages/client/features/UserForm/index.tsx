@@ -1,32 +1,50 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import { useIntl } from 'react-intl';
 
 // components
 import UploadImage from 'components/personalizers/Upload';
-import ComboBox from 'components/ComboBox';
+import ComboBox from '~/features/ComboBox';
+import ComboBoxType from '~/features/ComboBox/ComboBoxType';
 import useTranslate from 'hooks/useTranslate';
 
 // graphql
-import withQuery from 'shared/withQuery';
 import withMutation from 'shared/withMutation';
-import * as queries from 'definitions/album-definitions';
+import withQuery from 'shared/withQuery';
 import * as userQueries from 'definitions/user-definitions';
 
-interface IProps {}
+interface IProps {
+  id?: number;
+}
 const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
-  const { data } = withQuery(userQueries.GET_USERS);
-  const [form] = Form.useForm();
   const { formatMessage } = useIntl();
+  const { id: userId } = props;
   const t = (id, values?) => formatMessage({ id }, values);
-  const [uploadImage] = withMutation(queries.UPLOAD_FILE);
   const [createUser] = withMutation(userQueries.CREATE_USER);
+  const [form] = Form.useForm();
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
     onSubmit,
   }));
+
+  if (props.id) {
+    const { data, loading, refetch } = withQuery(userQueries.GET_USER, {
+      variables: {
+        id: userId,
+      },
+    });
+
+    if (!loading) {
+      form.setFields([
+        { name: 'role', value: data.user.role.id },
+        { name: 'name', value: data.user.name },
+        { name: 'email', value: data.user.email },
+        { name: 'image', value: data.user.image },
+      ]);
+    }
+  }
 
   const onSubmit = () => {
     form
@@ -43,12 +61,8 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
       });
   };
 
-  const onSetImageUrl = (file) => {
-    const promise = uploadImage({ variables: { file } });
-    promise.then((resp) => {
-      const { filename } = resp.data.uploadFile;
-      form.setFieldsValue({ image: filename });
-    });
+  const onSetImageUrl = (filename) => {
+    form.setFieldsValue({ image: filename });
   };
 
   return (
@@ -81,9 +95,7 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item name='role' label={t('userCreateform.label.role')}>
-        {data && data.users && (
-          <ComboBox dataSource={data.users} valueField='id' textField='name' />
-        )}
+        <ComboBox type={ComboBoxType.Role} valueField='id' textField='name' />
       </Form.Item>
 
       <Form.Item name='image' label={t('userCreateform.label.image')}>

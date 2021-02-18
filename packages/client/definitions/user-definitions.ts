@@ -17,6 +17,22 @@ export const GET_USERS = gql`
       name
       image
       email
+      created_at
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query GetUser($id: Int) {
+    user(id: $id) {
+      id
+      name
+      image
+      email
+      role{
+        id
+      }
+      created_at
     }
   }
 `;
@@ -37,7 +53,7 @@ export const LOGIN = gql`
       id
       name
       email
-      company {
+      role {
         id
         name
       }
