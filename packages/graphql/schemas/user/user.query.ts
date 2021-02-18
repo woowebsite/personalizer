@@ -3,13 +3,10 @@ import { User } from '../../models';
 import to from 'await-to-js';
 
 export const Query = {
-  getUser: resolver(User, {
-    before: async (findOptions, {}, { user }) => {
-      findOptions.where = { id: user.id };
+  user: resolver(User, {
+    before: async (findOptions, { id }, context) => {
+      findOptions.where = { id };
       return findOptions;
-    },
-    after: (user) => {
-      return user;
     },
   }),
   users: resolver(User, {
@@ -18,8 +15,8 @@ export const Query = {
       findOptions.order = [['name', 'ASC']];
       return findOptions;
     },
-    after: (user) => {
-      return user;
+    after: (users) => {
+      return users;
     },
   }),
   loginUser: resolver(User, {

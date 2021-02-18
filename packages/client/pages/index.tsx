@@ -5,7 +5,7 @@ import BasicLayout from '../layout/BasicLayout';
 
 const QUERY = gql`
   query {
-    getCompany(where: { id: 1 }) {
+    getRole(where: { id: 1 }) {
       id
       name
     }
@@ -21,7 +21,7 @@ const NOSSR = () => {
   return (
     <BasicLayout>
       <h1>This should be rendered on client side</h1>
-      <pre>Data: {data.getCompany.name}</pre>
+      <pre>Data: {data.getRole.name}</pre>
       <button onClick={() => refetch()}>Refetch</button>
     </BasicLayout>
   );

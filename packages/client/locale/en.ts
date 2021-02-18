@@ -20,6 +20,7 @@ export const en = {
         name: 'Name',
         age: 'Age',
         image: 'Image',
+        email: 'Email',
         createdAt: 'Created At',
       },
     },
@@ -44,6 +45,14 @@ export const en = {
   },
   '/admin/users/new': {
     title: 'Create an user',
+  },
+  '/admin/users/[id]': {
+    title: 'Update user',
+    pageHeader: {
+      buttons: {
+        save: 'Save',
+      },
+    },
   },
   '/user/albums': {
     title: 'All album',
