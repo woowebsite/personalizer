@@ -2521,6 +2521,16 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
+"@types/next-auth@3.1.24":
+  version "3.1.24"
+  resolved "https://registry.yarnpkg.com/@types/next-auth/-/next-auth-3.1.24.tgz#81193f48ec9f2dabc9b389bea5e7edef88d1d78c"
+  integrity sha512-uJ04mdWwKP3G101hHK6jsPB19bw4saGzixyhXoW6D3lHZ3yCT7sPqwEiMQsBLbTHx70jFlqZpWCDxD87Lk8mXA==
+  dependencies:
+    "@types/node" "*"
+    "@types/react" "*"
+    jose "^1.28.0"
+    typeorm "^0.2.24"
+
 "@types/node-fetch@2.5.7":
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.7.tgz#20a2afffa882ab04d44ca786449a276f9f6bbf3c"
@@ -9452,6 +9462,13 @@ jose@^1.27.2:
   version "1.27.3"
   resolved "https://registry.yarnpkg.com/jose/-/jose-1.27.3.tgz#deae0fa36f6e7b6f980c52a97bac40042c6ad721"
   integrity sha512-FhusFX3l64gDomt7pg+Q8HBkaDFaQjSkEJqTPhFVcUSHMw84JZdThoJF2xnVkL1NJ5yOHqhVp6ib00PiybHarg==
+  dependencies:
+    "@panva/asn1.js" "^1.0.0"
+
+jose@^1.28.0:
+  version "1.28.0"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-1.28.0.tgz#0803f8c71f43cd293a9d931c555c30531f5ca5dc"
+  integrity sha512-JmfDRzt/HSj8ipd9TsDtEHoLUnLYavG+7e8F6s1mx2jfVSfXOTaFQsJUydbjJpTnTDHP1+yKL9Ke7ktS/a0Eiw==
   dependencies:
     "@panva/asn1.js" "^1.0.0"
 

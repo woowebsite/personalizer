@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import { useQuery } from '@apollo/react-hooks';
 import createApolloClient from 'apollo/apolloClient';
-import { LOGIN } from 'definitions/user-definitions';
+import { LOGIN, GET_USER } from 'definitions/user-definitions';
 
 import Adapters from 'next-auth/adapters';
 import Models from 'models';
@@ -107,8 +107,15 @@ const options = {
   },
   callbacks: {
     session: async (session, user, sessionToken) => {
-      if (user && user.role) {
-        session.user.roleId = user.role.id;
+      const client = createApolloClient({}, undefined);
+      const userResp: any = await client.query({
+        query: GET_USER,
+        variables: { email: user.email },
+      });
+
+      if (userResp.data) {
+        const loggedUser = userResp.data.user;
+        session.user.roleId = loggedUser.role.id;
       }
       return Promise.resolve(session);
     },

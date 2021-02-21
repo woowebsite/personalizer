@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const GET_REST_USERS = gql`
   query ApiUsers {
-    users @rest(type: "User", path: "/users",  method: "GET") {
+    users @rest(type: "User", path: "/users", method: "GET") {
       id
       name
       avatar
@@ -29,7 +29,7 @@ export const GET_USER = gql`
       name
       image
       email
-      role{
+      role {
         id
       }
       created_at
@@ -39,7 +39,7 @@ export const GET_USER = gql`
 
 export const CREATE_USER = gql`
   mutation CreateUser($name: String, $image: String, $email: String) {
-    createUser(data: {name: $name, image: $image, email: $email}) {
+    createUser(data: { name: $name, image: $image, email: $email }) {
       name
       image
       email
@@ -49,7 +49,7 @@ export const CREATE_USER = gql`
 
 export const LOGIN = gql`
   query LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password ) {
+    loginUser(email: $email, password: $password) {
       id
       name
       email

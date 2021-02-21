@@ -16,6 +16,9 @@ export class User extends Model<User> {
   @Column
   name: string;
 
+  @Column
+  password: string;
+
   @Column({ unique: true })
   email: string;
 
@@ -37,4 +40,53 @@ export class User extends Model<User> {
 
   @BelongsTo(() => Role)
   role: Role;
+
+  // @BeforeSave
+  // static async hashPassword(user: User) {
+  //   let err;
+  //   if (user.changed('password')) {
+  //     let salt, hash;
+  //     [err, salt] = await to(bcrypt.genSalt(10));
+  //     if (err) {
+  //       throw err;
+  //     }
+
+  //     [err, hash] = await to(bcrypt.hash(user.password, salt));
+  //     if (err) {
+  //       throw err;
+  //     }
+  //     user.password = hash;
+  //   }
+  // }
+
+  // async comparePassword(pw) {
+  //   let err, pass;
+  //   if (!this.password) {
+  //     throw new Error('Does not have password');
+  //   }
+
+  //   [err, pass] = await to(bcrypt.compare(pw, this.password));
+  //   if (err) {
+  //     throw err;
+  //   }
+
+  //   if (!pass) {
+  //     throw 'Invalid password';
+  //   }
+
+  //   return this;
+  // }
+
+  // getJwt() {
+  //   return (
+  //     'Bearer ' +
+  //     jsonwebtoken.sign(
+  //       {
+  //         id: this.id,
+  //       },
+  //       ENV.JWT_ENCRYPTION,
+  //       { expiresIn: ENV.JWT_EXPIRATION }
+  //     )
+  //   );
+  // }
 }
