@@ -3,7 +3,6 @@ import { Layout, Button, PageHeader } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
-import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import withQuery from 'shared/withQuery';

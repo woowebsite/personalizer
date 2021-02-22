@@ -39,6 +39,7 @@
     "d3-dsv": "^1.2.0",
     "d3-format": "^1.4.3",
     "d3-time-format": "^2.2.3",
+    "draft-js": "0.11.7",
     "graphql": "^15.0.0",
     "graphql-anywhere": "^4.2.7",
     "history": "^4.10.1",
