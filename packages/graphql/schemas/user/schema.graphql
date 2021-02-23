@@ -24,7 +24,7 @@ input UserInput {
 
 type Query {
   user(id: Int): User 
-  users(where: UserWhere, limit: Int, offset: Int): [User]
+  users(where: UserWhere, limit: Int, offset: Int): [User] @isSysAdmin
   loginUser(email: String!, password: String!): User
 }
 
