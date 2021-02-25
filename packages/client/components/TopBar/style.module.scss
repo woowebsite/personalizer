@@ -1,0 +1,17 @@
+.topbar {
+  padding: 0 rem(16);
+  min-height: 64px;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  .pageTitle {
+    margin: 0;
+    font-size: 18px;
+    color: #3b3f5c;
+    font-weight: 600;
+    letter-spacing: 0px;
+  }
+}

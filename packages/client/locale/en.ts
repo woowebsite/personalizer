@@ -1,5 +1,10 @@
 export const en = {
   common: {
+    topBar: {
+      profileMenu: {
+        logout: 'Log out',
+      },
+    },
     menu: {
       users: {
         title: 'Users',

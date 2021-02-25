@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Button, PageHeader } from 'antd';
+import { Layout, Button, PageHeader, Row, Col } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
@@ -53,7 +53,14 @@ const UserDetail = (props) => {
         ]}
       />
       <Content>
-        <UserForm ref={formRef} id={parseInt(id.toString())} />
+        <Row gutter={24}>
+          <Col span="16">
+            <UserForm ref={formRef} id={parseInt(id.toString())} />
+          </Col>
+          <Col span="8">
+          Facebook, Google
+          </Col>
+        </Row>
       </Content>
     </>
   );
