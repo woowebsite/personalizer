@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Button, PageHeader, Row, Col } from 'antd';
+import { signIn } from 'next-auth/client';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
@@ -35,6 +36,10 @@ const UserDetail = (props) => {
     formRef.current?.onSubmit();
   };
 
+  const onLinkToFacebook = () => {
+    signIn('facebook');
+  }
+
   
   // RENDER
   const title = data.user.name || 'Unknow name';
@@ -58,7 +63,7 @@ const UserDetail = (props) => {
             <UserForm ref={formRef} id={parseInt(id.toString())} />
           </Col>
           <Col span="8">
-          Facebook, Google
+              <Button onClick={onLinkToFacebook}>Link to facebook</Button>
           </Col>
         </Row>
       </Content>

@@ -24,7 +24,7 @@ export const en = {
         id: 'Id',
         name: 'Name',
         age: 'Age',
-        image: 'Image',
+        image: 'Avatar',
         email: 'Email',
         createdAt: 'Created At',
       },

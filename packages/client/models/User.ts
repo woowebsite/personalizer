@@ -3,11 +3,10 @@ import RoleType from './RoleType';
 
 // Extend the built-in models using class inheritance
 export default class User extends Adapters.TypeORM.Models.User.model {
-  constructor(name, email, image, emailVerified, roleId) {
+  constructor(name, email, image, emailVerified, roleId, password) {
     super(name, email, image, emailVerified);
-    if (roleId) {
-      this.roleId = roleId;
-    }
+    if (roleId) this.roleId = roleId;
+    if (password) this.password = password;
   }
 }
 
@@ -19,7 +18,11 @@ export const UserSchema = {
     roleId: {
       type: 'int',
       nullable: true,
-      default: RoleType.Developer
+      default: RoleType.Developer,
+    },
+    password: {
+      type: 'varchar',
+      nullable: true,
     },
   },
 };

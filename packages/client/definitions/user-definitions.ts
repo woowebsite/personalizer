@@ -23,8 +23,8 @@ export const GET_USERS = gql`
 `;
 
 export const GET_USER = gql`
-  query GetUser($id: Int) {
-    user(id: $id) {
+  query GetUser($where: UserWhere) {
+    user(where: $where) {
       id
       name
       image

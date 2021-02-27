@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import withMutation from 'shared/withMutation';
+import Image from 'components/Image';
 import * as queries from 'definitions/album-definitions';
 
 function getBase64(img, callback) {
@@ -24,6 +25,7 @@ function beforeUpload(file) {
 
 const UploadImage = (props) => {
   console.log('props', props);
+
   // DECLARES
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
@@ -78,15 +80,7 @@ const UploadImage = (props) => {
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
-      {imageUrl ? (
-        <img
-          src={'/images/' + imageUrl}
-          alt='avatar'
-          style={{ width: '100%' }}
-        />
-      ) : (
-        uploadButton
-      )}
+      {imageUrl ? <img width="100%" src={imageUrl} /> : uploadButton}
     </Upload>
   );
 };

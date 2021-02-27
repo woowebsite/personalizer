@@ -12,6 +12,8 @@ type User {
 }
 
 input UserWhere {
+  id: Int
+  name: String
   roleId: Int
 }
 
@@ -23,7 +25,7 @@ input UserInput {
 }
 
 type Query {
-  user(id: Int): User 
+  user(where: UserWhere): User
   users(where: UserWhere, limit: Int, offset: Int): [User] @isSysAdmin
   loginUser(email: String!, password: String!): User
 }
