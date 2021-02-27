@@ -18,6 +18,9 @@ export const en = {
     buttons: {
       discard: 'Discard',
       save: 'Save',
+      delete: 'Delete',
+      edit: 'Edit',
+      cancel: 'Cancel',
     },
     userTable: {
       columns: {
@@ -38,6 +41,16 @@ export const en = {
         role: 'Role',
       },
     },
+    changePasswordForm: {
+      label: {
+        current: 'Current Password',
+        password: 'New Password',
+        confirmPassword: 'Confirm Password',
+      },
+    },
+    socialConnect: {
+      connectToFacebook: 'Connect to Facebook'
+    }
   },
   '/admin/users': {
     title: 'All users',
@@ -57,6 +70,12 @@ export const en = {
       buttons: {
         save: 'Save',
       },
+    },
+    changePasswordBox: {
+      title: 'Change password',
+    },
+    socialBox: {
+      title: 'Social',
     },
   },
   '/user/albums': {

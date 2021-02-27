@@ -3,9 +3,6 @@ import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import { useIntl } from 'react-intl';
 
 // components
-import UploadImage from '~/components/UploadImage';
-import ComboBox from '~/features/ComboBox';
-import ComboBoxType from '~/features/ComboBox/ComboBoxType';
 import useTranslate from 'hooks/useTranslate';
 
 // graphql
@@ -16,11 +13,11 @@ import * as userQueries from 'definitions/user-definitions';
 interface IProps {
   id?: number;
 }
-const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
+const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
-  const { id: userId } = props;
   const t = (id, values?) => formatMessage({ id }, values);
+  const { id: userId } = props;
   const [createUser] = withMutation(userQueries.CREATE_USER);
   const [form] = Form.useForm();
 
@@ -61,47 +58,63 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
       });
   };
 
-  const onSetImageUrl = (filename) => {
-    form.setFieldsValue({ image: filename });
-  };
 
+  // RENDER
   return (
     <Form
-      id='UserCreateForm'
       form={form}
+      id='ChangePasswordForm'
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       onFinish={onSubmit}
       layout='vertical'
     >
       <Form.Item
-        name='name'
+        name='current'
         rules={[
           {
             required: true,
             message: useTranslate('validator.required', {
-              name: 'userCreateform.label.name',
+              name: 'changePasswordForm.label.current',
             }),
           },
         ]}
-        label={t('userCreateform.label.name')}
+        label={t('changePasswordForm.label.current')}
       >
-        <Input />
+        <Input.Password />
       </Form.Item>
 
-      <Form.Item name='email' label={t('userCreateform.label.email')}>
-        <Input type='email' />
+      <Form.Item
+        name='password'
+        rules={[
+          {
+            required: true,
+            message: useTranslate('validator.required', {
+              name: 'changePasswordForm.label.password',
+            }),
+          },
+        ]}
+        label={t('changePasswordForm.label.password')}
+      >
+        <Input.Password />
       </Form.Item>
 
-      <Form.Item name='role' label={t('userCreateform.label.role')}>
-        <ComboBox type={ComboBoxType.Role} valueField='id' textField='name' />
-      </Form.Item>
-
-      <Form.Item name='image' label={t('userCreateform.label.image')}>
-        <UploadImage setImageUrl={onSetImageUrl} />
+      <Form.Item
+        name='confirmPassword'
+        rules={[
+          {
+            required: true,
+            message: useTranslate('validator.required', {
+              name: 'changePasswordForm.label.confirmPassword',
+            }),
+          },
+        ]}
+        label={t('changePasswordForm.label.confirmPassword')}
+      >
+        <Input.Password />
       </Form.Item>
     </Form>
   );
 });
 
-export default UserCreateForm;
+export default ChangePasswordForm;
