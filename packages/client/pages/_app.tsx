@@ -12,6 +12,7 @@ import messages from 'shared/localeHelper';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/antd-custom.scss';
+import '../assets/RichEditor.scss';
 
 
 
