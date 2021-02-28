@@ -32,6 +32,7 @@ export const GET_USER = gql`
       role {
         id
       }
+      role_id
       created_at
     }
   }
@@ -43,6 +44,17 @@ export const CREATE_USER = gql`
       name
       image
       email
+    }
+  }
+`;
+
+export const UPSERT_USER = gql`
+  mutation UpsertUser($id: Int, $name: String, $image: String, $email: String) {
+    upsertUser(data: {id: $id, name: $name, image: $image, email: $email }) {
+      name
+      image
+      email
+      role_id
     }
   }
 `;

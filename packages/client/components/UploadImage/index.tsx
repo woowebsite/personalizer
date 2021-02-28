@@ -24,8 +24,6 @@ function beforeUpload(file) {
 }
 
 const UploadImage = (props) => {
-  console.log('props', props);
-
   // DECLARES
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');

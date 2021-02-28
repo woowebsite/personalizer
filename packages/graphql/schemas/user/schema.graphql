@@ -8,6 +8,7 @@ type User {
   created_at: Date
   updated_at: Date
   email_verified: Date
+  role_id: Int
   role: Role
 }
 
@@ -18,6 +19,7 @@ input UserWhere {
 }
 
 input UserInput {
+  id: Int
   name: String
   email: String
   password: String
@@ -32,4 +34,5 @@ type Query {
 
 type Mutation {
   createUser(data: UserInput): User
+  upsertUser(data: UserInput): User
 }

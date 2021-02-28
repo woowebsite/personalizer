@@ -45,7 +45,7 @@ const SocialConenct = () => {
         />
 
         <Button onClick={onLinkToTwitter} size={'large'}>
-          {t('socialConnect.connectToFacebook')}
+          {t('socialConnect.connectToTwitter')}
         </Button>
       </Button.Group>
 
@@ -57,7 +57,7 @@ const SocialConenct = () => {
         />
 
         <Button onClick={onLinkToGoogle} size={'large'}>
-          {t('socialConnect.connectToFacebook')}
+          {t('socialConnect.connectToGoogle')}
         </Button>
       </Button.Group>
     </>

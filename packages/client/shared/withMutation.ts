@@ -11,7 +11,17 @@ import { notification } from 'antd';
 function withMutation<TData = any, TVariables = OperationVariables>(
   mutation: DocumentNode
 ): MutationTuple<TData, TVariables> {
-  const [mutate, result] = useMutation(mutation);
+  const [mutate, result] = useMutation(mutation, {
+    onCompleted: () => {
+      notification.success({
+        message: 'Notification Success',
+        description: 'Save successfully',
+        onClick: () => {
+          console.log('Notification Clicked!');
+        },
+      });
+    },
+  });
   const { data, loading, error } = result;
   // browser code
   if (typeof window !== 'undefined') {

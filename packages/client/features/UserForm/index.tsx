@@ -16,45 +16,64 @@ import * as userQueries from 'definitions/user-definitions';
 interface IProps {
   id?: number;
 }
-const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
+const UserForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
   const { id: userId } = props;
   const t = (id, values?) => formatMessage({ id }, values);
   const [createUser] = withMutation(userQueries.CREATE_USER);
+  const [upsertUser] = withMutation(userQueries.UPSERT_USER);
   const [form] = Form.useForm();
+
+  const { data, loading, refetch } = withQuery(userQueries.GET_USER, {
+    variables: {
+      id: userId,
+    },
+  });
+
+  const formSetFields = (user) => {
+    form.setFields([
+      { name: 'role', value: user.role_id },
+      { name: 'name', value: user.name },
+      { name: 'email', value: user.email },
+      { name: 'image', value: user.image },
+    ]);
+  };
+
+  // EFFECT
+  useEffect(
+    () => {
+      if (props.id) {
+        if (!loading) {
+          console.log('load detail', data.user);
+          formSetFields(data.user);
+        }
+      }
+    },
+    [props.id, loading, data]
+  );
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
     onSubmit,
   }));
 
-  if (props.id) {
-    const { data, loading, refetch } = withQuery(userQueries.GET_USER, {
-      variables: {
-        id: userId,
-      },
-    });
-
-    if (!loading) {
-      form.setFields([
-        { name: 'role', value: data.user.role.id },
-        { name: 'name', value: data.user.name },
-        { name: 'email', value: data.user.email },
-        { name: 'image', value: data.user.image },
-      ]);
-    }
-  }
-
   const onSubmit = () => {
     form
       .validateFields()
       .then((values) => {
-        console.log('values', values);
-        createUser({ variables: values }).finally(() => {
-          // callback
-          console.log('create callback');
-        });
+        if (props.id) {
+          upsertUser({
+            variables: {
+              id: props.id,
+              ...values,
+            },
+          });
+        } else {
+          createUser({ variables: values }).finally(() => {
+            formSetFields(values);
+          });
+        }
       })
       .catch((errorInfo) => {
         console.log('Error: ', errorInfo);
@@ -67,7 +86,7 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
 
   return (
     <Form
-      id='UserCreateForm'
+      id='UserForm'
       form={form}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
@@ -104,4 +123,4 @@ const UserCreateForm = forwardRef<any, IProps>((props, ref) => {
   );
 });
 
-export default UserCreateForm;
+export default UserForm;
