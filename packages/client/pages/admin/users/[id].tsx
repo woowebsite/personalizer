@@ -62,11 +62,6 @@ const UserDetail = (props) => {
             <Card className="pt-3">
               <UserForm ref={formRef} id={parseInt(id.toString())} />
             </Card>
-
-            <Card className="mt-3">
-              <Typography.Title level={5} className="mb-3">{t('changePasswordBox.title')}</Typography.Title>
-              <ChangePasswordForm ref={formRef} id={parseInt(id.toString())} />
-            </Card>
           </Col>
           <Col span="8">
             <Card>

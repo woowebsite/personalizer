@@ -2,6 +2,11 @@ import React from 'react';
 import { Button } from 'antd';
 import { signIn } from 'next-auth/client';
 import { useIntl } from 'react-intl';
+import {
+  FacebookFilled,
+  TwitterCircleFilled,
+  GooglePlusCircleFilled,
+} from '@ant-design/icons';
 
 const SocialConenct = () => {
   const { formatMessage } = useIntl();
@@ -11,11 +16,51 @@ const SocialConenct = () => {
   const onLinkToFacebook = () => {
     signIn('facebook');
   };
+  const onLinkToTwitter = () => {
+    signIn('twitter');
+  };
+  const onLinkToGoogle = () => {
+    signIn('google');
+  };
 
   return (
-    <Button onClick={onLinkToFacebook}>
-      {t('socialConnect.connectToFacebook')}
-    </Button>
+    <>
+      <Button.Group className='mb-3'>
+        <Button
+          onClick={onLinkToFacebook}
+          icon={<FacebookFilled />}
+          size={'large'}
+        />
+
+        <Button onClick={onLinkToFacebook} size={'large'}>
+          {t('socialConnect.connectToFacebook')}
+        </Button>
+      </Button.Group>
+
+      <Button.Group className='mb-3'>
+        <Button
+          onClick={onLinkToTwitter}
+          icon={<TwitterCircleFilled />}
+          size={'large'}
+        />
+
+        <Button onClick={onLinkToTwitter} size={'large'}>
+          {t('socialConnect.connectToFacebook')}
+        </Button>
+      </Button.Group>
+
+      <Button.Group>
+        <Button
+          onClick={onLinkToGoogle}
+          icon={<GooglePlusCircleFilled />}
+          size={'large'}
+        />
+
+        <Button onClick={onLinkToGoogle} size={'large'}>
+          {t('socialConnect.connectToFacebook')}
+        </Button>
+      </Button.Group>
+    </>
   );
 };
 
