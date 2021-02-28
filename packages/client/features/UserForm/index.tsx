@@ -27,7 +27,7 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
 
   const { data, loading, refetch } = withQuery(userQueries.GET_USER, {
     variables: {
-      id: userId,
+      where: { id: userId },
     },
   });
 
@@ -45,7 +45,6 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
     () => {
       if (props.id) {
         if (!loading) {
-          console.log('load detail', data.user);
           formSetFields(data.user);
         }
       }
@@ -62,18 +61,10 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
     form
       .validateFields()
       .then((values) => {
-        if (props.id) {
-          upsertUser({
-            variables: {
-              id: props.id,
-              ...values,
-            },
-          });
-        } else {
-          createUser({ variables: values }).finally(() => {
-            formSetFields(values);
-          });
-        }
+        const data = props.id ? { id: props.id, ...values } : values;
+        upsertUser({
+          variables: data,
+        });
       })
       .catch((errorInfo) => {
         console.log('Error: ', errorInfo);

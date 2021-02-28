@@ -3,6 +3,8 @@ import { Avatar as AntdAvatar } from 'antd';
 import EmptyImage from 'components/EmptyImage';
 
 const Avatar = ({ src, ...others }) => {
+  if (!src) return <EmptyImage width={50} height={50} />;
+
   let _src =
     src.startsWith('https://') || src.startsWith('http://')
       ? src
@@ -11,8 +13,6 @@ const Avatar = ({ src, ...others }) => {
   if (_src) {
     return <AntdAvatar {...others} src={_src} />;
   }
-
-  return <EmptyImage width={50} height={50} />;
 };
 
 export default Avatar;

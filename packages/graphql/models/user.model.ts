@@ -4,6 +4,7 @@ import {
   Model,
   BelongsTo,
   ForeignKey,
+  AllowNull,
 } from 'sequelize-typescript';
 import { Role } from './role.model';
 
@@ -19,6 +20,7 @@ export class User extends Model<User> {
   @Column
   password: string;
 
+  @AllowNull(false)
   @Column({ unique: true })
   email: string;
 

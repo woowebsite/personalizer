@@ -21,13 +21,8 @@ export const Mutation = {
 
   upsertUser: resolver(User, {
     before: async (findOptions, { data }) => {
-      const mdl = await User.findOne({ where: { id: data.id } });
-      mdl.name = data.name;
-      mdl.email = data.email;
-      mdl.save();
-
-      findOptions.where = { id: data.id };
-      return findOptions;
+      const [user0, created0] = await User.upsert(data, { returning: true });
+      return user0;
     },
     after: (user) => {
       user.login = true;

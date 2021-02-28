@@ -49,7 +49,7 @@ export const columns: ColumnsType<any> = [
 ];
 
 const UserTable = (props) => {
-  const { data, refetch } = withQuery(queries.GET_USERS);
+  const { data, loading, refetch } = withQuery(queries.GET_USERS);
 
   const { formatMessage } = useIntl();
   const t = (id) => formatMessage({ id });
@@ -58,11 +58,12 @@ const UserTable = (props) => {
     c.title = t(c.title);
     return c;
   });
+
+  if (loading) return <Table />;
+
   return (
     <>
-      {data && data.users && (
-        <Table rowKey='id' columns={columns} dataSource={data.users} />
-      )}
+      <Table rowKey='id' columns={columns} dataSource={data.users} />
     </>
   );
 };

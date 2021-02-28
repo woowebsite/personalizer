@@ -5,7 +5,8 @@ import to from 'await-to-js';
 export const Query = {
   user: resolver(User, {
     before: async (findOptions, { where }, context) => {
-      return User.findOne({ where });
+      findOptions.where = where;
+      return findOptions;
     },
     after: (user) => user,
   }),
