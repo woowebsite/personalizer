@@ -1,5 +1,10 @@
 export const en = {
   common: {
+    topBar: {
+      profileMenu: {
+        logout: 'Log out',
+      },
+    },
     menu: {
       users: {
         title: 'Users',
@@ -13,13 +18,16 @@ export const en = {
     buttons: {
       discard: 'Discard',
       save: 'Save',
+      delete: 'Delete',
+      edit: 'Edit',
+      cancel: 'Cancel',
     },
     userTable: {
       columns: {
         id: 'Id',
         name: 'Name',
         age: 'Age',
-        image: 'Image',
+        image: 'Avatar',
         email: 'Email',
         createdAt: 'Created At',
       },
@@ -33,6 +41,16 @@ export const en = {
         role: 'Role',
       },
     },
+    changePasswordForm: {
+      label: {
+        current: 'Current Password',
+        password: 'New Password',
+        confirmPassword: 'Confirm Password',
+      },
+    },
+    socialConnect: {
+      connectToFacebook: 'Connect to Facebook'
+    }
   },
   '/admin/users': {
     title: 'All users',
@@ -52,6 +70,12 @@ export const en = {
       buttons: {
         save: 'Save',
       },
+    },
+    changePasswordBox: {
+      title: 'Change password',
+    },
+    socialBox: {
+      title: 'Social',
     },
   },
   '/user/albums': {

@@ -1,8 +1,8 @@
 enum RoleType {
-  Developer = 1,
-  Manager,
+  SysAdmin = 1,
   Admin,
-  SysAdmin,
+  Manager,
+  Developer,
 }
 
 export default RoleType;

@@ -1,9 +1,9 @@
 import { ColumnsType } from 'antd/lib/table';
-import { Table, Image } from 'antd';
+import { Table } from 'antd';
 import { useIntl } from 'react-intl';
 
 // components
-import EmptyImage from 'components/EmptyImage';
+import Avatar from 'components/Avatar';
 
 import * as queries from 'definitions/user-definitions';
 import withQuery from 'shared/withQuery';
@@ -15,6 +15,13 @@ export const columns: ColumnsType<any> = [
     dataIndex: 'id',
     key: 'id',
     align: 'center',
+  },
+  {
+    title: 'userTable.columns.image',
+    dataIndex: 'image',
+    key: 'image',
+    width: '5%',
+    render: (image: string) => <Avatar alt={image} src={image} />,
   },
   {
     title: 'userTable.columns.name',
@@ -32,25 +39,7 @@ export const columns: ColumnsType<any> = [
       return <Link href={`/admin/users/${record.id}`}>{text}</Link>;
     },
   },
-  {
-    title: 'userTable.columns.image',
-    dataIndex: 'image',
-    key: 'image',
-    width: '25%',
-    render: (image) => {
-      if (image) {
-        return (
-          <Image
-            className='img-fluid img-thumbnail w-50'
-            alt={image}
-            src={'/images/' + image}
-          />
-        );
-      }
 
-      return <EmptyImage width={50} height={50} />;
-    },
-  },
   {
     title: 'userTable.columns.createdAt',
     dataIndex: 'created_at',
@@ -60,7 +49,7 @@ export const columns: ColumnsType<any> = [
 ];
 
 const UserTable = (props) => {
-  const { data, refetch } = withQuery(queries.GET_USERS);
+  const { data, loading, refetch } = withQuery(queries.GET_USERS);
 
   const { formatMessage } = useIntl();
   const t = (id) => formatMessage({ id });
@@ -69,11 +58,12 @@ const UserTable = (props) => {
     c.title = t(c.title);
     return c;
   });
+
+  if (loading) return <Table />;
+
   return (
     <>
-      {data && data.users && (
-        <Table rowKey='id' columns={columns} dataSource={data.users} />
-      )}
+      <Table rowKey='id' columns={columns} dataSource={data.users} />
     </>
   );
 };

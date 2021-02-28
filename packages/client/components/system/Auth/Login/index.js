@@ -17,10 +17,12 @@ const Login = (props) => {
     form
       .validateFields()
       .then((values) => {
-        signIn('credentials', {
-          email: values.email,
-          password: values.password,
-        });
+        // signIn('credentials', {
+        //   email: values.email,
+        //   password: values.password,
+        // });
+
+        signIn('email', { email: values.email });
       })
       .catch((errorInfo) => {
         console.log('Error: ', errorInfo);

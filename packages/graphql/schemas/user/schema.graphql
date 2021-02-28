@@ -8,14 +8,18 @@ type User {
   created_at: Date
   updated_at: Date
   email_verified: Date
+  role_id: Int
   role: Role
 }
 
 input UserWhere {
+  id: Int
+  name: String
   roleId: Int
 }
 
 input UserInput {
+  id: Int
   name: String
   email: String
   password: String
@@ -23,11 +27,12 @@ input UserInput {
 }
 
 type Query {
-  user(id: Int): User 
-  users(where: UserWhere, limit: Int, offset: Int): [User]
+  user(where: UserWhere): User
+  users(where: UserWhere, limit: Int, offset: Int): [User] @isSysAdmin
   loginUser(email: String!, password: String!): User
 }
 
 type Mutation {
   createUser(data: UserInput): User
+  upsertUser(data: UserInput): User
 }

@@ -40,7 +40,7 @@ const server = new ApolloServer({
       currentUser = await User.findOne({
         where: { email: session.user.email },
       })
-        .then((x) => x.dataValues)
+        .then((x) => x.get({ plain: true }))
         .catch((e) => console.log('Error: ', e));
     }
 
