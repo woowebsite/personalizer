@@ -57,6 +57,14 @@ query {
 }
 ```
 
+# Graphql generator
+Run graphql server at `http://localhoast:3001/graphql`
+Go to /packages/graphql run
+```console
+yarn generate
+```
+Note documents must start by a query
+
 # Sequelizer
 Run seed
 Go to `graphql` folder and run command line

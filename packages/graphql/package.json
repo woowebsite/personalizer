@@ -6,33 +6,45 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:migrate": "sequelize db:migrate",
-    "db:seed": "sequelize-cli db:seed:all"
+    "db:seed": "sequelize-cli db:seed:all",
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "author": "woowebsite",
   "license": "ISC",
   "dependencies": {
     "@types/bluebird": "^3.5.33",
     "@types/graphql": "^14.0.3",
-    "@types/sequelize": "^4.28.9",
     "@types/node": "^14.14.31",
+    "@types/sequelize": "^4.28.9",
     "@types/validator": "^13.1.3",
+    "apollo-server-express": "^2.17.0",
     "await-to-js": "^1.0.1",
     "bcrypt": "^5.0.1",
-    "shortid": "2.2.15",
     "dataloader-sequelize": "^2.3.1",
+    "dotenv": "^6.1.0",
     "express-jwt": "^5.3.1",
     "graphql": "^14.0.2",
     "graphql-relay": "^0.5.5",
-    "jsonwebtoken": "^8.3.0",
-    "reflect-metadata": "^0.1.13",
-    "tslint": "^5.11.0",
-    "typescript": "^4.2.2",
-    "apollo-server-express": "^2.17.0",
-    "schemaglue": "^4.0.2",
-    "mysql2": "^1.6.5",
-    "dotenv": "^6.1.0",
-    "sequelize": "^6.5.0",
     "graphql-sequelize": "^9.4.3",
-    "sequelize-typescript": "^2.1.0"
+    "jsonwebtoken": "^8.3.0",
+    "mysql2": "^1.6.5",
+    "reflect-metadata": "^0.1.13",
+    "schemaglue": "^4.0.2",
+    "sequelize": "^6.5.0",
+    "sequelize-typescript": "^2.1.0",
+    "shortid": "2.2.15",
+    "tslint": "^5.11.0",
+    "typescript": "^4.2.2"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "1.21.1",
+    "@graphql-codegen/urql-introspection": "1.0.0",
+    "@graphql-codegen/typescript-document-nodes": "1.17.9",
+    "@graphql-codegen/fragment-matcher": "2.0.1",
+    "@graphql-codegen/typescript-operations": "1.17.14",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.18.1",
+    "@graphql-codegen/typescript-react-apollo": "2.2.1",
+    "@graphql-codegen/typescript": "1.21.0",
+    "@graphql-codegen/introspection": "1.18.1"
   }
 }
