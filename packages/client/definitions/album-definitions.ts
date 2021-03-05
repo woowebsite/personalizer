@@ -1,9 +1,31 @@
 import { gql } from '@apollo/client';
+import baseService from 'definitions/base-definitions';
+
+const definitions = {
+  getAlbumsByUser: () => {
+    return gql`
+      query GetAlbum($where: AlbumWhere) {
+        album(where: $where) {
+          id
+          name
+          description
+        }
+      }
+    `;
+  },
+};
+
+const albumService = baseService({
+  name: 'Album',
+  plural: 'Albums',
+  definitions,
+});
+export default albumService;
 
 export const CREATE_ALBUM = gql`
-  mutation CreateAlbum($name: String, $description: String, $image: String) {
+  mutation CreateAlbum($album: AlbumInput) {
     createAlbum(
-      data: { name: $name, description: $description, image: $image }
+      data: $album
     ) {
       id
     }
@@ -33,7 +55,7 @@ export const GET_ALBUM = gql`
       description
     }
   }
-`
+`;
 
 export const UPLOAD_FILE = gql`
   mutation uploadFile($file: Upload!) {
@@ -44,7 +66,3 @@ export const UPLOAD_FILE = gql`
     }
   }
 `;
-
-
-
-

@@ -8,10 +8,11 @@ import Link from 'next/link';
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
 import * as queries from 'definitions/album-definitions';
+import albumService from 'definitions/album-definitions';
 
 const ManagementAlbums = ({ props }) => {
-
-  const { data, refetch } = withQuery(queries.GET_ALBUMS, {
+  const q = albumService.getAll();
+  const { data, refetch } = withQuery(q, {
     variables: {
       where: { userId: 2 },
       limit: PAGINGATION.pageSize,
