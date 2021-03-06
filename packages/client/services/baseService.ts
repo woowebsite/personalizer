@@ -46,6 +46,21 @@ function baseService(options: {
       }`;
       return withQuery(query, options);
     },
+    upsert: () => {
+      const upsert = gql`
+        mutation Upsert${name}($${name.toLowerCase()}: ${name}Input) {
+          upsert${name}(
+            data: $${name.toLowerCase()}
+          ) {
+            ${model.fields
+              .filter((field) => field.type.kind === 'SCALAR')
+              .map((field) => field.name)}
+          }
+        }
+      `;
+
+      return withMutation(upsert);
+    },
     create: () => {
       const mutation = gql`
         mutation Create${name}($${name}: ${name}Input) {
@@ -70,10 +85,9 @@ function baseService(options: {
           }
         }
       `;
-      const result = withMutation(mutation);
-      return result;
+      return withMutation(mutation);
     },
-    delete: (id) => {
+    delete: () => {
       const mutation = gql`
         mutation Delete${name}(
           $id: Int
@@ -85,8 +99,7 @@ function baseService(options: {
           }
         }
       `;
-      const [mutate] = withMutation(mutation);
-      return mutate({ variables: { id } });
+      return withMutation(mutation);
     },
   };
 

@@ -9,9 +9,7 @@ import ComboBoxType from '~/features/ComboBox/ComboBoxType';
 import useTranslate from 'hooks/useTranslate';
 
 // graphql
-import withMutation from 'shared/withMutation';
-import withQuery from 'shared/withQuery';
-import * as userQueries from 'definitions/user-definitions';
+import userService from 'services/userService';
 
 interface IProps {
   id?: number;
@@ -21,11 +19,10 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
   const { formatMessage } = useIntl();
   const { id: userId } = props;
   const t = (id, values?) => formatMessage({ id }, values);
-  const [createUser] = withMutation(userQueries.CREATE_USER);
-  const [upsertUser] = withMutation(userQueries.UPSERT_USER);
+  const [upsertUser] = userService.upsert(); //(userQueries.UPSERT_USER);
   const [form] = Form.useForm();
 
-  const { data, loading, refetch } = withQuery(userQueries.GET_USER, {
+  const { data, loading, refetch } = userService.get({
     variables: {
       where: { id: userId },
     },
@@ -63,7 +60,7 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
       .then((values) => {
         const data = props.id ? { id: props.id, ...values } : values;
         upsertUser({
-          variables: data,
+          variables: { user: data },
         });
       })
       .catch((errorInfo) => {
@@ -103,7 +100,7 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
         <Input type='email' />
       </Form.Item>
 
-      <Form.Item name='role' label={t('userCreateform.label.role')}>
+      <Form.Item name='role_id' label={t('userCreateform.label.role')}>
         <ComboBox type={ComboBoxType.Role} valueField='id' textField='name' />
       </Form.Item>
 
