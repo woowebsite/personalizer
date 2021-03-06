@@ -14,7 +14,7 @@ export const Query = {
     },
   }),
 
-  getAlbums: resolver(Album, {
+  albums: resolver(Album, {
     before: async (findOptions, { where, limit, offset }, context) => {
       // context.currentUser
       findOptions.where = where;
@@ -23,7 +23,7 @@ export const Query = {
     },
   }),
 
-  getPagination: resolver(Album, {
+  pagination: resolver(Album, {
     after: async (result, args) => {
       const total = await Album.count(args.where);
       return { total };

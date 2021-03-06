@@ -25,8 +25,8 @@ input AlbumInput {
 
 type Query {
   album(where: AlbumWhere): Album
-  getAlbums(where: AlbumWhere, limit: Int, offset: Int): [Album]
-  getPagination(where: AlbumWhere): PaginationInfo
+  albums(where: AlbumWhere, limit: Int, offset: Int): [Album]
+  pagination(where: AlbumWhere): PaginationInfo
 }
 
 type Mutation {

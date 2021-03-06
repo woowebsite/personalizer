@@ -23,12 +23,12 @@ function baseService(options: {
     getAll: (options) => {
       const query = gql`
       query GetAll${plural}($where: ${name}Where, $limit: Int, $offset: Int) {
-        get${plural}(where: $where, limit: $limit, offset: $offset) {
+        ${plural.toLowerCase()}(where: $where, limit: $limit, offset: $offset) {
           ${model.fields
             .filter((field) => field.type.kind === 'SCALAR')
             .map((field) => field.name)}
         }
-        getPagination(where: $where) {
+        pagination(where: $where) {
           total
         }
       }`;
