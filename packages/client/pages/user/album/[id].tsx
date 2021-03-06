@@ -17,13 +17,6 @@ const AlbumDetail = () => {
       where: { id: parseInt(id.toString()), userId: 2 },
     },
   });
-  // const { data, refetch } = withQuery(queries.GET_ALBUM, {
-  //   variables: {
-  //     where: { id: parseInt(id.toString()), userId: 2 },
-  //     limit: PAGINGATION.pageSize,
-  //     offset: 0,
-  //   },
-  // });
 
   return (
     <BasicLayout>
