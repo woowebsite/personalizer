@@ -7,12 +7,10 @@ import Link from 'next/link';
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from 'definitions/album-definitions';
-import albumService from 'definitions/album-definitions';
+import albumService from 'services/albumService';
 
 const ManagementAlbums = ({ props }) => {
-  const q = albumService.getAll();
-  const { data, refetch } = withQuery(q, {
+  const { data, refetch } = albumService.getAll({
     variables: {
       where: { userId: 2 },
       limit: PAGINGATION.pageSize,

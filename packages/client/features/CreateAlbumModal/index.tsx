@@ -4,13 +4,11 @@ import UploadImage from '~/components/UploadImage';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
-import withMutation from 'shared/withMutation';
-import * as queries from 'definitions/album-definitions';
-import albumService from 'definitions/album-definitions';
+import albumService from 'services/albumService';
 
 const CreateAlbumModal = (props) => {
   const [form] = Form.useForm();
-  const [createAlbum] = withMutation(albumService.create());
+  const [createAlbum] = albumService.create();
 
   const onSubmit = () => {
     form

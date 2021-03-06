@@ -1,7 +1,21 @@
 import React from 'react';
+import { gql } from '@apollo/client';
 import { withApollo } from 'apollo/apollo';
 
-import * as queries from 'definitions/album-definitions';
+export const GET_ALBUMS = gql`
+  query GetAlbums($where: AlbumWhere, $limit: Int, $offset: Int) {
+    getAlbums(where: $where, limit: $limit, offset: $offset) {
+      id
+      name
+      description
+      image
+      localName @client
+    }
+    getPagination(where: $where) {
+      total
+    }
+  }
+`;
 
 const SSR = ({ props }) => {
   console.log(props.data);
@@ -16,7 +30,7 @@ const SSR = ({ props }) => {
 SSR.getInitialProps = async ({ ctx }) => {
   const { apolloClient } = ctx;
   const result = await apolloClient.query({
-    query: queries.GET_ALBUMS,
+    query: GET_ALBUMS,
     variables: {
       where: { userId: 2 },
       limit: 4,
