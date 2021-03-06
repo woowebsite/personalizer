@@ -24,12 +24,12 @@ function baseService(options: {
       const query = gql`
       query GetAll${plural}($where: ${name}Where, $limit: Int, $offset: Int) {
         ${plural.toLowerCase()}(where: $where, limit: $limit, offset: $offset) {
-          ${model.fields
-            .filter((field) => field.type.kind === 'SCALAR')
-            .map((field) => field.name)}
-        }
-        pagination(where: $where) {
-          total
+          rows {
+            ${model.fields
+              .filter((field) => field.type.kind === 'SCALAR')
+              .map((field) => field.name)}
+          }
+          count
         }
       }`;
 
@@ -48,9 +48,9 @@ function baseService(options: {
     },
     create: () => {
       const mutation = gql`
-        mutation Create${name}($album: ${name}Input) {
+        mutation Create${name}($${name}: ${name}Input) {
           create${name}(
-            data: $album
+            data: $${name}
           ) {
             id
           }

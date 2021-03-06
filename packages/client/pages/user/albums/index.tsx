@@ -24,12 +24,12 @@ const ManagementAlbums = ({ props }) => {
       {data && (
         <ListThumbnails
           allowAddMore
-          dataSource={data.albums.map((x) => ({
+          dataSource={data.albums.rows.map((x) => ({
             url: `/user/album/${x.id}`,
             href: `/user/album/[id]`,
             ...x,
           }))}
-          dataPaging={data.pagination}
+          dataPaging={data.albums.count}
           onReload={() => refetch()}
           onPagingChange={(page) =>
             refetch({

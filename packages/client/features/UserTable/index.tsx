@@ -3,12 +3,11 @@ import { useIntl } from 'react-intl';
 
 // components
 import { columns } from './columns';
-import * as queries from 'definitions/user-definitions';
-import withQuery from 'shared/withQuery';
+import userService from 'services/userService';
 
 const UserTable = (props) => {
   // DEFINES
-  const { data, loading, refetch } = withQuery(queries.GET_USERS);
+  const { data, loading, refetch } = userService.getAll(); 
   const { formatMessage } = useIntl();
   const t = (id) => formatMessage({ id });
 
@@ -18,7 +17,7 @@ const UserTable = (props) => {
 
   return (
     <>
-      <Table rowKey='id' columns={columns(t)} dataSource={data.users} />
+      <Table rowKey='id' columns={columns(t)} dataSource={data.users.rows} />
     </>
   );
 };
