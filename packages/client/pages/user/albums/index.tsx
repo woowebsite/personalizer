@@ -7,11 +7,10 @@ import Link from 'next/link';
 // graphql
 import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from 'definitions/album-definitions';
+import albumService from 'services/albumService';
 
 const ManagementAlbums = ({ props }) => {
-
-  const { data, refetch } = withQuery(queries.GET_ALBUMS, {
+  const { data, refetch } = albumService.getAll({
     variables: {
       where: { userId: 2 },
       limit: PAGINGATION.pageSize,
@@ -25,12 +24,12 @@ const ManagementAlbums = ({ props }) => {
       {data && (
         <ListThumbnails
           allowAddMore
-          dataSource={data.getAlbums.map((x) => ({
+          dataSource={data.albums.rows.map((x) => ({
             url: `/user/album/${x.id}`,
             href: `/user/album/[id]`,
             ...x,
           }))}
-          dataPaging={data.getPagination}
+          dataPaging={data.albums.count}
           onReload={() => refetch()}
           onPagingChange={(page) =>
             refetch({

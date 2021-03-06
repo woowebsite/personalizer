@@ -1,7 +1,5 @@
-import { resolve } from "bluebird";
-import { GraphQLInt } from "graphql";
-import { resolver } from "graphql-sequelize";
-import { Album } from "../../models";
+import { resolver } from 'graphql-sequelize';
+import { Album } from '../../models';
 
 export const Query = {
   album: resolver(Album, {
@@ -14,19 +12,16 @@ export const Query = {
     },
   }),
 
-  getAlbums: resolver(Album, {
+  albums: resolver(Album, {
+    list: true,
     before: async (findOptions, { where, limit, offset }, context) => {
-      // context.currentUser
       findOptions.where = where;
-      findOptions.order = [['name', 'ASC']]
-      return findOptions
+      findOptions.order = [['name', 'ASC']];
+      return findOptions;
+    },
+    after: async (albums, args) => {
+      const total = await Album.count(args.where);
+      return { rows: albums, count: total };
     },
   }),
-
-  getPagination: resolver(Album, {
-    after: async (result, args) => {
-      const total = await Album.count(args.where);
-      return { total };
-    }
-  })
 };

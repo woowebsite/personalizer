@@ -11,13 +11,13 @@ export const Query = {
     after: (user) => user,
   }),
   users: resolver(User, {
+    list: true,
     before: async (findOptions, { where, limit, offset }, context) => {
-      findOptions.where = where;
-      findOptions.order = [['name', 'ASC']];
-      return findOptions;
+      return User.findAndCountAll({ where, limit, offset });
     },
-    after: (users) => {
-      return users;
+    after: async (users, args) => {
+      const total = await User.count(args.where);
+      return { rows: users, count: total };
     },
   }),
   loginUser: resolver(User, {

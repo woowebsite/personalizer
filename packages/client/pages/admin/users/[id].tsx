@@ -6,15 +6,13 @@ import withAdminLayout from 'layout/AdminLayout';
 import Card from 'components/Card'
 
 // graphql
-import withQuery from 'shared/withQuery';
 import { withApollo } from 'apollo/apollo';
-import * as queries from 'definitions/user-definitions';
 import { useRouter } from 'next/dist/client/router';
+import userService from 'services/userService';
 
 // inner components
 import UserForm from '~/features/UserForm';
 import SocialConenct from '~/features/SocialConnect';
-import ChangePasswordForm from '~/features/ChangePasswordForm';
 
 const { Content } = Layout;
 
@@ -25,9 +23,9 @@ const UserDetail = (props) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data, loading, refetch } = withQuery(queries.GET_USER, {
+  const { data, loading, refetch } = userService.get({
     variables: {
-      id: parseInt(id.toString()),
+      where: { id: parseInt(id.toString()) },
     },
   });
 

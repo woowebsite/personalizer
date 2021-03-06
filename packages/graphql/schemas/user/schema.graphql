@@ -21,14 +21,19 @@ input UserWhere {
 input UserInput {
   id: Int
   name: String
-  email: String
-  password: String
   image: String
+  email: String
+  role_id: Int
+}
+
+type UsersPaged {
+  rows: [User]
+  count: Int
 }
 
 type Query {
   user(where: UserWhere): User
-  users(where: UserWhere, limit: Int, offset: Int): [User] @isSysAdmin
+  users(where: UserWhere, limit: Int, offset: Int): UsersPaged @isSysAdmin
   loginUser(email: String!, password: String!): User
 }
 
