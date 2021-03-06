@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import withMutation from 'shared/withMutation';
-import Image from 'components/Image';
-import * as queries from 'definitions/album-definitions';
+import albumService from 'services/albumService'
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -27,7 +25,7 @@ const UploadImage = (props) => {
   // DECLARES
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  const [uploadImage] = withMutation(queries.UPLOAD_FILE);
+  const [uploadImage] = albumService.uploadImage()
 
   // EFFECT
   useEffect(

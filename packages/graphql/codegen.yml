@@ -1,0 +1,16 @@
+overwrite: true
+schema: "http://localhost:3001/graphql"
+# documents: "schemas/album/album-definitions.graphql"    # documents must be a query GetAlbum(...)
+generates:
+  ./generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+      # - "typescript-graphql-files-modules"
+      # - "typescript-document-nodes"
+      # - "fragment-matcher"
+      # - "urql-introspection"
+  ./generated/graphql.schema.json:
+    plugins:
+      - "introspection"

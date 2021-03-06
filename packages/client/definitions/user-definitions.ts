@@ -11,8 +11,8 @@ export const GET_REST_USERS = gql`
   }
 `;
 export const GET_USERS = gql`
-  query GetUsers {
-    users {
+  query GetAllUsers($where: UserWhere) {
+    users(where: $where) {
       id
       name
       image
@@ -50,7 +50,7 @@ export const CREATE_USER = gql`
 
 export const UPSERT_USER = gql`
   mutation UpsertUser($id: Int, $name: String, $image: String, $email: String) {
-    upsertUser(data: {id: $id, name: $name, image: $image, email: $email }) {
+    upsertUser(data: { id: $id, name: $name, image: $image, email: $email }) {
       name
       image
       email
