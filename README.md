@@ -16,7 +16,7 @@ yarn dev
 
 Goto `http://localhost:3001/graphql` to generate database structure
 
-Run seed
+## Run seed
 Go to `graphql` folder and run command line
 ```console
 npx sequelize-cli db:seed --seed 20200822034804-demo-role.js
