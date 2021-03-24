@@ -1,17 +1,15 @@
 import { Form, Input, Button } from "antd";
 
-const QuickForm = ({ values, save }) => {
+const QuickForm = ({ values, onSave }) => {
   // DEFINE
   const [form] = Form.useForm();
 
   // EVENTS
-  const onSubmit = () => {
+  const handleFinish = () => {
     form
       .validateFields()
       .then((values) => {
-        save({
-          variables: { user: values },
-        });
+        onSave(values);
       })
       .catch((errorInfo) => {
         console.log("Error: ", errorInfo);
@@ -23,7 +21,7 @@ const QuickForm = ({ values, save }) => {
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 8 }}
       initialValues={values}
-      onFinish={onSubmit}
+      onFinish={handleFinish}
       name="basic"
       form={form}
       labelAlign="left"
