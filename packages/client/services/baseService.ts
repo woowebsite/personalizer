@@ -20,6 +20,11 @@ function baseService(options: {
   const model = getModel(name);
 
   const baseQuery = {
+    /**
+     * Get all items includes paging, filter
+     * @param options { where: {name: 'abc'}, limit: 1, offset: 2 }
+     * @returns 
+     */
     getAll: (options) => {
       const query = gql`
       query GetAll${plural}($where: ${name}Where, $limit: Int, $offset: Int) {

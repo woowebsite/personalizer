@@ -2,12 +2,14 @@ import React from "react";
 import { Table, Space, Menu, Dropdown, Button } from "antd";
 import { useIntl } from "react-intl";
 
-import TableQuickEdit from "components/TableQuickEdit";
-
 // components
+import TableQuickEdit from "components/TableQuickEdit";
+import TableFilter from "components/TableFilter";
+import QuickForm from "./QuickForm";
+import FilterForm from "./FilterForm";
+
 import { columns } from "./columns";
 import userService from "services/userService";
-import QuickForm from "./QuickForm";
 
 const UserTable = (props) => {
   // DEFINES
@@ -24,21 +26,30 @@ const UserTable = (props) => {
       variables: { user: values },
     });
   };
+
+  const handleFilter = (values) => {
+    refetch({ where: values });
+  };
+
   // RENDER
   if (loading) return <Table />;
   if (result.loading) userTableRef.current.collapseAll();
 
+  const filterForm = () => <FilterForm values={{}} onFilter={handleFilter} />;
+
+  const userTable = () => (
+    <TableQuickEdit
+      ref={userTableRef}
+      rowKey="id"
+      quickForm={(record) => <QuickForm values={record} onSave={handleSave} />}
+      columns={columns(t)}
+      dataSource={data && data.users.rows}
+    />
+  );
+
   return (
     <>
-      <TableQuickEdit
-        ref={userTableRef}
-        rowKey="id"
-        quickForm={(record) => (
-          <QuickForm values={record} onSave={handleSave} />
-        )}
-        columns={columns(t)}
-        dataSource={data.users.rows}
-      />
+      <TableFilter filterFormRender={filterForm()} tableRender={userTable()} />
     </>
   );
 };
