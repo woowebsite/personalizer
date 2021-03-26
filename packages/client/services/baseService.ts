@@ -20,6 +20,11 @@ function baseService(options: {
   const model = getModel(name);
 
   const baseQuery = {
+    /**
+     * Get all items includes paging, filter
+     * @param options { where: {name: 'abc'}, limit: 1, offset: 2 }
+     * @returns 
+     */
     getAll: (options) => {
       const query = gql`
       query GetAll${plural}($where: ${name}Where, $limit: Int, $offset: Int) {
@@ -46,7 +51,7 @@ function baseService(options: {
       }`;
       return withQuery(query, options);
     },
-    upsert: () => {
+    upsert: (options) => {
       const upsert = gql`
         mutation Upsert${name}($${name.toLowerCase()}: ${name}Input) {
           upsert${name}(
@@ -59,7 +64,7 @@ function baseService(options: {
         }
       `;
 
-      return withMutation(upsert);
+      return withMutation(upsert, options);
     },
     create: () => {
       const mutation = gql`

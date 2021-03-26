@@ -58,9 +58,9 @@ export const columns = (t): ColumnsType<any> => {
       render: (text) => <span className='text-uppercase'>{text}</span>,
     },
     {
-      title: t('Action'),
+      title: '',
       key: 'action',
-      sorter: true,
+      sorter: false,
       render: () => (
         <Space size='middle'>
           <a>Delete</a>

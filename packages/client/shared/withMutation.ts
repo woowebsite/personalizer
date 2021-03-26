@@ -8,19 +8,23 @@ import { DocumentNode } from 'graphql';
 import NProgress from 'nprogress';
 import { notification } from 'antd';
 
+const onCompletedDefault = () => {
+  notification.success({
+    message: 'Notification Success',
+    description: 'Save successfully',
+    onClick: () => {
+      console.log('Notification Clicked!');
+    },
+  });
+};
+
 function withMutation<TData = any, TVariables = OperationVariables>(
-  mutation: DocumentNode
+  mutation: DocumentNode,
+  options?: MutationHookOptions
 ): MutationTuple<TData, TVariables> {
   const [mutate, result] = useMutation(mutation, {
-    onCompleted: () => {
-      notification.success({
-        message: 'Notification Success',
-        description: 'Save successfully',
-        onClick: () => {
-          console.log('Notification Clicked!');
-        },
-      });
-    },
+    ...options,
+    onCompleted: (options && options.onCompleted) || onCompletedDefault,
   });
   const { data, loading, error } = result;
   // browser code
