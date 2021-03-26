@@ -12,24 +12,28 @@ import userService from 'services/userService';
 
 const UserTable = (props) => {
   // DEFINES
-  const [upsertUser, result] = userService.upsert(); //(userQueries.UPSERT_USER);
+  const tableRef = React.useRef(null);
   const { formatMessage } = useIntl();
   const t = (id) => formatMessage({ id });
-
-  // EVENTS
-  const handleSave = (values) => {
-    upsertUser({
-      variables: { user: values },
-    });
-  };
 
   // RENDER
   const renderFilter = (props) => <FilterForm {...props} />;
   const renderTable = (props) => (
     <TableQuickEdit
       {...props}
+      ref={tableRef}
       rowKey='id'
-      quickForm={(record) => <QuickForm values={record} onSave={handleSave} />}
+      mutation={userService.upsert}
+      quickForm={(record, mutate) => (
+        <QuickForm
+          values={record}
+          onSave={(values) =>
+            mutate({
+              variables: { user: values },
+            })
+          }
+        />
+      )}
       columns={columns(t)}
     />
   );

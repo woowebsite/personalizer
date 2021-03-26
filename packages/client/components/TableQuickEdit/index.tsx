@@ -3,15 +3,18 @@ import React, {
   useImperativeHandle,
   useEffect,
   useState,
-} from "react";
-import { useIntl } from "react-intl";
-import { Table as AntdTable, TableProps } from "antd";
+} from 'react';
+import { useIntl } from 'react-intl';
+import { notification, Table as AntdTable, TableProps } from 'antd';
+import { FetchResult, MutationTuple, OperationVariables } from '@apollo/client';
 
 export declare type QuickForm<RecordType> = (
-  record: RecordType
+  record: RecordType,
+  mutate: any
 ) => React.ReactNode;
 interface TableQuickEditProps<RecordType> extends TableProps<RecordType> {
   quickForm: QuickForm<RecordType>;
+  mutation: (options?: any) => MutationTuple<any, OperationVariables>;
 }
 
 const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
@@ -33,6 +36,22 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
       setExpandedRowKeys(expanedRows);
     };
 
+    const onSaveCompleted = () => {
+      collapseAll();
+      notification.success({
+        message: 'Notification Success',
+        description: 'Save successfully',
+        onClick: () => {
+          console.log('Notification Clicked!');
+        },
+      });
+    };
+
+    // GRAPHQL
+    const [mutate, result] = props.mutation({
+      onCompleted: onSaveCompleted,
+    });
+
     // RENDER
     return (
       <AntdTable
@@ -47,12 +66,12 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
                 e.stopPropagation();
               }}
             >
-              {formatMessage({ id: "tableQuickEdit.btnQuickEdit" })}
+              {formatMessage({ id: 'tableQuickEdit.btnQuickEdit' })}
             </a>
           ),
           expandIconColumnIndex: columns.length - 1,
           expandedRowRender: (record, index, intent, expanded) =>
-            quickForm(record),
+            quickForm(record, mutate),
         }}
         {...others}
       >

@@ -1,4 +1,4 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button } from 'antd';
 
 const FilterForm = ({ values, onFilter }) => {
   // DEFINE
@@ -9,14 +9,13 @@ const FilterForm = ({ values, onFilter }) => {
     form
       .validateFields()
       .then((values) => {
-        const queries = {
-          ...values,
-          name: values ? `%${values.name}%` : "",
-        };
+        let queries = values;
+        if (values.name || !!!values.name)
+          queries.name = `%${values.name}%`;
         onFilter(queries);
       })
       .catch((errorInfo) => {
-        console.log("Error: ", errorInfo);
+        console.log('Error: ', errorInfo);
       });
   };
 
@@ -25,22 +24,22 @@ const FilterForm = ({ values, onFilter }) => {
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={values}
-      layout="inline"
+      layout='inline'
       onFinish={handleFinish}
-      name="basic"
+      name='basic'
       form={form}
-      labelAlign="left"
+      labelAlign='left'
     >
-      <Form.Item label="Name" name="name">
+      <Form.Item label='Name' name='name'>
         <Input />
       </Form.Item>
 
-      <Form.Item label="Email" name="email">
+      <Form.Item label='Email' name='email'>
         <Input />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type='primary' htmlType='submit'>
           Filter
         </Button>
       </Form.Item>

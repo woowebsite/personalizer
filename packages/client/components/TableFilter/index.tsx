@@ -10,9 +10,9 @@ export declare type FilterForm<RecordType> = (
 ) => React.ReactNode;
 
 interface TableFilterProps<RecordType> extends TableProps<RecordType> {
-  filterRender:  (any) => React.ReactNode;
+  filterRender: (any) => React.ReactNode;
   tableRender: React.FunctionComponent<TableProps<RecordType>>;
-  query: (any?) => QueryResult<any, OperationVariables>
+  query: (any?) => QueryResult<any, OperationVariables>;
 }
 
 const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
@@ -28,7 +28,9 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
 
   // HANDLERS
   const handleFilter = (values) => {
-    refetch({ where: values });
+    const hasValue = Object.values(values).some((x) => x !== undefined);
+    if (hasValue) refetch({ where: values });
+    else refetch();
   };
 
   // RENDER

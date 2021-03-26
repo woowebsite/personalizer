@@ -51,7 +51,7 @@ function baseService(options: {
       }`;
       return withQuery(query, options);
     },
-    upsert: () => {
+    upsert: (options) => {
       const upsert = gql`
         mutation Upsert${name}($${name.toLowerCase()}: ${name}Input) {
           upsert${name}(
@@ -64,7 +64,7 @@ function baseService(options: {
         }
       `;
 
-      return withMutation(upsert);
+      return withMutation(upsert, options);
     },
     create: () => {
       const mutation = gql`
