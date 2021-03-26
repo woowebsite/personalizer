@@ -1,4 +1,4 @@
-## Getting started
+# Getting started
 Set up Apollo client with Nextjs and Apollo server GraphQL into single Express
 
 ## Usage
@@ -13,8 +13,22 @@ yarn install
 yarn dev
 ```
 
-open `http://localhost:3001`
 
+Goto `http://localhost:3001/graphql` to generate database structure
+
+## Run seed
+Go to `graphql` folder and run command line
+```console
+npx sequelize-cli db:seed --seed 20200822034804-demo-role.js
+npx sequelize-cli db:seed --seed 20200124071616-demo-users.js
+```
+
+Goto `http://localhost:3001/api/auth/signin` input Email to signin
+
+Open `http://localhost:3001` to Enjoy!
+
+# System Administrator
+Goto `http://localhost:3001/admin/users` to manage users
 
 # SQL Sequelizer
 Auto sync database
@@ -65,10 +79,3 @@ yarn generate
 ```
 Note documents must start by a query
 
-# Sequelizer
-Run seed
-Go to `graphql` folder and run command line
-```console
-npx sequelize-cli db:seed --seed 20200822034804-demo-role.js
-npx sequelize-cli db:seed --seed 20200124071616-demo-users.js
-```

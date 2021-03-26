@@ -41,6 +41,9 @@ export const en = {
         role: 'Role',
       },
     },
+    tableQuickEdit: {
+      btnQuickEdit: 'QuickEdit'
+    },
     changePasswordForm: {
       label: {
         current: 'Current Password',

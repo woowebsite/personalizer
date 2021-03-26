@@ -1,6 +1,7 @@
-import { resolver } from 'graphql-sequelize';
-import { User } from '../../models';
-import to from 'await-to-js';
+import { resolver } from "graphql-sequelize";
+import { Op } from "sequelize";
+import { User } from "../../models";
+import to from "await-to-js";
 
 export const Query = {
   user: resolver(User, {
@@ -13,7 +14,17 @@ export const Query = {
   users: resolver(User, {
     list: true,
     before: async (findOptions, { where, limit, offset }, context) => {
-      return User.findAndCountAll({ where, limit, offset });
+      const conditions = where
+        ? {
+            ...where,
+            name: {
+              [Op.like]: where.name,
+            },
+          }
+        : {};
+      findOptions.where = conditions;
+      findOptions.order = [["name", "ASC"]];
+      return findOptions;
     },
     after: async (users, args) => {
       const total = await User.count(args.where);

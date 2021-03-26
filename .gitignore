@@ -12,7 +12,7 @@ dist/
 .DS_Store
 
 # ide info
-.vscode/
+#.vscode/
 .idea/
 .next/
 packages/server/images
