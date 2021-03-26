@@ -1,44 +1,48 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { useIntl } from "react-intl";
-import { Table as AntdTable, TableProps } from "antd";
-import Card from "components/Card";
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { Table as AntdTable, TableProps } from 'antd';
+import Card from 'components/Card';
+import userService from 'services/userService';
+import { OperationVariables, QueryResult } from '@apollo/client';
 
 export declare type FilterForm<RecordType> = (
   record: RecordType
 ) => React.ReactNode;
 
 interface TableFilterProps<RecordType> extends TableProps<RecordType> {
-  filterRender: (any) => React.ReactNode;
-  tableRender: (any) => React.ReactNode;
-  filter: (any) => void;
+  filterRender:  (any) => React.ReactNode;
+  tableRender: React.FunctionComponent<TableProps<RecordType>>;
+  query: (any?) => QueryResult<any, OperationVariables>
 }
 
 const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
-  const [expandedRowKeys, setExpandedRowKeys] = useState([]);
   const { children, filterRender, tableRender, ...others } = props;
+  const { data, loading, refetch } = props.query();
 
   // METHODS
   useImperativeHandle(ref, () => ({
-    collapseAll,
+    filter: handleFilter,
   }));
-
-  const collapseAll = () => setExpandedRowKeys([]);
 
   // HANDLERS
   const handleFilter = (values) => {
-    props.filter({ where: values });
+    refetch({ where: values });
   };
 
   // RENDER
+  if (loading) return <AntdTable />;
+
   return (
     <>
       <Card>
-        <div className="filter-form-wrapper">
+        <div className='filter-form-wrapper'>
           {filterRender({ onFilter: handleFilter })}
         </div>
-        <div className="table-wrapper">{tableRender({})}</div>
+        <div className='table-wrapper'>
+          {tableRender({ dataSource: data && data.users.rows })}
+        </div>
       </Card>
     </>
   );
