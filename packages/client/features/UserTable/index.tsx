@@ -27,18 +27,16 @@ const UserTable = (props) => {
     });
   };
 
-  const handleFilter = (values) => {
-    refetch({ where: values });
-  };
 
   // RENDER
   if (loading) return <Table />;
   if (result.loading) userTableRef.current.collapseAll();
 
-  const filterForm = () => <FilterForm values={{}} onFilter={handleFilter} />;
+  const renderFilter = (props) => <FilterForm {...props} />;
 
-  const userTable = () => (
+  const renderTable = (props) => (
     <TableQuickEdit
+      {...props}
       ref={userTableRef}
       rowKey="id"
       quickForm={(record) => <QuickForm values={record} onSave={handleSave} />}
@@ -49,7 +47,12 @@ const UserTable = (props) => {
 
   return (
     <>
-      <TableFilter filterFormRender={filterForm()} tableRender={userTable()} />
+      <TableFilter
+        filter={refetch}
+        dataSource={data && data.users.rows}
+        filterRender={(props) => renderFilter(props)}
+        tableRender={(props) => renderTable(props)}
+      />
     </>
   );
 };

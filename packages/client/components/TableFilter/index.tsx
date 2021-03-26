@@ -8,15 +8,16 @@ export declare type FilterForm<RecordType> = (
 ) => React.ReactNode;
 
 interface TableFilterProps<RecordType> extends TableProps<RecordType> {
-  filterFormRender: React.ReactNode;
-  tableRender: React.ReactNode;
+  filterRender: (any) => React.ReactNode;
+  tableRender: (any) => React.ReactNode;
+  filter: (any) => void;
 }
 
 const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
   const [expandedRowKeys, setExpandedRowKeys] = useState([]);
-  const { children, filterFormRender, tableRender, ...others } = props;
+  const { children, filterRender, tableRender, ...others } = props;
 
   // METHODS
   useImperativeHandle(ref, () => ({
@@ -26,16 +27,18 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
   const collapseAll = () => setExpandedRowKeys([]);
 
   // HANDLERS
-  const handleExpandedRowsChange = (expanedRows) => {
-    setExpandedRowKeys(expanedRows);
+  const handleFilter = (values) => {
+    props.filter({ where: values });
   };
 
   // RENDER
   return (
     <>
       <Card>
-        <div className="filter-form-wrapper">{filterFormRender}</div>
-        <div className="table-wrapper">{tableRender}</div>
+        <div className="filter-form-wrapper">
+          {filterRender({ onFilter: handleFilter })}
+        </div>
+        <div className="table-wrapper">{tableRender({})}</div>
       </Card>
     </>
   );
