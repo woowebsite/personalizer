@@ -11,7 +11,7 @@ const definitions = {
           rows {
             id
             title
-            consitions
+            conditions
             model_name
             status
             user_id

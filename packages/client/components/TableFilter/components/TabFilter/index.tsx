@@ -9,7 +9,7 @@ const TabFilter = ({ tabs, activeTab, onChange }) => {
 
   return (
     <Tabs defaultActiveKey={activeTab} onChange={onChange}>
-      <TabPane tab={t('tabFilter.all')} key={1} />
+      <TabPane tab={t('tabFilter.all')} key={0} />
       {tabs.map(tab => (
         <TabPane tab={tab.title} key={tab.id} />
       ))}

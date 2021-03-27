@@ -67,7 +67,7 @@ export type Filter = {
   __typename?: 'Filter';
   id?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
-  consitions?: Maybe<Scalars['String']>;
+  conditions?: Maybe<Scalars['String']>;
   model_name?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   user_id?: Maybe<Scalars['Int']>;
@@ -77,7 +77,7 @@ export type Filter = {
 export type FilterInput = {
   id?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
-  consitions?: Maybe<Scalars['String']>;
+  conditions?: Maybe<Scalars['String']>;
   model_name?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   user_id?: Maybe<Scalars['Int']>;

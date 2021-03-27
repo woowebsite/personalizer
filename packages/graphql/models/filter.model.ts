@@ -17,7 +17,7 @@ export class Filter extends Model<Filter> {
   title: string;
 
   @Column({ unique: true })
-  consitions: string;
+  conditions: string;
 
   @Column
   model_name: string;

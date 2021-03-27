@@ -18,33 +18,43 @@ interface TableFilterProps<RecordType> extends TableProps<RecordType> {
 }
 
 const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
-  // DECLARES
-  const { formatMessage } = useIntl();
+  // DECLARES ================================================================================================
   const { children, filterRender, tableRender, modelName, ...others } = props;
   const { data, loading, refetch } = props.query();
 
+  // tabs
+  const [tabFilterCondition, setTabFilterCondition] = useState({});
   const { data: tabs, loading: tabLoading } = filterService.getFiltersByModel({
     variables: { where: { model_name: modelName } },
   });
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(0);
 
-  // METHODS
+  // METHODS ================================================================================================
   useImperativeHandle(ref, () => ({
     filter: handleFilter,
   }));
 
-  // HANDLERS
+  // HANDLERS ================================================================================================
   const handleFilter = values => {
     const hasValue = Object.values(values).some(x => x !== undefined);
-    if (hasValue) refetch({ where: values });
+    const where = Object.assign(tabFilterCondition, values); // merge conditions and form values
+    if (hasValue) refetch({ where: where });
     else refetch();
   };
 
   const handleTabChange = key => {
     setSelectedTab(key);
-
-    if (selectedTab === 1) refetch({ where: { status: selectedTab } });
-    else refetch();
+    if (key === '0') {
+      // load all
+      refetch({ where: {} });
+    } else {
+      // load by tabs
+      const conditions = JSON.parse(
+        tabs.filters.rows.find(x => x.id === parseInt(key, 10)).conditions,
+      );
+      setTabFilterCondition(conditions);
+      refetch({ where: conditions });
+    }
   };
 
   // RENDER

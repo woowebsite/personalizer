@@ -767,7 +767,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consitions",
+            "name": "conditions",
             "description": null,
             "args": [],
             "type": {
@@ -1191,7 +1191,7 @@
             "defaultValue": null
           },
           {
-            "name": "consitions",
+            "name": "conditions",
             "description": null,
             "type": {
               "kind": "SCALAR",

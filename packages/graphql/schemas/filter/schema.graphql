@@ -1,7 +1,7 @@
 type Filter {
   id: Int
   title: String
-  consitions: String
+  conditions: String
   model_name: String
   status: String
   user_id: Int
@@ -16,7 +16,7 @@ input FilterWhere {
 input FilterInput {
   id: Int
   title: String
-  consitions: String
+  conditions: String
   model_name: String
   status: String
   user_id: Int
