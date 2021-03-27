@@ -1,7 +1,7 @@
-import { resolver } from "graphql-sequelize";
-import { Op } from "sequelize";
-import { User } from "../../models";
-import to from "await-to-js";
+import { resolver } from 'graphql-sequelize';
+import { Op } from 'sequelize';
+import { User } from '../../models';
+import to from 'await-to-js';
 
 export const Query = {
   user: resolver(User, {
@@ -9,21 +9,15 @@ export const Query = {
       findOptions.where = where;
       return findOptions;
     },
-    after: (user) => user,
+    after: user => user,
   }),
   users: resolver(User, {
     list: true,
     before: async (findOptions, { where, limit, offset }, context) => {
-      const conditions = where
-        ? {
-            ...where,
-            name: {
-              [Op.like]: where.name,
-            },
-          }
-        : {};
+      let conditions = where;
+      if (where && where.name) conditions.name = { [Op.like]: where.name };
       findOptions.where = conditions;
-      findOptions.order = [["name", "ASC"]];
+      findOptions.order = [['name', 'ASC']];
       return findOptions;
     },
     after: async (users, args) => {

@@ -1,10 +1,11 @@
 import { gql } from '@apollo/client';
 import baseService from './baseService';
 import withMutation from 'shared/withMutation';
+import withQuery from 'shared/withQuery';
 
 const definitions = {
-  getAlbumsByUser: () => {
-    return gql`
+  getAlbumsByUser: options => {
+    const query = gql`
       query GetAlbum($where: AlbumWhere) {
         album(where: $where) {
           id
@@ -13,8 +14,9 @@ const definitions = {
         }
       }
     `;
+
+    return withQuery(query, options);
   },
-  
 };
 
 const userService = baseService({
