@@ -46,6 +46,7 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
     setSelectedTab(key);
     if (key === '0') {
       // load all
+      setTabFilterCondition({});
       refetch({ where: {} });
     } else {
       // load by tabs
