@@ -22,8 +22,9 @@ export const sequelize = new Sequelize(
       const tableName = filename.substring(0, filename.indexOf('.model'));
       return tableName === member.toLowerCase();
     },
-  }
+  },
 );
 export { User } from './user.model';
 export { Role } from './role.model';
 export { Album } from './album.model';
+export { Filter } from './filter.model';

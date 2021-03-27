@@ -36,6 +36,9 @@ export class User extends Model<User> {
   @Column
   updated_at: Date;
 
+  @Column
+  status: string;
+
   @ForeignKey(() => Role)
   @Column
   role_id: number;

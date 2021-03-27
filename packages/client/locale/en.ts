@@ -42,7 +42,12 @@ export const en = {
       },
     },
     tableQuickEdit: {
-      btnQuickEdit: 'QuickEdit'
+      btnQuickEdit: 'QuickEdit',
+    },
+    tableFilter: {
+      tabFilter: {
+        all: 'All',
+      },
     },
     changePasswordForm: {
       label: {
@@ -52,8 +57,8 @@ export const en = {
       },
     },
     socialConnect: {
-      connectToFacebook: 'Connect to Facebook'
-    }
+      connectToFacebook: 'Connect to Facebook',
+    },
   },
   '/admin/users': {
     title: 'All users',

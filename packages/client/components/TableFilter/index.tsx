@@ -2,7 +2,7 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Table as AntdTable, TableProps } from 'antd';
 import Card from 'components/Card';
-import userService from 'services/userService';
+import filterService from 'services/filterService';
 import { OperationVariables, QueryResult } from '@apollo/client';
 import TabFilter from './components/TabFilter';
 
@@ -11,6 +11,7 @@ export declare type FilterForm<RecordType> = (
 ) => React.ReactNode;
 
 interface TableFilterProps<RecordType> extends TableProps<RecordType> {
+  modelName: String;
   filterRender: (any) => React.ReactNode;
   tableRender: React.FunctionComponent<TableProps<RecordType>>;
   query: (any?) => QueryResult<any, OperationVariables>;
@@ -19,8 +20,12 @@ interface TableFilterProps<RecordType> extends TableProps<RecordType> {
 const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
-  const { children, filterRender, tableRender, ...others } = props;
+  const { children, filterRender, tableRender, modelName, ...others } = props;
   const { data, loading, refetch } = props.query();
+
+  const { data: tabs, loading: tabLoading } = filterService.getFiltersByModel({
+    variables: { where: { model_name: modelName } },
+  });
   const [selectedTab, setSelectedTab] = useState(1);
 
   // METHODS
@@ -48,24 +53,13 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
   return (
     <>
       <Card>
-        <TabFilter
-          onChange={handleTabChange}
-          activeTab={selectedTab}
-          tabs={[
-            {
-              id: 1,
-              name: 'All',
-            },
-            {
-              id: 2,
-              name: 'Tab 2',
-            },
-            {
-              id: 3,
-              name: 'Tab 3',
-            },
-          ]}
-        />
+        {tabs && (
+          <TabFilter
+            onChange={handleTabChange}
+            activeTab={selectedTab}
+            tabs={tabs.filters.rows}
+          />
+        )}
         <div className="filter-form-wrapper">
           {filterRender({ onFilter: handleFilter })}
         </div>
