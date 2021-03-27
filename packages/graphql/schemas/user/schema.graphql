@@ -9,6 +9,7 @@ type User {
   updated_at: Date
   email_verified: Date
   role_id: Int
+  status: String
   role: Role
 }
 
@@ -16,6 +17,7 @@ input UserWhere {
   id: Int
   name: String
   roleId: Int
+  status: String
 }
 
 input UserInput {
@@ -23,6 +25,7 @@ input UserInput {
   name: String
   image: String
   email: String
+  status: String
   role_id: Int
 }
 
@@ -33,7 +36,7 @@ type UsersPaged {
 
 type Query {
   user(where: UserWhere): User
-  users(where: UserWhere, limit: Int, offset: Int): UsersPaged @isSysAdmin
+  users(where: UserWhere, limit: Int, offset: Int): UsersPaged 
   loginUser(email: String!, password: String!): User
 }
 
