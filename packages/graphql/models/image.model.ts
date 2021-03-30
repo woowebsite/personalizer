@@ -4,27 +4,26 @@ import {
   Model,
   BelongsTo,
   ForeignKey,
-  AllowNull,
 } from 'sequelize-typescript';
-import { ProductBaseTag } from './productbasetag.model';
-import { ProductBase } from './productbase.model';
 import { User } from './user.model';
+import { ProductBase } from './productbase.model';
+import { ProductBaseImage } from './productbaseimage.model';
 
 @Table({ timestamps: true })
-export class Tag extends Model<Tag> {
+export class Image extends Model<Image> {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
 
   @Column
-  title: string;
+  name: string;
 
   @Column
-  status: string;
-  
-  @Column
-  type: string;   // productBase
+  description: string;
 
-  // Reference ================================
+  @Column
+  url: string;
+
+  // Foreign ========================================
   // product base
   @ForeignKey(() => ProductBase)
   @Column
@@ -33,14 +32,14 @@ export class Tag extends Model<Tag> {
   @BelongsTo(() => ProductBase)
   productBase: ProductBase;
 
-  // product base tags
-  @ForeignKey(() => ProductBaseTag)
+  // product base image
+  @ForeignKey(() => ProductBaseImage)
   @Column
-  productBaseTagId: number;
+  productBaseImageId: number;
 
-  @BelongsTo(() => ProductBaseTag)
-  productBaseTag: ProductBaseTag;
-  
+  @BelongsTo(() => ProductBaseImage)
+  productBaseImage: ProductBaseImage;
+
   // user
   @ForeignKey(() => User)
   @Column

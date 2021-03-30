@@ -2,20 +2,18 @@ import {
   Table,
   Column,
   Model,
-  BelongsTo,
   ForeignKey,
-  AllowNull,
 } from 'sequelize-typescript';
 import { ProductBase } from './productbase.model';
-import { Tag } from './tag.model';
+import { Image } from './image.model';
 
 @Table({ timestamps: true })
-export class ProductBaseTag extends Model<ProductBaseTag> {
+export class ProductBaseImage extends Model<ProductBaseImage> {
   @ForeignKey(() => ProductBase)
   @Column
   productBaseId: number;
   
-  @ForeignKey(() => Tag)
+  @ForeignKey(() => Image)
   @Column
-  tagId: number;
+  imageId: number;
 }

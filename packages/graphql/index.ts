@@ -40,14 +40,19 @@ const server = new ApolloServer({
       currentUser = await User.findOne({
         where: { email: session.user.email },
       })
-        .then((x) => x.get({ plain: true }))
-        .catch((e) => console.log('Error: ', e));
+        .then(x => x.get({ plain: true }))
+        .catch(e => console.log('Error: ', e));
     }
 
-    // Sync database
-    // {force: true} remove all data
-    // {alter: true} modify table and keep data
-    sequelize.sync({ alter: true });
+    try {
+      // Sync database
+      // {force: true} remove all data
+      // {alter: true} modify table and keep data
+      sequelize.sync({ alter: true });
+      // sequelize.sync({ force: true });
+    } catch (e) {
+      console.log('Error: ', e);
+    }
 
     return {
       [EXPECTED_OPTIONS_KEY]: createContext(sequelize),

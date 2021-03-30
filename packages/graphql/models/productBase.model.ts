@@ -10,7 +10,10 @@ import {
 import { User } from './user.model';
 import { Category } from './category.model';
 import { Tag } from './tag.model';
-import { ProductBaseTag } from './productBaseTag.model';
+import { Provider } from './provider.model';
+import { Image } from './image.model';
+import { ProductBaseImage } from './productbaseimage.model';
+import { ProductBaseTag } from './productbasetag.model';
 
 @Table({ timestamps: true })
 export class ProductBase extends Model<ProductBase> {
@@ -20,11 +23,14 @@ export class ProductBase extends Model<ProductBase> {
   @Column
   title: string;
 
-  @Column({ unique: true })
+  @Column
   description: string;
 
   @Column
   status: string;
+ 
+  @Column
+  primaryImageUrl: string;
 
   @Column
   visibility: string;
@@ -33,6 +39,21 @@ export class ProductBase extends Model<ProductBase> {
   publishDate: Date;
 
   // Reference ================================
+  // tags
+  @BelongsToMany(() => ProductBaseTag, () => Tag)
+  tags: ProductBaseTag[];
+
+  // images
+  @BelongsToMany(() => ProductBaseImage, () => Image)
+  images: ProductBaseImage[];
+
+  // primary image
+  // @ForeignKey(() => Image)
+  // @Column
+  // primaryImageId: number;
+
+  // @BelongsTo(() => Image)
+  // primaryImage: Image;
 
   // category
   @ForeignKey(() => Category)
@@ -42,9 +63,13 @@ export class ProductBase extends Model<ProductBase> {
   @BelongsTo(() => Category)
   category: Category;
 
-  // tag
-  @BelongsToMany(() => ProductBaseTag, () => Tag)
-  tags: ProductBaseTag[];
+  // provider
+  @ForeignKey(() => Provider)
+  @Column
+  providerId: number;
+
+  @BelongsTo(() => Provider)
+  provider: Provider;
 
   // user
   @ForeignKey(() => User)
