@@ -5,13 +5,15 @@ import Card from 'components/Card';
 import filterService from 'services/filterService';
 import { OperationVariables, QueryResult } from '@apollo/client';
 import TabFilter from './components/TabFilter';
+import camelCase from 'lodash/camelCase';
 
 export declare type FilterForm<RecordType> = (
   record: RecordType,
 ) => React.ReactNode;
 
 interface TableFilterProps<RecordType> extends TableProps<RecordType> {
-  modelName: String;
+  modelName: string;
+  pluralName: string;
   filterRender: (any) => React.ReactNode;
   tableRender: React.FunctionComponent<TableProps<RecordType>>;
   query: (any?) => QueryResult<any, OperationVariables>;
@@ -19,7 +21,14 @@ interface TableFilterProps<RecordType> extends TableProps<RecordType> {
 
 const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
   // DECLARES ================================================================================================
-  const { children, filterRender, tableRender, modelName, ...others } = props;
+  const {
+    children,
+    filterRender,
+    tableRender,
+    modelName,
+    pluralName,
+    ...others
+  } = props;
   const { data, loading, refetch } = props.query();
 
   // tabs
@@ -75,7 +84,9 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
           {filterRender({ onFilter: handleFilter })}
         </div>
         <div className="table-wrapper">
-          {tableRender({ dataSource: data && data.users.rows })}
+          {tableRender({
+            dataSource: data && data[camelCase(pluralName)].rows,
+          })}
         </div>
       </Card>
     </>

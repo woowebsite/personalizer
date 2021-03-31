@@ -48,7 +48,7 @@ const server = new ApolloServer({
       // Sync database
       // {force: true} remove all data
       // {alter: true} modify table and keep data
-      sequelize.sync({ alter: true });
+      sequelize.sync({ alter: false });
       // sequelize.sync({ force: true });
     } catch (e) {
       console.log('Error: ', e);

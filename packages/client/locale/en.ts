@@ -32,6 +32,13 @@ export const en = {
         createdAt: 'Created At',
       },
     },
+    productBaseTable: {
+      columns: {
+        id: 'Id',
+        title: 'Title',
+        createdAt: 'Created At',
+      },
+    },
     userCreateform: {
       label: {
         name: 'Name',
@@ -66,6 +73,15 @@ export const en = {
     pageHeader: {
       buttons: {
         create: 'Add user',
+      },
+    },
+  },
+  '/admin/productbases': {
+    title: 'Product Bases',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add new',
       },
     },
   },

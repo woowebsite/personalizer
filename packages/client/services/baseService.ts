@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 const getModel = (modelName: string) => {
   const model = gqlSchemas.__schema.types.find(
-    (t) => t.kind === 'OBJECT' && t.name === modelName
+    t => t.kind === 'OBJECT' && t.name === modelName,
   );
   return model;
 };
@@ -23,16 +23,16 @@ function baseService(options: {
     /**
      * Get all items includes paging, filter
      * @param options { where: {name: 'abc'}, limit: 1, offset: 2 }
-     * @returns 
+     * @returns
      */
-    getAll: (options) => {
+    getAll: options => {
       const query = gql`
       query GetAll${plural}($where: ${name}Where, $limit: Int, $offset: Int) {
-        ${plural.toLowerCase()}(where: $where, limit: $limit, offset: $offset) {
+        ${_.camelCase(plural)}(where: $where, limit: $limit, offset: $offset) {
           rows {
             ${model.fields
-              .filter((field) => field.type.kind === 'SCALAR')
-              .map((field) => field.name)}
+              .filter(field => field.type.kind === 'SCALAR')
+              .map(field => field.name)}
           }
           count
         }
@@ -40,26 +40,26 @@ function baseService(options: {
 
       return withQuery(query, options);
     },
-    get: (options) => {
+    get: options => {
       const query = gql`
       query Get${name}($where: ${name}Where) {
         ${name.toLowerCase()}(where: $where) {
           ${model.fields
-            .filter((field) => field.type.kind === 'SCALAR')
-            .map((field) => field.name)}
+            .filter(field => field.type.kind === 'SCALAR')
+            .map(field => field.name)}
         }
       }`;
       return withQuery(query, options);
     },
-    upsert: (options) => {
+    upsert: options => {
       const upsert = gql`
         mutation Upsert${name}($${name.toLowerCase()}: ${name}Input) {
           upsert${name}(
             data: $${name.toLowerCase()}
           ) {
             ${model.fields
-              .filter((field) => field.type.kind === 'SCALAR')
-              .map((field) => field.name)}
+              .filter(field => field.type.kind === 'SCALAR')
+              .map(field => field.name)}
           }
         }
       `;
@@ -78,7 +78,7 @@ function baseService(options: {
       `;
       return withMutation(mutation);
     },
-    update: (variables) => {
+    update: variables => {
       const mutation = gql`
         mutation Update${name}(
           $data: ${name}Input
