@@ -44,15 +44,10 @@ const server = new ApolloServer({
         .catch(e => console.log('Error: ', e));
     }
 
-    try {
-      // Sync database
-      // {force: true} remove all data
-      // {alter: true} modify table and keep data
-      sequelize.sync({ alter: false });
-      // sequelize.sync({ force: true });
-    } catch (e) {
-      console.log('Error: ', e);
-    }
+ // Sync database
+    // {force: true} remove all data
+    // {alter: true} modify table and keep data
+    sequelize.sync({ alter: false });
 
     return {
       [EXPECTED_OPTIONS_KEY]: createContext(sequelize),
