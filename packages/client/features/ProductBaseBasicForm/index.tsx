@@ -9,44 +9,34 @@ import ComboBoxType from '~/features/ComboBox/ComboBoxType';
 import useTranslate from 'hooks/useTranslate';
 
 // graphql
-import userService from 'services/userService';
+import productBaseService from 'services/productBaseService';
 
 interface IProps {
-  id?: number;
+  data?: any;
 }
-const UserForm = forwardRef<any, IProps>((props, ref) => {
+const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
-  const { id: userId } = props;
+  const { data } = props;
   const t = (id, values?) => formatMessage({ id }, values);
-  const [upsertUser] = userService.upsert(); //(userQueries.UPSERT_USER);
+  const [upsertProductBase] = productBaseService.upsert();
   const [form] = Form.useForm();
 
-  const { data, loading, refetch } = userService.get({
-    variables: {
-      where: { id: userId },
-    },
-  });
-
-  const formSetFields = user => {
+  const formSetFields = productBase => {
     form.setFields([
-      { name: 'role', value: user.role_id },
-      { name: 'name', value: user.name },
-      { name: 'email', value: user.email },
-      { name: 'image', value: user.image },
+      { name: 'title', value: productBase.title },
+      { name: 'description', value: productBase.description },
     ]);
   };
 
   // EFFECT
   useEffect(
     () => {
-      if (props.id) {
-        if (!loading) {
-          formSetFields(data.user);
-        }
+      if (data) {
+        formSetFields(data);
       }
     },
-    [props.id, loading, data],
+    [data],
   );
 
   /// EVENTS
@@ -58,9 +48,9 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
     form
       .validateFields()
       .then(values => {
-        const data = props.id ? { id: props.id, ...values } : values;
-        upsertUser({
-          variables: { user: data },
+        const productBase = data.id ? { id: data.id, ...values } : values;
+        upsertProductBase({
+          variables: { productBase },
         });
       })
       .catch(errorInfo => {
@@ -74,41 +64,61 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
 
   return (
     <Form
-      id="UserForm"
+      id="ProductBaseBasicForm"
       form={form}
       labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
+      wrapperCol={{ span: 24 }}
       onFinish={onSubmit}
       layout="vertical"
     >
       <Form.Item
-        name="name"
+        name="title"
         rules={[
           {
             required: true,
             message: useTranslate('validator.required', {
-              field: 'userCreateform.label.name',
+              field: 'productBaseBasicForm.label.title',
             }),
           },
         ]}
-        label={t('userCreateform.label.name')}
+        label={t('productBaseBasicForm.label.title')}
       >
         <Input />
       </Form.Item>
 
-      <Form.Item name="email" label={t('userCreateform.label.email')}>
-        <Input type="email" />
+      <Form.Item
+        name="description"
+        label={t('productBaseBasicForm.label.description')}
+      >
+        <Input.TextArea />
       </Form.Item>
 
-      <Form.Item name="role_id" label={t('userCreateform.label.role')}>
+      <Form.Item
+        name="provider_id"
+        label={t('productBaseBasicForm.label.provider')}
+      >
         <ComboBox type={ComboBoxType.Role} valueField="id" textField="name" />
       </Form.Item>
 
-      <Form.Item name="image" label={t('userCreateform.label.image')}>
+      <Form.Item
+        name="thumbnails"
+        label={t('productBaseBasicForm.label.thumbnails')}
+      >
         <UploadImage setImageUrl={onSetImageUrl} />
+      </Form.Item>
+
+      <Form.Item
+        name="category_id"
+        label={t('productBaseBasicForm.label.categories')}
+      >
+        <ComboBox type={ComboBoxType.Role} valueField="id" textField="name" />
+      </Form.Item>
+
+      <Form.Item name="tags" label={t('productBaseBasicForm.label.tags')}>
+        <ComboBox type={ComboBoxType.Role} valueField="id" textField="name" />
       </Form.Item>
     </Form>
   );
 });
 
-export default UserForm;
+export default ProductBaseBasicForm;

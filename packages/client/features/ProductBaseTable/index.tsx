@@ -8,9 +8,10 @@ import QuickForm from './QuickForm';
 import FilterForm from './FilterForm';
 
 import { columns } from './columns';
-import userService from 'services/userService';
+import productBaseService from 'services/productBaseService';
+import usersService from 'services/userService';
 
-const UserTable = props => {
+const ProductBaseTable = props => {
   // DEFINES
   const tableRef = React.useRef(null);
   const { formatMessage } = useIntl();
@@ -23,7 +24,7 @@ const UserTable = props => {
       {...props}
       ref={tableRef}
       rowKey="id"
-      mutation={userService.upsert}
+      mutation={productBaseService.upsert}
       quickForm={(record, mutate) => (
         <QuickForm
           values={record}
@@ -41,9 +42,9 @@ const UserTable = props => {
   return (
     <>
       <TableFilter
-        modelName="User"
-        pluralName="Users"
-        query={userService.getAll}
+        modelName="ProductBase"
+        pluralName="ProductBases"
+        query={productBaseService.getAll}
         filterRender={props => renderFilter(props)}
         tableRender={props => renderTable(props)}
       />
@@ -51,4 +52,4 @@ const UserTable = props => {
   );
 };
 
-export default UserTable;
+export default ProductBaseTable;
