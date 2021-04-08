@@ -11,9 +11,14 @@ export const en = {
         allUsers: 'All users',
         createUser: 'Create an user',
       },
+      productBases: {
+        title: 'Product bases',
+        allProductBase: 'All Product bases',
+        createProductBase: 'Create product base',
+      },
     },
     validator: {
-      required: 'Please input {name}',
+      required: 'Please input {field}',
     },
     buttons: {
       discard: 'Discard',
@@ -37,6 +42,16 @@ export const en = {
         id: 'Id',
         title: 'Title',
         createdAt: 'Created At',
+      },
+    },
+    productBaseBasicForm: {
+      label: {
+        title: 'Title',
+        description: 'Description',
+        provider: 'Provider',
+        thumbnails: 'Thumbnails',
+        categories: 'Categories',
+        tags: 'Tags',
       },
     },
     userCreateform: {

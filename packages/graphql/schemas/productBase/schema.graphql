@@ -6,6 +6,7 @@ type ProductBase {
 
 input ProductBaseWhere {
   user_id: Int
+  id: Int
 }
 
 input ProductBaseInput {
@@ -20,6 +21,7 @@ type ProductBasesPaged {
 }
 
 type Query {
+  productBase(where: ProductBaseWhere): ProductBase
   productBases(where: ProductBaseWhere, limit: Int, offset: Int): ProductBasesPaged
 }
 

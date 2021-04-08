@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { ENV } from '../config/env.config';
+import camelCase from 'lodash/camelCase';
 
 export const sequelize = new Sequelize(
   ENV.DB_NAME,
@@ -20,7 +21,9 @@ export const sequelize = new Sequelize(
     models: [__dirname + '/*.model.ts'],
     modelMatch: (filename, member) => {
       const tableName = filename.substring(0, filename.indexOf('.model'));
-      return tableName === member.toLowerCase();
+      return (
+        tableName === member.toLowerCase() || tableName === camelCase(member)
+      );
     },
   },
 );
