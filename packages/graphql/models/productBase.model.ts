@@ -13,7 +13,7 @@ import { Tag } from './tag.model';
 import { Provider } from './provider.model';
 import { Image } from './image.model';
 import { ProductBaseImage } from './productbaseimage.model';
-import { ProductBaseTag } from './productbasetag.model';
+import { ProductBaseTag } from './productBaseTag.model';
 
 @Table({ timestamps: true })
 export class ProductBase extends Model<ProductBase> {

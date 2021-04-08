@@ -53,7 +53,6 @@ function baseQuery(options: {
       return query;
     },
     upsert: () => {
-      console.log('model.fields', model.fields)
       const upsert = gql`
         mutation Upsert${name}($${camelCaseName}: ${name}Input) {
           upsert${name}(

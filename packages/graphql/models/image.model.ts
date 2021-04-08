@@ -6,7 +6,7 @@ import {
   ForeignKey,
 } from 'sequelize-typescript';
 import { User } from './user.model';
-import { ProductBase } from './productbase.model';
+import { ProductBase } from './productBase.model';
 import { ProductBaseImage } from './productbaseimage.model';
 
 @Table({ timestamps: true })

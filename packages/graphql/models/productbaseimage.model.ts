@@ -4,7 +4,7 @@ import {
   Model,
   ForeignKey,
 } from 'sequelize-typescript';
-import { ProductBase } from './productbase.model';
+import { ProductBase } from './productBase.model';
 import { Image } from './image.model';
 
 @Table({ timestamps: true })

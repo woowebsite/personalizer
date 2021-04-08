@@ -6,7 +6,7 @@ import {
   ForeignKey,
   AllowNull,
 } from 'sequelize-typescript';
-import { ProductBase } from './productbase.model';
+import { ProductBase } from './productBase.model';
 import { Tag } from './tag.model';
 
 @Table({ timestamps: true })
