@@ -27,6 +27,10 @@ function withMutation<TData = any, TVariables = OperationVariables>(
     onCompleted: (options && options.onCompleted) || onCompletedDefault,
   });
   const { data, loading, error } = result;
+
+  console.log('mutation: ', mutation);
+  console.log('options: ', options);
+
   // browser code
   if (typeof window !== 'undefined') {
     if (loading) NProgress.start();
