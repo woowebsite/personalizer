@@ -11,10 +11,19 @@ const getModel = (modelName: string) => {
   return model;
 };
 
-function baseQuery(options: {
-  name: string;
-  plural: string;
-}) {
+/**
+ * Graphql dynamic queries CRUD
+ * @param options name of model, plural name of model
+ * @returns {
+ *  get,
+ *  getAll,
+ *  create,
+ *  update,
+ *  delete,
+ *  upsert 
+ * }
+ */
+function baseQuery(options: { name: string; plural: string }) {
   const { name, plural } = options;
   const model = getModel(name);
   const camelCaseName = _.camelCase(name);
@@ -26,8 +35,7 @@ function baseQuery(options: {
      * @param options { where: {name: 'abc'}, limit: 1, offset: 2 }
      * @returns
      */
-    getAll: () => {
-      const query = gql`
+    getAll: gql`
       query GetAll${plural}($where: ${name}Where, $limit: Int, $offset: Int) {
         ${camelCasePlural}(where: $where, limit: $limit, offset: $offset) {
           rows {
@@ -37,76 +45,56 @@ function baseQuery(options: {
           }
           count
         }
-      }`;
-
-      return query;
-    },
-    get: () => {
-      const query = gql`
+      }`,
+    /**
+     * Get an item 
+     */
+    get: gql`
       query Get${name}($where: ${name}Where) {
-        ${camelCaseName}(where: $where) {
+      ${camelCaseName}(where: $where) {
+        ${model.fields
+          .filter(field => field.type.kind === 'SCALAR')
+          .map(field => field.name)}
+        }
+      }`,
+    upsert: gql`
+      mutation Upsert${name}($${camelCaseName}: ${name}Input) {
+        upsert${name}(
+          data: $${camelCaseName}
+        ) {
           ${model.fields
             .filter(field => field.type.kind === 'SCALAR')
             .map(field => field.name)}
         }
-      }`;
-      return query;
-    },
-    upsert: () => {
-      const upsert = gql`
-        mutation Upsert${name}($${camelCaseName}: ${name}Input) {
-          upsert${name}(
-            data: $${camelCaseName}
-          ) {
-            ${model.fields
-              .filter(field => field.type.kind === 'SCALAR')
-              .map(field => field.name)}
-          }
-        }
-      `;
-
-      return upsert;
-    },
-    create: () => {
-      const mutation = gql`
-        mutation Create${name}($${name}: ${name}Input) {
-          create${camelCaseName}(
-            data: $${name}
-          ) {
-            id
-          }
-        }
-      `;
-      return mutation;
-    },
-    update: () => {
-      const mutation = gql`
-        mutation Update${name}(
-          $data: ${name}Input
+      }`,
+    create: gql`
+      mutation Create${name}($${name}: ${name}Input) {
+        create${camelCaseName}(
+          data: $${name}
         ) {
-          create${camelCaseName}(
-            data: $data
-          ) {
-            id
-          }
+          id
         }
-      `;
-      return mutation;
-    },
-    delete: () => {
-      const mutation = gql`
-        mutation Delete${name}(
-          $id: Int
+      }`,
+    update: gql`
+      mutation Update${name}(
+        $data: ${name}Input
+      ) {
+        create${camelCaseName}(
+          data: $data
         ) {
-          delete${camelCaseName}(
-            id: $id
-          ) {
-            id
-          }
+          id
         }
-      `;
-      return mutation;
-    },
+      }`,
+    delete: gql`
+      mutation Delete${name}(
+        $id: Int
+      ) {
+        delete${camelCaseName}(
+          id: $id
+        ) {
+          id
+        }
+      }`,
   };
 
   return baseQuery;
