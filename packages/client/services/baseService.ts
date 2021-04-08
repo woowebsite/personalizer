@@ -25,79 +25,23 @@ function baseService(options: {
   });
 
   const baseDefinitions = {
-    /**
-     * Get all items includes paging, filter
-     * @param options { where: {name: 'abc'}, limit: 1, offset: 2 }
-     * @returns
-     */
     getAll: options => {
-      const query = gql`
-      query GetAll${plural}($where: ${name}Where, $limit: Int, $offset: Int) {
-        ${_.camelCase(plural)}(where: $where, limit: $limit, offset: $offset) {
-          rows {
-            ${model.fields
-              .filter(field => field.type.kind === 'SCALAR')
-              .map(field => field.name)}
-          }
-          count
-        }
-      }`;
-
-      return withQuery(query, options);
+      return withQuery(baseGql.getAll, options);
     },
     get: options => {
-      const query = gql`
-      query Get${name}($where: ${name}Where) {
-        ${name.toLowerCase()}(where: $where) {
-          ${model.fields
-            .filter(field => field.type.kind === 'SCALAR')
-            .map(field => field.name)}
-        }
-      }`;
-      return withQuery(query, options);
+      return withQuery(baseGql.get, options);
     },
     upsert: options => {
-      return withMutation(baseGql.upsert(), options);
+      return withMutation(baseGql.upsert, options);
     },
     create: () => {
-      const mutation = gql`
-        mutation Create${name}($${name}: ${name}Input) {
-          create${name}(
-            data: $${name}
-          ) {
-            id
-          }
-        }
-      `;
-      return withMutation(mutation);
+      return withMutation(baseGql.create);
     },
     update: variables => {
-      const mutation = gql`
-        mutation Update${name}(
-          $data: ${name}Input
-        ) {
-          create${name}(
-            data: $data
-          ) {
-            id
-          }
-        }
-      `;
-      return withMutation(mutation);
+      return withMutation(baseGql.update);
     },
     delete: () => {
-      const mutation = gql`
-        mutation Delete${name}(
-          $id: Int
-        ) {
-          delete${name}(
-            id: $id
-          ) {
-            id
-          }
-        }
-      `;
-      return withMutation(mutation);
+      return withMutation(baseGql.delete);
     },
   };
 
