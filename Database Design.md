@@ -1,32 +1,54 @@
-1. Users
-- userId
-- username
-- password
-- name
+Product Base
+    id
+    title
+    description
+    status  Draft | Active
+    visibility  Public | Private
+    publish_date    Immediate | scheduled     
+    category_id
+    provider_id
+    thumbnail_id
 
-2. Orders
-- orderId
-- userId
+ProductBase_Category
+    id
+    title
+    parentId
 
-3. Templates
-- templateId
-- userId
-- name
+ProductBase_Tags
+    id
+    text
+    product_base_id
 
-4. Albums
-- albumId
-- userId
-- name
-- description
-- tagIds
+Providers
+    id
+    name
+    description
 
-5. Images
-- imageId
-- albumIds
-- name
-- infor
+Thumbnail
+    id
+    url
+    small_url
+    large_url
+    medium_url
+    isPrimary
+    type: Mockup, ProductBase
+    refId
 
+PrintArea
+    id
+    name
+    width
+    height
+    isCombine
+    product_base_id
 
-5. Tags
-- userId
-- name
+Mockup
+    id
+    name
+    background
+    width
+    height
+    thumbnail_id
+    isNoise
+    isPrimary
+    product_base_id

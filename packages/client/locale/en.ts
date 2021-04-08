@@ -11,9 +11,14 @@ export const en = {
         allUsers: 'All users',
         createUser: 'Create an user',
       },
+      productBases: {
+        title: 'Product bases',
+        allProductBase: 'All Product bases',
+        createProductBase: 'Create product base',
+      },
     },
     validator: {
-      required: 'Please input {name}',
+      required: 'Please input {field}',
     },
     buttons: {
       discard: 'Discard',
@@ -30,6 +35,23 @@ export const en = {
         image: 'Avatar',
         email: 'Email',
         createdAt: 'Created At',
+      },
+    },
+    productBaseTable: {
+      columns: {
+        id: 'Id',
+        title: 'Title',
+        createdAt: 'Created At',
+      },
+    },
+    productBaseBasicForm: {
+      label: {
+        title: 'Title',
+        description: 'Description',
+        provider: 'Provider',
+        thumbnails: 'Thumbnails',
+        categories: 'Categories',
+        tags: 'Tags',
       },
     },
     userCreateform: {
@@ -66,6 +88,15 @@ export const en = {
     pageHeader: {
       buttons: {
         create: 'Add user',
+      },
+    },
+  },
+  '/admin/productbases': {
+    title: 'Product Bases',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add new',
       },
     },
   },

@@ -22,12 +22,12 @@ const MenuLeft = (props) => {
         if (menu.children) {
           return (
             <SubMenu
-              key={`menu${i}`}
+              key={`menu-${i}`}
               icon={<UserOutlined />}
               title={f(menu.title)}
             >
               {menu.children.map((child, c) => (
-                <Menu.Item key={`child-menu${c}`}>
+                <Menu.Item key={`child-menu-${c}`}>
                   <Link href={child.url}>{f(child.title)}</Link>
                 </Menu.Item>
               ))}
