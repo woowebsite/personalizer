@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import { useIntl } from 'react-intl';
+import { notification } from 'antd';
 
 // components
 import useTranslate from 'hooks/useTranslate';
@@ -9,6 +10,7 @@ import useTranslate from 'hooks/useTranslate';
 import withMutation from 'shared/withMutation';
 import withQuery from 'shared/withQuery';
 import * as userQueries from 'definitions/user-definitions';
+import userService from 'services/userService';
 
 interface IProps {
   id?: number;
@@ -18,59 +20,61 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const { id: userId } = props;
-  const [createUser] = withMutation(userQueries.CREATE_USER);
   const [form] = Form.useForm();
+  const [changePassword] = userService.changePassword({
+    onCompleted: resp => {
+      if (resp.changePassword.result) {
+        notification.success({
+          message: 'Notification Success',
+          description: 'Save successfully',
+          onClick: () => {
+            console.log('Notification Clicked!');
+          },
+        });
+      } else {
+        notification.error({
+          message: 'Notification Error',
+          description: t('messages.changePassword.isValid'),
+          onClick: () => {
+            console.log('Notification Clicked!');
+          },
+        });
+      }
+    },
+  });
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
-    onSubmit,
+    submit: handleFinish,
   }));
 
-  if (props.id) {
-    const { data, loading, refetch } = withQuery(userQueries.GET_USER, {
-      variables: {
-        id: userId,
-      },
-    });
-
-    if (!loading) {
-      form.setFields([
-        { name: 'role', value: data.user.role.id },
-        { name: 'name', value: data.user.name },
-        { name: 'email', value: data.user.email },
-        { name: 'image', value: data.user.image },
-      ]);
-    }
-  }
-
-  const onSubmit = () => {
+  const handleFinish = () => {
     form
       .validateFields()
-      .then((values) => {
+      .then(values => {
         console.log('values', values);
-        createUser({ variables: values }).finally(() => {
+        changePassword({ variables: values }).finally(() => {
           // callback
-          console.log('create callback');
+          console.log('change callback');
         });
       })
-      .catch((errorInfo) => {
+      .catch(errorInfo => {
         console.log('Error: ', errorInfo);
       });
   };
-
 
   // RENDER
   return (
     <Form
       form={form}
-      id='ChangePasswordForm'
+      id="ChangePasswordForm"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
-      onFinish={onSubmit}
-      layout='vertical'
+      onFinish={handleFinish}
+      layout="vertical"
     >
       <Form.Item
-        name='current'
+        name="currentPassword"
         rules={[
           {
             required: true,
@@ -85,7 +89,7 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
-        name='password'
+        name="password"
         rules={[
           {
             required: true,
@@ -100,7 +104,7 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
-        name='confirmPassword'
+        name="confirmPassword"
         rules={[
           {
             required: true,

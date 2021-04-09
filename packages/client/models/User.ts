@@ -1,5 +1,6 @@
 import Adapters from 'next-auth/adapters';
 import RoleType from './RoleType';
+import StatusType from './StatusType';
 
 // Extend the built-in models using class inheritance
 export default class User extends Adapters.TypeORM.Models.User.model {
@@ -23,6 +24,11 @@ export const UserSchema = {
     password: {
       type: 'varchar',
       nullable: true,
+    },
+    status: {
+      type: 'varchar',
+      nullable: true,
+      default: StatusType.Actived,
     },
   },
 };
