@@ -43,4 +43,5 @@ type Query {
 type Mutation {
   createUser(data: UserInput): User
   upsertUser(data: UserInput): User
+  changePassword(currentPassword: String!, password: String!): BooleanResponse @isAuth
 }
