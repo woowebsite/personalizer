@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import {
   Table,
   Column,
@@ -5,8 +6,10 @@ import {
   BelongsTo,
   ForeignKey,
   AllowNull,
+  BeforeSave,
 } from 'sequelize-typescript';
 import { Role } from './role.model';
+import to from 'await-to-js';
 
 // timestamps = false : Use from NextAuth are created_at, updated_at
 @Table({ timestamps: false })
@@ -46,41 +49,41 @@ export class User extends Model<User> {
   @BelongsTo(() => Role)
   role: Role;
 
-  // @BeforeSave
-  // static async hashPassword(user: User) {
-  //   let err;
-  //   if (user.changed('password')) {
-  //     let salt, hash;
-  //     [err, salt] = await to(bcrypt.genSalt(10));
-  //     if (err) {
-  //       throw err;
-  //     }
+  @BeforeSave
+  static async hashPassword(user: User) {
+    let err;
+    if (user.changed('password')) {
+      let salt, hash;
+      [err, salt] = await to(bcrypt.genSalt(10));
+      if (err) {
+        throw err;
+      }
 
-  //     [err, hash] = await to(bcrypt.hash(user.password, salt));
-  //     if (err) {
-  //       throw err;
-  //     }
-  //     user.password = hash;
-  //   }
-  // }
+      [err, hash] = await to(bcrypt.hash(user.password, salt));
+      if (err) {
+        throw err;
+      }
+      user.password = hash;
+    }
+  }
 
-  // async comparePassword(pw) {
-  //   let err, pass;
-  //   if (!this.password) {
-  //     throw new Error('Does not have password');
-  //   }
+  async comparePassword(pw) {
+    let err, pass;
+    if (!this.password) {
+      throw new Error('Does not have password');
+    }
 
-  //   [err, pass] = await to(bcrypt.compare(pw, this.password));
-  //   if (err) {
-  //     throw err;
-  //   }
+    [err, pass] = await to(bcrypt.compare(pw, this.password));
+    if (err) {
+      throw err;
+    }
 
-  //   if (!pass) {
-  //     throw 'Invalid password';
-  //   }
+    if (!pass) {
+      throw 'Invalid password';
+    }
 
-  //   return this;
-  // }
+    return this;
+  }
 
   // getJwt() {
   //   return (
@@ -90,7 +93,7 @@ export class User extends Model<User> {
   //         id: this.id,
   //       },
   //       ENV.JWT_ENCRYPTION,
-  //       { expiresIn: ENV.JWT_EXPIRATION }
+  //       { expiresIn: ENV.JWT_EXPIRATION },
   //     )
   //   );
   // }

@@ -2,10 +2,16 @@ export const en = {
   common: {
     topBar: {
       profileMenu: {
+        profile: 'Basic information',
         logout: 'Log out',
       },
     },
     menu: {
+      settings: {
+        title: 'Settings',
+        changePassword: 'Change password',
+        profile: 'Basic information',
+      },
       users: {
         title: 'Users',
         allUsers: 'All users',
@@ -14,6 +20,11 @@ export const en = {
     },
     validator: {
       required: 'Please input {name}',
+    },
+    messages: {
+      changePassword: {
+        isValid: 'Current password is invalid',
+      },
     },
     buttons: {
       discard: 'Discard',
@@ -101,6 +112,12 @@ export const en = {
         age: 'Age',
         createdAt: 'Created At',
       },
+    },
+  },
+  '/settings/profile': {
+    title: 'Basic Information',
+    changePassword: {
+      title: 'Change Password',
     },
   },
 };

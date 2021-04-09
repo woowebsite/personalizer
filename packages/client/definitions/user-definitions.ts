@@ -29,6 +29,7 @@ export const GET_USER = gql`
       name
       image
       email
+      status
       role {
         id
       }
