@@ -24,5 +24,9 @@ export const UserSchema = {
       type: 'varchar',
       nullable: true,
     },
+    status: {
+      type: 'varchar',
+      nullable: true,
+    },
   },
 };
