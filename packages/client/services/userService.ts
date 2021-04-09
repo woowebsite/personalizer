@@ -17,6 +17,18 @@ const definitions = {
 
     return withQuery(query, options);
   },
+
+  changePassword: options => {
+    const query = gql`
+      mutation ChangePassword($currentPassword: String!, $password: String!) {
+        changePassword(currentPassword: $currentPassword, password: $password) {
+          result
+        }
+      }
+    `;
+
+    return withMutation(query, options);
+  },
 };
 
 const userService = baseService({
