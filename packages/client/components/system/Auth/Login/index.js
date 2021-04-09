@@ -20,9 +20,9 @@ const Login = (props) => {
         // signIn('credentials', {
         //   email: values.email,
         //   password: values.password,
+        //   callbackUrl: '/users/albums'
         // });
-
-        signIn('email', { email: values.email });
+        signIn('email', { email: values.email, callbackUrl: '/users/albums' });
       })
       .catch((errorInfo) => {
         console.log('Error: ', errorInfo);

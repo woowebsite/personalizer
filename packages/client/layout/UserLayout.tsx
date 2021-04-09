@@ -9,10 +9,12 @@ import { Component } from 'react';
 import Router from 'next/router';
 import { getSession } from 'next-auth/client';
 
+import TopBar from '~/components/TopBar';
+
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const withUserLayout = (WrappedComponent) =>
+const withUserLayout = WrappedComponent =>
   class extends Component {
     static async getInitialProps(context) {
       const { ctx } = context;
@@ -48,49 +50,45 @@ const withUserLayout = (WrappedComponent) =>
       const { props } = this;
       return (
         <Layout>
-          <Header className='header'>
-            <div className='logo' />
-            <Menu theme='dark' mode='horizontal' defaultSelectedKeys={['2']}>
-              <Menu.Item key='1'>nav 1</Menu.Item>
-              <Menu.Item key='2'>nav 2</Menu.Item>
-              <Menu.Item key='3'>nav 3</Menu.Item>
-            </Menu>
+          <Header className="header">
+            <div className="logo" />
+            <TopBar />
           </Header>
           <Layout>
-            <Sider width={200} className='site-layout-background'>
+            <Sider width={200} className="site-layout-background">
               <Menu
-                mode='inline'
+                mode="inline"
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
                 style={{ height: '100%', borderRight: 0 }}
               >
-                <SubMenu key='sub1' icon={<UserOutlined />} title='subnav 1'>
-                  <Menu.Item key='1'>
-                    <Link href='/'>Home</Link>
+                <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1">
+                  <Menu.Item key="1">
+                    <Link href="/">Home</Link>
                   </Menu.Item>
-                  <Menu.Item key='2'>
-                    <Link href='/user/albums'>Albums</Link>
+                  <Menu.Item key="2">
+                    <Link href="/user/albums">Albums</Link>
                   </Menu.Item>
-                  <Menu.Item key='2'>
-                    <Link href='/user/members'>Members</Link>
+                  <Menu.Item key="2">
+                    <Link href="/user/members">Members</Link>
                   </Menu.Item>
-                  <Menu.Item key='4'>option3</Menu.Item>
+                  <Menu.Item key="4">option3</Menu.Item>
                 </SubMenu>
-                <SubMenu key='sub2' icon={<LaptopOutlined />} title='subnav 2'>
-                  <Menu.Item key='5'>option5</Menu.Item>
-                  <Menu.Item key='6'>option6</Menu.Item>
-                  <Menu.Item key='7'>option7</Menu.Item>
-                  <Menu.Item key='8'>option8</Menu.Item>
+                <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
+                  <Menu.Item key="5">option5</Menu.Item>
+                  <Menu.Item key="6">option6</Menu.Item>
+                  <Menu.Item key="7">option7</Menu.Item>
+                  <Menu.Item key="8">option8</Menu.Item>
                 </SubMenu>
                 <SubMenu
-                  key='sub3'
+                  key="sub3"
                   icon={<NotificationOutlined />}
-                  title='subnav 3'
+                  title="subnav 3"
                 >
-                  <Menu.Item key='9'>option9</Menu.Item>
-                  <Menu.Item key='10'>option10</Menu.Item>
-                  <Menu.Item key='11'>option11</Menu.Item>
-                  <Menu.Item key='12'>option12</Menu.Item>
+                  <Menu.Item key="9">option9</Menu.Item>
+                  <Menu.Item key="10">option10</Menu.Item>
+                  <Menu.Item key="11">option11</Menu.Item>
+                  <Menu.Item key="12">option12</Menu.Item>
                 </SubMenu>
               </Menu>
             </Sider>
@@ -101,7 +99,7 @@ const withUserLayout = (WrappedComponent) =>
                 <Breadcrumb.Item>App</Breadcrumb.Item>
               </Breadcrumb>
               <Content
-                className='site-layout-background'
+                className="site-layout-background"
                 style={{
                   padding: 24,
                   margin: 0,
