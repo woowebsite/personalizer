@@ -1,0 +1,31 @@
+type ProductBase {
+  id: Int
+  title: String
+  user: User
+}
+
+input ProductBaseWhere {
+  user_id: Int
+  id: Int
+}
+
+input ProductBaseInput {
+  id: Int
+  title: String
+  user_id: Int
+}
+
+type ProductBasesPaged {
+  rows: [ProductBase]
+  count: Int
+}
+
+type Query {
+  productBase(where: ProductBaseWhere): ProductBase
+  productBases(where: ProductBaseWhere, limit: Int, offset: Int): ProductBasesPaged
+}
+
+type Mutation {
+  upsertProductBase(data: ProductBaseInput): ProductBase
+  deleteProductBase(id: Int): Int
+}

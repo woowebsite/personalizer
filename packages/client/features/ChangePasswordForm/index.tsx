@@ -13,13 +13,13 @@ import * as userQueries from 'definitions/user-definitions';
 import userService from 'services/userService';
 
 interface IProps {
-  id?: number;
+  user: any;
 }
 const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
+  const { user } = props;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
-  const { id: userId } = props;
   const [form] = Form.useForm();
   const [changePassword] = userService.changePassword({
     onCompleted: resp => {
@@ -52,14 +52,16 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
     form
       .validateFields()
       .then(values => {
-        console.log('values', values);
-        changePassword({ variables: values }).finally(() => {
-          // callback
-          console.log('change callback');
-        });
+        changePassword({ variables: values });
       })
       .catch(errorInfo => {
-        console.log('Error: ', errorInfo);
+        notification.error({
+          message: 'Notification Error',
+          description: errorInfo,
+          onClick: () => {
+            console.log('Notification Clicked!');
+          },
+        });
       });
   };
 
@@ -73,20 +75,22 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
       onFinish={handleFinish}
       layout="vertical"
     >
-      <Form.Item
-        name="currentPassword"
-        rules={[
-          {
-            required: true,
-            message: useTranslate('validator.required', {
-              name: 'changePasswordForm.label.current',
-            }),
-          },
-        ]}
-        label={t('changePasswordForm.label.current')}
-      >
-        <Input.Password />
-      </Form.Item>
+      {user.havePassword && (
+        <Form.Item
+          name="currentPassword"
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                name: 'changePasswordForm.label.current',
+              }),
+            },
+          ]}
+          label={t('changePasswordForm.label.current')}
+        >
+          <Input.Password />
+        </Form.Item>
+      )}
 
       <Form.Item
         name="password"

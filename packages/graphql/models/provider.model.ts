@@ -9,7 +9,7 @@ import {
 import { User } from './user.model';
 
 @Table({ timestamps: true })
-export class Filter extends Model<Filter> {
+export class Provider extends Model<Provider> {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
 
@@ -17,19 +17,5 @@ export class Filter extends Model<Filter> {
   title: string;
 
   @Column
-  conditions: string;
-
-  @Column
-  model_name: string;
-
-  @Column
   status: string;
-
-  @ForeignKey(() => User)
-  @Column
-  user_id: number;
-
-  @BelongsTo(() => User)
-  user: User;
-
 }
