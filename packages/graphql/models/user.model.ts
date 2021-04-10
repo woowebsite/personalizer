@@ -67,6 +67,10 @@ export class User extends Model<User> {
     }
   }
 
+  public get havePassword(): Boolean {
+    return this.password ? true : false;
+  }
+
   async comparePassword(pw) {
     let err, pass;
     if (!this.password) {
