@@ -33,6 +33,7 @@ export const GET_USER = gql`
       role {
         id
       }
+      havePassword
       role_id
       created_at
     }

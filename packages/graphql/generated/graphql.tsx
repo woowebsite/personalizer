@@ -83,6 +83,12 @@ export type FilterInput = {
   user_id?: Maybe<Scalars['Int']>;
 };
 
+export type FiltersPaged = {
+  __typename?: 'FiltersPaged';
+  rows?: Maybe<Array<Maybe<Filter>>>;
+  count?: Maybe<Scalars['Int']>;
+};
+
 export type FilterWhere = {
   model_name?: Maybe<Scalars['String']>;
   user_id?: Maybe<Scalars['Int']>;
@@ -94,6 +100,8 @@ export type Mutation = {
   upsertFilter?: Maybe<Filter>;
   deleteFilter?: Maybe<Scalars['Int']>;
   uploadFile: File;
+  upsertProductBase?: Maybe<ProductBase>;
+  deleteProductBase?: Maybe<Scalars['Int']>;
   createRole?: Maybe<Role>;
   createUser?: Maybe<User>;
   upsertUser?: Maybe<User>;
@@ -120,6 +128,16 @@ export type MutationUploadFileArgs = {
 };
 
 
+export type MutationUpsertProductBaseArgs = {
+  data?: Maybe<ProductBaseInput>;
+};
+
+
+export type MutationDeleteProductBaseArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
 export type MutationCreateRoleArgs = {
   data?: Maybe<RoleInput>;
 };
@@ -139,12 +157,36 @@ export type PaginationInfo = {
   total?: Maybe<Scalars['Int']>;
 };
 
+export type ProductBase = {
+  __typename?: 'ProductBase';
+  id?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
+};
+
+export type ProductBaseInput = {
+  id?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type ProductBasesPaged = {
+  __typename?: 'ProductBasesPaged';
+  rows?: Maybe<Array<Maybe<ProductBase>>>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type ProductBaseWhere = {
+  user_id?: Maybe<Scalars['Int']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   album?: Maybe<Album>;
   albums?: Maybe<AlbumsPaged>;
   pagination?: Maybe<PaginationInfo>;
-  filters?: Maybe<Array<Maybe<Filter>>>;
+  filters?: Maybe<FiltersPaged>;
+  productBases?: Maybe<ProductBasesPaged>;
   role?: Maybe<Role>;
   roles?: Maybe<Array<Maybe<Role>>>;
   user?: Maybe<User>;
@@ -172,6 +214,15 @@ export type QueryPaginationArgs = {
 
 export type QueryFiltersArgs = {
   where?: Maybe<FilterWhere>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryProductBasesArgs = {
+  where?: Maybe<ProductBaseWhere>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -232,6 +283,7 @@ export type User = {
   updated_at?: Maybe<Scalars['Date']>;
   email_verified?: Maybe<Scalars['Date']>;
   role_id?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
   role?: Maybe<Role>;
 };
 
@@ -240,6 +292,7 @@ export type UserInput = {
   name?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
   role_id?: Maybe<Scalars['Int']>;
 };
 
@@ -253,4 +306,5 @@ export type UserWhere = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   roleId?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
 };
