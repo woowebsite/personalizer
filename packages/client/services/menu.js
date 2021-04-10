@@ -37,5 +37,24 @@ export default function getMenuData() {
         },
       ],
     },
+    {
+      title: 'menu.productBases.title',
+      key: 'dashboards',
+      icon: 'fe fe-home',
+      roles: ['admin'],
+      count: 4,
+      children: [
+        {
+          title: 'menu.productBases.allProductBase',
+          key: 'dashboard',
+          url: '/admin/productbases',
+        },
+        {
+          title: 'menu.productBases.createProductBase',
+          key: 'dashboardBeta',
+          url: '/admin/productbases/new',
+        },
+      ],
+    },
   ];
 }

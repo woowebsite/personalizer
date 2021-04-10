@@ -20,7 +20,7 @@ const options = {
         username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
       },
-      authorize: async (credentials) => {
+      authorize: async credentials => {
         const client = createApolloClient({}, undefined);
 
         try {
@@ -110,12 +110,12 @@ const options = {
       const client = createApolloClient({}, undefined);
       const userResp: any = await client.query({
         query: GET_USER,
-        variables: { email: user.email },
+        variables: { where: { email: user.email } },
       });
 
       if (userResp.data) {
         const loggedUser = userResp.data.user;
-        session.user.roleId = loggedUser.role.id;
+        session.user = loggedUser;
       }
       return Promise.resolve(session);
     },
