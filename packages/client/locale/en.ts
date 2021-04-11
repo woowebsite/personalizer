@@ -90,8 +90,14 @@ export const en = {
       },
     },
     socialConnect: {
-      connectToFacebook: 'Connect to Facebook',
+      title: 'Social Network',
+      connectToFacebook: 'Connected Facebook',
+      connectToTwitter: 'Connected Twitter',
+      connectToGoogle: 'Connected Google',
     },
+  },
+  '/login': {
+    signin: 'Sign In'
   },
   '/admin/users': {
     title: 'All users',
@@ -149,6 +155,9 @@ export const en = {
     title: 'Basic Information',
     changePassword: {
       title: 'Change Password',
+    },
+    socialBox: {
+      title: 'Social Network',
     },
   },
 };
