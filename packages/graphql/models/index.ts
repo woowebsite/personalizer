@@ -28,6 +28,7 @@ export const sequelize = new Sequelize(
   },
 );
 export { User } from './user.model';
+export { Account } from './account.model';
 export { Role } from './role.model';
 export { Album } from './album.model';
 export { Filter } from './filter.model';

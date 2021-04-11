@@ -1,0 +1,33 @@
+type Account {
+  id: Int
+  compound_id: String
+  provider_type: String
+  provider_id: String
+  provider_account_id: String
+  refresh_token: String
+  access_token: String
+
+  created_at: Date
+  updated_at: Date
+  user_id: Int
+  user: User
+}
+
+input AccountWhere {
+  id: Int
+  user_id: Int
+  provide_account_id: String
+  provide_id: String
+}
+
+
+
+type AccountsPaged {
+  rows: [Account]
+  count: Int
+}
+
+type Query {
+  account(where: AccountWhere): Account
+  accounts(where: AccountWhere, limit: Int, offset: Int): AccountsPaged
+}

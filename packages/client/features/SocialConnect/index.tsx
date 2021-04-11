@@ -1,65 +1,61 @@
 import React from 'react';
-import { Button } from 'antd';
-import { signIn } from 'next-auth/client';
 import { useIntl } from 'react-intl';
-import {
-  FacebookFilled,
-  TwitterCircleFilled,
-  GooglePlusCircleFilled,
-} from '@ant-design/icons';
 
-const SocialConenct = () => {
+// graphql
+
+import accountService from 'services/accountService';
+import FacebookConnect from './components/FacebookConnect';
+import TwitterConnect from './components/TwitterConnect';
+import GoogleConnect from './components/GoogleConnect';
+
+const SocialConenct = props => {
   const { formatMessage } = useIntl();
+  const {
+    userId,
+    visibleTwitter = true,
+    visibleFacebook = true,
+    visibleGoogle = true,
+  } = props;
   const t = (id, values?) => formatMessage({ id }, values);
+  let facebookAccount, twitterAccount, googleAccount;
 
-  // EVENTS
-  const onLinkToFacebook = () => {
-    signIn('facebook');
-  };
-  const onLinkToTwitter = () => {
-    signIn('twitter');
-  };
-  const onLinkToGoogle = () => {
-    signIn('google');
-  };
+  if (userId) {
+    // Load accounts
+    const { data, loading, refetch } = accountService.getAll({
+      variables: {
+        where: { user_id: userId },
+      },
+    });
+
+    facebookAccount = data.accounts.rows.find(
+      x => x.provider_id === 'facebook',
+    );
+    twitterAccount = data.accounts.rows.find(x => x.provider_id === 'twitter');
+    googleAccount = data.accounts.rows.find(x => x.provider_id === 'twitter');
+  }
 
   return (
     <>
-      <Button.Group className='mb-3'>
-        <Button
-          onClick={onLinkToFacebook}
-          icon={<FacebookFilled />}
-          size={'large'}
+      {visibleFacebook && (
+        <FacebookConnect
+          account={facebookAccount}
+          buttonConnectText={t('socialConnect.connectToFacebook')}
         />
+      )}
 
-        <Button onClick={onLinkToFacebook} size={'large'}>
-          {t('socialConnect.connectToFacebook')}
-        </Button>
-      </Button.Group>
-
-      <Button.Group className='mb-3'>
-        <Button
-          onClick={onLinkToTwitter}
-          icon={<TwitterCircleFilled />}
-          size={'large'}
+      {visibleTwitter && (
+        <TwitterConnect
+          account={twitterAccount}
+          buttonConnectText={t('socialConnect.connectToTwitter')}
         />
+      )}
 
-        <Button onClick={onLinkToTwitter} size={'large'}>
-          {t('socialConnect.connectToTwitter')}
-        </Button>
-      </Button.Group>
-
-      <Button.Group>
-        <Button
-          onClick={onLinkToGoogle}
-          icon={<GooglePlusCircleFilled />}
-          size={'large'}
+      {visibleGoogle && (
+        <GoogleConnect
+          account={googleAccount}
+          buttonConnectText={t('socialConnect.connectToGoogle')}
         />
-
-        <Button onClick={onLinkToGoogle} size={'large'}>
-          {t('socialConnect.connectToGoogle')}
-        </Button>
-      </Button.Group>
+      )}
     </>
   );
 };
