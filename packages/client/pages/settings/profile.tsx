@@ -17,6 +17,7 @@ const { Content } = Layout;
 const Profile = props => {
   // DECLARE
   const { messages, t, session } = props;
+  const { user } = session;
   const formRef: any = React.createRef();
 
   // EVENTS
@@ -48,7 +49,7 @@ const Profile = props => {
               <Typography.Title level={5} className="mb-3">
                 {t('changePassword.title')}
               </Typography.Title>
-              <ChangePasswordForm ref={formRef} user={session.user}/>
+              <ChangePasswordForm ref={formRef} user={user} />
             </Card>
           </Col>
           <Col span="8">
@@ -56,7 +57,7 @@ const Profile = props => {
               <Typography.Title level={5} className="mb-3">
                 {t('socialBox.title')}
               </Typography.Title>
-              <SocialConenct />
+              <SocialConenct userId={user.id} />
             </Card>
           </Col>
         </Row>
