@@ -20,6 +20,34 @@ export type Scalars = {
 
 
 
+export type Account = {
+  __typename?: 'Account';
+  id?: Maybe<Scalars['Int']>;
+  compound_id?: Maybe<Scalars['String']>;
+  provider_type?: Maybe<Scalars['String']>;
+  provider_id?: Maybe<Scalars['String']>;
+  provider_account_id?: Maybe<Scalars['String']>;
+  refresh_token?: Maybe<Scalars['String']>;
+  access_token?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['Date']>;
+  updated_at?: Maybe<Scalars['Date']>;
+  user_id?: Maybe<Scalars['Int']>;
+  user?: Maybe<User>;
+};
+
+export type AccountsPaged = {
+  __typename?: 'AccountsPaged';
+  rows?: Maybe<Array<Maybe<Account>>>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type AccountWhere = {
+  id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+  provide_account_id?: Maybe<Scalars['String']>;
+  provide_id?: Maybe<Scalars['String']>;
+};
+
 export type Album = {
   __typename?: 'Album';
   id?: Maybe<Scalars['Int']>;
@@ -46,6 +74,11 @@ export type AlbumWhere = {
   id?: Maybe<Scalars['Int']>;
   userId?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
+};
+
+export type BooleanResponse = {
+  __typename?: 'BooleanResponse';
+  result?: Maybe<Scalars['Boolean']>;
 };
 
 export enum CacheControlScope {
@@ -105,6 +138,7 @@ export type Mutation = {
   createRole?: Maybe<Role>;
   createUser?: Maybe<User>;
   upsertUser?: Maybe<User>;
+  changePassword?: Maybe<BooleanResponse>;
 };
 
 
@@ -152,6 +186,12 @@ export type MutationUpsertUserArgs = {
   data?: Maybe<UserInput>;
 };
 
+
+export type MutationChangePasswordArgs = {
+  currentPassword: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type PaginationInfo = {
   __typename?: 'PaginationInfo';
   total?: Maybe<Scalars['Int']>;
@@ -178,20 +218,36 @@ export type ProductBasesPaged = {
 
 export type ProductBaseWhere = {
   user_id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
 };
 
 export type Query = {
   __typename?: 'Query';
+  account?: Maybe<Account>;
+  accounts?: Maybe<AccountsPaged>;
   album?: Maybe<Album>;
   albums?: Maybe<AlbumsPaged>;
   pagination?: Maybe<PaginationInfo>;
   filters?: Maybe<FiltersPaged>;
+  productBase?: Maybe<ProductBase>;
   productBases?: Maybe<ProductBasesPaged>;
   role?: Maybe<Role>;
   roles?: Maybe<Array<Maybe<Role>>>;
   user?: Maybe<User>;
   users?: Maybe<UsersPaged>;
   loginUser?: Maybe<User>;
+};
+
+
+export type QueryAccountArgs = {
+  where?: Maybe<AccountWhere>;
+};
+
+
+export type QueryAccountsArgs = {
+  where?: Maybe<AccountWhere>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -216,6 +272,11 @@ export type QueryFiltersArgs = {
   where?: Maybe<FilterWhere>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryProductBaseArgs = {
+  where?: Maybe<ProductBaseWhere>;
 };
 
 
@@ -285,6 +346,7 @@ export type User = {
   role_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   role?: Maybe<Role>;
+  havePassword?: Maybe<Scalars['Boolean']>;
 };
 
 export type UserInput = {
@@ -307,4 +369,5 @@ export type UserWhere = {
   name?: Maybe<Scalars['String']>;
   roleId?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
 };
