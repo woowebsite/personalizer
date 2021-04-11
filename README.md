@@ -82,7 +82,7 @@ query {
 # Graphql generator
 
 Run graphql server at `http://localhoast:3001/graphql`
-Go to /packages/graphql run
+Go to packages/graphql run
 
 ```console
 yarn generate
