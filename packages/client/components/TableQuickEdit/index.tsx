@@ -5,12 +5,12 @@ import React, {
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import { notification, Table as AntdTable, TableProps } from 'antd';
+import { notification, Table as AntdTable, TableProps, Button } from 'antd';
 import { FetchResult, MutationTuple, OperationVariables } from '@apollo/client';
 
 export declare type QuickForm<RecordType> = (
   record: RecordType,
-  mutate: any
+  mutate: any,
 ) => React.ReactNode;
 interface TableQuickEditProps<RecordType> extends TableProps<RecordType> {
   quickForm: QuickForm<RecordType>;
@@ -32,7 +32,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
     const collapseAll = () => setExpandedRowKeys([]);
 
     // HANDLERS
-    const handleExpandedRowsChange = (expanedRows) => {
+    const handleExpandedRowsChange = expanedRows => {
       setExpandedRowKeys(expanedRows);
     };
 
@@ -60,14 +60,15 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
           expandedRowKeys: expandedRowKeys,
           onExpandedRowsChange: handleExpandedRowsChange,
           expandIcon: ({ onExpand, record }) => (
-            <a
-              onClick={(e) => {
+            <Button
+              type="link"
+              onClick={e => {
                 onExpand(record, e!);
                 e.stopPropagation();
               }}
             >
               {formatMessage({ id: 'tableQuickEdit.btnQuickEdit' })}
-            </a>
+            </Button>
           ),
           expandIconColumnIndex: columns.length - 1,
           expandedRowRender: (record, index, intent, expanded) =>
@@ -78,7 +79,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
         {children}
       </AntdTable>
     );
-  }
+  },
 );
 
 export default TableQuickEdit;

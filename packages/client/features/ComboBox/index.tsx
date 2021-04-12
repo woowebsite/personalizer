@@ -37,7 +37,7 @@ const ComboBox = ({ type, textField, valueField, ...others }) => {
   // render
   return (
     <Select {...others}>
-      {dataSource.map((option) => (
+      {dataSource.map(option => (
         <Option key={option[valueField]} value={option[valueField]}>
           {option[textField]}
         </Option>
@@ -46,3 +46,5 @@ const ComboBox = ({ type, textField, valueField, ...others }) => {
   );
 };
 export default ComboBox;
+
+export { ComboBoxType };

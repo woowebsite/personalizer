@@ -16,3 +16,12 @@ html {
   line-height: 1;
   content: '*';
 }
+
+/* Table */
+.ant-table-row-expand-icon-cell {
+  padding-right: 0 I !important;
+}
+
+.ant-table-cell.actions-cell {
+  padding-left: 0 !important;
+}
