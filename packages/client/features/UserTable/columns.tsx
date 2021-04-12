@@ -2,24 +2,24 @@ import Link from 'next/link';
 import { ColumnsType } from 'antd/lib/table';
 import { Table, Space, Menu, Dropdown, Button } from 'antd';
 import { useIntl } from 'react-intl';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { DownOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
 import Avatar from 'components/Avatar';
-
+import ComboBox, { ComboBoxType } from 'features/ComboBox';
 const menu = (
   <Menu>
-    <Menu.Item key='1' icon={<UserOutlined />}>
-      1st menu item
+    <Menu.Item key="1" icon={<UserOutlined />}>
+      Reset Password
     </Menu.Item>
-    <Menu.Item key='2' icon={<UserOutlined />}>
+    <Menu.Item key="2" icon={<UserOutlined />}>
       2nd menu item
     </Menu.Item>
-    <Menu.Item key='3' icon={<UserOutlined />}>
+    <Menu.Item key="3" icon={<UserOutlined />}>
       3rd menu item
     </Menu.Item>
   </Menu>
 );
 
-export const columns = (t): ColumnsType<any> => {
+export const columns = (t, onDeleteUser, onRoleChanged): ColumnsType<any> => {
   return [
     {
       title: t('userTable.columns.id'),
@@ -39,40 +39,54 @@ export const columns = (t): ColumnsType<any> => {
       dataIndex: 'name',
       key: 'name',
       width: '25%',
-      render: (text) => <span className='text-capitalize'>{text}</span>,
+      render: (text, record) => {
+        return <Link href={`/admin/users/${record.id}`}>{text}</Link>;
+      },
     },
     {
       title: t('userTable.columns.email'),
       dataIndex: 'email',
       key: 'email',
       width: '25%',
-      render: (text, record) => {
-        return <Link href={`/admin/users/${record.id}`}>{text}</Link>;
-      },
+      render: text => <span className="text-capitalize">{text}</span>,
     },
 
     {
-      title: t('userTable.columns.createdAt'),
-      dataIndex: 'created_at',
-      key: 'createdAt',
-      render: (text) => <span className='text-uppercase'>{text}</span>,
+      title: t('userTable.columns.role'),
+      key: 'role_id',
+      dataIndex: 'role_id',
+      render: (value, record, index) => (
+        <ComboBox
+          onChange={changedValue =>
+            onRoleChanged(value, record, index, changedValue)
+          }
+          style={{ width: 150 }}
+          defaultValue={value}
+          valueField="id"
+          textField="name"
+          type={ComboBoxType.Role}
+        />
+      ),
     },
     {
       title: '',
+      className: 'actions-cell',
+      width: '15%',
       key: 'action',
       sorter: false,
-      render: () => (
-        <Space size='middle'>
-          <a>Delete</a>
-          <Dropdown overlay={menu}>
-            <a
-              className='ant-dropdown-link'
-              onClick={(e) => e.preventDefault()}
-            >
-              Actions <DownOutlined />
-            </a>
+      render: (value, record, index) => (
+        <Button.Group>
+          <Button onClick={() => onDeleteUser(record.id)} type="link">
+            {t('buttons.delete')}
+          </Button>
+
+          <Dropdown placement="bottomRight" overlay={menu}>
+            <Button>
+              {t('buttons.actions')}
+              <DownOutlined />
+            </Button>
           </Dropdown>
-        </Space>
+        </Button.Group>
       ),
     },
   ];
