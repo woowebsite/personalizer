@@ -15,6 +15,7 @@
 - id
 - title
 - description
+- demoColor         // Checkbox: Need demo color or not
 - price
 - priority
 - due time
@@ -40,10 +41,23 @@
 - content: Dùng để post link
 - userId
 
+
+
+4. Team
+- id
+- leader_id
+- description
+
 2. User
 - fb
 - name
-- role_id
+- role_id       // customer, employee, leader, helpdesk, admin
+
+3. UserMeta
+- id
+- user_id
+- key       // address, phone, fb
+- value         
 
 3. Wallet
 - userId

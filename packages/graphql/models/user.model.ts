@@ -7,9 +7,11 @@ import {
   ForeignKey,
   AllowNull,
   BeforeSave,
+  HasMany,
 } from 'sequelize-typescript';
 import { Role } from './role.model';
 import to from 'await-to-js';
+import { UserMeta } from './userMeta.model';
 
 // timestamps = false : Use from NextAuth are created_at, updated_at
 @Table({ timestamps: false })
@@ -42,12 +44,17 @@ export class User extends Model<User> {
   @Column
   status: string;
 
+  // foreign
   @ForeignKey(() => Role)
   @Column
   role_id: number;
 
   @BelongsTo(() => Role)
   role: Role;
+
+  // metas
+  @HasMany(() => UserMeta)
+  userMeta: UserMeta[];
 
   @BeforeSave
   static async hashPassword(user: User) {

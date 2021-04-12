@@ -51,6 +51,16 @@ export const en = {
         createdAt: 'Created At',
       },
     },
+    customerTable: {
+      columns: {
+        id: 'Id',
+        name: 'Name',
+        image: 'Avatar',
+        facebook: 'Facebook',
+        customerType: 'Type',
+        createdAt: 'Created At',
+      },
+    },
     productBaseTable: {
       columns: {
         id: 'Id',
@@ -108,6 +118,15 @@ export const en = {
     pageHeader: {
       buttons: {
         create: 'Add user',
+      },
+    },
+  },
+  '/admin/customers': {
+    title: 'All customers',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add customer',
       },
     },
   },

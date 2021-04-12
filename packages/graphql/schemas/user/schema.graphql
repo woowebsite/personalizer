@@ -15,7 +15,7 @@ type User {
 input UserWhere {
   id: Int
   name: String
-  roleId: Int
+  role_id: Int
   status: String
   email: String
 }
