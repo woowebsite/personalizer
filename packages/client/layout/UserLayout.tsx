@@ -4,7 +4,6 @@ import { useIntl } from 'react-intl';
 import MenuLeft from './MenuLeft';
 import getMenuData from 'services/menu';
 import { getSession } from 'next-auth/client';
-import RoleType from '~/models/RoleType';
 
 // components
 import TopBar from '~/components/TopBar';
