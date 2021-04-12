@@ -55,9 +55,7 @@ function withAdminLayout(WrappedComponent) {
     }
 
     // Permission check
-    console.log('session.user.roleId', session.user.roleId);
-
-    if (session.user.roleId !== RoleType.SysAdmin) {
+    if (session.user.role_id !== RoleType.SysAdmin) {
       ctx.res.writeHead(302, { Location: '/login' });
       ctx.res.end();
     }
