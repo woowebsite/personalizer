@@ -116,6 +116,8 @@ const options = {
       if (userResp.data) {
         const loggedUser = userResp.data.user;
         session.user = loggedUser;
+      } else {
+        console.error('Error: The user ' + user.email + 'is not available');
       }
       return Promise.resolve(session);
     },
