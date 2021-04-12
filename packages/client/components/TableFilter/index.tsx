@@ -6,6 +6,7 @@ import filterService from 'services/filterService';
 import { OperationVariables, QueryResult } from '@apollo/client';
 import TabFilter from './components/TabFilter';
 import camelCase from 'lodash/camelCase';
+import { defaultConditions } from './constants';
 
 export declare type FilterForm<RecordType> = (
   record: RecordType,
@@ -29,7 +30,9 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
     pluralName,
     ...others
   } = props;
-  const { data, loading, refetch } = props.query();
+  const { data, loading, refetch } = props.query({
+    variables: { where: defaultConditions },
+  });
 
   // tabs
   const [tabFilterCondition, setTabFilterCondition] = useState({});
@@ -56,7 +59,7 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>((props, ref) => {
     if (key === '0') {
       // load all
       setTabFilterCondition({});
-      refetch({ where: {} });
+      refetch({ where: defaultConditions });
     } else {
       // load by tabs
       const conditions = JSON.parse(

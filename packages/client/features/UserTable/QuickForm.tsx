@@ -1,6 +1,9 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button } from 'antd';
+import { useIntl } from 'react-intl';
 
-const QuickForm = ({ values, onSave }) => {
+const QuickForm = ({ values, onSave, onCancel }) => {
+  const { formatMessage } = useIntl();
+  const t = (id, values?) => formatMessage({ id }, values);
   // DEFINE
   const [form] = Form.useForm();
 
@@ -8,11 +11,11 @@ const QuickForm = ({ values, onSave }) => {
   const handleFinish = () => {
     form
       .validateFields()
-      .then((values) => {
+      .then(values => {
         onSave(values);
       })
-      .catch((errorInfo) => {
-        console.log("Error: ", errorInfo);
+      .catch(errorInfo => {
+        console.log('Error: ', errorInfo);
       });
   };
 
@@ -24,12 +27,13 @@ const QuickForm = ({ values, onSave }) => {
       onFinish={handleFinish}
       name="basic"
       form={form}
+      size="small"
       labelAlign="left"
     >
       <Form.Item
         label="Name"
         name="name"
-        rules={[{ required: true, message: "Please input your username!" }]}
+        rules={[{ required: true, message: 'Please input your username!' }]}
       >
         <Input />
       </Form.Item>
@@ -37,14 +41,17 @@ const QuickForm = ({ values, onSave }) => {
       <Form.Item
         label="Email"
         name="email"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: 'Please input your password!' }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
+        <Button type="primary" className="mr-2" htmlType="submit">
+          {t('buttons.save')}
+        </Button>
+        <Button htmlType="button" type="default" onClick={onCancel}>
+          {t('buttons.cancel')}
         </Button>
       </Form.Item>
     </Form>

@@ -3,6 +3,9 @@
 Load tabs from table `filter` by `user_id`, `model_name` `status=A`
 Each tab has a conditions which will be merged with values of FilterForm to make a searchCriteria
 
+# Default tab: All 
+Default tab `All` has condition 'status=A'
+
 # Usage
 
 ```js
