@@ -36,6 +36,8 @@ export const en = {
       save: 'Save',
       delete: 'Delete',
       edit: 'Edit',
+      actions: 'Actions',
+      more: 'More',
       cancel: 'Cancel',
     },
     userTable: {
@@ -45,6 +47,7 @@ export const en = {
         age: 'Age',
         image: 'Avatar',
         email: 'Email',
+        role: 'Role',
         createdAt: 'Created At',
       },
     },
@@ -75,7 +78,7 @@ export const en = {
       },
     },
     tableQuickEdit: {
-      btnQuickEdit: 'QuickEdit',
+      btnQuickEdit: 'Edit',
     },
     tableFilter: {
       tabFilter: {
@@ -97,7 +100,7 @@ export const en = {
     },
   },
   '/login': {
-    signin: 'Sign In'
+    signin: 'Sign In',
   },
   '/admin/users': {
     title: 'All users',
