@@ -4,11 +4,11 @@ import { Table, Space, Menu, Dropdown, Button } from 'antd';
 import { useIntl } from 'react-intl';
 import { DownOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
 import Avatar from 'components/Avatar';
-
+import ComboBox, { ComboBoxType } from 'features/ComboBox';
 const menu = (
   <Menu>
     <Menu.Item key="1" icon={<UserOutlined />}>
-      1st menu item
+      Reset Password
     </Menu.Item>
     <Menu.Item key="2" icon={<UserOutlined />}>
       2nd menu item
@@ -19,7 +19,7 @@ const menu = (
   </Menu>
 );
 
-export const columns = (t, deleteUser): ColumnsType<any> => {
+export const columns = (t, onDeleteUser, onRoleChanged): ColumnsType<any> => {
   return [
     {
       title: t('userTable.columns.id'),
@@ -52,10 +52,21 @@ export const columns = (t, deleteUser): ColumnsType<any> => {
     },
 
     {
-      title: t('userTable.columns.createdAt'),
-      dataIndex: 'created_at',
-      key: 'createdAt',
-      render: text => <span className="text-uppercase">{text}</span>,
+      title: t('userTable.columns.role'),
+      key: 'role_id',
+      dataIndex: 'role_id',
+      render: (value, record, index) => (
+        <ComboBox
+          onChange={changedValue =>
+            onRoleChanged(value, record, index, changedValue)
+          }
+          style={{ width: 150 }}
+          defaultValue={value}
+          valueField="id"
+          textField="name"
+          type={ComboBoxType.Role}
+        />
+      ),
     },
     {
       title: '',
@@ -65,7 +76,7 @@ export const columns = (t, deleteUser): ColumnsType<any> => {
       sorter: false,
       render: (value, record, index) => (
         <Button.Group>
-          <Button onClick={deleteUser(record)} type="link">
+          <Button onClick={() => onDeleteUser(record.id)} type="link">
             {t('buttons.delete')}
           </Button>
 

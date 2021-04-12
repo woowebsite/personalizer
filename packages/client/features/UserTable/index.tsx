@@ -9,21 +9,42 @@ import FilterForm from './FilterForm';
 
 import { columns } from './columns';
 import userService from 'services/userService';
+import StatusType from '~/models/StatusType';
 
 const UserTable = props => {
   // DEFINES
   const tableRef = React.useRef(null);
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
+  const [upsertUser] = userService.upsert();
 
   // EVENTS
-  const handleDeleteUser = () => {};
+  const handleDeleteUser = user_id => {
+    upsertUser({
+      variables: {
+        user: {
+          id: user_id,
+          status: StatusType.Deactive,
+        },
+      },
+    });
+  };
+
+  const handleRoleChanged = (value, record, index, changedValue) => {
+    upsertUser({
+      variables: {
+        user: {
+          id: record.id,
+          role_id: changedValue,
+        },
+      },
+    });
+  };
 
   // RENDER
   const renderFilter = props => <FilterForm {...props} />;
   const renderTable = props => (
     <TableQuickEdit
-      {...props}
       ref={tableRef}
       rowKey="id"
       mutation={userService.upsert}
@@ -38,7 +59,8 @@ const UserTable = props => {
           }
         />
       )}
-      columns={columns(t, handleDeleteUser)}
+      columns={columns(t, handleDeleteUser, handleRoleChanged)}
+      {...props}
     />
   );
 
