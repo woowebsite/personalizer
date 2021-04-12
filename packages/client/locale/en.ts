@@ -75,7 +75,7 @@ export const en = {
       },
     },
     tableQuickEdit: {
-      btnQuickEdit: 'QuickEdit',
+      btnQuickEdit: 'Edit',
     },
     tableFilter: {
       tabFilter: {

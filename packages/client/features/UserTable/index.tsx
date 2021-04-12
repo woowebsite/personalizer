@@ -27,6 +27,7 @@ const UserTable = props => {
       quickForm={(record, mutate) => (
         <QuickForm
           values={record}
+          onCancel={tableRef.current.collapseAll}
           onSave={values =>
             mutate({
               variables: { user: values },

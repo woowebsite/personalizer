@@ -10,7 +10,7 @@ import { FetchResult, MutationTuple, OperationVariables } from '@apollo/client';
 
 export declare type QuickForm<RecordType> = (
   record: RecordType,
-  mutate: any
+  mutate: any,
 ) => React.ReactNode;
 interface TableQuickEditProps<RecordType> extends TableProps<RecordType> {
   quickForm: QuickForm<RecordType>;
@@ -32,7 +32,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
     const collapseAll = () => setExpandedRowKeys([]);
 
     // HANDLERS
-    const handleExpandedRowsChange = (expanedRows) => {
+    const handleExpandedRowsChange = expanedRows => {
       setExpandedRowKeys(expanedRows);
     };
 
@@ -61,7 +61,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
           onExpandedRowsChange: handleExpandedRowsChange,
           expandIcon: ({ onExpand, record }) => (
             <a
-              onClick={(e) => {
+              onClick={e => {
                 onExpand(record, e!);
                 e.stopPropagation();
               }}
@@ -78,7 +78,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
         {children}
       </AntdTable>
     );
-  }
+  },
 );
 
 export default TableQuickEdit;
