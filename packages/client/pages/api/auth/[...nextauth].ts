@@ -116,7 +116,10 @@ const options = {
       if (userResp.data) {
         const loggedUser = userResp.data.user;
         session.user = loggedUser;
+      } else {
+        console.error('Error: The user ' + user.email + 'is not available');
       }
+      console.log('session', session);
       return Promise.resolve(session);
     },
     // jwt: async (token, user, account, profile, isNewUser) => {

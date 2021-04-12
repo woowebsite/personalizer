@@ -1,54 +1,65 @@
-Product Base
-    id
-    title
-    description
-    status  Draft | Active
-    visibility  Public | Private
-    publish_date    Immediate | scheduled     
-    category_id
-    provider_id
-    thumbnail_id
+1. Board
+- id
+- title
+- description
+- status
 
-ProductBase_Category
-    id
-    title
-    parentId
+// Todo, blend màu, ... admin được tạo
+1. Workflow
+- id
+- title
+- status
+- board_id
 
-ProductBase_Tags
-    id
-    text
-    product_base_id
+4. Task
+- id
+- title
+- description
+- price
+- priority
+- due time
+- money
+- start time
+- workflow_id
+- tags
+- assign_id
+- leader_id
+- customer_id
 
-Providers
-    id
-    name
-    description
+5. Activity
+- id
+- from_user_id
+- to_user_id
+- action_type: Assign, Done, CreateJob, UpdateJob, TransferMoney
+- task_id
+- description
+- money
 
-Thumbnail
-    id
-    url
-    small_url
-    large_url
-    medium_url
-    isPrimary
-    type: Mockup, ProductBase
-    refId
+5. Comment
+- taskId
+- content: Dùng để post link
+- userId
 
-PrintArea
-    id
-    name
-    width
-    height
-    isCombine
-    product_base_id
+2. User
+- fb
+- name
+- role_id
 
-Mockup
-    id
-    name
-    background
-    width
-    height
-    thumbnail_id
-    isNoise
-    isPrimary
-    product_base_id
+3. Wallet
+- userId
+- money
+- created_date
+- updated_date
+
+3. Role
+- id
+- name: Employee, Customer, Leader, SystemAdmin, HelpDesk
+
+// Bộ lọc dành riêng cho mỗi user
+8. Filter
+- id
+- title
+- conditions        // json
+- model_name        // table name
+- userId        // thuộc về user nào đó
+- status        
