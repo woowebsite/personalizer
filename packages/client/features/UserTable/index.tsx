@@ -16,6 +16,9 @@ const UserTable = props => {
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
 
+  // EVENTS
+  const handleDeleteUser = () => {};
+
   // RENDER
   const renderFilter = props => <FilterForm {...props} />;
   const renderTable = props => (
@@ -35,7 +38,7 @@ const UserTable = props => {
           }
         />
       )}
-      columns={columns(t)}
+      columns={columns(t, handleDeleteUser)}
     />
   );
 

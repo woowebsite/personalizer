@@ -36,6 +36,8 @@ export const en = {
       save: 'Save',
       delete: 'Delete',
       edit: 'Edit',
+      actions: 'Actions',
+      more: 'More',
       cancel: 'Cancel',
     },
     userTable: {
@@ -97,7 +99,7 @@ export const en = {
     },
   },
   '/login': {
-    signin: 'Sign In'
+    signin: 'Sign In',
   },
   '/admin/users': {
     title: 'All users',

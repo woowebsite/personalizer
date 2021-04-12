@@ -5,7 +5,7 @@ import React, {
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import { notification, Table as AntdTable, TableProps } from 'antd';
+import { notification, Table as AntdTable, TableProps, Button } from 'antd';
 import { FetchResult, MutationTuple, OperationVariables } from '@apollo/client';
 
 export declare type QuickForm<RecordType> = (
@@ -60,14 +60,15 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
           expandedRowKeys: expandedRowKeys,
           onExpandedRowsChange: handleExpandedRowsChange,
           expandIcon: ({ onExpand, record }) => (
-            <a
+            <Button
+              type="link"
               onClick={e => {
                 onExpand(record, e!);
                 e.stopPropagation();
               }}
             >
               {formatMessage({ id: 'tableQuickEdit.btnQuickEdit' })}
-            </a>
+            </Button>
           ),
           expandIconColumnIndex: columns.length - 1,
           expandedRowRender: (record, index, intent, expanded) =>

@@ -19,7 +19,7 @@ const menu = (
   </Menu>
 );
 
-export const columns = (t): ColumnsType<any> => {
+export const columns = (t, deleteUser): ColumnsType<any> => {
   return [
     {
       title: t('userTable.columns.id'),
@@ -59,17 +59,23 @@ export const columns = (t): ColumnsType<any> => {
     },
     {
       title: '',
+      className: 'actions-cell',
+      width: '15%',
       key: 'action',
       sorter: false,
-      render: () => (
-        <Space size="middle">
-          <a href="#">Delete</a>
-          <Dropdown overlay={menu}>
-            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-              <MoreOutlined />
-            </a>
+      render: (value, record, index) => (
+        <Button.Group>
+          <Button onClick={deleteUser(record)} type="link">
+            {t('buttons.delete')}
+          </Button>
+
+          <Dropdown placement="bottomRight" overlay={menu}>
+            <Button>
+              {t('buttons.actions')}
+              <DownOutlined />
+            </Button>
           </Dropdown>
-        </Space>
+        </Button.Group>
       ),
     },
   ];
