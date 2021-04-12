@@ -11,13 +11,25 @@ module.exports = {
       },
       {
         id: 2,
-        name: 'Admin',
+        name: 'HelpDesk',
         createdAt: Date.now(),
         updatedAt: Date.now(),
       },
       {
         id: 3,
-        name: 'Moderator',
+        name: 'Leader',
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      },
+      {
+        id: 4,
+        name: 'Employee',
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      },
+      {
+        id: 5,
+        name: 'Customer',
         createdAt: Date.now(),
         updatedAt: Date.now(),
       },
