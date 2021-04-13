@@ -346,6 +346,7 @@ export type User = {
   role_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   role?: Maybe<Role>;
+  userMeta?: Maybe<UserMeta>;
   havePassword?: Maybe<Scalars['Boolean']>;
 };
 
@@ -358,6 +359,13 @@ export type UserInput = {
   role_id?: Maybe<Scalars['Int']>;
 };
 
+export type UserMeta = {
+  __typename?: 'UserMeta';
+  id?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
 export type UsersPaged = {
   __typename?: 'UsersPaged';
   rows?: Maybe<Array<Maybe<User>>>;
@@ -367,7 +375,7 @@ export type UsersPaged = {
 export type UserWhere = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
-  roleId?: Maybe<Scalars['Int']>;
+  role_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
 };

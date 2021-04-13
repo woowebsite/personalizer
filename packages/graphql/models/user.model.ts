@@ -52,7 +52,7 @@ export class User extends Model<User> {
   @BelongsTo(() => Role)
   role: Role;
 
-  // metas
+  // metadata
   @HasMany(() => UserMeta)
   userMeta: UserMeta[];
 

@@ -1,0 +1,7 @@
+type UserMeta {
+  id: Int
+  user_id: Int
+  key: String
+  value: String
+  user: User
+}
