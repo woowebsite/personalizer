@@ -1,7 +1,8 @@
-import { resolver } from 'graphql-sequelize';
+import { resolver, attributeFields } from 'graphql-sequelize';
 import { Op } from 'sequelize';
 import { User } from '../../models';
 import to from 'await-to-js';
+import { metadataToField } from '../../utils/dataUtil';
 import { UserMeta } from '../../models/userMeta.model';
 
 export const Query = {
@@ -19,11 +20,17 @@ export const Query = {
       if (where && where.name) conditions.name = { [Op.like]: where.name };
       findOptions.where = conditions;
       findOptions.order = [['name', 'ASC']];
+      findOptions.include = [{ model: UserMeta }];
       return findOptions;
     },
-    after: async (users, args) => {
+    after: async (users, args, context) => {
       const total = await User.count(args.where);
-      return { rows: users, count: total };
+
+      const transferData = users.map(u => metadataToField(u, 'userMeta'));
+      return {
+        rows: transferData,
+        count: total,
+      };
     },
   }),
   loginUser: resolver(User, {

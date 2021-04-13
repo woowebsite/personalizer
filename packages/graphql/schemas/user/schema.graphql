@@ -11,6 +11,9 @@ type User {
   role: Role
   userMeta: [UserMeta]
   havePassword: Boolean
+
+  phone: String
+  address: String
 }
 
 input UserWhere {

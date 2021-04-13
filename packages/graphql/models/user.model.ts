@@ -8,6 +8,7 @@ import {
   AllowNull,
   BeforeSave,
   HasMany,
+  DataType,
 } from 'sequelize-typescript';
 import { Role } from './role.model';
 import to from 'await-to-js';
@@ -52,10 +53,18 @@ export class User extends Model<User> {
   @BelongsTo(() => Role)
   role: Role;
 
-  // metadata
+  // METADATA
   @HasMany(() => UserMeta)
   userMeta: UserMeta[];
 
+  @Column(DataType.VIRTUAL)
+  phone: String;
+
+  @Column(DataType.VIRTUAL)
+  address: String;
+
+
+  // METHOD
   @BeforeSave
   static async hashPassword(user: User) {
     let err;
