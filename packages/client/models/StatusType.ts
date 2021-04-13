@@ -1,6 +1,6 @@
-enum CustomerType {
-  VIP = 1,
-  Normal 
+enum StatusType {
+  Actived = 'A',
+  Deactive = 'D',
 }
 
-export default CustomerType;
+export default StatusType;
