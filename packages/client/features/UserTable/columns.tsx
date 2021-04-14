@@ -44,6 +44,12 @@ export const columns = (t, onDeleteUser, onRoleChanged): ColumnsType<any> => {
       },
     },
     {
+      title: t('userTable.columns.phone'),
+      dataIndex: 'phone',
+      key: 'phone',
+      width: '25%',
+    },
+    {
       title: t('userTable.columns.email'),
       dataIndex: 'email',
       key: 'email',
