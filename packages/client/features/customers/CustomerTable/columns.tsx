@@ -4,7 +4,7 @@ import { Table, Space, Menu, Dropdown, Button } from 'antd';
 import { DownOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
 import Avatar from 'components/Avatar';
 import ComboBoxEnum from '~/components/ComboBoxEnum';
-import CustomerType from '~/models/StatusType';
+import CustomerType from '~/models/CustomerType';
 
 const menu = (
   <Menu>
@@ -46,15 +46,15 @@ export const columns = (t, onDeleteUser, onTypeChanged): ColumnsType<any> => {
     },
     {
       title: t('customerTable.columns.facebook'),
-      dataIndex: 'facebook',
-      key: 'facebook',
+      dataIndex: 'facebookUrl',
+      key: 'facebookUrl',
       width: '25%',
       render: text => <span className="text-capitalize">{text}</span>,
     },
     {
       title: t('customerTable.columns.customerType'),
-      key: 'role_id',
-      dataIndex: 'role_id',
+      key: 'customerType',
+      dataIndex: 'customerType',
       render: (value, record, index) => (
         <ComboBoxEnum
           onChange={changedValue =>

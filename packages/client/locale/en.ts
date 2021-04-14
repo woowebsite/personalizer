@@ -17,10 +17,10 @@ export const en = {
         allUsers: 'All users',
         createUser: 'Create an user',
       },
-      productBases: {
-        title: 'Product bases',
-        allProductBase: 'All Product bases',
-        createProductBase: 'Create product base',
+      customers: {
+        title: 'Customers',
+        allCustomers: 'All Customer',
+        createCustomer: 'Create Customer',
       },
     },
     validator: {

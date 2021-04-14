@@ -17,7 +17,7 @@ const ComboBoxEnum = ({ type, ...others }) => {
   return (
     <Select {...others}>
       {dataSource.map(option => (
-        <Option key={option.id} value={option.name}>
+        <Option key={option.id} value={option.id.toString()}>
           {option.name}
         </Option>
       ))}
