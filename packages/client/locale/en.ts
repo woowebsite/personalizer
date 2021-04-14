@@ -47,6 +47,7 @@ export const en = {
         age: 'Age',
         image: 'Avatar',
         email: 'Email',
+        phone: 'Phone',
         role: 'Role',
         createdAt: 'Created At',
       },
