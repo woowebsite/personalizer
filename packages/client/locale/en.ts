@@ -17,10 +17,10 @@ export const en = {
         allUsers: 'All users',
         createUser: 'Create an user',
       },
-      productBases: {
-        title: 'Product bases',
-        allProductBase: 'All Product bases',
-        createProductBase: 'Create product base',
+      customers: {
+        title: 'Customers',
+        allCustomers: 'All Customer',
+        createCustomer: 'Create Customer',
       },
     },
     validator: {
@@ -48,6 +48,16 @@ export const en = {
         image: 'Avatar',
         email: 'Email',
         role: 'Role',
+        createdAt: 'Created At',
+      },
+    },
+    customerTable: {
+      columns: {
+        id: 'Id',
+        name: 'Name',
+        image: 'Avatar',
+        facebook: 'Facebook',
+        customerType: 'Type',
         createdAt: 'Created At',
       },
     },
@@ -108,6 +118,15 @@ export const en = {
     pageHeader: {
       buttons: {
         create: 'Add user',
+      },
+    },
+  },
+  '/admin/customers': {
+    title: 'All customers',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add customer',
       },
     },
   },
