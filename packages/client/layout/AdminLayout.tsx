@@ -13,17 +13,17 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 function withAdminLayout(WrappedComponent) {
-  const AdminLayout = (props) => {
+  const AdminLayout = props => {
     const { formatMessage, messages } = useIntl();
-    const t = (id) => formatMessage({ id });
+    const t = id => formatMessage({ id });
 
     return (
       <Layout>
-        <Header className='header'>
+        <Header className="header">
           <TopBar />
         </Header>
         <Layout>
-          <Sider width={200} className='site-layout-background'>
+          <Sider width={200} className="site-layout-background">
             <MenuLeft data={getMenuData()} />
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
@@ -34,7 +34,7 @@ function withAdminLayout(WrappedComponent) {
     );
   };
 
-  AdminLayout.getInitialProps = async (context) => {
+  AdminLayout.getInitialProps = async context => {
     const { ctx } = context;
     const session = await getSession({ req: ctx.req });
 
@@ -58,6 +58,9 @@ function withAdminLayout(WrappedComponent) {
     if (session.user.role_id !== RoleType.SysAdmin) {
       ctx.res.writeHead(302, { Location: '/login' });
       ctx.res.end();
+    } else {
+      console.log('session.user', session.user);
+      console.error('Error: You have not permission to access');
     }
 
     const componentProps =
