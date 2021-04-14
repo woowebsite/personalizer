@@ -346,8 +346,12 @@ export type User = {
   role_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   role?: Maybe<Role>;
-  userMeta?: Maybe<UserMeta>;
+  userMeta?: Maybe<Array<Maybe<UserMeta>>>;
   havePassword?: Maybe<Scalars['Boolean']>;
+  phone?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  customerType?: Maybe<Scalars['String']>;
+  facebookUrl?: Maybe<Scalars['String']>;
 };
 
 export type UserInput = {
@@ -362,8 +366,10 @@ export type UserInput = {
 export type UserMeta = {
   __typename?: 'UserMeta';
   id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
 };
 
 export type UsersPaged = {

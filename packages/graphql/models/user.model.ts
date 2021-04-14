@@ -53,15 +53,21 @@ export class User extends Model<User> {
   @BelongsTo(() => Role)
   role: Role;
 
-  // METADATA
   @HasMany(() => UserMeta)
   userMeta: UserMeta[];
-
+  
+  // CUSTOMER's metadata
   @Column(DataType.VIRTUAL)
   phone: String;
 
   @Column(DataType.VIRTUAL)
   address: String;
+  
+  @Column(DataType.VIRTUAL)
+  customerType: String;
+  
+  @Column(DataType.VIRTUAL)
+  facebookUrl: String;
 
 
   // METHOD
