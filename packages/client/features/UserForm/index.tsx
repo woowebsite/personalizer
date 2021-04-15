@@ -4,8 +4,8 @@ import { useIntl } from 'react-intl';
 
 // components
 import UploadImage from '~/components/UploadImage';
-import ComboBox from '~/features/ComboBox';
-import ComboBoxType from '~/features/ComboBox/ComboBoxType';
+import ComboBox from '~/components/ComboBox';
+import ComboBoxType from '~/components/ComboBox/ComboBoxType';
 import useTranslate from 'hooks/useTranslate';
 
 // graphql
