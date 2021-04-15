@@ -7,6 +7,7 @@ type ProductBase {
 input ProductBaseWhere {
   user_id: Int
   id: Int
+  status: String
 }
 
 input ProductBaseInput {
@@ -22,7 +23,11 @@ type ProductBasesPaged {
 
 type Query {
   productBase(where: ProductBaseWhere): ProductBase
-  productBases(where: ProductBaseWhere, limit: Int, offset: Int): ProductBasesPaged
+  productBases(
+    where: ProductBaseWhere
+    limit: Int
+    offset: Int
+  ): ProductBasesPaged
 }
 
 type Mutation {

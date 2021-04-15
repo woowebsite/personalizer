@@ -136,6 +136,8 @@ export type Mutation = {
   upsertProductBase?: Maybe<ProductBase>;
   deleteProductBase?: Maybe<Scalars['Int']>;
   createRole?: Maybe<Role>;
+  upsertTermTaxonomy?: Maybe<TermTaxonomy>;
+  deleteTermTaxonomy?: Maybe<Scalars['Int']>;
   createUser?: Maybe<User>;
   upsertUser?: Maybe<User>;
   changePassword?: Maybe<BooleanResponse>;
@@ -174,6 +176,16 @@ export type MutationDeleteProductBaseArgs = {
 
 export type MutationCreateRoleArgs = {
   data?: Maybe<RoleInput>;
+};
+
+
+export type MutationUpsertTermTaxonomyArgs = {
+  data?: Maybe<TermTaxonomyInput>;
+};
+
+
+export type MutationDeleteTermTaxonomyArgs = {
+  id?: Maybe<Scalars['Int']>;
 };
 
 
@@ -219,6 +231,7 @@ export type ProductBasesPaged = {
 export type ProductBaseWhere = {
   user_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -233,6 +246,8 @@ export type Query = {
   productBases?: Maybe<ProductBasesPaged>;
   role?: Maybe<Role>;
   roles?: Maybe<Array<Maybe<Role>>>;
+  termTaxonomy?: Maybe<TermTaxonomy>;
+  termTaxonomies?: Maybe<TermTaxonomiesPaged>;
   user?: Maybe<User>;
   users?: Maybe<UsersPaged>;
   loginUser?: Maybe<User>;
@@ -301,6 +316,18 @@ export type QueryRolesArgs = {
 };
 
 
+export type QueryTermTaxonomyArgs = {
+  where?: Maybe<TermTaxonomyWhere>;
+};
+
+
+export type QueryTermTaxonomiesArgs = {
+  where?: Maybe<TermTaxonomyWhere>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryUserArgs = {
   where?: Maybe<UserWhere>;
 };
@@ -331,6 +358,42 @@ export type RoleInput = {
 
 export type RoleWhere = {
   id?: Maybe<Scalars['Int']>;
+};
+
+export type Term = {
+  __typename?: 'Term';
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  term_group?: Maybe<Scalars['Int']>;
+};
+
+export type TermTaxonomiesPaged = {
+  __typename?: 'TermTaxonomiesPaged';
+  rows?: Maybe<Array<Maybe<TermTaxonomy>>>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type TermTaxonomy = {
+  __typename?: 'TermTaxonomy';
+  id?: Maybe<Scalars['Int']>;
+  taxonomy?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  termName?: Maybe<Scalars['String']>;
+  term?: Maybe<Term>;
+};
+
+export type TermTaxonomyInput = {
+  id?: Maybe<Scalars['Int']>;
+  taxonomy?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  parent?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type TermTaxonomyWhere = {
+  id?: Maybe<Scalars['Int']>;
+  taxonomy?: Maybe<Scalars['String']>;
 };
 
 

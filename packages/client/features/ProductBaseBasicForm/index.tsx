@@ -4,12 +4,13 @@ import { useIntl } from 'react-intl';
 
 // components
 import UploadImage from '~/components/UploadImage';
-import ComboBox from '~/features/ComboBox';
-import ComboBoxType from '~/features/ComboBox/ComboBoxType';
+import ComboBox from '~/components/ComboBox';
+import ComboBoxType from '~/components/ComboBox/ComboBoxType';
 import useTranslate from 'hooks/useTranslate';
 
 // graphql
 import productBaseService from 'services/productBaseService';
+import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 
 interface IProps {
   data?: any;
@@ -111,11 +112,11 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
         name="category_id"
         label={t('productBaseBasicForm.label.categories')}
       >
-        <ComboBox type={ComboBoxType.Role} valueField="id" textField="name" />
+        <ComboBoxTaxonomy type={TaxonomyType.ProductBase_Category} />
       </Form.Item>
 
       <Form.Item name="tags" label={t('productBaseBasicForm.label.tags')}>
-        <ComboBox type={ComboBoxType.Role} valueField="id" textField="name" />
+        <ComboBoxTaxonomy type={TaxonomyType.ProductBase_Tag} />
       </Form.Item>
     </Form>
   );
