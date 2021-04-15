@@ -35,5 +35,6 @@ export { Filter } from './filter.model';
 export { ProductBase } from './productBase.model';
 export { ProductBaseImage } from './productbaseimage.model';
 export { ProductBaseTag } from './productBaseTag.model';
+export { TermTaxonomy } from './termTaxonomy.model';
 export { Image } from './image.model';
 export { Provider } from './provider.model';
