@@ -1,0 +1,39 @@
+type TermTaxonomy {
+  id: Int
+  taxonomy: String
+  description: String
+  termName: String
+  term: Term
+}
+
+input TermTaxonomyWhere {
+  id: Int
+  taxonomy: String
+}
+
+input TermTaxonomyInput {
+  id: Int
+  taxonomy: String
+  description: String
+  parent: Int
+  count: Int
+}
+
+type TermTaxonomiesPaged {
+  rows: [TermTaxonomy]
+  count: Int
+}
+
+type Query {
+  termTaxonomy(where: TermTaxonomyWhere): TermTaxonomy
+  termTaxonomies(
+    where: TermTaxonomyWhere
+    limit: Int
+    offset: Int
+  ): TermTaxonomiesPaged
+}
+
+type Mutation {
+  upsertTermTaxonomy(data: TermTaxonomyInput): TermTaxonomy
+  deleteTermTaxonomy(id: Int): Int
+}
