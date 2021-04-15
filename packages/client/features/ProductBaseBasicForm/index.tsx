@@ -49,9 +49,14 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
     form
       .validateFields()
       .then(values => {
-        const productBase = data.id ? { id: data.id, ...values } : values;
+        const taxonomies = values.taxonomies
+          ? Object.values(values.taxonomies)
+          : [];
+        const productBase = data ? { id: data.id, ...values } : values;
         upsertProductBase({
-          variables: { productBase },
+          variables: {
+            productBase: { ...productBase, taxonomies },
+          },
         });
       })
       .catch(errorInfo => {
@@ -109,13 +114,16 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
-        name="category_id"
+        name={['taxonomies', 'productbase_category']}
         label={t('productBaseBasicForm.label.categories')}
       >
         <ComboBoxTaxonomy type={TaxonomyType.ProductBase_Category} />
       </Form.Item>
 
-      <Form.Item name="tags" label={t('productBaseBasicForm.label.tags')}>
+      <Form.Item
+        name={['taxonomies', 'productbase_tag']}
+        label={t('productBaseBasicForm.label.tags')}
+      >
         <ComboBoxTaxonomy type={TaxonomyType.ProductBase_Tag} />
       </Form.Item>
     </Form>

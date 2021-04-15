@@ -13,7 +13,9 @@ input ProductBaseWhere {
 input ProductBaseInput {
   id: Int
   title: String
+  description: String
   user_id: Int
+  taxonomies: [Int]
 }
 
 type ProductBasesPaged {

@@ -219,7 +219,9 @@ export type ProductBase = {
 export type ProductBaseInput = {
   id?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   user_id?: Maybe<Scalars['Int']>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
 export type ProductBasesPaged = {
@@ -366,6 +368,14 @@ export type Term = {
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   term_group?: Maybe<Scalars['Int']>;
+};
+
+export type TermRelationship = {
+  __typename?: 'TermRelationship';
+  id?: Maybe<Scalars['Int']>;
+  term_taxonomy_id?: Maybe<Scalars['Int']>;
+  order?: Maybe<Scalars['Int']>;
+  ref_id?: Maybe<Scalars['Int']>;
 };
 
 export type TermTaxonomiesPaged = {

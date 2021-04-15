@@ -10,12 +10,11 @@ const ComboBoxTaxonomy = ({ type, ...others }) => {
   const { data, loading } = termTaxonomyService.getTaxonomiesByType(type);
   if (loading) return <Select {...others} />;
   const dataSource = data.termTaxonomies.rows;
-
   // render
   return (
     <Select {...others}>
       {dataSource.map(option => (
-        <Option key={option.value} value={option.value}>
+        <Option key={option.id} value={option.id}>
           {option.termName}
         </Option>
       ))}
