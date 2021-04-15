@@ -4,7 +4,7 @@ import { Table, Space, Menu, Dropdown, Button } from 'antd';
 import { useIntl } from 'react-intl';
 import { DownOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
 import Avatar from 'components/Avatar';
-import ComboBox, { ComboBoxType } from 'features/ComboBox';
+import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 const menu = (
   <Menu>
     <Menu.Item key="1" icon={<UserOutlined />}>
