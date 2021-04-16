@@ -1,6 +1,7 @@
 import { resolver } from 'graphql-sequelize';
 import { User } from '../../models';
 import to from 'await-to-js';
+import { UserMeta } from '../../models/userMeta.model';
 
 export const Mutation = {
   createUser: resolver(User, {
@@ -19,9 +20,19 @@ export const Mutation = {
   }),
 
   upsertUser: resolver(User, {
-    before: async (findOptions, { data }) => {
-      const [user0, created0] = await User.upsert(data, { returning: true });
-      return user0;
+    before: async (findOptions, { data, metadata }) => {
+      const [user, created0] = await User.upsert(data, { returning: true });
+
+      if (user) {
+        const userMeta = metadata.map(x => ({
+          ...x,
+          user_id: user.id,
+        }));
+
+        await UserMeta.bulkCreate(userMeta);
+      }
+
+      return user;
     },
     after: user => {
       user.login = true;

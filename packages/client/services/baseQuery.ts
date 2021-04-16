@@ -58,9 +58,10 @@ function baseQuery(options: { name: string; plural: string }) {
         }
       }`,
     upsert: gql`
-      mutation Upsert${name}($${camelCaseName}: ${name}Input) {
+      mutation Upsert${name}($${camelCaseName}: ${name}Input, $metadata: [${name}MetaInput]) {
         upsert${name}(
-          data: $${camelCaseName}
+          data: $${camelCaseName},
+          metadata: $metadata
         ) {
           ${model.fields
             .filter(field => field.type.kind === 'SCALAR')
