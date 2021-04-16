@@ -35,6 +35,12 @@ input UserInput {
   role_id: Int
 }
 
+input UserMetaInput{
+  user_id: Int
+  key: String
+  value: String
+}
+
 type UsersPaged {
   rows: [User]
   count: Int
@@ -48,6 +54,6 @@ type Query {
 
 type Mutation {
   createUser(data: UserInput): User
-  upsertUser(data: UserInput): User
+  upsertUser(data: UserInput, metadata: [UserMetaInput]): User
   changePassword(currentPassword: String!, password: String!): BooleanResponse @isAuth
 }
