@@ -62,6 +62,17 @@ export const en = {
         createdAt: 'Created At',
       },
     },
+    customerCreateform: {
+      label: {
+        name: 'Name',
+        description: 'Description',
+        image: 'Image',
+        email: 'Email',
+        type: 'Customer type',
+        address: 'Address',
+        phone: 'Phone',
+      },
+    },
     productBaseTable: {
       columns: {
         id: 'Id',

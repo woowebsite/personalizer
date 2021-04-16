@@ -5,10 +5,10 @@ module.exports = {
     return queryInterface.bulkInsert('users', [
       {
         role_id: 1,
-        created_at: Date.now(),
-        updated_at: Date.now(),
+        created_at: new Date(),
+        updated_at: new Date(),
         email: 'wooowebsite@gmail.com',
-        email_verified: Date.now(),
+        email_verified: new Date(),
         name: 'Nghiem Tran',
         status: 'A',
         password:
@@ -16,10 +16,10 @@ module.exports = {
       },
       {
         role_id: 2,
-        created_at: Date.now(),
-        updated_at: Date.now(),
+        created_at: new Date(),
+        updated_at: new Date(),
         email: 'quanretoucher@gmail.com',
-        email_verified: Date.now(),
+        email_verified: new Date(),
         name: 'Quan',
         status: 'A',
         password:
@@ -27,10 +27,10 @@ module.exports = {
       },
       {
         role_id: 3,
-        created_at: Date.now(),
-        updated_at: Date.now(),
+        created_at: new Date(),
+        updated_at: new Date(),
         email: 'chieudong4712@gmail.com',
-        email_verified: Date.now(),
+        email_verified: new Date(),
         name: 'Minh Phuong',
         status: 'A',
         password:

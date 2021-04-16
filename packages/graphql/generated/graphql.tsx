@@ -196,6 +196,7 @@ export type MutationCreateUserArgs = {
 
 export type MutationUpsertUserArgs = {
   data?: Maybe<UserInput>;
+  metadata?: Maybe<Array<Maybe<UserMetaInput>>>;
 };
 
 
@@ -443,6 +444,12 @@ export type UserMeta = {
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
   user?: Maybe<User>;
+};
+
+export type UserMetaInput = {
+  user_id?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type UsersPaged = {
