@@ -13,42 +13,37 @@ import userService from 'services/userService';
 import ComboBoxEnum from '~/components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
 
+// utils
+import { fieldsToMetadata } from '~/shared/metadataHelper';
+
 interface IProps {
-  id?: number;
+  data: any;
 }
 const CustomerForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
-  const { id: userId } = props;
+  const { data: customer } = props;
   const t = (id, values?) => formatMessage({ id }, values);
   const [upsertUser] = userService.upsert(); //(userQueries.UPSERT_USER);
   const [form] = Form.useForm();
 
-  const { data, loading, refetch } = userService.get({
-    variables: {
-      where: { id: userId },
-    },
-  });
-
-  const formSetFields = user => {
+  const formSetFields = customer => {
     form.setFields([
-      { name: 'role', value: user.role_id },
-      { name: 'name', value: user.name },
-      { name: 'email', value: user.email },
-      { name: 'image', value: user.image },
+      { name: 'role', value: customer.role_id },
+      { name: 'name', value: customer.name },
+      { name: 'email', value: customer.email },
+      { name: 'image', value: customer.image },
     ]);
   };
 
   // EFFECT
   useEffect(
     () => {
-      if (props.id) {
-        if (!loading) {
-          formSetFields(data.user);
-        }
+      if (customer) {
+        formSetFields(customer);
       }
     },
-    [props.id, loading, data],
+    [customer],
   );
 
   /// EVENTS
@@ -60,9 +55,14 @@ const CustomerForm = forwardRef<any, IProps>((props, ref) => {
     form
       .validateFields()
       .then(values => {
-        const data = props.id ? { id: props.id, ...values } : values;
+        const user = customer
+          ? { id: customer.id, ...values.user }
+          : values.user;
+
+        const metadata = fieldsToMetadata(values.metadata);
+
         upsertUser({
-          variables: { user: data },
+          variables: { user, metadata },
         });
       })
       .catch(errorInfo => {
@@ -84,7 +84,7 @@ const CustomerForm = forwardRef<any, IProps>((props, ref) => {
       layout="vertical"
     >
       <Form.Item
-        name="name"
+        name={['user', 'name']}
         rules={[
           {
             required: true,
@@ -98,23 +98,38 @@ const CustomerForm = forwardRef<any, IProps>((props, ref) => {
         <Input />
       </Form.Item>
 
-      <Form.Item name="email" label={t('customerCreateform.label.email')}>
+      <Form.Item
+        name={['user', 'email']}
+        label={t('customerCreateform.label.email')}
+      >
         <Input type="email" />
       </Form.Item>
 
-      <Form.Item name="customer_type" label={t('customerCreateform.label.type')}>
-        <ComboBoxEnum type={CustomerType}  />
+      <Form.Item
+        name={['user', 'type']}
+        label={t('customerCreateform.label.type')}
+      >
+        <ComboBoxEnum type={CustomerType} />
       </Form.Item>
 
-      <Form.Item name="image" label={t('customerCreateform.label.image')}>
+      <Form.Item
+        name={['user', 'image']}
+        label={t('customerCreateform.label.image')}
+      >
         <UploadImage setImageUrl={onSetImageUrl} />
       </Form.Item>
 
-      <Form.Item name="address" label={t('customerCreateform.label.address')}>
+      <Form.Item
+        name={['metadata', 'address']}
+        label={t('customerCreateform.label.address')}
+      >
         <Input type="address" />
       </Form.Item>
 
-      <Form.Item name="phone" label={t('customerCreateform.label.phone')}>
+      <Form.Item
+        name={['metadata', 'phone']}
+        label={t('customerCreateform.label.phone')}
+      >
         <Input type="phone" />
       </Form.Item>
     </Form>
