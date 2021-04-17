@@ -62,9 +62,12 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
           : values.job;
 
         const metadata = fieldsToMetadata(values.metadata);
+        const taxonomies = values.taxonomies
+          ? Object.values(values.taxonomies)
+          : [];
 
         upsertJob({
-          variables: { job, metadata },
+          variables: { job, metadata, taxonomies },
         });
       })
       .catch(errorInfo => {
@@ -115,10 +118,17 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
+        name={['taxonomies', 'job_status']}
+        label={t('jobCreateform.label.status')}
+      >
+        <ComboBoxTaxonomy type={TaxonomyType.Job_Status} />
+      </Form.Item>
+
+      <Form.Item
         name={['job', 'dueDate']}
         label={t('jobCreateform.label.dueDate')}
       >
-        <DatePicker  />
+        <DatePicker />
       </Form.Item>
 
       <Form.Item
@@ -127,8 +137,6 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       >
         <TextArea />
       </Form.Item>
-
-     
     </Form>
   );
 });

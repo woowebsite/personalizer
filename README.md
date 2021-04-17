@@ -91,10 +91,12 @@ yarn generate
 Copy `graphql.schema.json` to `client/services/graphql.schema.json`
 Note documents must start by a query
 
-
 # Metadata
-## Model 
+
+## Model
+
 Define virtual columns at model.ts
+
 ```ts
 {
   @Column(DataType.VIRTUAL)
@@ -102,8 +104,11 @@ Define virtual columns at model.ts
 }
 
 ```
+
 ## Schema
-Must be include `metadata` at type FooModel 
+
+Must be include `metadata` at type FooModel
+
 ```
 type Foo {
   metadata: [FooMeta]
@@ -118,17 +123,63 @@ type FooMetaInput {
 }
 
 ```
+
 Define FooMeta, FooMetaInput
 
 ```
 metadata: [FooMeta]
 ```
+
 ## Sequelize
+
 before function
+
 ```ts
 findOptions.include = [{ model: FooMeta }];
 ```
+
 after function
+
 ```ts
 const rows = foos.map(u => metadataToField(u, 'metadata'));
+```
+
+## Form
+
+Add `metadata` or `taxonomies` at field
+
+```ts
+      <Form.Item
+        name={['job', 'dueDate']}
+        label={t('jobCreateform.label.dueDate')}
+      >
+        <DatePicker  />
+      </Form.Item>
+
+      <Form.Item
+        name={['metadata', 'link']}
+        label={t('jobCreateform.label.link')}
+      >
+        <Input type="link" />
+      </Form.Item>
+
+      <Form.Item
+        name={['taxonomies', 'job_status']}
+        label={t('jobCreateform.label.status')}
+      >
+        <ComboBoxTaxonomy type={TaxonomyType.Job_Status} />
+      </Form.Item>
+
+```
+
+at submit method, pass `metadata` and `taxonomies`
+
+```ts
+upsertJob({
+  variables: {
+    job,
+    metadata,
+    taxonomies,
+  },
+});
 ```

@@ -79,7 +79,8 @@ export const en = {
         title: "Title",
         link: "Link",
         priority: "Priority",
-        dueDate: "DuaDate",
+        status: "Status",
+        dueDate: "DueDate",
         description: "Notes"
       },
     },
