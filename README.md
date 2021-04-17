@@ -90,3 +90,45 @@ yarn generate
 
 Copy `graphql.schema.json` to `client/services/graphql.schema.json`
 Note documents must start by a query
+
+
+# Metadata
+## Model 
+Define virtual columns at model.ts
+```ts
+{
+  @Column(DataType.VIRTUAL)
+  link: string;
+}
+
+```
+## Schema
+Must be include `metadata` at type FooModel 
+```
+type Foo {
+  metadata: [FooMeta]
+}
+type FooMeta {
+  foo: Foo
+}
+type FooMetaInput {
+  foo_id
+  key
+  value
+}
+
+```
+Define FooMeta, FooMetaInput
+
+```
+metadata: [FooMeta]
+```
+## Sequelize
+before function
+```ts
+findOptions.include = [{ model: FooMeta }];
+```
+after function
+```ts
+const rows = foos.map(u => metadataToField(u, 'metadata'));
+```

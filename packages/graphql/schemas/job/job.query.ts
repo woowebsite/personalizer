@@ -1,5 +1,6 @@
 import { resolver } from 'graphql-sequelize';
-import { Job } from '../../models';
+import { Job, JobMeta } from '../../models';
+import { metadataToField } from '../../utils/dataUtil';
 
 export const Query = {
   job: resolver(Job, {
@@ -13,12 +14,15 @@ export const Query = {
     list: true,
     before: async (findOptions, { where }, context) => {
       findOptions.where = where;
-      findOptions.order = [['title', 'ASC']];
+      findOptions.order = [['createdAt', 'DESC']];
+      findOptions.include = [{ model: JobMeta }];
       return findOptions;
     },
     after: async (jobs, args) => {
-      const total = await Job.count(args.where);
-      return { rows: jobs, count: total };
+      const count = await Job.count(args.where);
+      const rows = jobs.map(u => metadataToField(u, 'metadata'));
+      
+      return { rows, count };
     },
   }),
 };

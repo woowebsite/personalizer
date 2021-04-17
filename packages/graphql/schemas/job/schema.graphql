@@ -1,7 +1,12 @@
 type Job {
   id: Int
   title: String
+  description: String
+  dueDate: Date
   user: User
+  metadata: [JobMeta]
+
+  link: String
 }
 
 input JobWhere {
@@ -14,6 +19,7 @@ input JobInput {
   id: Int
   title: String
   description: String
+  dueDate: Date
   user_id: Int
 }
 
@@ -22,8 +28,16 @@ type JobsPaged {
   count: Int
 }
 
+type JobMeta{
+  id: Int
+  job_id: Int
+  key: String
+  value: String
+  job: Job
+}
+
 input JobMetaInput{
-  user_id: Int
+  job_id: Int
   key: String
   value: String
 }

@@ -212,7 +212,7 @@
             "deprecationReason": null
           },
           {
-            "name": "productBase",
+            "name": "job",
             "description": null,
             "args": [
               {
@@ -220,7 +220,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "ProductBaseWhere",
+                  "name": "JobWhere",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -228,14 +228,14 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "ProductBase",
+              "name": "Job",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "productBases",
+            "name": "jobs",
             "description": null,
             "args": [
               {
@@ -243,7 +243,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "ProductBaseWhere",
+                  "name": "JobWhere",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -271,7 +271,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "ProductBasesPaged",
+              "name": "JobsPaged",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1489,7 +1489,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "ProductBaseWhere",
+        "name": "JobWhere",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1530,7 +1530,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "ProductBase",
+        "name": "Job",
         "description": null,
         "fields": [
           {
@@ -1558,12 +1558,64 @@
             "deprecationReason": null
           },
           {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "dueDate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Date",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "user",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
               "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "JobMeta",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "link",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1577,7 +1629,78 @@
       },
       {
         "kind": "OBJECT",
-        "name": "ProductBasesPaged",
+        "name": "JobMeta",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "job_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "key",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "value",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "job",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Job",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "JobsPaged",
         "description": null,
         "fields": [
           {
@@ -1589,7 +1712,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "ProductBase",
+                "name": "Job",
                 "ofType": null
               }
             },
@@ -2041,7 +2164,7 @@
             "deprecationReason": null
           },
           {
-            "name": "upsertProductBase",
+            "name": "upsertJob",
             "description": null,
             "args": [
               {
@@ -2049,22 +2172,50 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "ProductBaseInput",
+                  "name": "JobInput",
                   "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "metadata",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "JobMetaInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "taxonomies",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "ProductBase",
+              "name": "Job",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "deleteProductBase",
+            "name": "deleteJob",
             "description": null,
             "args": [
               {
@@ -2487,7 +2638,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "ProductBaseInput",
+        "name": "JobInput",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -2522,7 +2673,38 @@
             "defaultValue": null
           },
           {
+            "name": "dueDate",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Date",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
             "name": "user_id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "JobMetaInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "job_id",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -2532,16 +2714,22 @@
             "defaultValue": null
           },
           {
-            "name": "taxonomies",
+            "name": "key",
             "description": null,
             "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "value",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "defaultValue": null
           }
