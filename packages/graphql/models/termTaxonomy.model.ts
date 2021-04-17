@@ -5,6 +5,7 @@ import {
   ForeignKey,
   BelongsTo,
   DataType,
+  Default,
 } from 'sequelize-typescript';
 import { Term } from './term.model';
 
@@ -27,6 +28,10 @@ export class TermTaxonomy extends Model<TermTaxonomy> {
 
   @Column
   parent: number;
+
+  @Default(1)
+  @Column
+  order: number;
 
   @Column
   count: number;
