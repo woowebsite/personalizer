@@ -20,51 +20,40 @@ const menu = (
   </Menu>
 );
 
-export const columns = (t, onDeleteUser, onTypeChanged): ColumnsType<any> => {
+export const columns = (t, onDeleteJob): ColumnsType<any> => {
   return [
     {
-      title: t('customerTable.columns.id'),
+      title: t('jobTable.columns.id'),
       dataIndex: 'id',
       key: 'id',
       align: 'center',
     },
+
     {
-      title: t('customerTable.columns.image'),
-      dataIndex: 'image',
-      key: 'image',
-      width: '5%',
-      render: (image: string) => <Avatar alt={image} src={image} />,
-    },
-    {
-      title: t('customerTable.columns.name'),
-      dataIndex: 'name',
-      key: 'name',
+      title: t('jobTable.columns.title'),
+      dataIndex: 'title',
+      key: 'title',
       width: '25%',
       render: (text, record) => {
-        return <Link href={`/admin/users/${record.id}`}>{text}</Link>
+        console.log('record', record);
+
+        return text ? <Link href={`/jobs/${record.id}`}>{text}</Link> : text;
       },
     },
     {
-      title: t('customerTable.columns.facebook'),
-      dataIndex: 'facebookUrl',
-      key: 'facebookUrl',
+      title: t('jobTable.columns.link'),
+      dataIndex: 'link',
+      key: 'link',
       width: '25%',
-      render: text => <span className="text-capitalize">{text}</span>,
+      render: link => {
+        return link ? <Link href={link}>{link}</Link> : link;
+      },
     },
     {
-      title: t('customerTable.columns.customerType'),
-      key: 'customerType',
-      dataIndex: 'customerType',
-      render: (value, record, index) => (
-        <ComboBoxEnum
-          onChange={changedValue =>
-            onTypeChanged(value, record, index, changedValue)
-          }
-          style={{ width: 150 }}
-          defaultValue={value}
-          type={CustomerType}
-        />
-      ),
+      title: t('jobTable.columns.status'),
+      dataIndex: 'status',
+      key: 'status',
+      width: '25%',
     },
     {
       title: '',
@@ -74,7 +63,7 @@ export const columns = (t, onDeleteUser, onTypeChanged): ColumnsType<any> => {
       sorter: false,
       render: (value, record, index) => (
         <Button.Group>
-          <Button onClick={() => onDeleteUser(record.id)} type="link">
+          <Button onClick={() => onDeleteJob(record.id)} type="link">
             {t('buttons.delete')}
           </Button>
 

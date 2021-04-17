@@ -34,11 +34,13 @@ export const en = {
     buttons: {
       discard: 'Discard',
       save: 'Save',
+      create: 'Create',
       delete: 'Delete',
       edit: 'Edit',
       actions: 'Actions',
       more: 'More',
       cancel: 'Cancel',
+      filter: 'Filter'
     },
     userTable: {
       columns: {
@@ -60,6 +62,26 @@ export const en = {
         facebook: 'Facebook',
         customerType: 'Type',
         createdAt: 'Created At',
+      },
+    },
+    jobTable: {
+      columns: {
+        id: 'Id',
+        title: 'Title',
+        link: 'Link',
+        status: 'Status',
+        priority: 'Priority',
+        createdAt: 'Created At',
+      },
+    },
+    jobCreateform: {
+      label: {
+        title: "Title",
+        link: "Link",
+        priority: "Priority",
+        status: "Status",
+        dueDate: "DueDate",
+        description: "Notes"
       },
     },
     customerCreateform: {
@@ -142,12 +164,22 @@ export const en = {
       },
     },
   },
-  '/admin/productbases': {
-    title: 'Product Bases',
+  '/customer/jobs': {
+    title: 'Job',
     subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
         create: 'Add new',
+      },
+    },
+  },
+  '/customer/jobs/new': {
+    title: 'Create a job',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add job',
+        all: 'All jobs'
       },
     },
   },
