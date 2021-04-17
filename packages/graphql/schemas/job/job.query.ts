@@ -1,24 +1,24 @@
 import { resolver } from 'graphql-sequelize';
-import { ProductBase } from '../../models';
+import { Job } from '../../models';
 
 export const Query = {
-  productBase: resolver(ProductBase, {
+  job: resolver(Job, {
     before: async (findOptions, { where }, context) => {
       findOptions.where = where;
       return findOptions;
     },
-    after: productBase => productBase,
+    after: job => job,
   }),
-  productBases: resolver(ProductBase, {
+  jobs: resolver(Job, {
     list: true,
     before: async (findOptions, { where }, context) => {
       findOptions.where = where;
       findOptions.order = [['title', 'ASC']];
       return findOptions;
     },
-    after: async (productBases, args) => {
-      const total = await ProductBase.count(args.where);
-      return { rows: productBases, count: total };
+    after: async (jobs, args) => {
+      const total = await Job.count(args.where);
+      return { rows: jobs, count: total };
     },
   }),
 };

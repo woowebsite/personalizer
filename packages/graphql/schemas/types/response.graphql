@@ -1,3 +1,11 @@
 type BooleanResponse {
   result: Boolean
 }
+
+type TermRelationship {
+  id: Int
+  term_taxonomy_id: Int
+  order: Int
+  ref_id: Int
+}
+
