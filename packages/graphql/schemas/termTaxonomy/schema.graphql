@@ -3,6 +3,7 @@ type TermTaxonomy {
   taxonomy: String
   description: String
   termName: String
+  order: Int
   term: Term
 }
 
@@ -15,6 +16,7 @@ input TermTaxonomyInput {
   id: Int
   taxonomy: String
   description: String
+  order: Int
   parent: Int
   count: Int
 }

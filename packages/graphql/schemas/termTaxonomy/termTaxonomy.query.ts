@@ -16,7 +16,7 @@ export const Query = {
     before: async (findOptions, { where }, context) => {
       findOptions.where = where;
       findOptions.include = [{ model: Term }];
-      findOptions.order = [['taxonomy', 'ASC']];
+      findOptions.order = [['order', 'ASC']];
       return findOptions;
     },
     after: async (termTaxonomies, args) => {
