@@ -5,7 +5,7 @@ const path = require('path');
 
 // Where your antd-custom.less file lives
 const themeVariables = lessToJS(
-  fs.readFileSync(path.resolve(__dirname, './assets/antd-custom.less'), 'utf8')
+  fs.readFileSync(path.resolve(__dirname, './assets/antd-custom.less'), 'utf8'),
 );
 
 module.exports = {
@@ -15,10 +15,11 @@ module.exports = {
   i18n: {
     // These are all the locales you want to support in
     // your application
-    locales: ['en', 'vn'],
+    locales: ['vi', 'en'],
     // This is the default locale you want to be used when visiting
     // a non-locale prefixed path e.g. `/hello`
     defaultLocale: 'en',
+    localeDetection: false // disable automatic redirect Accept-language
   },
   lessLoaderOptions: {
     lessOptions: {
