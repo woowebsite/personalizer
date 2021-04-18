@@ -15,7 +15,7 @@ import to from 'await-to-js';
 import { UserMeta } from './userMeta.model';
 
 // timestamps = false : Use from NextAuth are created_at, updated_at
-@Table({ timestamps: false })
+@Table({ timestamps: false, tableName: 'users' })
 export class User extends Model<User> {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
@@ -55,20 +55,19 @@ export class User extends Model<User> {
 
   @HasMany(() => UserMeta)
   userMeta: UserMeta[];
-  
+
   // CUSTOMER's metadata
   @Column(DataType.VIRTUAL)
   phone: String;
 
   @Column(DataType.VIRTUAL)
   address: String;
-  
+
   @Column(DataType.VIRTUAL)
   customerType: String;
-  
+
   @Column(DataType.VIRTUAL)
   facebookUrl: String;
-
 
   // METHOD
   @BeforeSave
