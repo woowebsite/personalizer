@@ -7,7 +7,7 @@ import {
 } from 'sequelize-typescript';
 import { User } from './user.model';
 
-@Table({ timestamps: false })
+@Table({ timestamps: false, tableName: 'accounts' })
 export class Account extends Model<Account> {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
