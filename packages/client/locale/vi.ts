@@ -1,4 +1,4 @@
-export const vn = {
+export const vi = {
   common: {
     topBar: {
       profileMenu: {
@@ -45,7 +45,7 @@ export const vn = {
       actions: 'Tác vụ',
       more: 'Thêm nữa',
       cancel: 'Tạm hoãn',
-      filter: 'Lọc'
+      filter: 'Lọc',
     },
     userTable: {
       columns: {
@@ -81,14 +81,15 @@ export const vn = {
     },
     jobCreateform: {
       label: {
-        title: "Tiêu đề",
-        link: "Link",
-        priority: "Ưu tiên",
-        status: "Trạng thái",
-        dueDate: "Ngày hết hạn",
-        description: "Ghi chú"
+        title: 'Tiêu đề',
+        link: 'Link',
+        priority: 'Ưu tiên',
+        status: 'Trạng thái',
+        dueDate: 'Ngày hết hạn',
+        description: 'Ghi chú',
       },
     },
+
     customerCreateform: {
       label: {
         name: 'Tên',
@@ -100,7 +101,7 @@ export const vn = {
         phone: 'Số điện thoại',
       },
     },
-   
+
     userCreateform: {
       label: {
         name: 'Tên',
@@ -127,9 +128,9 @@ export const vn = {
     },
     socialConnect: {
       title: 'Mạng xã hội',
-      connectToFacebook: 'Đã kết nối Facebook',
-      connectToTwitter: 'Đã kết nối twitter',
-      connectToGoogle: 'Đã kết nối Google',
+      connectToFacebook: 'Facebook',
+      connectToTwitter: 'Twitter',
+      connectToGoogle: 'Google',
     },
   },
   '/login': {
@@ -153,13 +154,33 @@ export const vn = {
       },
     },
   },
+  '/admin/customers/new': {
+    title: 'Tạo khách hàng',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Thêm khách hàng',
+      },
+    },
+    customerMoney: {
+      title: 'Tài khoản',
+      buttons: {
+        addMoney: 'Nạp tiền',
+        cancel: 'Tạm hoãn'
+      },
+      label: {
+        money: 'Tiền',
+        debt: 'Công nợ',
+      },
+    },
+  },
   '/customer/jobs': {
     title: 'Danh sách công việc',
     subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
         create: 'Tạo mới',
-        all: 'Danh sách công việc'
+        all: 'Danh sách công việc',
       },
     },
   },
@@ -169,7 +190,22 @@ export const vn = {
     pageHeader: {
       buttons: {
         create: 'Tạo mới',
-        all: 'Danh sách công việc'
+        all: 'Danh sách công việc',
+      },
+    },
+    jobStatus: {
+      title: 'Tình trạng công việc',
+      label: {
+        status: 'Tình trạng',
+        employee: 'Thợ ảnh',
+        leader: 'Leader',
+      },
+    },
+    jobMoney: {
+      title: 'Chi phí',
+      label: {
+        paid: 'Đã thanh toán',
+        debt: 'Còn nợ',
       },
     },
   },
@@ -190,7 +226,7 @@ export const vn = {
       title: 'Mạng xã hội',
     },
   },
-  
+
   '/settings/profile': {
     title: 'Thông tin cá nhân',
     changePassword: {
