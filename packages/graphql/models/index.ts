@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize} from 'sequelize-typescript';
 import { ENV } from '../config/env.config';
 import camelCase from 'lodash/camelCase';
 

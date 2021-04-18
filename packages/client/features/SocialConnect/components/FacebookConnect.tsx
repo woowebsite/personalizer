@@ -5,7 +5,7 @@ import { FacebookFilled } from '@ant-design/icons';
 const FacebookConnect = props => {
   const { account, buttonConnectText } = props;
   const onLinkToFacebook = () => {
-    signIn('facebook');
+    signIn('facebook', { callbackUrl: '/settings/profile' });
   };
 
   return (
