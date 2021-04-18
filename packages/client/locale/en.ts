@@ -22,6 +22,11 @@ export const en = {
         allCustomers: 'All Customer',
         createCustomer: 'Create Customer',
       },
+      jobs: {
+        title: 'Jobs',
+        allJobs: 'All Jobs',
+        createJob: 'Create Job',
+      },
     },
     validator: {
       required: 'Please input {field}',
@@ -170,6 +175,7 @@ export const en = {
     pageHeader: {
       buttons: {
         create: 'Add new',
+        all: 'All jobs'
       },
     },
   },

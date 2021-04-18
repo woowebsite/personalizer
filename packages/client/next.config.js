@@ -18,7 +18,7 @@ module.exports = {
     locales: ['en', 'vn'],
     // This is the default locale you want to be used when visiting
     // a non-locale prefixed path e.g. `/hello`
-    defaultLocale: 'en',
+    defaultLocale: process.env.locale || 'vn',
   },
   lessLoaderOptions: {
     lessOptions: {

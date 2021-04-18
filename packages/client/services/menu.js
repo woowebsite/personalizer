@@ -39,6 +39,25 @@ export default function getMenuData() {
       ],
     },
     {
+      title: 'menu.jobs.title',
+      key: 'dashboards',
+      icon: 'fe fe-home',
+      roles: ['admin'],
+      count: 4,
+      children: [
+        {
+          title: 'menu.jobs.allJobs',
+          key: 'all',
+          url: '/admin/jobs',
+        },
+        {
+          title: 'menu.jobs.createJob',
+          key: 'new',
+          url: '/admin/jobs/new',
+        },
+      ],
+    },
+    {
       title: 'menu.settings.title',
       key: 'settings',
       icon: 'fe fe-home',
