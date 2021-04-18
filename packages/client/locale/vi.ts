@@ -1,4 +1,4 @@
-export const vn = {
+export const vi = {
   common: {
     topBar: {
       profileMenu: {
@@ -128,9 +128,9 @@ export const vn = {
     },
     socialConnect: {
       title: 'Mạng xã hội',
-      connectToFacebook: 'Đã kết nối Facebook',
-      connectToTwitter: 'Đã kết nối twitter',
-      connectToGoogle: 'Đã kết nối Google',
+      connectToFacebook: 'Facebook',
+      connectToTwitter: 'Twitter',
+      connectToGoogle: 'Google',
     },
   },
   '/login': {
