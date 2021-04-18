@@ -17,7 +17,7 @@ import CustomerType from '~/models/CustomerType';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 interface IProps {
-  data: any;
+  data?: any;
 }
 const CustomerForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES

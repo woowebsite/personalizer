@@ -48,12 +48,12 @@ export default function getMenuData() {
         {
           title: 'menu.jobs.allJobs',
           key: 'all',
-          url: '/admin/jobs',
+          url: '/customer/jobs',
         },
         {
           title: 'menu.jobs.createJob',
           key: 'new',
-          url: '/admin/jobs/new',
+          url: '/customer/jobs/new',
         },
       ],
     },
