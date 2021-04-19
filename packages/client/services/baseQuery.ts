@@ -58,7 +58,7 @@ function baseQuery(options: { name: string; plural: string }) {
         }
       }`,
     upsert: gql`
-      mutation Upsert${name}($${camelCaseName}: ${name}Input, $metadata: [${name}MetaInput], $taxonomies: [Int]) {
+      mutation Upsert${name}($${camelCaseName}: ${name}Input, $metadata: [${name}MetaInput], $taxonomies: [Int]=[]) {
         upsert${name}(
           data: $${camelCaseName},
           metadata: $metadata,
