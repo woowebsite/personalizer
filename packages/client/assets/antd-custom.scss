@@ -1,6 +1,19 @@
 html {
   font-size: 15px;
 }
+/* Header */
+.ant-layout-header {
+  background-color: #1a3b30;
+}
+.ant-menu.ant-menu-dark,
+.ant-menu-dark .ant-menu-sub,
+.ant-menu.ant-menu-dark .ant-menu-sub {
+  background-color: inherit;
+}
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+  background-color: #0a241c;
+}
 
 .ant-form-item-label
   > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
@@ -26,16 +39,15 @@ html {
   padding-left: 0 !important;
 }
 
-
 /* FORM */
 .status-form {
-  .field-number{
+  .field-number {
     text-align: right;
   }
   .ant-form-item {
     margin-bottom: 0;
   }
-  .ant-card-actions  {
+  .ant-card-actions {
     padding-left: 24px;
     padding-right: 24px;
   }

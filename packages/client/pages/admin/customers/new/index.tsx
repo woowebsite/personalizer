@@ -10,8 +10,8 @@ import { withApollo } from 'apollo/apollo';
 
 // inner components
 import CustomerForm from '~/features/customers/CustomerForm';
-import SocialConenct from '~/features/SocialConnect';
 import CustomerMoney from '~/features/customers/CustomerMoney';
+import RedirectButton from '~/components/RedirectButton';
 
 const { Content } = Layout;
 
@@ -34,6 +34,9 @@ const CustomerNew = props => {
         title={title}
         subTitle={messages.subTitle}
         extra={[
+          <RedirectButton url={'/admin/customers'}>
+            {t('pageHeader.buttons.allCustomers')}
+          </RedirectButton>,
           <Button key="2" danger>
             {t('buttons.delete')}
           </Button>,

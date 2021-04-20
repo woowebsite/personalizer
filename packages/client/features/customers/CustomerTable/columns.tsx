@@ -41,7 +41,7 @@ export const columns = (t, onDeleteUser, onTypeChanged): ColumnsType<any> => {
       key: 'name',
       width: '25%',
       render: (text, record) => {
-        return <Link href={`/admin/users/${record.id}`}>{text}</Link>
+        return <Link href={`/admin/customers/${record.id}`}>{text}</Link>
       },
     },
     {

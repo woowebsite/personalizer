@@ -30,7 +30,7 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
 
   const formSetFields = user => {
     form.setFields([
-      { name: 'role', value: user.role_id },
+      { name: 'role_id', value: user.role_id },
       { name: 'name', value: user.name },
       { name: 'email', value: user.email },
       { name: 'image', value: user.image },
