@@ -12,6 +12,10 @@ import userService from 'services/userService';
 import StatusType from '~/models/StatusType';
 import { defaultFilter } from './constants';
 
+// const
+import CustomerMetaFields from 'models/CustomerMetaFields';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
+
 const CustomerTable = props => {
   // DEFINES
   const tableRef = React.useRef(null);
@@ -36,13 +40,13 @@ const CustomerTable = props => {
       variables: {
         user: {
           id: record.id,
-          role_id: changedValue,
         },
+        metadata: fieldsToMetadata({
+          [CustomerMetaFields.CustomerType]: changedValue,
+        }),
       },
     });
   };
-
- 
 
   // RENDER
   const renderFilter = props => <FilterForm {...props} />;

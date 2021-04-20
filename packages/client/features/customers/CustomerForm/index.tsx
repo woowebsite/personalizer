@@ -28,7 +28,6 @@ const CustomerForm = forwardRef<any, IProps>((props, ref) => {
   const [form] = Form.useForm();
 
   const formSetFields = customer => {
-    console.log('customer', customer);
     form.setFields([
       { name: ['user', 'name'], value: customer.name },
       { name: ['user', 'email'], value: customer.email },
