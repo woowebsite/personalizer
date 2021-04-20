@@ -156,10 +156,32 @@ export const vi = {
   },
   '/admin/customers/new': {
     title: 'Tạo khách hàng',
-    subTitle: 'This is subtitle',
+    subTitle: 'This is subtitle', 
     pageHeader: {
       buttons: {
         create: 'Thêm khách hàng',
+        allCustomers: 'Danh sách khách hàng',
+      },
+    },
+    customerMoney: {
+      title: 'Tài khoản',
+      buttons: {
+        addMoney: 'Nạp tiền',
+        cancel: 'Tạm hoãn'
+      },
+      label: {
+        money: 'Tiền',
+        debt: 'Công nợ',
+      },
+    },
+  },
+  '/admin/customers/[id]': {
+    title: 'Tạo khách hàng',
+    subTitle: 'This is subtitle', 
+    pageHeader: {
+      buttons: {
+        create: 'Thêm khách hàng',
+        allCustomers: 'Danh sách khách hàng',
       },
     },
     customerMoney: {

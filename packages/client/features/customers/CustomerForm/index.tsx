@@ -22,28 +22,31 @@ interface IProps {
 const CustomerForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
-  const { data: customer } = props;
+  const { data } = props;
   const t = (id, values?) => formatMessage({ id }, values);
   const [upsertUser] = userService.upsert(); //(userQueries.UPSERT_USER);
   const [form] = Form.useForm();
 
   const formSetFields = customer => {
+    console.log('customer', customer);
     form.setFields([
-      { name: 'role', value: customer.role_id },
-      { name: 'name', value: customer.name },
-      { name: 'email', value: customer.email },
-      { name: 'image', value: customer.image },
+      { name: ['user', 'name'], value: customer.name },
+      { name: ['user', 'email'], value: customer.email },
+      { name: ['user', 'image'], value: customer.image },
+      { name: ['metadata', 'customerType'], value: customer.customerType },
+      { name: ['metadata', 'address'], value: customer.address },
+      { name: ['metadata', 'phone'], value: customer.phone },
     ]);
   };
 
   // EFFECT
   useEffect(
     () => {
-      if (customer) {
-        formSetFields(customer);
+      if (data && data.user) {
+        formSetFields(data.user);
       }
     },
-    [customer],
+    [data],
   );
 
   /// EVENTS
@@ -55,10 +58,11 @@ const CustomerForm = forwardRef<any, IProps>((props, ref) => {
     form
       .validateFields()
       .then(values => {
-        const user = customer
-          ? { id: customer.id, ...values.user }
-          : values.user;
-
+        
+        const user = data.user
+        ? { id: data.user.id, ...values.user }
+        : values.user;
+        
         const metadata = fieldsToMetadata(values.metadata);
 
         upsertUser({
@@ -106,7 +110,7 @@ const CustomerForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
-        name={['user', 'type']}
+        name={['metadata', 'customerType']}
         label={t('customerCreateform.label.type')}
       >
         <ComboBoxEnum type={CustomerType} />

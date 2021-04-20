@@ -9,9 +9,15 @@ export const Query = {
   user: resolver(User, {
     before: async (findOptions, { where }, context) => {
       findOptions.where = where;
+      findOptions.include = [{ model: UserMeta }];
       return findOptions;
     },
-    after: user => user,
+    after: async (user, args, context) => {
+      const total = await User.count(args.where);
+
+      const transferData = metadataToField(user, 'userMeta') //user.map(u => metadataToField(u, 'userMeta'));
+      return transferData
+    },
   }),
   users: resolver(User, {
     list: true,

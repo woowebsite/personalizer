@@ -9,9 +9,9 @@ type User {
   role_id: Int
   status: String
   role: Role
-  userMeta: [UserMeta]
   havePassword: Boolean
 
+  userMeta: [UserMeta]
   phone: String
   address: String
   customerType: String
@@ -54,6 +54,6 @@ type Query {
 
 type Mutation {
   createUser(data: UserInput): User
-  upsertUser(data: UserInput, metadata: [UserMetaInput]): User
+  upsertUser(data: UserInput, metadata: [UserMetaInput], taxonomies: [Int]): User
   changePassword(currentPassword: String!, password: String!): BooleanResponse @isAuth
 }
