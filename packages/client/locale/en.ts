@@ -121,6 +121,23 @@ export const en = {
       },
     },
   },
+  '/admin/productbases/new': {
+    title: 'Product Bases',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add new',
+      },
+    },
+    publishBox: {
+      title: 'Publish',
+      label: {
+        status: 'Status',
+        visibility: 'Visibility',
+        publish: 'Publish'
+      }
+    }
+  },
   '/admin/users/new': {
     title: 'Create an user',
   },

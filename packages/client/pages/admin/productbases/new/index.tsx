@@ -13,8 +13,8 @@ import userService from 'services/userService';
 import { productBaseQuery } from 'services/productBaseService';
 
 // inner components
-import ProductBaseBasicForm from '~/features/ProductBaseBasicForm';
-import SocialConenct from '~/features/SocialConnect';
+import ProductBaseBasicForm from '~/features/productBases/ProductBaseBasicForm';
+import ProductBaseStatus from '~/features/productBases/productBaseStatus';
 
 const { Content } = Layout;
 
@@ -54,12 +54,7 @@ const ProductBaseCreate = props => {
             </Card>
           </Col>
           <Col span="12">
-            <Card>
-              <Typography.Title level={5} className="mb-3">
-                {t('socialBox.title')}
-              </Typography.Title>
-              <SocialConenct />
-            </Card>
+            <ProductBaseStatus />
           </Col>
         </Row>
       </Content>
