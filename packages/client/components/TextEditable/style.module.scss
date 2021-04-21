@@ -1,0 +1,10 @@
+.text2combo {
+  :global(.ant-select) {
+    width: auto !important;
+    min-width: 100px;
+  }
+
+  :global(.ant-typography) {
+    font-weight: bold;
+  }
+}

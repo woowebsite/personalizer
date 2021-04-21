@@ -60,7 +60,7 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
       .then(values => {
         const data = props.id ? { id: props.id, ...values } : values;
         upsertUser({
-          variables: { user: data },
+          variables: { user: data, metadata: []},
         });
       })
       .catch(errorInfo => {
