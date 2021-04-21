@@ -11,8 +11,8 @@ function withQuery<TData = any, TVariables = OperationVariables>(
   const result = useQuery(query, options);
   const { data, loading, error, refetch } = result;
 
-  console.log('query: ', query);
-  console.log('options: ', options);
+  // console.log('query: ', query);
+  // console.log('options: ', options);
   // browser code
   if (typeof window !== 'undefined') {
     if (loading) NProgress.start();

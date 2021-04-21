@@ -13,7 +13,7 @@ import userService from 'services/userService';
 import { productBaseQuery } from 'services/productBaseService';
 
 // inner components
-import ProductBaseBasicForm from '~/features/ProductBaseBasicForm';
+import ProductBaseBasicForm from '~/features/productBases/ProductBaseBasicForm';
 import SocialConenct from '~/features/SocialConnect';
 
 const { Content } = Layout;

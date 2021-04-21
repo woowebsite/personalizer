@@ -3,7 +3,7 @@ import { Layout, Button, PageHeader } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
-import ProductBaseTable from 'features/ProductBaseTable';
+import ProductBaseTable from '~/features/productBases/ProductBaseTable';
 import RedirectButton from '~/components/RedirectButton';
 
 // graphql

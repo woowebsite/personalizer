@@ -28,8 +28,8 @@ function withMutation<TData = any, TVariables = OperationVariables>(
   });
   const { data, loading, error } = result;
 
-  console.log('mutation: ', mutation);
-  console.log('options: ', options);
+  // console.log('mutation: ', mutation);
+  // console.log('options: ', options);
 
   // browser code
   if (typeof window !== 'undefined') {
