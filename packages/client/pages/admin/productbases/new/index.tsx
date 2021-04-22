@@ -14,7 +14,8 @@ import { productBaseQuery } from 'services/productBaseService';
 
 // inner components
 import ProductBaseBasicForm from '~/features/productBases/ProductBaseBasicForm';
-import ProductBaseStatus from '~/features/productBases/productBaseStatus';
+import ProductBaseStatus from '~/features/productBases/ProductBaseStatus';
+import ProductBasePrintArea from '~/features/productBases/ProductBasePrintArea';
 
 const { Content } = Layout;
 
@@ -48,13 +49,14 @@ const ProductBaseCreate = props => {
       />
       <Content>
         <Row gutter={24}>
-          <Col span="12">
+          <Col span="16">
             <Card className="pt-3">
               <ProductBaseBasicForm ref={formRef} />
             </Card>
           </Col>
-          <Col span="12">
+          <Col span="8">
             <ProductBaseStatus />
+            <ProductBasePrintArea className="mt-4" />
           </Col>
         </Row>
       </Content>
