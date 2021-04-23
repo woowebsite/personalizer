@@ -23,7 +23,7 @@ export const Mutation = {
     before: async (findOptions, { data, metadata }) => {
       const [user, created0] = await User.upsert(data, { returning: true });
 
-      if (user) {
+      if (user && metadata) {
         const userMeta = metadata.map(x => ({
           ...x,
           user_id: user.id,
@@ -32,9 +32,10 @@ export const Mutation = {
         await UserMeta.bulkCreate(userMeta);
       }
 
-      return user;
+      findOptions.where = { id: user.id };
+      return findOptions;
     },
-    after: user => {
+    after: (user) => {
       user.login = true;
       return user;
     },
