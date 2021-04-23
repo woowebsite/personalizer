@@ -32,6 +32,7 @@ export const en = {
       },
     },
     buttons: {
+      addNew: 'Add new',
       discard: 'Discard',
       save: 'Save',
       delete: 'Delete',
@@ -136,6 +137,16 @@ export const en = {
         visibility: 'Visibility',
         publish: 'Publish'
       }
+    },
+    printAreaBox: {
+      title: "Print Areas",
+      columns: {
+        name: 'Name',
+        width: 'Width',
+        height: 'Height',
+        action: 'Action'
+      }
+
     }
   },
   '/admin/users/new': {

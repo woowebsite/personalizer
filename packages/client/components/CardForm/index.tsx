@@ -4,7 +4,7 @@ import { Button, Form, Table as AntdTable, CardProps } from 'antd';
 import Card from 'components/Card';
 import filterService from 'services/filterService';
 import { MutationTuple, OperationVariables, QueryResult } from '@apollo/client';
-import camelCase from 'lodash/camelCase';
+import style from './style.module.scss'
 
 interface CardFormProps extends CardProps {
   title: string;
@@ -16,7 +16,7 @@ interface CardFormProps extends CardProps {
 
 const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
   // DECLARES ================================================================================================
-  const { children, formRender, okText, cancelText, ...others } = props;
+  const { children, formRender, okText, cancelText, className, ...others } = props;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [mutate, result] = others.mutation();
@@ -36,12 +36,12 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
   };
 
   // RENDER
-  const InlineForm = () => (
-    <div className="">
-      <Button type="default" size="small">
+  const ActionButtons = () => (
+    <div className={style.footer}>
+      <Button type="default" >
         {cancelText ?? t('buttons.cancel')}
       </Button>
-      <Button type="primary" size="small" onClick={handleOnSave}>
+      <Button type="primary"  onClick={handleOnSave}>
         {okText ?? t('buttons.save')}
       </Button>
     </div>
@@ -49,9 +49,9 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
 
   return (
     <>
-      <Card actions={[<InlineForm />]} title={title}>
-        <div className="content-wrapper">{children}</div>
-        <div className="form-wrapper">{formRender({ form })}</div>
+      <Card className={`${style.cardForm} ${className}`} actions={[<ActionButtons />]} title={title}>
+        <div className={style.content}>{children}</div>
+        <div className={style.form}>{formRender({ form })}</div>
       </Card>
     </>
   );
