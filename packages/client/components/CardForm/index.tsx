@@ -16,7 +16,7 @@ interface CardFormProps extends CardProps {
 
 const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
   // DECLARES ================================================================================================
-  const { children, formRender, okText, cancelText, ...others } = props;
+  const { children, formRender, okText, cancelText, className, ...others } = props;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [mutate, result] = others.mutation();
@@ -49,7 +49,7 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
 
   return (
     <>
-      <Card className={style.cardForm} actions={[<ActionButtons />]} title={title}>
+      <Card className={`${style.cardForm} ${className}`} actions={[<ActionButtons />]} title={title}>
         <div className={style.content}>{children}</div>
         <div className={style.form}>{formRender({ form })}</div>
       </Card>
