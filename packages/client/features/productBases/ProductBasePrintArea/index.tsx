@@ -20,7 +20,7 @@ const ProductBasePrintArea = () => {
         className="mt-4"
         mutation={productBaseService.upsert}
         formRender={formRender}
-        title="User Information"
+        title={t('printAreaBox.title')}
       >
         <PrintAreaTable />
       </CardForm>

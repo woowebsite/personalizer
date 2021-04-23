@@ -162,7 +162,7 @@ const PrintAreaTable = () => {
             cell: EditableCell,
           },
         }}
-        bordered
+        size="small"
         dataSource={data}
         columns={mergedColumns}
         rowClassName="editable-row"
