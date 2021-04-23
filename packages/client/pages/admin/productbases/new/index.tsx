@@ -56,7 +56,7 @@ const ProductBaseCreate = props => {
           </Col>
           <Col span="8">
             <ProductBaseStatus />
-            <ProductBasePrintArea className="mt-4" />
+            <ProductBasePrintArea/>
           </Col>
         </Row>
       </Content>
