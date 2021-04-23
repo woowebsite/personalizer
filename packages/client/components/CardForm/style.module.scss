@@ -1,6 +1,6 @@
 .cardForm {
   :global(.ant-card-body) {
-    padding: 0;
+    padding: 1px 0 0;
   }
   .form {
     border-top: 1px solid #d0d5dd;
@@ -10,6 +10,8 @@
   }
   .content {
     background-color: white;
+    padding-left: 24px;
+    padding-right: 24px;
   }
   :global(.ant-card-actions) {
     padding-left: 24px;
