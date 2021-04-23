@@ -55,3 +55,9 @@ html {
     text-align: right;
   }
 }
+
+.ant-form-vertical.vertical-compact {
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+}
