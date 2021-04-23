@@ -16,6 +16,7 @@ import { productBaseQuery } from 'services/productBaseService';
 import ProductBaseBasicForm from '~/features/productBases/ProductBaseBasicForm';
 import ProductBaseStatus from '~/features/productBases/ProductBaseStatus';
 import ProductBasePrintArea from '~/features/productBases/ProductBasePrintArea';
+import ProductBaseMockup from '~/features/productBases/ProductBaseMockup';
 
 const { Content } = Layout;
 
@@ -57,6 +58,7 @@ const ProductBaseCreate = props => {
           <Col span="8">
             <ProductBaseStatus />
             <ProductBasePrintArea/>
+            <ProductBaseMockup/>
           </Col>
         </Row>
       </Content>
