@@ -18,6 +18,7 @@ const AddPrintAreaForm = ({ form, initialValues, onSubmit }) => {
     <Form
       form={form}
       layout="vertical"
+      className="vertical-compact"
       initialValues={initialValues}
       onFinish={handleFinish}
     >
