@@ -1,0 +1,26 @@
+.cardForm {
+  :global(.ant-card-body) {
+    padding: 0;
+  }
+  .form {
+    border-top: 1px solid #d0d5dd;
+    background-color: #e3e7ec;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .content {
+    background-color: white;
+  }
+  :global(.ant-card-actions) {
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: #e3e7ec !important;
+    border-top: 1px solid #d0d5dd;
+    & > li {
+      text-align: right;
+    }
+    :global(.ant-btn) {
+      margin-left: 10px;
+    }
+  }
+}
