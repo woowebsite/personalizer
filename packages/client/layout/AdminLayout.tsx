@@ -56,11 +56,9 @@ function withAdminLayout(WrappedComponent) {
 
     // Permission check
     if (session.user.role_id !== RoleType.SysAdmin) {
+      console.error('Error: You have not permission to access', session.user);
       ctx.res.writeHead(302, { Location: '/login' });
       ctx.res.end();
-    } else {
-      console.log('session.user', session.user);
-      console.error('Error: You have not permission to access');
     }
 
     const componentProps =
