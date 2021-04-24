@@ -17,6 +17,9 @@ import CustomerType from '~/models/CustomerType';
 // utils
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
+import JOB_SETTING from '~/constants/jobSettings';
+import { smallerThan } from '~/shared/antdHelper';
+import moment from 'moment';
 
 interface IProps {
   initialValues?: any;
@@ -31,10 +34,18 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
 
   const formSetFields = job => {
     form.setFields([
-      { name: 'title', value: job.title },
-      { name: 'link', value: job.link },
-      { name: 'description', value: job.description },
-      { name: 'dueDate', value: job.image },
+      { name: ['job', 'title'], value: job.title },
+      { name: ['job', 'link'], value: job.link },
+      { name: ['job', 'description'], value: job.description },
+      { name: ['job', 'publishDate'], value: moment(job.publishDate) },
+      { name: ['job', 'dueDate'], value: moment(job.dueDate) },
+
+      // taxonomies
+      { name: ['taxonomies', 'job_priority'], value: job.job_priority },
+      { name: ['taxonomies', 'job_status'], value: job.job_status },
+
+      // metadata
+      { name: ['metadata', 'link'], value: job.link },
     ]);
   };
 
@@ -75,16 +86,18 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       });
   };
 
-  const onSetImageUrl = filename => {
-    form.setFieldsValue({ image: filename });
-  };
-
   return (
     <Form
       id="JobForm"
       form={form}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
+      initialValues={{
+        job: {
+          publishDate: moment(),
+          dueDate: moment().add(JOB_SETTING.dueDateIncrease, 'day'),
+        },
+      }}
       onFinish={onSubmit}
       layout="vertical"
     >
@@ -125,10 +138,19 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
+        name={['job', 'publishDate']}
+        label={t('jobCreateform.label.publishDate')}
+      >
+        <DatePicker />
+      </Form.Item>
+
+      <Form.Item
         name={['job', 'dueDate']}
         label={t('jobCreateform.label.dueDate')}
       >
-        <DatePicker />
+        <DatePicker
+          disabledDate={smallerThan(form.getFieldValue(['job', 'publishDate']))}
+        />
       </Form.Item>
 
       <Form.Item
