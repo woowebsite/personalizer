@@ -147,6 +147,15 @@ export const en = {
         action: 'Action',
       },
     },
+    combinePrintAreaBox: {
+      title: 'Combine Print Areas',
+      columns: {
+        name: 'Name',
+        width: 'Width',
+        height: 'Height',
+        action: 'Action',
+      },
+    },
     mockupBox: {
       title: 'Mockups',
       fields: {
