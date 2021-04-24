@@ -34,10 +34,18 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
 
   const formSetFields = job => {
     form.setFields([
-      { name: 'title', value: job.title },
-      { name: 'link', value: job.link },
-      { name: 'description', value: job.description },
-      { name: 'dueDate', value: job.image },
+      { name: ['job', 'title'], value: job.title },
+      { name: ['job', 'link'], value: job.link },
+      { name: ['job', 'description'], value: job.description },
+      { name: ['job', 'publishDate'], value: moment(job.publishDate) },
+      { name: ['job', 'dueDate'], value: moment(job.dueDate) },
+
+      // taxonomies
+      { name: ['taxonomies', 'job_priority'], value: job.job_priority },
+      { name: ['taxonomies', 'job_status'], value: job.job_status },
+
+      // metadata
+      { name: ['metadata', 'link'], value: job.link },
     ]);
   };
 
@@ -76,10 +84,6 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       .catch(errorInfo => {
         console.log('Error: ', errorInfo);
       });
-  };
-
-  const onSetImageUrl = filename => {
-    form.setFieldsValue({ image: filename });
   };
 
   return (

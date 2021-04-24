@@ -3,7 +3,8 @@ import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
-import Card from 'components/Card'
+import Card from 'components/Card';
+import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
@@ -11,45 +12,42 @@ import { useRouter } from 'next/dist/client/router';
 import userService from 'services/userService';
 
 // inner components
-import UserForm from '~/features/UserForm';
-import SocialConenct from '~/features/SocialConnect';
+import JobForm from '~/features/jobs/JobForm';
+import JobStatus from '~/features/jobs/JobStatus';
+import JobMoney from '~/features/jobs/JobMoney';
+import { jobQuery } from '~/services/jobService';
+
 
 const { Content } = Layout;
 
-const UserDetail = (props) => {
+const JobDetail = props => {
   // DECLARE
-  const { messages, t } = props;
+  const { messages, t, query, data } = props;
   const formRef: any = React.createRef();
   const router = useRouter();
-  const { id } = router.query;
-
-  const { data, loading, refetch } = userService.get({
-    variables: {
-      where: { id: parseInt(id.toString()) },
-    },
-  });
-
-  if (loading) {
-    return null;
-  }
 
   // EVENTS
   const onSave = () => {
-    formRef.current?.onSubmit();
+    formRef.current.onSubmit();
   };
 
   // RENDER
-  const title = data.user.name || 'Unknow name';
+  const title = data.job.title || t('pageHeader.title');
+  console.log('job', data.job)
   return (
     <>
       <PageHeader
-        className='mb-4 pl-0 pr-0'
+        className="mb-4 pl-0 pr-0"
         title={title}
         subTitle={messages.subTitle}
         extra={[
-          <Button key='3'>Duplicate</Button>,
-          <Button key='2' danger >{t('buttons.delete')}</Button>,
-          <Button key='1' type='primary' onClick={onSave} >
+          <RedirectButton url={'/customer/jobs'}>
+            {t('pageHeader.buttons.all')}
+          </RedirectButton>,
+          <Button key="2" danger>
+            {t('buttons.delete')}
+          </Button>,
+          <Button key="1" type="primary" onClick={onSave}>
             {t('buttons.save')}
           </Button>,
         ]}
@@ -58,13 +56,23 @@ const UserDetail = (props) => {
         <Row gutter={24}>
           <Col span="16">
             <Card className="pt-3">
-              <UserForm ref={formRef} id={parseInt(id.toString())} />
+              <JobForm ref={formRef} initialValues={data.job} />
             </Card>
           </Col>
           <Col span="8">
-            <Card>
-              <Typography.Title level={5} className="mb-3">{t('socialBox.title')}</Typography.Title>
-              <SocialConenct />
+            <Card className="status-form" title={t('jobStatus.title')}>
+              <JobStatus />
+            </Card>
+            <Card
+              className="mt-4 status-form"
+              title={t('jobMoney.title')}
+              actions={[
+                <Button type="primary" size="small">
+                  Thanh toán
+                </Button>,
+              ]}
+            >
+              <JobMoney />
             </Card>
           </Col>
         </Row>
@@ -73,4 +81,20 @@ const UserDetail = (props) => {
   );
 };
 
-export default withAdminLayout(withApollo({ ssr: false })(UserDetail));
+export default withAdminLayout(withApollo({ ssr: true })(JobDetail));
+
+JobDetail.getInitialProps = async ({ ctx }) => {
+  const { res, req, query, pathname, apolloClient } = ctx;
+
+  const { data, loading, refetch } = await apolloClient.query({
+    query: jobQuery.get,
+    variables: {
+      where: { id: parseInt(query.id) },
+    },
+  });
+
+  return {
+    query,
+    data,
+  };
+};

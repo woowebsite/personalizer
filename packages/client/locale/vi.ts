@@ -232,6 +232,31 @@ export const vi = {
       },
     },
   },
+  '/customer/jobs/[id]': {
+    title: 'Chưa đặt tiêu đề',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Tạo mới',
+        all: 'Danh sách công việc',
+      },
+    },
+    jobStatus: {
+      title: 'Tình trạng công việc',
+      label: {
+        status: 'Tình trạng',
+        employee: 'Thợ ảnh',
+        leader: 'Leader',
+      },
+    },
+    jobMoney: {
+      title: 'Chi phí',
+      label: {
+        paid: 'Đã thanh toán',
+        debt: 'Còn nợ',
+      },
+    },
+  },
   '/admin/users/new': {
     title: 'Tạo người dùng',
   },

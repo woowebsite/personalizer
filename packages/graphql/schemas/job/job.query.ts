@@ -6,9 +6,14 @@ export const Query = {
   job: resolver(Job, {
     before: async (findOptions, { where }, context) => {
       findOptions.where = where;
+      findOptions.include = [{ model: JobMeta }];
+
       return findOptions;
     },
-    after: job => job,
+    after: job => {
+      const transferData = metadataToField(job);
+      return transferData;
+    },
   }),
   jobs: resolver(Job, {
     list: true,
@@ -21,7 +26,7 @@ export const Query = {
     after: async (jobs, args) => {
       const count = await Job.count(args.where);
       const rows = jobs.map(u => metadataToField(u, 'metadata'));
-      
+
       return { rows, count };
     },
   }),
