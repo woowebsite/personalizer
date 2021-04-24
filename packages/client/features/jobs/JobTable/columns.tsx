@@ -37,7 +37,7 @@ export const columns = (t, onDeleteJob): ColumnsType<any> => {
       render: (text, record) => {
         console.log('record', record);
 
-        return text ? <Link href={`/jobs/${record.id}`}>{text}</Link> : text;
+        return text ? <Link href={`/customer/jobs/${record.id}`}>{text}</Link> : text;
       },
     },
     {

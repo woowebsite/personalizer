@@ -17,6 +17,9 @@ import CustomerType from '~/models/CustomerType';
 // utils
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
+import JOB_SETTING from '~/constants/jobSettings';
+import { smallerThan } from '~/shared/antdHelper';
+import moment from 'moment';
 
 interface IProps {
   initialValues?: any;
@@ -85,6 +88,12 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       form={form}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
+      initialValues={{
+        job: {
+          publishDate: moment(),
+          dueDate: moment().add(JOB_SETTING.dueDateIncrease, 'day'),
+        },
+      }}
       onFinish={onSubmit}
       layout="vertical"
     >
@@ -125,10 +134,19 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
+        name={['job', 'publishDate']}
+        label={t('jobCreateform.label.publishDate')}
+      >
+        <DatePicker />
+      </Form.Item>
+
+      <Form.Item
         name={['job', 'dueDate']}
         label={t('jobCreateform.label.dueDate')}
       >
-        <DatePicker />
+        <DatePicker
+          disabledDate={smallerThan(form.getFieldValue(['job', 'publishDate']))}
+        />
       </Form.Item>
 
       <Form.Item
