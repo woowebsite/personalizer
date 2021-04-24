@@ -112,6 +112,10 @@ Must be include `metadata` at type FooModel
 ```
 type Foo {
   metadata: [FooMeta]
+
+  fooMeta1,
+  fooMeta2,
+  ...
 }
 type FooMeta {
   foo: Foo
@@ -130,7 +134,7 @@ Define FooMeta, FooMetaInput
 metadata: [FooMeta]
 ```
 
-## Sequelize
+## Query Sequelize
 
 before function
 
@@ -138,10 +142,44 @@ before function
 findOptions.include = [{ model: FooMeta }];
 ```
 
-after function
+after function for a líst foo
 
 ```ts
 const rows = foos.map(u => metadataToField(u, 'metadata'));
+```
+
+after function for a foo
+
+```ts
+const transferData = metadataToField(user, 'metadata');
+return transferData;
+```
+
+## Mutation sequelize
+
+Create or update a job
+
+```ts
+// Update taxonomies
+if (job && taxonomies) {
+  const terms = taxonomies.map(termId => ({
+    term_taxonomy_id: termId,
+    ref_id: job.id,
+  }));
+  await JobTerm.bulkCreate(terms);
+}
+
+// Metadata
+if (job && metadata) {
+  const meta = metadata.map(x => ({
+    ...x,
+    job_id: job.id,
+  }));
+
+  await JobMeta.bulkCreate(meta);
+}
+findOptions.where = { id: job.id };
+return findOptions;
 ```
 
 ## Form
@@ -182,4 +220,26 @@ upsertJob({
     taxonomies,
   },
 });
+```
+
+load detail
+
+```ts
+const formSetFields = job => {
+  form.setFields([
+    // job
+    { name: ['job', 'title'], value: job.title },
+    { name: ['job', 'link'], value: job.link },
+    { name: ['job', 'description'], value: job.description },
+    { name: ['job', 'publishDate'], value: job.publishDate },
+    { name: ['job', 'dueDate'], value: job.image },
+
+    // taxonomies
+    { name: ['taxonomies', 'job_priority'], value: job.job_priority },
+    { name: ['taxonomies', 'job_status'], value: job.job_status },
+
+    // metadata
+    { name: ['metadata', 'link'], value: job.link },
+  ]);
+};
 ```
