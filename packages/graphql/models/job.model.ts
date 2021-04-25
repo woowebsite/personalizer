@@ -13,6 +13,7 @@ import {
 import StatusType from '../constants/StatusType';
 import { User } from './user.model';
 import { JobMeta } from './jobMeta.model';
+import { JobTerm } from './jobTerm.model';
 
 @Table({ timestamps: true })
 export class Job extends Model<Job> {
@@ -35,14 +36,14 @@ export class Job extends Model<Job> {
   @Column
   visibility: string;
 
-  @Column(DataType.VIRTUAL)
-  link: string;
-
   @Column
   dueDate: Date;
 
   @HasMany(() => JobMeta)
   metadata: JobMeta[];
+
+  @HasMany(() => JobTerm)
+  jobTerms: JobTerm[];
 
   // Reference ================================
 
@@ -53,4 +54,14 @@ export class Job extends Model<Job> {
 
   @BelongsTo(() => User)
   user: User;
+
+  // Virtual fields
+  @Column(DataType.VIRTUAL)
+  link: string;
+
+  @Column(DataType.VIRTUAL)
+  job_priority: number;
+
+  @Column(DataType.VIRTUAL)
+  job_status: number;
 }

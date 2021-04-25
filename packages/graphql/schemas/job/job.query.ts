@@ -1,18 +1,39 @@
 import { resolver } from 'graphql-sequelize';
-import { Job, JobMeta } from '../../models';
-import { metadataToField } from '../../utils/dataUtil';
+import { Job, JobMeta, JobTerm, TermTaxonomy } from '../../models';
+import { Term } from '../../models/term.model';
+import { metadataToField, taxonomyToField } from '../../utils/dataUtil';
 
 export const Query = {
   job: resolver(Job, {
     before: async (findOptions, { where }, context) => {
       findOptions.where = where;
-      findOptions.include = [{ model: JobMeta }];
+      findOptions.include = [
+        { model: JobMeta },
+        {
+          model: JobTerm,
+          require: true,
+          include: [
+            {
+              model: TermTaxonomy,
+              where: { taxonomy: 'job_priority' },
+              require: true,
+              include: [
+                {
+                  model: Term,
+                  require: true,
+                },
+              ],
+            },
+          ],
+        },
+      ];
 
       return findOptions;
     },
     after: job => {
       const transferData = metadataToField(job);
-      return transferData;
+      const transferTerm = taxonomyToField(transferData, 'jobTerms');
+      return transferTerm;
     },
   }),
   jobs: resolver(Job, {
