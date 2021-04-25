@@ -15,7 +15,7 @@ export const Query = {
           include: [
             {
               model: TermTaxonomy,
-              where: { taxonomy: 'job_priority' },
+              where: { taxonomy: ['job_priority', 'job_status'] },
               require: true,
               include: [
                 {
