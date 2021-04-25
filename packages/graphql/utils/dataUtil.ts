@@ -50,10 +50,6 @@ export const taxonomyToField = (obj, termField) => {
     term.forEach(x => {
       const termTaxonomy = x.dataValues.termTaxonomy;
       const { taxonomy, id, term } = termTaxonomy.dataValues;
-      console.log('taxonomy', taxonomy)
-      console.log('id', id)
-      const { name } = term.dataValues;
-
       return obj.setDataValue(taxonomy, id);
     });
   }
