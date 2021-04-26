@@ -17,7 +17,6 @@ import JobStatus from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
 import { jobQuery } from '~/services/jobService';
 
-
 const { Content } = Layout;
 
 const JobDetail = props => {
@@ -33,7 +32,6 @@ const JobDetail = props => {
 
   // RENDER
   const title = data.job.title || t('pageHeader.title');
-  console.log('job', data.job)
   return (
     <>
       <PageHeader

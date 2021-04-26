@@ -6,8 +6,11 @@ type Job {
   publishDate: Date
   user: User
   metadata: [JobMeta]
+  jobTerms: [JobTerm]
 
   link: String
+  job_priority: Int
+  job_status: Int
 }
 
 input JobWhere {

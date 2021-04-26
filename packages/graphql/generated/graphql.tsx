@@ -133,14 +133,19 @@ export type Job = {
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   dueDate?: Maybe<Scalars['Date']>;
+  publishDate?: Maybe<Scalars['Date']>;
   user?: Maybe<User>;
   metadata?: Maybe<Array<Maybe<JobMeta>>>;
+  jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
   link?: Maybe<Scalars['String']>;
+  job_priority?: Maybe<Scalars['Int']>;
+  job_status?: Maybe<Scalars['Int']>;
 };
 
 export type JobInput = {
   id?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  publishDate?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   dueDate?: Maybe<Scalars['Date']>;
   user_id?: Maybe<Scalars['Int']>;
@@ -165,6 +170,14 @@ export type JobsPaged = {
   __typename?: 'JobsPaged';
   rows?: Maybe<Array<Maybe<Job>>>;
   count?: Maybe<Scalars['Int']>;
+};
+
+export type JobTerm = {
+  __typename?: 'JobTerm';
+  term_taxonomy_id?: Maybe<Scalars['Int']>;
+  order?: Maybe<Scalars['Int']>;
+  ref_id?: Maybe<Job>;
+  termTaxonomies?: Maybe<TermTaxonomy>;
 };
 
 export type JobWhere = {
@@ -245,6 +258,7 @@ export type MutationCreateUserArgs = {
 export type MutationUpsertUserArgs = {
   data?: Maybe<UserInput>;
   metadata?: Maybe<Array<Maybe<UserMetaInput>>>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
 
@@ -412,6 +426,7 @@ export type TermTaxonomy = {
   taxonomy?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   termName?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Int']>;
   term?: Maybe<Term>;
 };
 
@@ -419,6 +434,7 @@ export type TermTaxonomyInput = {
   id?: Maybe<Scalars['Int']>;
   taxonomy?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Int']>;
   parent?: Maybe<Scalars['Int']>;
   count?: Maybe<Scalars['Int']>;
 };
@@ -441,8 +457,8 @@ export type User = {
   role_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   role?: Maybe<Role>;
-  userMeta?: Maybe<Array<Maybe<UserMeta>>>;
   havePassword?: Maybe<Scalars['Boolean']>;
+  userMeta?: Maybe<Array<Maybe<UserMeta>>>;
   phone?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
   customerType?: Maybe<Scalars['String']>;
