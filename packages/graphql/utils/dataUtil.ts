@@ -24,3 +24,34 @@ export const metadataToField = (obj, metadata='metadata') => {
   }
   return obj;
 };
+
+/**
+ * Convert metadata array into fields of object
+ * Example: from {user: {name, password, sex, jobTerms: [{key: 'phone', value: '1234'}, {key: 'address', value: '123 Street ABC'}]}}
+ * Into {user: {name, password, sex, phone: '1234', address: '123 Street ABC' }
+ * @param data object with metadata
+ * @param termField name of term field, eg: jobTerms
+ */
+export const taxonomyToField = (obj, termField) => {
+  if (!obj || !termField) {
+    console.error(`TermsToField Error: Object or termField is null`);
+    return;
+  }
+  if (!obj.hasOwnProperty(termField)) {
+    console.error(
+      `TermsToField Error: ${termField} is not exists in object`,
+      obj,
+    );
+    return;
+  }
+
+  const term = obj.dataValues[termField];
+  if (term && term.length > 0) {
+    term.forEach(x => {
+      const termTaxonomy = x.dataValues.termTaxonomy;
+      const { taxonomy, id, term } = termTaxonomy.dataValues;
+      return obj.setDataValue(taxonomy, id);
+    });
+  }
+  return obj;
+};
