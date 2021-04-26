@@ -243,3 +243,68 @@ const formSetFields = job => {
   ]);
 };
 ```
+
+# Taxonomy
+
+## Model
+
+Follow below, must have ForeignKey for TermTaxnomy, Foo
+
+```ts
+export class JobTerm extends Model<JobTerm> {
+  @BelongsTo(() => TermTaxonomy)
+  termTaxonomy: TermTaxonomy;
+
+  @ForeignKey(() => TermTaxonomy)
+  @Column
+  term_taxonomy_id: number;
+
+  @Column
+  order: number;
+
+  // job
+  @Column
+  @ForeignKey(() => Job) // only change Job
+  ref_id: number;
+
+  @BelongsTo(() => Job) // only change Job
+  job: Job;
+}
+```
+
+## Graphql
+
+Follow below, must have `termTaxnomies` field
+
+```
+type JobTerm {
+  ...
+  termTaxonomies: TermTaxonomy
+}
+
+```
+
+## Query single
+
+```ts
+findOptions.include = [
+  { model: JobMeta },
+  {
+    model: JobTerm,                                             // FooTerm
+    require: true,
+    include: [
+      {
+        model: TermTaxonomy,
+        where: { taxonomy: ['job_priority', 'job_status'] },    // all of taxonomies fields
+        require: true,
+        include: [
+          {
+            model: Term,
+            require: true,
+          },
+        ],
+      },
+    ],
+  },
+];
+```
