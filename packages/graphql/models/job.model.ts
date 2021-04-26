@@ -9,6 +9,7 @@ import {
   Default,
   HasMany,
   DataType,
+  Sequelize,
 } from 'sequelize-typescript';
 import StatusType from '../constants/StatusType';
 import { User } from './user.model';
@@ -36,6 +37,10 @@ export class Job extends Model<Job> {
   @Column
   visibility: string;
 
+  @Default(Date.now())
+  @Column
+  publishDate: Date;
+
   @Column
   dueDate: Date;
 
@@ -60,8 +65,9 @@ export class Job extends Model<Job> {
   link: string;
 
   @Column(DataType.VIRTUAL)
-  job_priority: number;
-
+  job_priority: any;
+  
+  
   @Column(DataType.VIRTUAL)
-  job_status: number;
+  job_status: any;
 }

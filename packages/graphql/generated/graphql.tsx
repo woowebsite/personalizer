@@ -138,8 +138,8 @@ export type Job = {
   metadata?: Maybe<Array<Maybe<JobMeta>>>;
   jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
   link?: Maybe<Scalars['String']>;
-  job_priority?: Maybe<Scalars['Int']>;
-  job_status?: Maybe<Scalars['Int']>;
+  job_priority?: Maybe<NameValue>;
+  job_status?: Maybe<NameValue>;
 };
 
 export type JobInput = {
@@ -265,6 +265,12 @@ export type MutationUpsertUserArgs = {
 export type MutationChangePasswordArgs = {
   currentPassword: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type NameValue = {
+  __typename?: 'NameValue';
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type PaginationInfo = {

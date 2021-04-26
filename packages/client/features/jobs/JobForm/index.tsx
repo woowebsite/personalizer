@@ -41,8 +41,14 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       { name: ['job', 'dueDate'], value: moment(job.dueDate) },
 
       // taxonomies
-      { name: ['taxonomies', 'job_priority'], value: job.job_priority },
-      { name: ['taxonomies', 'job_status'], value: job.job_status },
+      {
+        name: ['taxonomies', 'job_priority'],
+        value: parseInt(job.job_priority.value, 10),
+      },
+      {
+        name: ['taxonomies', 'job_status'],
+        value: parseInt(job.job_status.value, 10),
+      },
 
       // metadata
       { name: ['metadata', 'link'], value: job.link },
