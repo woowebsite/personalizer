@@ -30,8 +30,14 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
   const formSetFields = job => {
     form.setFields([
       // taxonomies
-      { name: ['taxonomies', 'job_priority'], value: job.job_priority.value },
-      { name: ['taxonomies', 'job_status'], value: job.job_status.value },
+      {
+        name: ['taxonomies', 'job_priority'],
+        value: parseInt(job.job_priority.value, 10),
+      },
+      {
+        name: ['taxonomies', 'job_status'],
+        value: parseInt(job.job_status.value, 10),
+      },
 
       // metadata
       { name: ['metadata', 'link'], value: job.link },

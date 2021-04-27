@@ -35,6 +35,7 @@ const JobDetail = props => {
 
     // metadata fields
     const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
+
     // taxonomies fields
     const taxonomyFields = {
       ...formValues.taxonomies,

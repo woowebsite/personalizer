@@ -6,7 +6,7 @@ import { JobMeta } from '../../models/jobMeta.model';
 
 export const Mutation = {
   upsertJob: resolver(Job, {
-    before: async (findOptions, { data, metadata , taxonomies}, ctx) => {
+    before: async (findOptions, { data, metadata, taxonomies }, ctx) => {
       const { currentUser } = ctx;
       const obj = { ...data, userId: currentUser.id };
 
