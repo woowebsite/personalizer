@@ -53,7 +53,6 @@ export class Job extends Model<Job> {
 
   // Reference ================================
 
-  // user
   @ForeignKey(() => User)
   @Column
   userId: number;
@@ -61,14 +60,20 @@ export class Job extends Model<Job> {
   @BelongsTo(() => User)
   user: User;
 
-  // Virtual fields
+  // metadata
   @Column(DataType.VIRTUAL)
   link: string;
 
   @Column(DataType.VIRTUAL)
+  employee_id: number;
+
+  @Column(DataType.VIRTUAL)
+  leader_id: number;
+
+  // taxonomies
+  @Column(DataType.VIRTUAL)
   job_priority: any;
-  
-  
+
   @Column(DataType.VIRTUAL)
   job_status: any;
 }
