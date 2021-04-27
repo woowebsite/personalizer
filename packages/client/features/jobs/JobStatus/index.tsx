@@ -1,40 +1,138 @@
-import React from 'react';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Form, Button } from 'antd';
 import { useIntl } from 'react-intl';
 
 // graphql
+import TextEditable from '~/components/TextEditable';
+import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
+import ComboBox, { ComboBoxType } from '~/components/ComboBox';
+import jobService from '~/services/jobService';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 
-import accountService from 'services/accountService';
-
-const JobStatus = props => {
+// utils
+const JobStatus = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
-  const { userId } = props;
+  const { initialValues } = props;
+  const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
   const t = (id, values?) => formatMessage({ id }, values);
+  const [form] = Form.useForm();
+
+  // EFFECT
+  useEffect(
+    () => {
+      if (initialValues) {
+        formSetFields(initialValues);
+      }
+    },
+    [initialValues],
+  );
+
+  const formSetFields = job => {
+    form.setFields([
+      // taxonomies
+      {
+        name: ['taxonomies', 'job_priority'],
+        value: parseInt(job.job_priority.value, 10),
+      },
+      {
+        name: ['taxonomies', 'job_status'],
+        value: parseInt(job.job_status.value, 10),
+      },
+
+      // metadata
+      { name: ['metadata', 'link'], value: job.link },
+    ]);
+  };
+
+  /// EVENTS
+  useImperativeHandle(ref, () => ({
+    onSubmit,
+    getFieldsValue,
+  }));
+
+  const getFieldsValue = () => form.getFieldsValue();
+  const onSubmit = () => {
+    form
+      .validateFields()
+      .then(values => {
+        const job = initialValues
+          ? { id: initialValues.id, ...values.job }
+          : values.job;
+
+        const metadata = fieldsToMetadata(values.metadata);
+        const taxonomies = values.taxonomies
+          ? Object.values(values.taxonomies)
+          : [];
+
+        upsertJob({
+          variables: { job, metadata, taxonomies },
+        });
+      })
+      .catch(errorInfo => {
+        console.log('Error: ', errorInfo);
+      });
+  };
 
   return (
     <>
-      <Form size="small">
+      <Form form={form} size="small" onFinish={onSubmit}>
         <Form.Item
-          name={['metadata', 'link']}
+          name={['taxonomies', 'job_status']}
           label={t('jobStatus.label.status')}
         >
-          <Button type="link"> Đã chấm sửa </Button>
+          <TextEditable
+            defaultValue={
+              initialValues
+                ? parseInt(initialValues.job_status.value, 10)
+                : null
+            }
+            defaultText={initialValues ? initialValues.job_status.name : null}
+            renderComponent={({ handleOnChange, ...rest }) => (
+              <ComboBoxTaxonomy
+                onChange={handleOnChange}
+                type={TaxonomyType.Job_Status}
+                {...rest}
+              />
+            )}
+          />
         </Form.Item>
         <Form.Item
-          name={['metadata', 'link']}
+          name={['metadata', 'employee_id']}
           label={t('jobStatus.label.employee')}
         >
-          <Button type="link"> Mai Bảo Anh </Button>
+          <TextEditable
+            renderComponent={({ handleOnChange, ...rest }) => (
+              <ComboBox
+                onChange={handleOnChange}
+                textField="name"
+                valueField="id"
+                type={ComboBoxType.User}
+                width="200"
+                {...rest}
+              />
+            )}
+          />
         </Form.Item>
         <Form.Item
-          name={['metadata', 'link']}
+          name={['metadata', 'leader_id']}
           label={t('jobStatus.label.leader')}
         >
-          <Button type="link"> Lăng Tuấn Anh</Button>
+          <TextEditable
+            renderComponent={({ handleOnChange, ...rest }) => (
+              <ComboBox
+                onChange={handleOnChange}
+                textField="name"
+                valueField="id"
+                type={ComboBoxType.User}
+                width="200"
+                {...rest}
+              />
+            )}
+          />
         </Form.Item>
       </Form>
     </>
   );
-};
+});
 
 export default JobStatus;

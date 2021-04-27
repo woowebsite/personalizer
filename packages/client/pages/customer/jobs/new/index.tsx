@@ -28,10 +28,12 @@ const JobNew = props => {
   // DECLARE
   const { messages, t } = props;
   const formRef: any = React.createRef();
+  const formStatusRef: any = React.createRef();
 
   // EVENTS
   const onSave = () => {
     formRef.current.onSubmit();
+    formStatusRef.current.onSubmit();
   };
 
   // RENDER
@@ -61,7 +63,7 @@ const JobNew = props => {
           </Col>
           <Col span="8">
             <Card className="status-form" title={t('jobStatus.title')}>
-              <JobStatus />
+              <JobStatus ref={formStatusRef} />
             </Card>
             <Card
               className="mt-4 status-form"

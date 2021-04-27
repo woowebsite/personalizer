@@ -9,8 +9,10 @@ type Job {
   jobTerms: [JobTerm]
 
   link: String
-  job_priority: Int
-  job_status: Int
+  employee_id: Int
+  leader_id: Int
+  job_priority: NameValue
+  job_status: NameValue
 }
 
 input JobWhere {

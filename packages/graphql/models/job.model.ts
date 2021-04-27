@@ -9,11 +9,13 @@ import {
   Default,
   HasMany,
   DataType,
+  Sequelize,
 } from 'sequelize-typescript';
 import StatusType from '../constants/StatusType';
 import { User } from './user.model';
 import { JobMeta } from './jobMeta.model';
 import { JobTerm } from './jobTerm.model';
+import moment from 'moment';
 
 @Table({ timestamps: true })
 export class Job extends Model<Job> {
@@ -36,6 +38,10 @@ export class Job extends Model<Job> {
   @Column
   visibility: string;
 
+  @Default(moment().toDate())
+  @Column
+  publishDate: Date;
+
   @Column
   dueDate: Date;
 
@@ -47,7 +53,6 @@ export class Job extends Model<Job> {
 
   // Reference ================================
 
-  // user
   @ForeignKey(() => User)
   @Column
   userId: number;
@@ -55,13 +60,20 @@ export class Job extends Model<Job> {
   @BelongsTo(() => User)
   user: User;
 
-  // Virtual fields
+  // metadata
   @Column(DataType.VIRTUAL)
   link: string;
 
   @Column(DataType.VIRTUAL)
-  job_priority: number;
+  employee_id: number;
 
   @Column(DataType.VIRTUAL)
-  job_status: number;
+  leader_id: number;
+
+  // taxonomies
+  @Column(DataType.VIRTUAL)
+  job_priority: any;
+
+  @Column(DataType.VIRTUAL)
+  job_status: any;
 }

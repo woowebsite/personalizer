@@ -9,8 +9,9 @@ const { Option } = Select;
 const ComboBoxTaxonomy = ({ type, ...others }) => {
   const { data, loading } = termTaxonomyService.getTaxonomiesByType(type);
   if (loading) return <Select {...others} />;
-  const dataSource = data.termTaxonomies.rows;
+
   // render
+  const dataSource = data.termTaxonomies.rows;
   return (
     <Select {...others}>
       {dataSource.map(option => (
