@@ -37,28 +37,23 @@ const JobStatus = props => {
 
   return (
     <>
-      <Form
-        form={form}
-        size="small"
-        initialValues={{
-          metadata: {
-            job_status: initialValues.job_status.value,
-            job_priority: initialValues.job_priority.value,
-          },
-        }}
-      >
+      <Form form={form} size="small">
         <Form.Item
           name={['taxonomies', 'job_status']}
           label={t('jobStatus.label.status')}
         >
           <TextEditable
-            defaultValue={initialValues.job_status.value}
-            defaultText={initialValues.job_status.name}
-            renderComponent={props => (
+            defaultValue={
+              initialValues
+                ? parseInt(initialValues.job_status.value, 10)
+                : null
+            }
+            defaultText={initialValues ? initialValues.job_status.name : null}
+            renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBoxTaxonomy
-                labelInValue
-                onChange={props.handleOnChange}
+                onChange={handleOnChange}
                 type={TaxonomyType.Job_Status}
+                {...rest}
               />
             )}
           />

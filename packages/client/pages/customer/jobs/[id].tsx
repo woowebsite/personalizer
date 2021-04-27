@@ -51,7 +51,6 @@ const JobDetail = props => {
         ]}
       />
       <Content>
-        {JSON.stringify(data.job)}
         <Row gutter={24}>
           <Col span="16">
             <Card className="pt-3">

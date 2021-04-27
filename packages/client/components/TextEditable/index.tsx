@@ -1,4 +1,4 @@
-import { Button, Select, Typography, SelectProps } from 'antd';
+import { Button, SelectProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import styles from './style.module.scss';
 import KeyCode from 'rc-util/lib/KeyCode';
@@ -69,7 +69,6 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
 
   // Methods
   const confirmChange = () => {
-    console.log('xxxxxxxxxxxxxx')
     setTimeout(() => {
       setEditable(false);
     }, 100);
@@ -90,7 +89,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
   // render
   const renderEditInput = () => {
     return others.renderComponent({
-      defaultValue,
+      defaultValue: selectedValue,
       onKeyDown,
       onKeyUp,
       onBlur,

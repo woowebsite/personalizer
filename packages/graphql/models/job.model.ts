@@ -15,6 +15,7 @@ import StatusType from '../constants/StatusType';
 import { User } from './user.model';
 import { JobMeta } from './jobMeta.model';
 import { JobTerm } from './jobTerm.model';
+import moment from 'moment';
 
 @Table({ timestamps: true })
 export class Job extends Model<Job> {
@@ -37,7 +38,7 @@ export class Job extends Model<Job> {
   @Column
   visibility: string;
 
-  @Default(Date.now())
+  @Default(moment().toDate())
   @Column
   publishDate: Date;
 
