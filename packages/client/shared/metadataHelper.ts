@@ -6,7 +6,7 @@ export const fieldsToMetadata = (fields: object) => {
   if (!fields) return;
   let result = [];
   for (const prop in fields) {
-    result.push({ key: prop, value: fields[prop] });
+    result.push({ key: prop, value: fields[prop].toString() });
   }
   return result;
 };
