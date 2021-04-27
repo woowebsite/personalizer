@@ -51,6 +51,7 @@ const JobDetail = props => {
         ]}
       />
       <Content>
+        {JSON.stringify(data.job)}
         <Row gutter={24}>
           <Col span="16">
             <Card className="pt-3">
@@ -59,7 +60,7 @@ const JobDetail = props => {
           </Col>
           <Col span="8">
             <Card className="status-form" title={t('jobStatus.title')}>
-              <JobStatus />
+              <JobStatus initialValues={data.job} />
             </Card>
             <Card
               className="mt-4 status-form"
@@ -85,7 +86,7 @@ JobDetail.getInitialProps = async ({ ctx }) => {
   const { res, req, query, pathname, apolloClient } = ctx;
 
   const { data, loading, refetch } = await apolloClient.query({
-    query: jobQuery.get,
+    query: jobQuery.getJob,
     variables: {
       where: { id: parseInt(query.id) },
     },

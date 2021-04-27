@@ -32,9 +32,15 @@ export const jobQuery = {
   `,
 };
 
+export const definitions = {
+  getJob: options => {
+    return withQuery(jobQuery.getJob, options);
+  },
+};
+
 const jobService = baseService({
   name: 'Job',
   plural: 'Jobs',
-  definitions: jobQuery,
+  definitions,
 });
 export default jobService;
