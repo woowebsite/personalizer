@@ -78,6 +78,9 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
       setSelectedValue(value);
       setSelectedText(option.children);
     }, 100);
+
+    onChange?.(value);
+
   };
   const end = () => {
     setEditable(false);

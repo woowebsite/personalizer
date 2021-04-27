@@ -68,7 +68,10 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
   /// EVENTS
   useImperativeHandle(ref, () => ({
     onSubmit,
+    getFieldsValue,
   }));
+
+  const getFieldsValue = () => form.getFieldsValue();
 
   const onSubmit = () => {
     form
@@ -134,13 +137,6 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         label={t('jobCreateform.label.priority')}
       >
         <ComboBoxTaxonomy type={TaxonomyType.Job_Priority} />
-      </Form.Item>
-
-      <Form.Item
-        name={['taxonomies', 'job_status']}
-        label={t('jobCreateform.label.status')}
-      >
-        <ComboBoxTaxonomy type={TaxonomyType.Job_Status} />
       </Form.Item>
 
       <Form.Item

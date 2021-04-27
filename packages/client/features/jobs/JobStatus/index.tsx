@@ -41,8 +41,10 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
   /// EVENTS
   useImperativeHandle(ref, () => ({
     onSubmit,
+    getFieldsValue,
   }));
 
+  const getFieldsValue = () => form.getFieldsValue();
   const onSubmit = () => {
     form
       .validateFields()

@@ -9,13 +9,14 @@ import RedirectButton from '~/components/RedirectButton';
 // graphql
 import { withApollo } from 'apollo/apollo';
 import { useRouter } from 'next/dist/client/router';
-import userService from 'services/userService';
+import jobService from 'services/jobService';
 
 // inner components
 import JobForm from '~/features/jobs/JobForm';
 import JobStatus from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
 import { jobQuery } from '~/services/jobService';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 const { Content } = Layout;
 
@@ -25,11 +26,32 @@ const JobDetail = props => {
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
   const router = useRouter();
+  const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
 
   // EVENTS
   const onSave = () => {
-    formRef.current.onSubmit();
-    formStatusRef.current.onSubmit();
+    const formValues = formRef.current.getFieldsValue();
+    const statusValues = formStatusRef.current.getFieldsValue();
+
+    // metadata fields
+    const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
+    // taxonomies fields
+    const taxonomyFields = {
+      ...formValues.taxonomies,
+      ...statusValues.taxonomies,
+    };
+
+    // parse
+    const job = data.job
+      ? { id: data.job.id, ...formValues.job }
+      : formValues.job;
+
+    const metadata = fieldsToMetadata(metadataFields);
+    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
+
+    upsertJob({
+      variables: { job, metadata, taxonomies },
+    });
   };
 
   // RENDER
