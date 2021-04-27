@@ -27,6 +27,7 @@
     "graphql-relay": "^0.5.5",
     "graphql-sequelize": "^9.4.3",
     "jsonwebtoken": "^8.3.0",
+    "moment": "^2.29.1",
     "mysql2": "^1.6.5",
     "reflect-metadata": "^0.1.13",
     "schemaglue": "^4.0.2",
@@ -38,13 +39,13 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.1",
-    "@graphql-codegen/urql-introspection": "1.0.0",
-    "@graphql-codegen/typescript-document-nodes": "1.17.9",
     "@graphql-codegen/fragment-matcher": "2.0.1",
-    "@graphql-codegen/typescript-operations": "1.17.14",
-    "@graphql-codegen/typescript-graphql-files-modules": "1.18.1",
-    "@graphql-codegen/typescript-react-apollo": "2.2.1",
+    "@graphql-codegen/introspection": "1.18.1",
     "@graphql-codegen/typescript": "1.21.0",
-    "@graphql-codegen/introspection": "1.18.1"
+    "@graphql-codegen/typescript-document-nodes": "1.17.9",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.18.1",
+    "@graphql-codegen/typescript-operations": "1.17.14",
+    "@graphql-codegen/typescript-react-apollo": "2.2.1",
+    "@graphql-codegen/urql-introspection": "1.0.0"
   }
 }
