@@ -31,16 +31,19 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
     form.setFields([
       // taxonomies
       {
-        name: ['taxonomies', 'job_priority'],
-        value: parseInt(job.job_priority.value, 10),
+        name: ['taxonomies', 'job_status'],
+        value: job.job_status.value,
       },
       {
-        name: ['taxonomies', 'job_status'],
-        value: parseInt(job.job_status.value, 10),
+        name: ['metadata', 'employee_id'],
+        value: JSON.parse(job.employee_id).value,
       },
 
       // metadata
-      { name: ['metadata', 'link'], value: job.link },
+      {
+        name: ['metadata', 'leader_id'],
+        value: JSON.parse(job.leader_id).value,
+      },
     ]);
   };
 
@@ -101,11 +104,18 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
           label={t('jobStatus.label.employee')}
         >
           <TextEditable
+            defaultValue={
+              initialValues ? JSON.parse(initialValues.employee_id) : null
+            }
+            defaultText={
+              initialValues ? JSON.parse(initialValues.employee_id).label : null
+            }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox
                 onChange={handleOnChange}
                 textField="name"
                 valueField="id"
+                labelInValue
                 type={ComboBoxType.User}
                 width="200"
                 {...rest}
@@ -118,6 +128,12 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
           label={t('jobStatus.label.leader')}
         >
           <TextEditable
+            defaultValue={
+              initialValues ? JSON.parse(initialValues.leader_id) : null
+            }
+            defaultText={
+              initialValues ? JSON.parse(initialValues.leader_id).label : null
+            }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox
                 onChange={handleOnChange}
@@ -125,6 +141,7 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
                 valueField="id"
                 type={ComboBoxType.User}
                 width="200"
+                labelInValue
                 {...rest}
               />
             )}

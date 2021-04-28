@@ -65,10 +65,10 @@ export class Job extends Model<Job> {
   link: string;
 
   @Column(DataType.VIRTUAL)
-  employee_id: number;
+  employee_id: any;
 
   @Column(DataType.VIRTUAL)
-  leader_id: number;
+  leader_id: any;
 
   // taxonomies
   @Column(DataType.VIRTUAL)
