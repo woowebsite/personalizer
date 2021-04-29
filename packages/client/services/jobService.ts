@@ -19,8 +19,8 @@ export const jobQuery = {
         dueDate
         publishDate
         link
-        employee_id
-        leader_id
+        employee
+        leader
         job_priority {
           name
           value

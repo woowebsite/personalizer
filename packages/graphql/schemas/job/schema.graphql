@@ -9,8 +9,8 @@ type Job {
   jobTerms: [JobTerm]
 
   link: String
-  employee_id: String
-  leader_id: String
+  employee: String
+  leader: String
   job_priority: NameValue
   job_status: NameValue
 }

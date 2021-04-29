@@ -35,14 +35,14 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         value: job.job_status.value,
       },
       {
-        name: ['metadata', 'employee_id'],
-        value: JSON.parse(job.employee_id).value,
+        name: ['metadata', 'employee'],
+        value: JSON.parse(job.employee).value,
       },
 
       // metadata
       {
-        name: ['metadata', 'leader_id'],
-        value: JSON.parse(job.leader_id).value,
+        name: ['metadata', 'leader'],
+        value: JSON.parse(job.leader).value,
       },
     ]);
   };
@@ -100,15 +100,15 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
           />
         </Form.Item>
         <Form.Item
-          name={['metadata', 'employee_id']}
+          name={['metadata', 'employee']}
           label={t('jobStatus.label.employee')}
         >
           <TextEditable
             defaultValue={
-              initialValues ? JSON.parse(initialValues.employee_id) : null
+              initialValues ? JSON.parse(initialValues.employee) : null
             }
             defaultText={
-              initialValues ? JSON.parse(initialValues.employee_id).label : null
+              initialValues ? JSON.parse(initialValues.employee).label : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox
@@ -124,15 +124,15 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
           />
         </Form.Item>
         <Form.Item
-          name={['metadata', 'leader_id']}
+          name={['metadata', 'leader']}
           label={t('jobStatus.label.leader')}
         >
           <TextEditable
             defaultValue={
-              initialValues ? JSON.parse(initialValues.leader_id) : null
+              initialValues ? JSON.parse(initialValues.leader) : null
             }
             defaultText={
-              initialValues ? JSON.parse(initialValues.leader_id).label : null
+              initialValues ? JSON.parse(initialValues.leader).label : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox

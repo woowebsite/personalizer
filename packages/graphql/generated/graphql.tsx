@@ -138,8 +138,8 @@ export type Job = {
   metadata?: Maybe<Array<Maybe<JobMeta>>>;
   jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
   link?: Maybe<Scalars['String']>;
-  employee_id?: Maybe<Scalars['String']>;
-  leader_id?: Maybe<Scalars['String']>;
+  employee?: Maybe<Scalars['String']>;
+  leader?: Maybe<Scalars['String']>;
   job_priority?: Maybe<NameValue>;
   job_status?: Maybe<NameValue>;
 };
