@@ -23,7 +23,7 @@ export class JobMeta extends Model<JobMeta> {
   value: string;
 
   @Column
-  status: string;
+  type: string;
 
   @ForeignKey(() => Job)
   @Column

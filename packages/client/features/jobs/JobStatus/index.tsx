@@ -31,16 +31,19 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
     form.setFields([
       // taxonomies
       {
-        name: ['taxonomies', 'job_priority'],
-        value: parseInt(job.job_priority.value, 10),
+        name: ['taxonomies', 'job_status'],
+        value: job.job_status.value,
       },
       {
-        name: ['taxonomies', 'job_status'],
-        value: parseInt(job.job_status.value, 10),
+        name: ['metadata', 'employee'],
+        value: JSON.parse(job.employee).value,
       },
 
       // metadata
-      { name: ['metadata', 'link'], value: job.link },
+      {
+        name: ['metadata', 'leader'],
+        value: JSON.parse(job.leader).value,
+      },
     ]);
   };
 
@@ -97,15 +100,22 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
           />
         </Form.Item>
         <Form.Item
-          name={['metadata', 'employee_id']}
+          name={['metadata', 'employee']}
           label={t('jobStatus.label.employee')}
         >
           <TextEditable
+            defaultValue={
+              initialValues ? JSON.parse(initialValues.employee) : null
+            }
+            defaultText={
+              initialValues ? JSON.parse(initialValues.employee).label : null
+            }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox
                 onChange={handleOnChange}
                 textField="name"
                 valueField="id"
+                labelInValue
                 type={ComboBoxType.User}
                 width="200"
                 {...rest}
@@ -114,10 +124,16 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
           />
         </Form.Item>
         <Form.Item
-          name={['metadata', 'leader_id']}
+          name={['metadata', 'leader']}
           label={t('jobStatus.label.leader')}
         >
           <TextEditable
+            defaultValue={
+              initialValues ? JSON.parse(initialValues.leader) : null
+            }
+            defaultText={
+              initialValues ? JSON.parse(initialValues.leader).label : null
+            }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox
                 onChange={handleOnChange}
@@ -125,6 +141,7 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
                 valueField="id"
                 type={ComboBoxType.User}
                 width="200"
+                labelInValue
                 {...rest}
               />
             )}

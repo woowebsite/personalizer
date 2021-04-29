@@ -9,8 +9,8 @@ type Job {
   jobTerms: [JobTerm]
 
   link: String
-  employee_id: Int
-  leader_id: Int
+  employee: String
+  leader: String
   job_priority: NameValue
   job_status: NameValue
 }
@@ -35,28 +35,25 @@ type JobsPaged {
   count: Int
 }
 
-type JobMeta{
+type JobMeta {
   id: Int
   job_id: Int
   key: String
   value: String
+  type: String
   job: Job
 }
 
-input JobMetaInput{
+input JobMetaInput {
   job_id: Int
   key: String
   value: String
+  type: String
 }
-
 
 type Query {
   job(where: JobWhere): Job
-  jobs(
-    where: JobWhere
-    limit: Int
-    offset: Int
-  ): JobsPaged
+  jobs(where: JobWhere, limit: Int, offset: Int): JobsPaged
 }
 
 type Mutation {
