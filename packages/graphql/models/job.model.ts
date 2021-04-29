@@ -63,6 +63,12 @@ export class Job extends Model<Job> {
   // metadata
   @Column(DataType.VIRTUAL)
   link: string;
+  
+  @Column(DataType.VIRTUAL)
+  isDemoColor: any;
+  
+  @Column(DataType.VIRTUAL)
+  isDemoLayout: any;
 
   @Column(DataType.VIRTUAL)
   employee: any;

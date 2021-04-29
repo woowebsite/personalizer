@@ -138,6 +138,8 @@ export type Job = {
   metadata?: Maybe<Array<Maybe<JobMeta>>>;
   jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
   link?: Maybe<Scalars['String']>;
+  isDemoColor?: Maybe<Scalars['Boolean']>;
+  isDemoLayout?: Maybe<Scalars['Boolean']>;
   employee?: Maybe<Scalars['String']>;
   leader?: Maybe<Scalars['String']>;
   job_priority?: Maybe<NameValue>;
@@ -159,6 +161,7 @@ export type JobMeta = {
   job_id?: Maybe<Scalars['Int']>;
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
   job?: Maybe<Job>;
 };
 
@@ -166,6 +169,7 @@ export type JobMetaInput = {
   job_id?: Maybe<Scalars['Int']>;
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type JobsPaged = {

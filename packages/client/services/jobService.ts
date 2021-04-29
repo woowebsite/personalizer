@@ -19,6 +19,8 @@ export const jobQuery = {
         dueDate
         publishDate
         link
+        isDemoColor
+        isDemoLayout
         employee
         leader
         job_priority {

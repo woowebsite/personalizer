@@ -20,6 +20,7 @@ import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import JOB_SETTING from '~/constants/jobSettings';
 import { smallerThan } from '~/shared/antdHelper';
 import moment from 'moment';
+import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 interface IProps {
   initialValues?: any;
@@ -33,6 +34,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
   const [form] = Form.useForm();
 
   const formSetFields = job => {
+    console.log('job', job);
     form.setFields([
       { name: ['job', 'title'], value: job.title },
       { name: ['job', 'link'], value: job.link },
@@ -52,6 +54,8 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
 
       // metadata
       { name: ['metadata', 'link'], value: job.link },
+      { name: ['metadata', 'isDemoColor'], value: job.isDemoColor },
+      { name: ['metadata', 'isDemoLayout'], value: job.isDemoLayout },
     ]);
   };
 
@@ -153,6 +157,14 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         <DatePicker
           disabledDate={smallerThan(form.getFieldValue(['job', 'publishDate']))}
         />
+      </Form.Item>
+
+      <Form.Item name={['metadata', 'isDemoColor']} valuePropName="checked">
+        <Checkbox>{t('jobCreateform.label.demoColor')}</Checkbox>
+      </Form.Item>
+
+      <Form.Item name={['metadata', 'isDemoLayout']} valuePropName="checked">
+        <Checkbox>{t('jobCreateform.label.demoLayout')}</Checkbox>
       </Form.Item>
 
       <Form.Item
