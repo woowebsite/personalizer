@@ -1,8 +1,9 @@
 enum RoleType {
   SysAdmin = 1,
-  Admin,
-  Manager,
-  Developer,
+  HelpDesk,
+  Leader,
+  Employee,
+  Customer,
 }
 
 export default RoleType;

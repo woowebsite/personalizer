@@ -5,7 +5,7 @@
  * @param data object with metadata
  * @param metadata name of metadata field, eg: userMeta
  */
-export const metadataToField = (obj, metadata='metadata') => {
+export const metadataToField = (obj, metadata = 'metadata') => {
   if (!obj || !metadata) {
     console.error('MetadataToField Error: Object or metadata is null');
     return;

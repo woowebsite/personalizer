@@ -127,14 +127,79 @@ export type FilterWhere = {
   user_id?: Maybe<Scalars['Int']>;
 };
 
+export type Job = {
+  __typename?: 'Job';
+  id?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  dueDate?: Maybe<Scalars['Date']>;
+  publishDate?: Maybe<Scalars['Date']>;
+  user?: Maybe<User>;
+  metadata?: Maybe<Array<Maybe<JobMeta>>>;
+  jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
+  link?: Maybe<Scalars['String']>;
+  isDemoColor?: Maybe<Scalars['Boolean']>;
+  isDemoLayout?: Maybe<Scalars['Boolean']>;
+  employee?: Maybe<Scalars['String']>;
+  leader?: Maybe<Scalars['String']>;
+  job_priority?: Maybe<NameValue>;
+  job_status?: Maybe<NameValue>;
+};
+
+export type JobInput = {
+  id?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  publishDate?: Maybe<Scalars['Date']>;
+  description?: Maybe<Scalars['String']>;
+  dueDate?: Maybe<Scalars['Date']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type JobMeta = {
+  __typename?: 'JobMeta';
+  id?: Maybe<Scalars['Int']>;
+  job_id?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  job?: Maybe<Job>;
+};
+
+export type JobMetaInput = {
+  job_id?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type JobsPaged = {
+  __typename?: 'JobsPaged';
+  rows?: Maybe<Array<Maybe<Job>>>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type JobTerm = {
+  __typename?: 'JobTerm';
+  term_taxonomy_id?: Maybe<Scalars['Int']>;
+  order?: Maybe<Scalars['Int']>;
+  ref_id?: Maybe<Job>;
+  termTaxonomies?: Maybe<TermTaxonomy>;
+};
+
+export type JobWhere = {
+  user_id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createAlbum?: Maybe<Album>;
   upsertFilter?: Maybe<Filter>;
   deleteFilter?: Maybe<Scalars['Int']>;
   uploadFile: File;
-  upsertProductBase?: Maybe<ProductBase>;
-  deleteProductBase?: Maybe<Scalars['Int']>;
+  upsertJob?: Maybe<Job>;
+  deleteJob?: Maybe<Scalars['Int']>;
   createRole?: Maybe<Role>;
   upsertTermTaxonomy?: Maybe<TermTaxonomy>;
   deleteTermTaxonomy?: Maybe<Scalars['Int']>;
@@ -164,12 +229,14 @@ export type MutationUploadFileArgs = {
 };
 
 
-export type MutationUpsertProductBaseArgs = {
-  data?: Maybe<ProductBaseInput>;
+export type MutationUpsertJobArgs = {
+  data?: Maybe<JobInput>;
+  metadata?: Maybe<Array<Maybe<JobMetaInput>>>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
 
-export type MutationDeleteProductBaseArgs = {
+export type MutationDeleteJobArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 
@@ -196,6 +263,8 @@ export type MutationCreateUserArgs = {
 
 export type MutationUpsertUserArgs = {
   data?: Maybe<UserInput>;
+  metadata?: Maybe<Array<Maybe<UserMetaInput>>>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
 
@@ -204,36 +273,15 @@ export type MutationChangePasswordArgs = {
   password: Scalars['String'];
 };
 
+export type NameValue = {
+  __typename?: 'NameValue';
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
 export type PaginationInfo = {
   __typename?: 'PaginationInfo';
   total?: Maybe<Scalars['Int']>;
-};
-
-export type ProductBase = {
-  __typename?: 'ProductBase';
-  id?: Maybe<Scalars['Int']>;
-  title?: Maybe<Scalars['String']>;
-  user?: Maybe<User>;
-};
-
-export type ProductBaseInput = {
-  id?: Maybe<Scalars['Int']>;
-  title?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  user_id?: Maybe<Scalars['Int']>;
-  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
-};
-
-export type ProductBasesPaged = {
-  __typename?: 'ProductBasesPaged';
-  rows?: Maybe<Array<Maybe<ProductBase>>>;
-  count?: Maybe<Scalars['Int']>;
-};
-
-export type ProductBaseWhere = {
-  user_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  status?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -244,8 +292,8 @@ export type Query = {
   albums?: Maybe<AlbumsPaged>;
   pagination?: Maybe<PaginationInfo>;
   filters?: Maybe<FiltersPaged>;
-  productBase?: Maybe<ProductBase>;
-  productBases?: Maybe<ProductBasesPaged>;
+  job?: Maybe<Job>;
+  jobs?: Maybe<JobsPaged>;
   role?: Maybe<Role>;
   roles?: Maybe<Array<Maybe<Role>>>;
   termTaxonomy?: Maybe<TermTaxonomy>;
@@ -292,13 +340,13 @@ export type QueryFiltersArgs = {
 };
 
 
-export type QueryProductBaseArgs = {
-  where?: Maybe<ProductBaseWhere>;
+export type QueryJobArgs = {
+  where?: Maybe<JobWhere>;
 };
 
 
-export type QueryProductBasesArgs = {
-  where?: Maybe<ProductBaseWhere>;
+export type QueryJobsArgs = {
+  where?: Maybe<JobWhere>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
@@ -390,6 +438,7 @@ export type TermTaxonomy = {
   taxonomy?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   termName?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Int']>;
   term?: Maybe<Term>;
 };
 
@@ -397,6 +446,7 @@ export type TermTaxonomyInput = {
   id?: Maybe<Scalars['Int']>;
   taxonomy?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Int']>;
   parent?: Maybe<Scalars['Int']>;
   count?: Maybe<Scalars['Int']>;
 };
@@ -419,8 +469,8 @@ export type User = {
   role_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   role?: Maybe<Role>;
-  userMeta?: Maybe<Array<Maybe<UserMeta>>>;
   havePassword?: Maybe<Scalars['Boolean']>;
+  userMeta?: Maybe<Array<Maybe<UserMeta>>>;
   phone?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
   customerType?: Maybe<Scalars['String']>;
@@ -443,6 +493,12 @@ export type UserMeta = {
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
   user?: Maybe<User>;
+};
+
+export type UserMetaInput = {
+  user_id?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type UsersPaged = {

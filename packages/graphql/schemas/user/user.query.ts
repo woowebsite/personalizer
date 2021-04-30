@@ -13,8 +13,10 @@ export const Query = {
       return findOptions;
     },
     after: async (user, args, context) => {
-      const transferData = metadataToField(user, 'userMeta');
-      return transferData;
+      const total = await User.count(args.where);
+
+      const transferData = metadataToField(user, 'userMeta') //user.map(u => metadataToField(u, 'userMeta'));
+      return transferData
     },
   }),
   users: resolver(User, {
@@ -22,6 +24,7 @@ export const Query = {
     before: async (findOptions, { where, limit, offset }, context) => {
       let conditions = where;
       if (where && where.name) conditions.name = { [Op.like]: where.name };
+      if (where && where.email) conditions.email = { [Op.like]: where.email };
       findOptions.where = conditions;
       findOptions.order = [['name', 'ASC']];
       findOptions.include = [{ model: UserMeta }];

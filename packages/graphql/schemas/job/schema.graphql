@@ -1,0 +1,64 @@
+type Job {
+  id: Int
+  title: String
+  description: String
+  dueDate: Date
+  publishDate: Date
+  user: User
+  metadata: [JobMeta]
+  jobTerms: [JobTerm]
+
+  link: String
+  isDemoColor: String
+  isDemoLayout: String
+  employee: String
+  leader: String
+  job_priority: NameValue
+  job_status: NameValue
+}
+
+input JobWhere {
+  user_id: Int
+  id: Int
+  status: String
+}
+
+input JobInput {
+  id: Int
+  title: String
+  publishDate: Date
+  description: String
+  dueDate: Date
+  user_id: Int
+}
+
+type JobsPaged {
+  rows: [Job]
+  count: Int
+}
+
+type JobMeta {
+  id: Int
+  job_id: Int
+  key: String
+  value: String
+  type: String
+  job: Job
+}
+
+input JobMetaInput {
+  job_id: Int
+  key: String
+  value: String
+  type: String
+}
+
+type Query {
+  job(where: JobWhere): Job
+  jobs(where: JobWhere, limit: Int, offset: Int): JobsPaged
+}
+
+type Mutation {
+  upsertJob(data: JobInput, metadata: [JobMetaInput], taxonomies: [Int]): Job
+  deleteJob(id: Int): Int
+}

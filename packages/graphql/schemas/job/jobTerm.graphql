@@ -1,0 +1,7 @@
+type JobTerm {
+  term_taxonomy_id: Int
+  order: Int
+  ref_id: Job
+
+  termTaxonomies: TermTaxonomy
+}
