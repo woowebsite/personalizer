@@ -1,5 +1,7 @@
-import { Button, SelectProps } from 'antd';
+import { Button, Select, Typography, SelectProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import ComboBoxEnum from '~/components/ComboBoxEnum';
+import ProductBaseStatus from '~/models/ProductBaseStatus';
 import styles from './style.module.scss';
 import KeyCode from 'rc-util/lib/KeyCode';
 
@@ -78,9 +80,6 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
       setSelectedValue(value);
       setSelectedText(option.children);
     }, 100);
-
-    onChange?.(value);
-
   };
   const end = () => {
     setEditable(false);
@@ -92,7 +91,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
   // render
   const renderEditInput = () => {
     return others.renderComponent({
-      defaultValue: selectedValue,
+      defaultValue,
       onKeyDown,
       onKeyUp,
       onBlur,

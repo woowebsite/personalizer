@@ -7,14 +7,12 @@ import {
   HasOne,
   BelongsTo,
 } from 'sequelize-typescript';
-import { Job } from './job.model';
+import { ProductBase } from './productBase.model';
+import { Term } from './term.model';
 import { TermTaxonomy } from './termTaxonomy.model';
 
 @Table({ timestamps: false })
-export class JobTerm extends Model<JobTerm> {
-  @BelongsTo(() => TermTaxonomy)
-  termTaxonomy: TermTaxonomy;
-
+export class ProductBaseTerm extends Model<ProductBaseTerm> {
   @ForeignKey(() => TermTaxonomy)
   @Column
   term_taxonomy_id: number;
@@ -22,11 +20,7 @@ export class JobTerm extends Model<JobTerm> {
   @Column
   order: number;
 
-  // job
   @Column
-  @ForeignKey(() => Job)
+  @ForeignKey(() => ProductBase)
   ref_id: number;
-
-  @BelongsTo(() => Job)
-  job: Job;
 }

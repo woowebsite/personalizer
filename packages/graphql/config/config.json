@@ -2,7 +2,7 @@
   "development": {
       "username": "graphql",
       "password": "123456",
-      "database": "jyworkflow",
+      "database": "ecommerce",
       "host": "127.0.0.1",
       "dialect": "mysql"
   }
