@@ -16,6 +16,8 @@ import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
+import jobService from 'services/jobService';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 // inner components
 import JobForm from '~/features/jobs/JobForm';
@@ -29,11 +31,30 @@ const JobNew = props => {
   const { messages, t } = props;
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
+  const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
 
   // EVENTS
   const onSave = () => {
-    formRef.current.onSubmit();
-    formStatusRef.current.onSubmit();
+    const formValues = formRef.current.getFieldsValue();
+    const statusValues = formStatusRef.current.getFieldsValue();
+
+    // metadata fields
+    const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
+
+    // taxonomies fields
+    const taxonomyFields = {
+      ...formValues.taxonomies,
+      ...statusValues.taxonomies,
+    };
+
+    // parse
+    const job = formValues.job;
+    const metadata = fieldsToMetadata(metadataFields);
+    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
+
+    upsertJob({
+      variables: { job, metadata, taxonomies },
+    });
   };
 
   // RENDER
@@ -46,9 +67,6 @@ const JobNew = props => {
           <RedirectButton url={'/customer/jobs'}>
             {messages['pageHeader.buttons.all']}
           </RedirectButton>,
-          <Button key="2" danger>
-            {t('buttons.delete')}
-          </Button>,
           <Button key="1" type="primary" onClick={onSave}>
             {t('buttons.save')}
           </Button>,

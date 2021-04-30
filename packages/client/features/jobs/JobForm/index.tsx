@@ -55,7 +55,10 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       // metadata
       { name: ['metadata', 'link'], value: job.link },
       { name: ['metadata', 'isDemoColor'], value: job.isDemoColor },
-      { name: ['metadata', 'isDemoLayout'], value: job.isDemoLayout },
+      {
+        name: ['metadata', 'isDemoLayout'],
+        value: job.isDemoLayout,
+      },
     ]);
   };
 
@@ -109,6 +112,10 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         job: {
           publishDate: moment(),
           dueDate: moment().add(JOB_SETTING.dueDateIncrease, 'day'),
+        },
+        metadata: {
+          isDemoColor: false,
+          isDemoLayout: false,
         },
       }}
       onFinish={onSubmit}

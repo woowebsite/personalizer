@@ -65,10 +65,10 @@ export class Job extends Model<Job> {
   link: string;
   
   @Column(DataType.VIRTUAL)
-  isDemoColor: any;
+  isDemoColor: boolean;
   
   @Column(DataType.VIRTUAL)
-  isDemoLayout: any;
+  isDemoLayout: boolean;
 
   @Column(DataType.VIRTUAL)
   employee: any;
