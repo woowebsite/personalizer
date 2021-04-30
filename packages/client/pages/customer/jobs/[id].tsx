@@ -10,13 +10,13 @@ import RedirectButton from '~/components/RedirectButton';
 import { withApollo } from 'apollo/apollo';
 import { useRouter } from 'next/dist/client/router';
 import jobService from 'services/jobService';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 // inner components
 import JobForm from '~/features/jobs/JobForm';
 import JobStatus from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
 import { jobQuery } from '~/services/jobService';
-import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 const { Content } = Layout;
 
@@ -25,7 +25,6 @@ const JobDetail = props => {
   const { messages, t, query, data } = props;
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
-  const router = useRouter();
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
 
   // EVENTS
@@ -70,6 +69,9 @@ const JobDetail = props => {
           <Button key="2" danger>
             {t('buttons.delete')}
           </Button>,
+          <RedirectButton url={'/customer/jobs/new'}>
+            {t('buttons.create')}
+          </RedirectButton>,
           <Button key="1" type="primary" onClick={onSave}>
             {t('buttons.save')}
           </Button>,
