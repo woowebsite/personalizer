@@ -13,13 +13,11 @@ export const GET_REST_USERS = gql`
 export const GET_USERS = gql`
   query GetAllUsers($where: UserWhere) {
     users(where: $where) {
-      rows {
-        id
-        name
-        image
-        email
-        created_at
-      }
+      id
+      name
+      image
+      email
+      created_at
     }
   }
 `;

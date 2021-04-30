@@ -27,7 +27,7 @@ const ComboBox = ({ type, textField, valueField, ...others }) => {
   if (loading) return <Select {...others} />;
   switch (type) {
     case ComboBoxType.User:
-      dataSource = data.users.rows;
+      dataSource = data.users;
       break;
     case ComboBoxType.Role:
       dataSource = data.roles;

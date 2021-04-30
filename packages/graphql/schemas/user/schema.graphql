@@ -9,9 +9,9 @@ type User {
   role_id: Int
   status: String
   role: Role
+  userMeta: [UserMeta]
   havePassword: Boolean
 
-  userMeta: [UserMeta]
   phone: String
   address: String
   customerType: String
@@ -37,7 +37,6 @@ input UserInput {
 
 input UserMetaInput{
   user_id: Int
-  type: String
   key: String
   value: String
 }

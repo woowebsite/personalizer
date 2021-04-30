@@ -6,7 +6,7 @@ export const ENV = {
 
     DB_HOST: process.env.DB_HOST || '127.0.0.1',
     DB_PORT: process.env.DB_PORT || '3306',
-    DB_NAME: process.env.DB_NAME || 'jyworkflow',
+    DB_NAME: process.env.DB_NAME || 'ecommerce',
     DB_USER: process.env.DB_USER || 'graphql',
     DB_PASSWORD: process.env.DB_PASSWORD || '123456',
     DB_DIALECT: process.env.DB_DIALECT || 'mysql',

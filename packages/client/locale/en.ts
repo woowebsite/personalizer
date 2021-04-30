@@ -17,15 +17,10 @@ export const en = {
         allUsers: 'All users',
         createUser: 'Create an user',
       },
-      customers: {
-        title: 'Customers',
-        allCustomers: 'All Customer',
-        createCustomer: 'Create Customer',
-      },
-      jobs: {
-        title: 'Jobs',
-        allJobs: 'All Jobs',
-        createJob: 'Create Job',
+      productBases: {
+        title: 'Product bases',
+        allProductBase: 'All Product bases',
+        createProductBase: 'Create product base',
       },
     },
     validator: {
@@ -39,13 +34,11 @@ export const en = {
     buttons: {
       discard: 'Discard',
       save: 'Save',
-      create: 'Create',
       delete: 'Delete',
       edit: 'Edit',
       actions: 'Actions',
       more: 'More',
       cancel: 'Cancel',
-      filter: 'Filter'
     },
     userTable: {
       columns: {
@@ -57,47 +50,6 @@ export const en = {
         phone: 'Phone',
         role: 'Role',
         createdAt: 'Created At',
-      },
-    },
-    customerTable: {
-      columns: {
-        id: 'Id',
-        name: 'Name',
-        image: 'Avatar',
-        facebook: 'Facebook',
-        customerType: 'Type',
-        createdAt: 'Created At',
-      },
-    },
-    jobTable: {
-      columns: {
-        id: 'Id',
-        title: 'Title',
-        link: 'Link',
-        status: 'Status',
-        priority: 'Priority',
-        createdAt: 'Created At',
-      },
-    },
-    jobCreateform: {
-      label: {
-        title: "Title",
-        link: "Link",
-        priority: "Priority",
-        status: "Status",
-        dueDate: "DueDate",
-        description: "Notes"
-      },
-    },
-    customerCreateform: {
-      label: {
-        name: 'Name',
-        description: 'Description',
-        image: 'Image',
-        email: 'Email',
-        type: 'Customer type',
-        address: 'Address',
-        phone: 'Phone',
       },
     },
     productBaseTable: {
@@ -160,32 +112,12 @@ export const en = {
       },
     },
   },
-  '/admin/customers': {
-    title: 'All customers',
-    subTitle: 'This is subtitle',
-    pageHeader: {
-      buttons: {
-        create: 'Add customer',
-      },
-    },
-  },
-  '/customer/jobs': {
-    title: 'Job',
+  '/admin/productbases': {
+    title: 'Product Bases',
     subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
         create: 'Add new',
-        all: 'All jobs'
-      },
-    },
-  },
-  '/customer/jobs/new': {
-    title: 'Create a job',
-    subTitle: 'This is subtitle',
-    pageHeader: {
-      buttons: {
-        create: 'Add job',
-        all: 'All jobs'
       },
     },
   },

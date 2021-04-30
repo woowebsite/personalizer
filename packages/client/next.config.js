@@ -18,7 +18,7 @@ module.exports = {
     locales: ['vi', 'en'],
     // This is the default locale you want to be used when visiting
     // a non-locale prefixed path e.g. `/hello`
-    defaultLocale: 'vi',
+    defaultLocale: 'en',
     localeDetection: false // disable automatic redirect Accept-language
   },
   lessLoaderOptions: {

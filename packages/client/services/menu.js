@@ -1,6 +1,24 @@
 export default function getMenuData() {
   return [
     {
+      title: 'menu.settings.title',
+      key: 'settings',
+      icon: 'fe fe-home',
+      count: 1,
+      children: [
+        {
+          title: 'menu.settings.profile',
+          key: 'profile',
+          url: '/settings/profile',
+        },
+        {
+          title: 'menu.settings.changePassword',
+          key: 'changePassword',
+          url: '/settings/changePassword',
+        },
+      ],
+    },
+    {
       title: 'menu.users.title',
       key: 'dashboards',
       icon: 'fe fe-home',
@@ -20,58 +38,21 @@ export default function getMenuData() {
       ],
     },
     {
-      title: 'menu.customers.title',
+      title: 'menu.productBases.title',
       key: 'dashboards',
       icon: 'fe fe-home',
       roles: ['admin'],
       count: 4,
       children: [
         {
-          title: 'menu.customers.allCustomers',
-          key: 'all',
-          url: '/admin/customers',
+          title: 'menu.productBases.allProductBase',
+          key: 'dashboard',
+          url: '/admin/productbases',
         },
         {
-          title: 'menu.customers.createCustomer',
-          key: 'new',
-          url: '/admin/customers/new',
-        },
-      ],
-    },
-    {
-      title: 'menu.jobs.title',
-      key: 'dashboards',
-      icon: 'fe fe-home',
-      roles: ['admin'],
-      count: 4,
-      children: [
-        {
-          title: 'menu.jobs.allJobs',
-          key: 'all',
-          url: '/customer/jobs',
-        },
-        {
-          title: 'menu.jobs.createJob',
-          key: 'new',
-          url: '/customer/jobs/new',
-        },
-      ],
-    },
-    {
-      title: 'menu.settings.title',
-      key: 'settings',
-      icon: 'fe fe-home',
-      count: 1,
-      children: [
-        {
-          title: 'menu.settings.profile',
-          key: 'profile',
-          url: '/settings/profile',
-        },
-        {
-          title: 'menu.settings.changePassword',
-          key: 'changePassword',
-          url: '/settings/changePassword',
+          title: 'menu.productBases.createProductBase',
+          key: 'dashboardBeta',
+          url: '/admin/productbases/new',
         },
       ],
     },
