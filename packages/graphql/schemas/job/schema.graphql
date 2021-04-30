@@ -9,6 +9,8 @@ type Job {
   jobTerms: [JobTerm]
 
   link: String
+  isDemoColor: String
+  isDemoLayout: String
   employee: String
   leader: String
   job_priority: NameValue
