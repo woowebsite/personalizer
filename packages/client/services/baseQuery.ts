@@ -20,7 +20,7 @@ const getModel = (modelName: string) => {
  *  create,
  *  update,
  *  delete,
- *  upsert 
+ *  upsert
  * }
  */
 function baseQuery(options: { name: string; plural: string }) {
@@ -47,7 +47,7 @@ function baseQuery(options: { name: string; plural: string }) {
         }
       }`,
     /**
-     * Get an item 
+     * Get an item
      */
     get: gql`
       query Get${name}($where: ${name}Where) {
@@ -91,11 +91,9 @@ function baseQuery(options: { name: string; plural: string }) {
       mutation Delete${name}(
         $id: Int
       ) {
-        delete${camelCaseName}(
+        delete${name}(
           id: $id
-        ) {
-          id
-        }
+        ) 
       }`,
   };
 
