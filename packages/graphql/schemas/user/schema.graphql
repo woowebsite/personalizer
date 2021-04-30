@@ -37,6 +37,7 @@ input UserInput {
 
 input UserMetaInput{
   user_id: Int
+  type: String
   key: String
   value: String
 }
