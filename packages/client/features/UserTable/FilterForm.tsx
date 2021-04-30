@@ -8,13 +8,17 @@ const FilterForm = ({ values, onFilter }) => {
   const handleFinish = () => {
     form
       .validateFields()
-      .then((values) => {
+      .then(values => {
         let queries = values;
-        if (values.name || !!!values.name)
+        if (typeof values.name !== 'undefined' && values.name.length) {
           queries.name = `%${values.name}%`;
+        }
+        if (typeof values.email !== 'undefined' && values.email.length) {
+          queries.email = `%${values.email}%`;
+        }
         onFilter(queries);
       })
-      .catch((errorInfo) => {
+      .catch(errorInfo => {
         console.log('Error: ', errorInfo);
       });
   };
@@ -24,22 +28,22 @@ const FilterForm = ({ values, onFilter }) => {
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={values}
-      layout='inline'
+      layout="inline"
       onFinish={handleFinish}
-      name='basic'
+      name="basic"
       form={form}
-      labelAlign='left'
+      labelAlign="left"
     >
-      <Form.Item label='Name' name='name'>
+      <Form.Item label="Name" name="name">
         <Input />
       </Form.Item>
 
-      <Form.Item label='Email' name='email'>
+      <Form.Item label="Email" name="email">
         <Input />
       </Form.Item>
 
       <Form.Item>
-        <Button type='primary' htmlType='submit'>
+        <Button type="primary" htmlType="submit">
           Filter
         </Button>
       </Form.Item>

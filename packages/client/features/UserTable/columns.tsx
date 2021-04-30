@@ -86,12 +86,9 @@ export const columns = (t, onDeleteUser, onRoleChanged): ColumnsType<any> => {
             {t('buttons.delete')}
           </Button>
 
-          <Dropdown placement="bottomRight" overlay={menu}>
-            <Button>
-              {t('buttons.actions')}
-              <DownOutlined />
-            </Button>
-          </Dropdown>
+          <Dropdown.Button placement="bottomRight" overlay={menu}>
+            {t('buttons.actions')}
+          </Dropdown.Button>
         </Button.Group>
       ),
     },

@@ -22,6 +22,7 @@ export const Query = {
     before: async (findOptions, { where, limit, offset }, context) => {
       let conditions = where;
       if (where && where.name) conditions.name = { [Op.like]: where.name };
+      if (where && where.email) conditions.email = { [Op.like]: where.email };
       findOptions.where = conditions;
       findOptions.order = [['name', 'ASC']];
       findOptions.include = [{ model: UserMeta }];
