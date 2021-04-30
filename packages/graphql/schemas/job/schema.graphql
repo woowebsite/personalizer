@@ -58,5 +58,5 @@ type Query {
 
 type Mutation {
   upsertJob(data: JobInput, metadata: [JobMetaInput], taxonomies: [Int]): Job
-  deleteJob(id: Int): Int
+  deleteJob(id: Int): Boolean
 }

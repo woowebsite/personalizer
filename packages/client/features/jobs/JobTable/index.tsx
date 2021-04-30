@@ -24,16 +24,10 @@ const JobTable = props => {
   const handleDeleteJob = id => {
     deleteJob({
       variables: {
-        user: {
-          id: id,
-          status: StatusType.Deactive,
-        },
+        id,
       },
     });
   };
-
-  
- 
 
   // RENDER
   const renderFilter = props => <FilterForm {...props} />;

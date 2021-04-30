@@ -1,10 +1,16 @@
 import Link from 'next/link';
 import { ColumnsType } from 'antd/lib/table';
-import { Table, Space, Menu, Dropdown, Button } from 'antd';
-import { DownOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
+import { Table, Space, Menu, Dropdown, Modal, Button } from 'antd';
+import {
+  DownOutlined,
+  UserOutlined,
+  MoreOutlined,
+  CloseCircleFilled,
+} from '@ant-design/icons';
 import Avatar from 'components/Avatar';
 import ComboBoxEnum from '~/components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
+import ButtonModal from '~/components/ButtonModal';
 
 const menu = (
   <Menu>
@@ -21,6 +27,15 @@ const menu = (
 );
 
 export const columns = (t, onDeleteJob): ColumnsType<any> => {
+  const configDeleteModal = record => ({
+    icon: <CloseCircleFilled style={{ color: 'rgb(244, 85, 53)' }} />,
+    title: t('jobTable.deleteModal.title'),
+    content: t('jobTable.deleteModal.content'),
+    onOk() {
+      onDeleteJob(record.id);
+    },
+  });
+
   return [
     {
       title: t('jobTable.columns.id'),
@@ -35,9 +50,11 @@ export const columns = (t, onDeleteJob): ColumnsType<any> => {
       key: 'title',
       width: '25%',
       render: (text, record) => {
-        console.log('record', record);
-
-        return text ? <Link href={`/customer/jobs/${record.id}`}>{text}</Link> : text;
+        return text ? (
+          <Link href={`/customer/jobs/${record.id}`}>{text}</Link>
+        ) : (
+          text
+        );
       },
     },
     {
@@ -63,9 +80,9 @@ export const columns = (t, onDeleteJob): ColumnsType<any> => {
       sorter: false,
       render: (value, record, index) => (
         <Button.Group>
-          <Button onClick={() => onDeleteJob(record.id)} type="link">
+          <ButtonModal config={configDeleteModal(record)} type="link">
             {t('buttons.delete')}
-          </Button>
+          </ButtonModal>
 
           <Dropdown placement="bottomRight" overlay={menu}>
             <Button>

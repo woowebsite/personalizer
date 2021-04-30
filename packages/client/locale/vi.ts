@@ -78,6 +78,10 @@ export const vi = {
         priority: 'Ưu tiên',
         createdAt: 'Ngày tạo',
       },
+      deleteModal: {
+        title: 'Xoá công việc',
+        content: 'Bạn thực sự muốn xoá công việc này?',
+      },
     },
     jobCreateform: {
       label: {
@@ -157,7 +161,7 @@ export const vi = {
   },
   '/admin/customers/new': {
     title: 'Tạo khách hàng',
-    subTitle: 'This is subtitle', 
+    subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
         create: 'Thêm khách hàng',
@@ -168,7 +172,7 @@ export const vi = {
       title: 'Tài khoản',
       buttons: {
         addMoney: 'Nạp tiền',
-        cancel: 'Tạm hoãn'
+        cancel: 'Tạm hoãn',
       },
       label: {
         money: 'Tiền',
@@ -178,7 +182,7 @@ export const vi = {
   },
   '/admin/customers/[id]': {
     title: 'Tạo khách hàng',
-    subTitle: 'This is subtitle', 
+    subTitle: 'This is subtitle',
     pageHeader: {
       buttons: {
         create: 'Thêm khách hàng',
@@ -189,7 +193,7 @@ export const vi = {
       title: 'Tài khoản',
       buttons: {
         addMoney: 'Nạp tiền',
-        cancel: 'Tạm hoãn'
+        cancel: 'Tạm hoãn',
       },
       label: {
         money: 'Tiền',

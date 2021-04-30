@@ -36,4 +36,19 @@ export const Mutation = {
       return findOptions;
     },
   }),
+
+  deleteJob: resolver(Job, {
+    before: async (findOptions, { id }, ctx) => {
+      JobMeta.destroy({
+        where: { job_id: id },
+      });
+      const x = Job.destroy({
+        where: { id: id },
+      });
+    },
+    after: (job, args) => {
+      if (job.id === args.id) return false;
+      return true;
+    },
+  }),
 };
