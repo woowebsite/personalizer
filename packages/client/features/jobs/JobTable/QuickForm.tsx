@@ -1,5 +1,8 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 import { useIntl } from 'react-intl';
+import useTranslate from 'hooks/useTranslate';
+import React from 'react';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 const QuickForm = ({ values, onSave, onCancel }) => {
   const { formatMessage } = useIntl();
@@ -11,40 +14,67 @@ const QuickForm = ({ values, onSave, onCancel }) => {
   const handleFinish = () => {
     form
       .validateFields()
-      .then(values => {
-        onSave(values);
+      .then(formValues => {
+        const updated = {
+          job: {
+            id: values.id,
+            title: formValues.title,
+            description: formValues.description,
+          },
+          metadata: fieldsToMetadata({
+            link: formValues.link,
+          }),
+          taxonomies: [],
+        };
+
+        onSave(updated);
       })
       .catch(errorInfo => {
         console.log('Error: ', errorInfo);
       });
   };
 
+  console.log('values', values);
   return (
     <Form
-      labelCol={{ span: 4 }}
-      wrapperCol={{ span: 8 }}
+      form={form}
       initialValues={values}
       onFinish={handleFinish}
       name="basic"
-      form={form}
       size="small"
       labelAlign="left"
     >
-      <Form.Item
-        label="Name"
-        name="name"
-        rules={[{ required: true, message: 'Please input your username!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-      >
-        <Input />
-      </Form.Item>
+      <Row gutter={12}>
+        <Col span={8}>
+          <Form.Item
+            label={t('jobTable.columns.title')}
+            name="title"
+            rules={[
+              {
+                required: true,
+                message: useTranslate('validator.required', {
+                  name: 'changePasswordForm.label.current',
+                }),
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item
+            label={t('jobTable.columns.description')}
+            name="description"
+          >
+            <Input.TextArea />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item label={t('jobTable.columns.link')} name="link">
+            <Input.TextArea />
+          </Form.Item>
+        </Col>
+      </Row>
 
       <Form.Item>
         <Button type="primary" className="mr-2" htmlType="submit">

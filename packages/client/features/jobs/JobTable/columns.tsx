@@ -58,6 +58,12 @@ export const columns = (t, onDeleteJob): ColumnsType<any> => {
       },
     },
     {
+      title: t('jobTable.columns.description'),
+      dataIndex: 'description',
+      key: 'description',
+      width: '25%',
+    },
+    {
       title: t('jobTable.columns.link'),
       dataIndex: 'link',
       key: 'link',
@@ -65,12 +71,6 @@ export const columns = (t, onDeleteJob): ColumnsType<any> => {
       render: link => {
         return link ? <Link href={link}>{link}</Link> : link;
       },
-    },
-    {
-      title: t('jobTable.columns.status'),
-      dataIndex: 'status',
-      key: 'status',
-      width: '25%',
     },
     {
       title: '',

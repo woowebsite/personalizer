@@ -75,6 +75,7 @@ export const vi = {
         title: 'Tiêu đề',
         link: 'Link',
         status: 'Trạng thái',
+        description: 'Mô tả',
         priority: 'Ưu tiên',
         createdAt: 'Ngày tạo',
       },
