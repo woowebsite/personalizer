@@ -42,7 +42,7 @@ const JobTable = props => {
           onCancel={tableRef.current.collapseAll}
           onSave={values =>
             mutate({
-              variables: { user: values },
+              variables: values,
             })
           }
         />

@@ -42,6 +42,11 @@ export class Job extends Model<Job> {
   @Column
   publishDate: Date;
 
+  @Default(
+    moment()
+      .add(3, 'days')
+      .toDate(),
+  )
   @Column
   dueDate: Date;
 
@@ -63,10 +68,10 @@ export class Job extends Model<Job> {
   // metadata
   @Column(DataType.VIRTUAL)
   link: string;
-  
+
   @Column(DataType.VIRTUAL)
   isDemoColor: boolean;
-  
+
   @Column(DataType.VIRTUAL)
   isDemoLayout: boolean;
 
