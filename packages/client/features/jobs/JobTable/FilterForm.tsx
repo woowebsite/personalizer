@@ -7,6 +7,7 @@ import ComboBoxEnum from 'components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
 import JobPriority from '~/models/JobPriority';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
+import _ from 'lodash';
 
 const FilterForm = ({ values, onFilter }) => {
   // DEFINE
@@ -19,10 +20,23 @@ const FilterForm = ({ values, onFilter }) => {
     form
       .validateFields()
       .then(values => {
-        let queries = values;
-        if (typeof values.title !== 'undefined' && values.title.length) {
-          queries.title = `%${values.title}%`;
+        // job fields
+        let queries: any = { job: values.job };
+        if (
+          typeof values.job.title !== 'undefined' &&
+          values.job.title.length
+        ) {
+          queries.job.title = `%${values.title}%`;
         }
+
+        // taxonomy fields
+        if (values.taxonomies) {
+          queries.taxonomies = _.values(_.pickBy(values.taxonomies));
+        }
+
+        // metadata
+
+        // execute
         onFilter(queries);
       })
       .catch(errorInfo => {
@@ -43,7 +57,10 @@ const FilterForm = ({ values, onFilter }) => {
     >
       <Row>
         <Col span="6">
-          <Form.Item label={t('jobTable.columns.title')} name="title">
+          <Form.Item
+            label={t('jobTable.columns.title')}
+            name={['job', 'title']}
+          >
             <Input />
           </Form.Item>
         </Col>

@@ -40,22 +40,22 @@ export const Query = {
   jobs: resolver(Job, {
     list: true,
     before: async (findOptions, { where }, context) => {
-      // Filters
-      let conditions = where;
-      let include: Array<any> = [{ model: JobMeta }];
-      if (where && where.title) conditions.title = { [Op.like]: where.title };
+      // job
+      let { job } = where;
+      if (where && where.job.title) job.title = { [Op.like]: where.job.title };
 
-      // Taxonomies
-      console.log('where.taxonomies', where.taxonomies);
+      // taxonomies
+      let include: Array<any> = [{ model: JobMeta }];
       if (where.taxonomies) {
         include.push({
           model: JobTerm,
+          require: true,
           where: { term_taxonomy_id: where.taxonomies },
         });
       }
 
       // Find
-      findOptions.where = conditions;
+      findOptions.where = job;
       findOptions.order = [['createdAt', 'DESC']];
       findOptions.include = include;
 
