@@ -1,5 +1,7 @@
 import StatusType from '~/models/StatusType';
 
 export const defaultFilter = {
-  status: StatusType.Actived,
+  job: {
+    status: StatusType.Actived,
+  },
 };

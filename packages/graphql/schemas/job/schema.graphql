@@ -18,9 +18,9 @@ type Job {
 }
 
 input JobWhere {
-  user_id: Int
-  id: Int
-  status: String
+  job: JobInput
+  metadata: [JobMetaInput]
+  taxonomies: [Int]
 }
 
 input JobInput {
@@ -30,6 +30,7 @@ input JobInput {
   description: String
   dueDate: Date
   user_id: Int
+  status: String
 }
 
 type JobsPaged {

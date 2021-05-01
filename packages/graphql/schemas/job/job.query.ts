@@ -1,4 +1,5 @@
 import { resolver } from 'graphql-sequelize';
+import { Op } from 'sequelize';
 import { Job, JobMeta, JobTerm, TermTaxonomy } from '../../models';
 import { Term } from '../../models/term.model';
 import { metadataToField, taxonomyToField } from '../../utils/dataUtil';
@@ -39,9 +40,25 @@ export const Query = {
   jobs: resolver(Job, {
     list: true,
     before: async (findOptions, { where }, context) => {
-      findOptions.where = where;
+      // job
+      let { job } = where;
+      if (where && where.job.title) job.title = { [Op.like]: where.job.title };
+
+      // taxonomies
+      let include: Array<any> = [{ model: JobMeta }];
+      if (where.taxonomies) {
+        include.push({
+          model: JobTerm,
+          require: true,
+          where: { term_taxonomy_id: where.taxonomies },
+        });
+      }
+
+      // Find
+      findOptions.where = job;
       findOptions.order = [['createdAt', 'DESC']];
-      findOptions.include = [{ model: JobMeta }];
+      findOptions.include = include;
+
       return findOptions;
     },
     after: async (jobs, args) => {
