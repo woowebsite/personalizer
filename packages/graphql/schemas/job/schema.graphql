@@ -21,6 +21,11 @@ input JobWhere {
   user_id: Int
   id: Int
   status: String
+  job_status: Int
+  job_priority: Int
+  title: String
+  metadata: [JobMetaInput]
+  taxonomies: [Int]
 }
 
 input JobInput {

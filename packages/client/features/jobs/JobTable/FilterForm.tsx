@@ -20,7 +20,9 @@ const FilterForm = ({ values, onFilter }) => {
       .validateFields()
       .then(values => {
         let queries = values;
-        if (values.name || !!!values.name) queries.name = `%${values.name}%`;
+        if (typeof values.title !== 'undefined' && values.title.length) {
+          queries.title = `%${values.title}%`;
+        }
         onFilter(queries);
       })
       .catch(errorInfo => {
@@ -46,12 +48,18 @@ const FilterForm = ({ values, onFilter }) => {
           </Form.Item>
         </Col>
         <Col span="6">
-          <Form.Item label={t('jobTable.columns.status')} name="status">
+          <Form.Item
+            label={t('jobTable.columns.status')}
+            name={['taxonomies', 'job_status']}
+          >
             <ComboBoxTaxonomy type={TaxonomyType.Job_Status} />
           </Form.Item>
         </Col>
         <Col span="6">
-          <Form.Item label={t('jobTable.columns.priority')} name="priority">
+          <Form.Item
+            label={t('jobTable.columns.priority')}
+            name={['taxonomies', 'job_priority']}
+          >
             <ComboBoxTaxonomy type={TaxonomyType.Job_Priority} />
           </Form.Item>
         </Col>
