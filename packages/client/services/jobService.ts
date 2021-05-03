@@ -34,11 +34,29 @@ export const jobQuery = {
       }
     }
   `,
+  getWorkflow: gql`
+    query GetWorkFlow($where: WorkflowWhere) {
+      workflows(where: $where) {
+        lanes {
+          id
+          title
+          cards {
+            id
+            title
+            description
+          }
+        }
+      }
+    }
+  `,
 };
 
 export const definitions = {
   getJob: options => {
     return withQuery(jobQuery.getJob, options);
+  },
+  getWorkflow: options => {
+    return withQuery(jobQuery.getWorkflow, options);
   },
 };
 

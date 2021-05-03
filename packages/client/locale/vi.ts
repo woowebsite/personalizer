@@ -291,4 +291,7 @@ export const vi = {
       title: 'Liên kết mạng xã hội',
     },
   },
+  '/workflow' : {
+    title: 'Bảng điều phối công việc'
+  }
 };

@@ -1,4 +1,5 @@
 import { resolver } from 'graphql-sequelize';
+import { Sequelize } from 'sequelize';
 import { Op } from 'sequelize';
 import { Job, JobMeta, JobTerm, TermTaxonomy } from '../../models';
 import { Term } from '../../models/term.model';
@@ -40,24 +41,27 @@ export const Query = {
   jobs: resolver(Job, {
     list: true,
     before: async (findOptions, { where }, context) => {
-      // job
-      let { job } = where;
-      if (where && where.job.title) job.title = { [Op.like]: where.job.title };
+      if (where) {
+        // job
+        let { job } = where;
+        if (where && where.job.title)
+          job.title = { [Op.like]: where.job.title };
 
-      // taxonomies
-      let include: Array<any> = [{ model: JobMeta }];
-      if (where.taxonomies) {
-        include.push({
-          model: JobTerm,
-          require: true,
-          where: { term_taxonomy_id: where.taxonomies },
-        });
+        // taxonomies
+        let include: Array<any> = [{ model: JobMeta }];
+        if (where.taxonomies) {
+          include.push({
+            model: JobTerm,
+            require: true,
+            where: { term_taxonomy_id: where.taxonomies },
+          });
+        }
+
+        // Find
+        findOptions.where = job;
+        findOptions.order = [['createdAt', 'DESC']];
+        findOptions.include = include;
       }
-
-      // Find
-      findOptions.where = job;
-      findOptions.order = [['createdAt', 'DESC']];
-      findOptions.include = include;
 
       return findOptions;
     },
@@ -66,6 +70,40 @@ export const Query = {
       const rows = jobs.map(u => metadataToField(u, 'metadata'));
 
       return { rows, count };
+    },
+  }),
+  workflows: resolver(TermTaxonomy, {
+    list: true,
+    before: async (findOptions, { where }, context) => {
+      // Find
+      findOptions.where = { taxonomy: 'job_status' };
+      findOptions.include = [
+        {
+          model: Term,
+        },
+        {
+          model: JobTerm,
+          require: false,
+          include: [
+            {
+              model: Job,
+            },
+          ],
+        },
+      ];
+
+      return findOptions;
+    },
+    after: async (termTaxonomies, args) => {
+      const lanes = termTaxonomies.map(x => {
+        return {
+          id: x.dataValues.id,
+          title: x.dataValues.term.dataValues.name,
+          cards: x.dataValues.jobTerms.map(x => x.dataValues.job),
+        };
+      });
+
+      return { lanes };
     },
   }),
 };
