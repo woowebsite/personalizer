@@ -4,20 +4,20 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('terms', [
       {
-        name: 'Urgent',
-        slug: 'urgent',
+        name: 'Ưu tiên',
+        slug: 'uu-tien',
       },
       {
-        name: 'High',
-        slug: 'high',
+        name: 'Cao',
+        slug: 'cao',
       },
       {
-        name: 'Normal',
-        slug: 'normal',
+        name: 'Thông thường',
+        slug: 'thong-thuong',
       },
       {
-        name: 'Low',
-        slug: 'low',
+        name: 'Thấp',
+        slug: 'thap',
       },
 
       {

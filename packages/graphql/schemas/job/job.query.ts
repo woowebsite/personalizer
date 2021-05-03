@@ -76,17 +76,22 @@ export const Query = {
     list: true,
     before: async (findOptions, { where }, context) => {
       // Find
+      let query: any = {};
+      if (where && where.title) query.title = { [Op.like]: where.title };
       findOptions.where = { taxonomy: 'job_status' };
+
+      // Include
       findOptions.include = [
         {
           model: Term,
         },
         {
           model: JobTerm,
-          require: false,
+          require: false, // right outerjoin
           include: [
             {
               model: Job,
+              where: query,
             },
           ],
         },

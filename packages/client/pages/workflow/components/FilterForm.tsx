@@ -1,5 +1,7 @@
 import { useIntl } from 'react-intl';
 import { Form, Input, Button } from 'antd';
+import React from 'react';
+import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 
 const FilterForm = ({ values, onFilter }) => {
   // DEFINE
@@ -13,11 +15,8 @@ const FilterForm = ({ values, onFilter }) => {
       .validateFields()
       .then(values => {
         let queries = values;
-        if (typeof values.name !== 'undefined' && values.name.length) {
-          queries.name = `%${values.name}%`;
-        }
-        if (typeof values.email !== 'undefined' && values.email.length) {
-          queries.email = `%${values.email}%`;
+        if (typeof values.title !== 'undefined' && values.title.length) {
+          queries.title = `%${values.title}%`;
         }
         onFilter(queries);
       })
@@ -28,20 +27,30 @@ const FilterForm = ({ values, onFilter }) => {
 
   return (
     <Form
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
+      form={form}
       initialValues={values}
       layout="inline"
-      onFinish={handleFinish}
       name="basic"
-      form={form}
       labelAlign="left"
+      onFinish={handleFinish}
     >
-      <Form.Item label="Name" name="name">
-        <Input />
+      <Form.Item label={t('filter.labels.employee')} name="employee">
+        <ComboBox
+          type={ComboBoxType.Employee}
+          textField="name"
+          valueField="id"
+        />
       </Form.Item>
 
-      <Form.Item label="Email" name="email">
+      <Form.Item label={t('filter.labels.customer')} name="customer">
+        <ComboBox
+          type={ComboBoxType.Customer}
+          textField="name"
+          valueField="id"
+        />
+      </Form.Item>
+
+      <Form.Item label={t('filter.labels.title')}  name="title">
         <Input />
       </Form.Item>
 

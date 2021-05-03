@@ -1,4 +1,5 @@
 import React from 'react';
+import NProgress from 'nprogress';
 import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
 import Board from 'react-trello';
 
@@ -58,11 +59,26 @@ const dataWorkflow = {
 
 const Workflow = props => {
   // DECLARE
-  const { messages, t, query, data } = props;
+  const { messages, t, query } = props;
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
-  console.log(messages);
+  const { data, loading, refetch } = jobService.getWorkflow();
+
+  // browser code
+  if (typeof window !== 'undefined') {
+    if (loading) NProgress.start();
+    if (data) NProgress.done();
+  }
+
+  if (loading) return <div />;
+
+  // EVENTS
+  const handleFilter = values => {
+    const hasValue = Object.values(values).some(x => x !== undefined);
+    if (hasValue) refetch({ where: values });
+    else refetch();
+  };
 
   // RENDER
   return (
@@ -85,35 +101,24 @@ const Workflow = props => {
       />
 
       <Content>
-        <FilterForm />
-        <Board
-          components={{
-            GlobalStyle: GlobalStyled,
-            Card: MyCard,
-            LaneHeader: MyLaneHeader,
-          }}
-          laneStyle={{ backgroundColor: '#f0f2f5' }}
-          style={{ backgroundColor: 'inherit' }}
-          cardDragClass={style.cardDragClass}
-          data={data.workflows}
-          cardDraggable={true}
-        />
+        <FilterForm onFilter={handleFilter} />
+        {data && data.workflows && (
+          <Board
+            components={{
+              GlobalStyle: GlobalStyled,
+              Card: MyCard,
+              LaneHeader: MyLaneHeader,
+            }}
+            laneStyle={{ backgroundColor: '#f0f2f5' }}
+            style={{ backgroundColor: 'inherit' }}
+            cardDragClass={style.cardDragClass}
+            data={JSON.parse(JSON.stringify(data.workflows))}
+            cardDraggable={true}
+          />
+        )}
       </Content>
     </>
   );
 };
 
-export default withAdminLayout(withApollo({ ssr: true })(Workflow));
-
-Workflow.getInitialProps = async ({ ctx }) => {
-  const { res, req, query, pathname, apolloClient } = ctx;
-
-  const { data, loading, refetch } = await apolloClient.query({
-    query: jobQuery.getWorkflow,
-  });
-
-  return {
-    query,
-    data,
-  };
-};
+export default withAdminLayout(withApollo({ ssr: false })(Workflow));
