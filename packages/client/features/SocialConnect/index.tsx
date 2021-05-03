@@ -27,11 +27,15 @@ const SocialConenct = props => {
       },
     });
 
-    facebookAccount = data.accounts.rows.find(
-      x => x.provider_id === 'facebook',
-    );
-    twitterAccount = data.accounts.rows.find(x => x.provider_id === 'twitter');
-    googleAccount = data.accounts.rows.find(x => x.provider_id === 'twitter');
+    if (data) {
+      facebookAccount = data.accounts.rows.find(
+        x => x.provider_id === 'facebook',
+      );
+      twitterAccount = data.accounts.rows.find(
+        x => x.provider_id === 'twitter',
+      );
+      googleAccount = data.accounts.rows.find(x => x.provider_id === 'twitter');
+    }
   }
 
   return (
