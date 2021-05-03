@@ -1,0 +1,17 @@
+type Query {
+  workflows(where: WorkflowWhere): Workflow
+}
+
+type Workflow {
+  lanes: [Lane]
+}
+
+input WorkflowWhere {
+  user_id: Int
+}
+
+type Lane {
+  id: Int
+  title: String
+  cards: [Job]
+}

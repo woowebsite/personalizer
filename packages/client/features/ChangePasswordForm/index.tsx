@@ -82,7 +82,7 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
             {
               required: true,
               message: useTranslate('validator.required', {
-                name: 'changePasswordForm.label.current',
+                field: 'changePasswordForm.label.current',
               }),
             },
           ]}
@@ -98,7 +98,7 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
           {
             required: true,
             message: useTranslate('validator.required', {
-              name: 'changePasswordForm.label.password',
+              field: 'changePasswordForm.label.password',
             }),
           },
         ]}
@@ -113,7 +113,7 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
           {
             required: true,
             message: useTranslate('validator.required', {
-              name: 'changePasswordForm.label.confirmPassword',
+              field: 'changePasswordForm.label.confirmPassword',
             }),
           },
         ]}

@@ -1,0 +1,11 @@
+@import '../../assets/variables.scss';
+
+.cardDragClass {
+  box-shadow: $box-shadow-base;
+}
+
+.cardClass {
+  &:hover {
+    background-color: red;
+  }
+}

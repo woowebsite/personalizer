@@ -5,6 +5,7 @@ type TermTaxonomy {
   termName: String
   order: Int
   term: Term
+  jobTerms: [JobTerm]
 }
 
 input TermTaxonomyWhere {

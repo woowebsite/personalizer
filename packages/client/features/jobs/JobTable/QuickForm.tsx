@@ -53,7 +53,7 @@ const QuickForm = ({ values, onSave, onCancel }) => {
               {
                 required: true,
                 message: useTranslate('validator.required', {
-                  name: 'changePasswordForm.label.current',
+                  field: 'changePasswordForm.label.current',
                 }),
               },
             ]}
