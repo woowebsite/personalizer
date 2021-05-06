@@ -9,6 +9,8 @@ type Workflow {
 input WorkflowWhere {
   title: String
   taxonomies: [Int]
+  startDueDate: String
+  endDueDate: String
   user_id: Int
 }
 

@@ -76,9 +76,16 @@ export const Query = {
     list: true,
     before: async (findOptions, { where }, context) => {
       // Find
+      findOptions.where = { taxonomy: 'job_status' };
+
       let query: any = {};
       if (where && where.title) query.title = { [Op.like]: where.title };
-      findOptions.where = { taxonomy: 'job_status' };
+
+      if (where && where.startDueDate && where.endDueDate) {
+        query.dueDate = {
+          [Op.between]: [where.startDueDate, where.endDueDate],
+        };
+      }
 
       // Include
       findOptions.include = [

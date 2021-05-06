@@ -299,6 +299,10 @@ export const vi = {
         employee: 'Nhân viên',
         title: 'Tiêu đề',
       }
+    },
+    dividers: {
+      today: 'Hôm nay',
+      thisWeek: 'Tuần này'
     }
   }
 };

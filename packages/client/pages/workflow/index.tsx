@@ -1,26 +1,17 @@
 import React from 'react';
-import NProgress from 'nprogress';
+import { Divider } from 'antd';
 import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
-import Board from 'react-trello';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
-import Card from 'components/Card';
 import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
-import { useRouter } from 'next/dist/client/router';
-import jobService, { jobBaseQuery, jobQuery } from 'services/jobService';
-import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 // inner components
-import JobForm from '~/features/jobs/JobForm';
-import JobStatus from '~/features/jobs/JobStatus';
-import JobMoney from '~/features/jobs/JobMoney';
-import style from './style.module.scss';
-import { MyCard, MyLaneHeader, GlobalStyled } from './styled';
 import FilterForm from './components/FilterForm';
+import WorkflowBoard from './components/Workflow';
 
 const { Content } = Layout;
 
@@ -60,24 +51,13 @@ const dataWorkflow = {
 const Workflow = props => {
   // DECLARE
   const { messages, t, query } = props;
-  const formRef: any = React.createRef();
-  const formStatusRef: any = React.createRef();
-  const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
-  const { data, loading, refetch } = jobService.getWorkflow();
-
-  // browser code
-  if (typeof window !== 'undefined') {
-    if (loading) NProgress.start();
-    if (data) NProgress.done();
-  }
-
-  if (loading) return <div />;
+  const weekRef: any = React.createRef();
+  const dayRef: any = React.createRef();
 
   // EVENTS
   const handleFilter = values => {
-    const hasValue = Object.values(values).some(x => x !== undefined);
-    if (hasValue) refetch({ where: values });
-    else refetch();
+    weekRef.current.filter(values);
+    dayRef.current.filter(values);
   };
 
   // RENDER
@@ -102,20 +82,14 @@ const Workflow = props => {
 
       <Content>
         <FilterForm onFilter={handleFilter} />
-        {data && data.workflows && (
-          <Board
-            components={{
-              GlobalStyle: GlobalStyled,
-              Card: MyCard,
-              LaneHeader: MyLaneHeader,
-            }}
-            laneStyle={{ backgroundColor: '#f0f2f5' }}
-            style={{ backgroundColor: 'inherit' }}
-            cardDragClass={style.cardDragClass}
-            data={JSON.parse(JSON.stringify(data.workflows))}
-            cardDraggable={true}
-          />
-        )}
+        <Divider orientation="left" plain>
+          {t('dividers.today')}
+        </Divider>
+        <WorkflowBoard prior="day" ref={dayRef} />
+        <Divider orientation="left" plain>
+          {t('dividers.thisWeek')}
+        </Divider>
+        <WorkflowBoard prior="week" ref={weekRef} />
       </Content>
     </>
   );
