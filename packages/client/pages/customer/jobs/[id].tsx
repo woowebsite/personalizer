@@ -114,7 +114,7 @@ JobDetail.getInitialProps = async ({ ctx }) => {
   const { data, loading, refetch } = await apolloClient.query({
     query: jobQuery.getJob,
     variables: {
-      where: { id: parseInt(query.id) },
+      where: { job: { id: parseInt(query.id) } },
     },
   });
 

@@ -36,13 +36,13 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
       },
       {
         name: ['metadata', 'employee'],
-        value: JSON.parse(job.employee).value,
+        value: job.employee ? JSON.parse(job.employee).value : null,
       },
 
       // metadata
       {
         name: ['metadata', 'leader'],
-        value: JSON.parse(job.leader).value,
+        value: job.leader ? JSON.parse(job.leader).value : null,
       },
     ]);
   };
@@ -85,11 +85,13 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues
+              initialValues.job_status
                 ? parseInt(initialValues.job_status.value, 10)
                 : null
             }
-            defaultText={initialValues ? initialValues.job_status.name : null}
+            defaultText={
+              initialValues.job_status ? initialValues.job_status.name : null
+            }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBoxTaxonomy
                 onChange={handleOnChange}
@@ -105,10 +107,12 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues ? JSON.parse(initialValues.employee) : null
+              initialValues.employee ? JSON.parse(initialValues.employee) : null
             }
             defaultText={
-              initialValues ? JSON.parse(initialValues.employee).label : null
+              initialValues.employee
+                ? JSON.parse(initialValues.employee).label
+                : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox
@@ -129,10 +133,12 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues ? JSON.parse(initialValues.leader) : null
+              initialValues.leader ? JSON.parse(initialValues.leader) : null
             }
             defaultText={
-              initialValues ? JSON.parse(initialValues.leader).label : null
+              initialValues.leader
+                ? JSON.parse(initialValues.leader).label
+                : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox

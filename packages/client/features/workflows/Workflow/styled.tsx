@@ -7,6 +7,21 @@ export const GlobalStyled = createGlobalStyle`
         text-transform: uppercase !important;
         margin-bottom: 10px !important;
     }
+    .react-trello-board {
+      height: 50vh;
+    }
+    .card-urgent{
+      background: red
+    }
+    .card-high{
+      background: orange
+    }
+    .card-normal{
+      background: green
+    }
+    .card-low{
+      background: yellow
+    }
 `;
 
 export const MyCard = styled(Card)`

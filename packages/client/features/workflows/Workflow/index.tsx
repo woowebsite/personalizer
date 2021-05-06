@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { Divider } from 'antd';
 import NProgress from 'nprogress';
@@ -11,9 +11,44 @@ import Board from 'react-trello';
 import jobService, { jobBaseQuery, jobQuery } from 'services/jobService';
 
 // inner components
-import style from '../style.module.scss';
-import { MyCard, MyLaneHeader, GlobalStyled } from '../styled';
+import style from './style.module.scss';
+import { MyCard, MyLaneHeader, GlobalStyled } from './styled';
 import moment from 'moment';
+import { cardDecorator } from './utils';
+
+const dataWorkflow = {
+  lanes: [
+    {
+      id: 'lane1',
+      style: { backgroundColor: '#a5a9ae45' }, // Style of Lane
+      title: 'Planned Tasks',
+      label: '2/2',
+      cards: [
+        {
+          id: 'Card1',
+          title: 'Write Blog',
+          description: 'Can AI make memes',
+          label: '30 mins',
+          draggable: false,
+          className: 'card-important',
+        },
+        {
+          id: 'Card2',
+          title: 'Pay Rent',
+          description: 'Transfer via NEFT',
+          label: '5 mins',
+          metadata: { sha: 'be312a1' },
+        },
+      ],
+    },
+    {
+      id: 'lane2',
+      title: 'Completed',
+      label: '0/0',
+      cards: [],
+    },
+  ],
+};
 
 interface WorkflowProps {
   prior: moment.unitOfTime.StartOf;
@@ -50,6 +85,8 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   }
 
   if (loading) return <div />;
+  const workflows = cardDecorator(data.workflows);
+  console.log('workflows', workflows);
 
   // EVENTS
   const handleFilter = values => {
@@ -61,20 +98,19 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   // RENDER
   return (
     <>
-      {data && data.workflows && (
-        <Board
-          components={{
-            GlobalStyle: GlobalStyled,
-            Card: MyCard,
-            LaneHeader: MyLaneHeader,
-          }}
-          laneStyle={{ backgroundColor: '#f0f2f5' }}
-          style={{ backgroundColor: 'inherit' }}
-          cardDragClass={style.cardDragClass}
-          data={JSON.parse(JSON.stringify(data.workflows))}
-          cardDraggable={true}
-        />
-      )}
+      <Board
+        components={{
+          GlobalStyle: GlobalStyled,
+          Card: MyCard,
+          LaneHeader: MyLaneHeader,
+        }}
+        laneStyle={{ backgroundColor: '#f0f2f5' }}
+        style={{ backgroundColor: 'inherit' }}
+        cardDragClass={style.cardDragClass}
+        data={JSON.parse(JSON.stringify(workflows))}
+        // data={dataWorkflow}
+        cardDraggable={true}
+      />
     </>
   );
 });

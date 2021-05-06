@@ -44,6 +44,10 @@ export const jobQuery = {
             id
             title
             description
+            job_priority {
+              name
+              value
+            }
           }
         }
       }

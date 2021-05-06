@@ -39,6 +39,7 @@ const FilterForm = ({ values, onFilter }) => {
           type={ComboBoxType.Employee}
           textField="name"
           valueField="id"
+          style={{ width: 150 }}
         />
       </Form.Item>
 
@@ -47,10 +48,11 @@ const FilterForm = ({ values, onFilter }) => {
           type={ComboBoxType.Customer}
           textField="name"
           valueField="id"
+          style={{ width: 150 }}
         />
       </Form.Item>
 
-      <Form.Item label={t('filter.labels.title')}  name="title">
+      <Form.Item label={t('filter.labels.title')} name="title">
         <Input />
       </Form.Item>
 
