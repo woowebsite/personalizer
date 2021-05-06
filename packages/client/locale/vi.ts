@@ -292,6 +292,17 @@ export const vi = {
     },
   },
   '/workflow' : {
-    title: 'Bảng điều phối công việc'
+    title: 'Bảng điều phối công việc',
+    filter: {
+      labels: {
+        customer: 'Khách hàng',
+        employee: 'Nhân viên',
+        title: 'Tiêu đề',
+      }
+    },
+    dividers: {
+      today: 'Hôm nay',
+      thisWeek: 'Tuần này'
+    }
   }
 };

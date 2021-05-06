@@ -1,25 +1,17 @@
 import React from 'react';
+import { Divider } from 'antd';
 import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
-import Board from 'react-trello';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
-import Card from 'components/Card';
 import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
-import { useRouter } from 'next/dist/client/router';
-import jobService, { jobBaseQuery, jobQuery } from 'services/jobService';
-import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 // inner components
-import JobForm from '~/features/jobs/JobForm';
-import JobStatus from '~/features/jobs/JobStatus';
-import JobMoney from '~/features/jobs/JobMoney';
-import style from './style.module.scss';
-import { MyCard, MyLaneHeader, GlobalStyled } from './styled';
 import FilterForm from './components/FilterForm';
+import WorkflowBoard from './components/Workflow';
 
 const { Content } = Layout;
 
@@ -58,11 +50,15 @@ const dataWorkflow = {
 
 const Workflow = props => {
   // DECLARE
-  const { messages, t, query, data } = props;
-  const formRef: any = React.createRef();
-  const formStatusRef: any = React.createRef();
-  const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
-  console.log(messages);
+  const { messages, t, query } = props;
+  const weekRef: any = React.createRef();
+  const dayRef: any = React.createRef();
+
+  // EVENTS
+  const handleFilter = values => {
+    weekRef.current.filter(values);
+    dayRef.current.filter(values);
+  };
 
   // RENDER
   return (
@@ -85,35 +81,18 @@ const Workflow = props => {
       />
 
       <Content>
-        <FilterForm />
-        <Board
-          components={{
-            GlobalStyle: GlobalStyled,
-            Card: MyCard,
-            LaneHeader: MyLaneHeader,
-          }}
-          laneStyle={{ backgroundColor: '#f0f2f5' }}
-          style={{ backgroundColor: 'inherit' }}
-          cardDragClass={style.cardDragClass}
-          data={data.workflows}
-          cardDraggable={true}
-        />
+        <FilterForm onFilter={handleFilter} />
+        <Divider orientation="left" plain>
+          {t('dividers.today')}
+        </Divider>
+        <WorkflowBoard prior="day" ref={dayRef} />
+        <Divider orientation="left" plain>
+          {t('dividers.thisWeek')}
+        </Divider>
+        <WorkflowBoard prior="week" ref={weekRef} />
       </Content>
     </>
   );
 };
 
-export default withAdminLayout(withApollo({ ssr: true })(Workflow));
-
-Workflow.getInitialProps = async ({ ctx }) => {
-  const { res, req, query, pathname, apolloClient } = ctx;
-
-  const { data, loading, refetch } = await apolloClient.query({
-    query: jobQuery.getWorkflow,
-  });
-
-  return {
-    query,
-    data,
-  };
-};
+export default withAdminLayout(withApollo({ ssr: false })(Workflow));
