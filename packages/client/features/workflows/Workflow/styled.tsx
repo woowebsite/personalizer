@@ -11,16 +11,16 @@ export const GlobalStyled = createGlobalStyle`
       height: 50vh;
     }
     .card-urgent{
-      background: red
+      border-left: 2px solid red
     }
     .card-high{
-      background: orange
+      border-left: 2px solid orange
     }
     .card-normal{
-      background: green
+      border-left: 2px solid green
     }
     .card-low{
-      background: yellow
+      border-left: 2px solid yellow
     }
 `;
 
