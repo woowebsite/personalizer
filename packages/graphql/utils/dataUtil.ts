@@ -23,7 +23,7 @@ export const metadataToField = (obj, metadata = 'metadata') => {
     meta.forEach(x => {
       let { value, type } = x.dataValues;
       // parse data by 'type'
-      if (type === 'boolean') value = JSON.parse(value);
+      if (type === 'boolean') value = !!JSON.parse(value);
       if (type === 'number') value = parseFloat(value);
       // if (type === 'object') value = JSON.parse(value);
 

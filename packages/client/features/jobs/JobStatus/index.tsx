@@ -32,17 +32,19 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
       // taxonomies
       {
         name: ['taxonomies', 'job_status'],
-        value: job.job_status.value,
+        value: parseInt(job.job_status.value),
       },
       {
         name: ['metadata', 'employee'],
-        value: job.employee ? JSON.parse(job.employee).value : null,
+        value: !!JSON.parse(job.employee)
+          ? JSON.parse(job.employee).value
+          : null,
       },
 
       // metadata
       {
         name: ['metadata', 'leader'],
-        value: job.leader ? JSON.parse(job.leader).value : null,
+        value: !!JSON.parse(job.leader) ? JSON.parse(job.leader).value : null,
       },
     ]);
   };
@@ -107,10 +109,12 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues.employee ? JSON.parse(initialValues.employee) : null
+              !!JSON.parse(initialValues.employee)
+                ? JSON.parse(initialValues.employee)
+                : null
             }
             defaultText={
-              initialValues.employee
+              !!JSON.parse(initialValues.employee)
                 ? JSON.parse(initialValues.employee).label
                 : null
             }
@@ -133,10 +137,12 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues.leader ? JSON.parse(initialValues.leader) : null
+              !!JSON.parse(initialValues.leader)
+                ? JSON.parse(initialValues.leader)
+                : null
             }
             defaultText={
-              initialValues.leader
+              !!JSON.parse(initialValues.leader)
                 ? JSON.parse(initialValues.leader).label
                 : null
             }

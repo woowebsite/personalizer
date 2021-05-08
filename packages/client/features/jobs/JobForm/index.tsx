@@ -54,10 +54,10 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
 
       // metadata
       { name: ['metadata', 'link'], value: job.link },
-      { name: ['metadata', 'isDemoColor'], value: job.isDemoColor },
+      { name: ['metadata', 'isDemoColor'], value: !!job.isDemoColor },
       {
         name: ['metadata', 'isDemoLayout'],
-        value: job.isDemoLayout,
+        value: !!job.isDemoLayout,
       },
     ]);
   };
