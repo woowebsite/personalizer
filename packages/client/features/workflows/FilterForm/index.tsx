@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd';
 import React from 'react';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 
-const FilterForm = ({ values, onFilter }) => {
+const FilterForm = ({ onFilter }) => {
   // DEFINE
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
@@ -28,7 +28,6 @@ const FilterForm = ({ values, onFilter }) => {
   return (
     <Form
       form={form}
-      initialValues={values}
       layout="inline"
       name="basic"
       labelAlign="left"

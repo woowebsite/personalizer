@@ -24,7 +24,13 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 interface IProps {
   initialValues?: any;
+  layout?: any;
 }
+
+const defaultLayout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
 const JobForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
   const { formatMessage } = useIntl();
@@ -32,9 +38,9 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
   const t = (id, values?) => formatMessage({ id }, values);
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
   const [form] = Form.useForm();
+  const layout = props.layout || defaultLayout;
 
   const formSetFields = job => {
-    console.log('job', job);
     form.setFields([
       { name: ['job', 'title'], value: job.title },
       { name: ['job', 'link'], value: job.link },
@@ -106,8 +112,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
     <Form
       id="JobForm"
       form={form}
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
+      {...layout}
       initialValues={{
         job: {
           publishDate: moment(),
@@ -140,7 +145,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         name={['metadata', 'link']}
         label={t('jobCreateform.label.link')}
       >
-        <Input type="link" />
+        <Input.TextArea />
       </Form.Item>
 
       <Form.Item

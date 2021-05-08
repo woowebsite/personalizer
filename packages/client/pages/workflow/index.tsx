@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Divider } from 'antd';
 import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
 
@@ -11,6 +11,7 @@ import { withApollo } from 'apollo/apollo';
 
 // inner components
 import FilterForm from 'features/workflows/FilterForm';
+import JobDrawer from 'features/workflows/JobDrawer';
 import WorkflowBoard from 'features/workflows/Workflow';
 
 const { Content } = Layout;
@@ -20,11 +21,20 @@ const Workflow = props => {
   const { messages, t, query } = props;
   const weekRef: any = React.createRef();
   const dayRef: any = React.createRef();
+  const jobDrawerRef: any = React.createRef();
+  const [currentJobId, setCurrentJob] = useState(null);
 
   // EVENTS
   const handleFilter = values => {
     weekRef.current.filter(values);
     dayRef.current.filter(values);
+  };
+
+  const showJobDetail = (jobId, metadata, laneId) => {
+    setCurrentJob(jobId);
+    if (jobDrawerRef.current) {
+      jobDrawerRef.current.showDetail(jobId);
+    }
   };
 
   // RENDER
@@ -52,12 +62,15 @@ const Workflow = props => {
         <Divider orientation="left" plain>
           {t('dividers.today')}
         </Divider>
-        <WorkflowBoard prior="day" ref={dayRef} />
+        <WorkflowBoard prior="day" ref={dayRef} onCardClick={showJobDetail} />
         <Divider orientation="left" plain>
           {t('dividers.thisWeek')}
         </Divider>
         <WorkflowBoard prior="week" hiddenLaneHeader={true} ref={weekRef} />
       </Content>
+      {currentJobId && (
+        <JobDrawer key={currentJobId} id={currentJobId} ref={jobDrawerRef} />
+      )}
     </>
   );
 };

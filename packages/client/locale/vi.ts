@@ -291,18 +291,29 @@ export const vi = {
       title: 'Liên kết mạng xã hội',
     },
   },
-  '/workflow' : {
+  '/workflow': {
     title: 'Bảng điều phối công việc',
     filter: {
       labels: {
         customer: 'Khách hàng',
         employee: 'Nhân viên',
         title: 'Tiêu đề',
-      }
+      },
     },
     dividers: {
       today: 'Hôm nay',
-      thisWeek: 'Tuần này'
-    }
-  }
+      thisWeek: 'Tuần này',
+    },
+    jobDrawer: {
+      title: 'Chi tiết công việc',
+    },
+    jobStatus: {
+      title: 'Tình trạng công việc',
+      label: {
+        status: 'Tình trạng',
+        employee: 'Thợ ảnh',
+        leader: 'Leader',
+      },
+    },
+  },
 };

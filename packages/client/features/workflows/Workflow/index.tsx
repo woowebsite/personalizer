@@ -53,12 +53,13 @@ const dataWorkflow = {
 interface WorkflowProps {
   prior: moment.unitOfTime.StartOf;
   hiddenLaneHeader?: boolean;
+  onCardClick?: any;
 }
 
 const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   // DECLARE
   const { formatMessage } = useIntl();
-  const { prior } = props;
+  const { prior, onCardClick } = props;
   const t = id => formatMessage({ id });
   const priorConditions = {
     startDueDate: moment()
@@ -108,6 +109,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
         laneStyle={{ backgroundColor: '#f0f2f5' }}
         style={{ backgroundColor: 'inherit' }}
         cardDragClass={style.cardDragClass}
+        onCardClick={onCardClick}
         data={JSON.parse(JSON.stringify(workflows))}
         cardDraggable={true}
       />

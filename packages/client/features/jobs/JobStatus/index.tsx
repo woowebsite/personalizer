@@ -36,63 +36,43 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
       },
       {
         name: ['metadata', 'employee'],
-        value: !!JSON.parse(job.employee)
-          ? JSON.parse(job.employee).value
-          : null,
+        value: job.employee,
       },
 
       // metadata
       {
         name: ['metadata', 'leader'],
-        value: !!JSON.parse(job.leader) ? JSON.parse(job.leader).value : null,
+        value: job.leader,
       },
     ]);
   };
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
-    onSubmit,
+    // onSubmit,
     getFieldsValue,
   }));
 
   const getFieldsValue = () => form.getFieldsValue();
-  const onSubmit = () => {
-    form
-      .validateFields()
-      .then(values => {
-        const job = initialValues
-          ? { id: initialValues.id, ...values.job }
-          : values.job;
-
-        const metadata = fieldsToMetadata(values.metadata);
-        const taxonomies = values.taxonomies
-          ? Object.values(values.taxonomies)
-          : [];
-
-        upsertJob({
-          variables: { job, metadata, taxonomies },
-        });
-      })
-      .catch(errorInfo => {
-        console.log('Error: ', errorInfo);
-      });
-  };
+ 
 
   return (
     <>
-      <Form form={form} size="small" onFinish={onSubmit}>
+      <Form form={form} size="small">
         <Form.Item
           name={['taxonomies', 'job_status']}
           label={t('jobStatus.label.status')}
         >
           <TextEditable
             defaultValue={
-              initialValues.job_status
+              initialValues && initialValues.job_status
                 ? parseInt(initialValues.job_status.value, 10)
                 : null
             }
             defaultText={
-              initialValues.job_status ? initialValues.job_status.name : null
+              initialValues && initialValues.job_status
+                ? initialValues.job_status.name
+                : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBoxTaxonomy
@@ -109,12 +89,12 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              !!JSON.parse(initialValues.employee)
+              initialValues && !!JSON.parse(initialValues.employee)
                 ? JSON.parse(initialValues.employee)
                 : null
             }
             defaultText={
-              !!JSON.parse(initialValues.employee)
+              initialValues && !!JSON.parse(initialValues.employee)
                 ? JSON.parse(initialValues.employee).label
                 : null
             }
@@ -137,12 +117,12 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              !!JSON.parse(initialValues.leader)
+              initialValues && !!JSON.parse(initialValues.leader)
                 ? JSON.parse(initialValues.leader)
                 : null
             }
             defaultText={
-              !!JSON.parse(initialValues.leader)
+              initialValues && !!JSON.parse(initialValues.leader)
                 ? JSON.parse(initialValues.leader).label
                 : null
             }
