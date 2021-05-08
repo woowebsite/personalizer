@@ -56,7 +56,7 @@ const Workflow = props => {
         <Divider orientation="left" plain>
           {t('dividers.thisWeek')}
         </Divider>
-        <WorkflowBoard prior="week" ref={weekRef} />
+        <WorkflowBoard className="hidden-lane-header" prior="week" hiddenLaneHeader={true} ref={weekRef} />
       </Content>
     </>
   );

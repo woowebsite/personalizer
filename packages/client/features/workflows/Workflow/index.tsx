@@ -12,7 +12,7 @@ import jobService, { jobBaseQuery, jobQuery } from 'services/jobService';
 
 // inner components
 import style from './style.module.scss';
-import { MyCard, MyLaneHeader, GlobalStyled } from './styled';
+import { MyCard, MyLaneHeader, HiddenLaneHeader, GlobalStyled } from './styled';
 import moment from 'moment';
 import { cardDecorator } from './utils';
 
@@ -52,6 +52,7 @@ const dataWorkflow = {
 
 interface WorkflowProps {
   prior: moment.unitOfTime.StartOf;
+  hiddenLaneHeader?: boolean;
 }
 
 const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
@@ -86,7 +87,6 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
 
   if (loading) return <div />;
   const workflows = cardDecorator(data.workflows);
-  console.log('workflows', workflows);
 
   // EVENTS
   const handleFilter = values => {
@@ -99,6 +99,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   return (
     <>
       <Board
+        className={props.hiddenLaneHeader ? 'hidden-lane-header' : null}
         components={{
           GlobalStyle: GlobalStyled,
           Card: MyCard,
@@ -108,7 +109,6 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
         style={{ backgroundColor: 'inherit' }}
         cardDragClass={style.cardDragClass}
         data={JSON.parse(JSON.stringify(workflows))}
-        // data={dataWorkflow}
         cardDraggable={true}
       />
     </>

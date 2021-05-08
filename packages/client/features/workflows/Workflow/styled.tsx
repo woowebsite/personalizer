@@ -3,6 +3,9 @@ import Card from 'react-trello/dist/components/Card';
 import LaneHeader from 'react-trello/dist/components/Lane/LaneHeader';
 
 export const GlobalStyled = createGlobalStyle`
+    .hidden-lane-header .react-trello-lane > header{
+      display: none; 
+    }
     .react-trello-lane > header {
         text-transform: uppercase !important;
         margin-bottom: 10px !important;
@@ -34,4 +37,9 @@ export const MyCard = styled(Card)`
 export const MyLaneHeader = styled(LaneHeader)`
   text-transform: uppercase !important;
   margin-bottom: 10px !important;
+`;
+
+export const HiddenLaneHeader = styled(LaneHeader)`
+  color: red;
+  display: none;
 `;
