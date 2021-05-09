@@ -300,6 +300,11 @@ export const vi = {
         title: 'Tiêu đề',
       },
     },
+    pageHeader: {
+      buttons: {
+        all: 'Danh sách công việc',
+      },
+    },
     dividers: {
       today: 'Hôm nay',
       thisWeek: 'Tuần này',

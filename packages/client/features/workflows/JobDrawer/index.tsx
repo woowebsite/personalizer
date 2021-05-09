@@ -94,7 +94,6 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   if (result.data) {
     props.onSaveCompleted();
   }
-  console.log(data);
 
   return (
     <>

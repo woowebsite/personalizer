@@ -53,12 +53,6 @@ const Workflow = props => {
           <RedirectButton url={'/customer/jobs'}>
             {t('pageHeader.buttons.all')}
           </RedirectButton>,
-          <Button key="2" danger>
-            {t('buttons.delete')}
-          </Button>,
-          <RedirectButton url={'/customer/jobs/new'}>
-            {t('buttons.create')}
-          </RedirectButton>,
         ]}
       />
 

@@ -1,8 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { Divider } from 'antd';
 import NProgress from 'nprogress';
-import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
 import Board from 'react-trello';
 
 // components
@@ -54,12 +52,13 @@ interface WorkflowProps {
   prior: moment.unitOfTime.StartOf;
   hiddenLaneHeader?: boolean;
   onCardClick?: any;
+  onDragEnd?: any;
 }
-
+let eventBus = undefined;
 const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   // DECLARE
   const { formatMessage } = useIntl();
-  const { prior, onCardClick } = props;
+  const { prior, onCardClick, onDragEnd } = props;
   const t = id => formatMessage({ id });
   const priorConditions = {
     startDueDate: moment()
@@ -74,6 +73,10 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     variables: {
       where: priorConditions,
     },
+  });
+
+  const [upsertJob] = jobService.upsert({
+    ignoreResults: true,
   });
 
   useImperativeHandle(ref, () => ({
@@ -96,6 +99,29 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     else refetch();
   };
 
+  const setEventBus = handle => {
+    eventBus = handle;
+  };
+  const handleDragEnd = (cardId, sourceLandId, targetLaneId, card) => {
+    if (eventBus) {
+      eventBus.publish({
+        type: 'MOVE_CARD',
+        fromLaneId: sourceLandId,
+        toLaneId: targetLaneId,
+        cardId,
+        index: card,
+      });
+    }
+    upsertJob({
+      variables: {
+        job: {
+          id: cardId,
+        },
+        taxonomies: [targetLaneId],
+      },
+    });
+  };
+
   // RENDER
   return (
     <>
@@ -106,12 +132,15 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
           Card: MyCard,
           LaneHeader: MyLaneHeader,
         }}
+        hideCardDeleteIcon={true}
         laneStyle={{ backgroundColor: '#f0f2f5' }}
         style={{ backgroundColor: 'inherit' }}
         cardDragClass={style.cardDragClass}
         onCardClick={onCardClick}
+        handleDragEnd={handleDragEnd}
         data={JSON.parse(JSON.stringify(workflows))}
         cardDraggable={true}
+        eventBusHandle={setEventBus}
       />
     </>
   );

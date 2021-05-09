@@ -31,6 +31,7 @@ export const MyCard = styled(Card)`
   &:hover {
     background: white;
     border-bottom-color: #bdb4b4;
+    box-shadow: 0px 0px 1px #333;
   }
 `;
 
