@@ -21,6 +21,7 @@ const Workflow = props => {
   const { messages, t, query } = props;
   const weekRef: any = React.createRef();
   const dayRef: any = React.createRef();
+  const formRef: any = React.createRef();
   const jobDrawerRef: any = React.createRef();
   const [currentJobId, setCurrentJob] = useState(null);
 
@@ -35,6 +36,10 @@ const Workflow = props => {
     if (jobDrawerRef.current) {
       jobDrawerRef.current.showDetail(jobId);
     }
+  };
+
+  const onSaveJobCompleted = () => {
+    formRef.current.submit();
   };
 
   // RENDER
@@ -58,7 +63,7 @@ const Workflow = props => {
       />
 
       <Content>
-        <FilterForm onFilter={handleFilter} />
+        <FilterForm onFilter={handleFilter} ref={formRef} />
         <Divider orientation="left" plain>
           {t('dividers.today')}
         </Divider>
@@ -66,10 +71,20 @@ const Workflow = props => {
         <Divider orientation="left" plain>
           {t('dividers.thisWeek')}
         </Divider>
-        <WorkflowBoard prior="week" hiddenLaneHeader={true} ref={weekRef} />
+        <WorkflowBoard
+          ref={weekRef}
+          prior="week"
+          hiddenLaneHeader={true}
+          onCardClick={showJobDetail}
+        />
       </Content>
       {currentJobId && (
-        <JobDrawer key={currentJobId} id={currentJobId} ref={jobDrawerRef} />
+        <JobDrawer
+          key={currentJobId}
+          id={currentJobId}
+          ref={jobDrawerRef}
+          onSaveCompleted={onSaveJobCompleted}
+        />
       )}
     </>
   );

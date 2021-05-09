@@ -27,6 +27,7 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
         notification.success({
           message: 'Notification Success',
           description: 'Save successfully',
+          placement: 'bottomLeft',
           onClick: () => {
             console.log('Notification Clicked!');
           },
@@ -35,6 +36,7 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
         notification.error({
           message: 'Notification Error',
           description: t('messages.changePassword.isValid'),
+          placement: 'bottomLeft',
           onClick: () => {
             console.log('Notification Clicked!');
           },
@@ -58,6 +60,7 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
         notification.error({
           message: 'Notification Error',
           description: errorInfo,
+          placement: 'bottomLeft',
           onClick: () => {
             console.log('Notification Clicked!');
           },

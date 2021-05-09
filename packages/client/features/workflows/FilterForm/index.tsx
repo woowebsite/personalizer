@@ -1,15 +1,19 @@
+import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input, Button } from 'antd';
-import React from 'react';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 
-const FilterForm = ({ onFilter }) => {
+const FilterForm = forwardRef<any, any>(({ onFilter }, ref) => {
   // DEFINE
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
   const [form] = Form.useForm();
 
   // EVENTS
+  useImperativeHandle(ref, () => ({
+    submit: handleFinish,
+  }));
+
   const handleFinish = () => {
     form
       .validateFields()
@@ -62,6 +66,6 @@ const FilterForm = ({ onFilter }) => {
       </Form.Item>
     </Form>
   );
-};
+});
 
 export default FilterForm;

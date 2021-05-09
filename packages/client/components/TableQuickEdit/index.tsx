@@ -41,6 +41,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
       notification.success({
         message: 'Notification Success',
         description: 'Save successfully',
+        placement: 'bottomLeft',
         onClick: () => {
           console.log('Notification Clicked!');
         },

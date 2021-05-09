@@ -30,6 +30,7 @@ import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 interface JobDrawerProps {
   id: number;
+  onSaveCompleted: any;
 }
 
 const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
@@ -44,6 +45,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
       where: { job: { id: props.id } },
     },
   });
+  const [upsertJob, result] = jobService.upsert();
 
   useEffect(() => {
     if (props.id) {
@@ -62,7 +64,36 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
     setVisible(false);
   };
 
+  const onSave = () => {
+    const formValues = formRef.current.getFieldsValue();
+    const statusValues = formStatusRef.current.getFieldsValue();
+
+    // metadata fields
+    const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
+
+    // taxonomies fields
+    const taxonomyFields = {
+      ...formValues.taxonomies,
+      ...statusValues.taxonomies,
+    };
+
+    // parse
+    const job = data.job
+      ? { id: data.job.id, ...formValues.job }
+      : formValues.job;
+
+    const metadata = fieldsToMetadata(metadataFields);
+    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
+
+    upsertJob({
+      variables: { job, metadata, taxonomies },
+    });
+  };
+
   if (loading) return <div />;
+  if (result.data) {
+    props.onSaveCompleted();
+  }
   console.log(data);
 
   return (
@@ -82,7 +113,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
             <Button onClick={onClose} style={{ marginRight: 8 }}>
               {t('buttons.cancel')}
             </Button>
-            <Button onClick={onClose} type="primary">
+            <Button key="1" type="primary" onClick={onSave}>
               {t('buttons.save')}
             </Button>
           </div>

@@ -12,6 +12,7 @@ const onCompletedDefault = () => {
   notification.success({
     message: 'Notification Success',
     description: 'Save successfully',
+    placement: 'bottomLeft',
     onClick: () => {
       console.log('Notification Clicked!');
     },
@@ -41,6 +42,7 @@ function withMutation<TData = any, TVariables = OperationVariables>(
     notification.error({
       message: 'Notification Title',
       description: error.message,
+      placement: 'bottomLeft',
       onClick: () => {
         console.log('Notification Clicked!');
       },
