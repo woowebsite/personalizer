@@ -24,7 +24,10 @@ export class JobMeta extends Model<JobMeta> {
 
   @Column
   type: string;
-
+  
+  @Column
+  data: string;
+  
   @ForeignKey(() => Job)
   @Column
   job_id: number;

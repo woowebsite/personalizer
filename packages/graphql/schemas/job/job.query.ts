@@ -48,8 +48,10 @@ export const Query = {
         if (where && where.job.title)
           job.title = { [Op.like]: where.job.title };
 
-        // taxonomies
+        // metadata
         let include: Array<any> = [{ model: JobMeta }];
+
+        // taxonomies
         if (where.taxonomies) {
           include.push({
             model: JobTerm,
@@ -101,6 +103,7 @@ export const Query = {
               model: Job,
               where: query,
               include: [
+                { model: JobMeta, where: where.metadata },
                 {
                   model: JobTerm,
                   include: [

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Form, Input, Select, Button, Row, Col } from 'antd';
 import { useIntl } from 'react-intl';
+import _ from 'lodash';
 
 // comoonents
 import ComboBoxEnum from 'components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
 import JobPriority from '~/models/JobPriority';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
-import _ from 'lodash';
 
 const FilterForm = ({ values, onFilter }) => {
   // DEFINE
