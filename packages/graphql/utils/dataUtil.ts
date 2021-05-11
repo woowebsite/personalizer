@@ -5,7 +5,7 @@
  * @param data object with metadata
  * @param metadata name of metadata field, eg: userMeta
  */
-export const metadataToField = (obj, metadata='metadata') => {
+export const metadataToField = (obj, metadata = 'metadata') => {
   if (!obj || !metadata) {
     console.error('MetadataToField Error: Object or metadata is null');
     return;
@@ -21,11 +21,11 @@ export const metadataToField = (obj, metadata='metadata') => {
   const meta = obj.dataValues[metadata];
   if (meta && meta.length > 0) {
     meta.forEach(x => {
-      let { value, type } = x.dataValues;
+      let { value, data, type } = x.dataValues;
       // parse data by 'type'
       if (type === 'boolean') value = JSON.parse(value);
       if (type === 'number') value = parseFloat(value);
-      // if (type === 'object') value = JSON.parse(value);
+      if (type === 'object') value = data;
 
       // setValue
       obj.setDataValue(x.dataValues.key, value);
