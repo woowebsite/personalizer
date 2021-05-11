@@ -41,6 +41,7 @@ type JobsPaged {
 type JobMeta {
   id: Int
   job_id: Int
+  data: String
   key: String
   value: String
   type: String
@@ -51,6 +52,7 @@ input JobMetaInput {
   job_id: Int
   key: String
   value: String
+  data: String
   type: String
 }
 

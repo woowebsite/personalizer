@@ -20,6 +20,12 @@ export const Mutation = {
           term_taxonomy_id: termId,
           ref_id: job.id,
         }));
+        await JobMeta.destroy({
+          where: { job_id: job.id },
+        });
+        await JobTerm.destroy({
+          where: { ref_id: job.id },
+        });
         await JobTerm.bulkCreate(terms);
       }
 

@@ -34,20 +34,19 @@ const JobDetail = props => {
 
     // metadata fields
     const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
+    const metadata = fieldsToMetadata(metadataFields);
 
     // taxonomies fields
     const taxonomyFields = {
       ...formValues.taxonomies,
       ...statusValues.taxonomies,
     };
+    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
 
     // parse
     const job = data.job
       ? { id: data.job.id, ...formValues.job }
       : formValues.job;
-
-    const metadata = fieldsToMetadata(metadataFields);
-    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
 
     upsertJob({
       variables: { job, metadata, taxonomies },
@@ -114,7 +113,7 @@ JobDetail.getInitialProps = async ({ ctx }) => {
   const { data, loading, refetch } = await apolloClient.query({
     query: jobQuery.getJob,
     variables: {
-      where: { id: parseInt(query.id) },
+      where: { job: { id: parseInt(query.id) } },
     },
   });
 

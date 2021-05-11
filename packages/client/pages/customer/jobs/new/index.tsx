@@ -37,7 +37,7 @@ const JobNew = props => {
   const onSave = () => {
     const formValues = formRef.current.getFieldsValue();
     const statusValues = formStatusRef.current.getFieldsValue();
-
+    
     // metadata fields
     const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
 

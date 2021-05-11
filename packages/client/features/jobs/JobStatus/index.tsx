@@ -32,64 +32,48 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
       // taxonomies
       {
         name: ['taxonomies', 'job_status'],
-        value: job.job_status.value,
+        value: parseInt(job.job_status.value),
       },
       {
         name: ['metadata', 'employee'],
-        value: JSON.parse(job.employee).value,
+        value: job.employee,
       },
 
       // metadata
       {
         name: ['metadata', 'leader'],
-        value: JSON.parse(job.leader).value,
+        value: job.leader,
       },
     ]);
   };
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
-    onSubmit,
+    // onSubmit,
     getFieldsValue,
   }));
 
   const getFieldsValue = () => form.getFieldsValue();
-  const onSubmit = () => {
-    form
-      .validateFields()
-      .then(values => {
-        const job = initialValues
-          ? { id: initialValues.id, ...values.job }
-          : values.job;
-
-        const metadata = fieldsToMetadata(values.metadata);
-        const taxonomies = values.taxonomies
-          ? Object.values(values.taxonomies)
-          : [];
-
-        upsertJob({
-          variables: { job, metadata, taxonomies },
-        });
-      })
-      .catch(errorInfo => {
-        console.log('Error: ', errorInfo);
-      });
-  };
+ 
 
   return (
     <>
-      <Form form={form} size="small" onFinish={onSubmit}>
+      <Form form={form} size="small">
         <Form.Item
           name={['taxonomies', 'job_status']}
           label={t('jobStatus.label.status')}
         >
           <TextEditable
             defaultValue={
-              initialValues
+              initialValues && initialValues.job_status
                 ? parseInt(initialValues.job_status.value, 10)
                 : null
             }
-            defaultText={initialValues ? initialValues.job_status.name : null}
+            defaultText={
+              initialValues && initialValues.job_status
+                ? initialValues.job_status.name
+                : null
+            }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBoxTaxonomy
                 onChange={handleOnChange}
@@ -105,10 +89,14 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues ? JSON.parse(initialValues.employee) : null
+              initialValues && !!JSON.parse(initialValues.employee)
+                ? JSON.parse(initialValues.employee)
+                : null
             }
             defaultText={
-              initialValues ? JSON.parse(initialValues.employee).label : null
+              initialValues && !!JSON.parse(initialValues.employee)
+                ? JSON.parse(initialValues.employee).label
+                : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox
@@ -129,10 +117,14 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues ? JSON.parse(initialValues.leader) : null
+              initialValues && !!JSON.parse(initialValues.leader)
+                ? JSON.parse(initialValues.leader)
+                : null
             }
             defaultText={
-              initialValues ? JSON.parse(initialValues.leader).label : null
+              initialValues && !!JSON.parse(initialValues.leader)
+                ? JSON.parse(initialValues.leader).label
+                : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
               <ComboBox

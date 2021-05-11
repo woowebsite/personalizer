@@ -23,6 +23,7 @@ function withQuery<TData = any, TVariables = OperationVariables>(
     notification.error({
       message: 'Notification Title',
       description: error.message,
+      placement: 'bottomLeft',
       onClick: () => {
         console.log('Notification Clicked!');
       },

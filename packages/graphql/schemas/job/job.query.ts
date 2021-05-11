@@ -8,7 +8,8 @@ import { metadataToField, taxonomyToField } from '../../utils/dataUtil';
 export const Query = {
   job: resolver(Job, {
     before: async (findOptions, { where }, context) => {
-      findOptions.where = where;
+      const { job } = where;
+      findOptions.where = job;
       findOptions.include = [
         { model: JobMeta },
         {
@@ -47,8 +48,10 @@ export const Query = {
         if (where && where.job.title)
           job.title = { [Op.like]: where.job.title };
 
-        // taxonomies
+        // metadata
         let include: Array<any> = [{ model: JobMeta }];
+
+        // taxonomies
         if (where.taxonomies) {
           include.push({
             model: JobTerm,
@@ -99,6 +102,25 @@ export const Query = {
             {
               model: Job,
               where: query,
+              include: [
+                { model: JobMeta, where: where.metadata },
+                {
+                  model: JobTerm,
+                  include: [
+                    {
+                      model: TermTaxonomy,
+                      where: { taxonomy: ['job_priority', 'job_status'] },
+                      require: true,
+                      include: [
+                        {
+                          model: Term,
+                          require: true,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
@@ -111,7 +133,12 @@ export const Query = {
         return {
           id: x.dataValues.id,
           title: x.dataValues.term.dataValues.name,
-          cards: x.dataValues.jobTerms.map(x => x.dataValues.job),
+          cards: x.dataValues.jobTerms.map(x => {
+            if (x) {
+              const jobTransfer = taxonomyToField(x.dataValues.job, 'jobTerms');
+              return jobTransfer;
+            }
+          }),
         };
       });
 
