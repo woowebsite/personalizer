@@ -11,6 +11,8 @@ import useTranslate from 'hooks/useTranslate';
 // graphql
 import productBaseService from 'services/productBaseService';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
+import ComboBoxEnum from '~/components/ComboBoxEnum';
+import ProviderEnum from '~/models/ProviderEnum';
 
 interface IProps {
   data?: any;
@@ -103,7 +105,7 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
         name="provider_id"
         label={t('productBaseBasicForm.label.provider')}
       >
-        <ComboBox type={ComboBoxType.Role} valueField="id" textField="name" />
+        <ComboBoxEnum type={ProviderEnum} />
       </Form.Item>
 
       <Form.Item

@@ -1,10 +1,19 @@
 import React from 'react';
-import { Select } from 'antd';
+import { Select, SelectProps } from 'antd';
 
 // graphql
 
+interface ComboBoxEnumProps {
+  defaultValue?: string;
+  type: any;
+}
+
 const { Option } = Select;
-const ComboBoxEnum = ({ type, defaultValue, ...others }) => {
+const ComboBoxEnum: React.FC<ComboBoxEnumProps & SelectProps<any>> = ({
+  type,
+  defaultValue,
+  ...others
+}) => {
   const selectedValue = defaultValue ? parseInt(defaultValue) : null;
   // defines
   const dataSource = Object.values<string>(type)
