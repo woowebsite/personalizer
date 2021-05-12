@@ -27,8 +27,25 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
 
   const formSetFields = productBase => {
     form.setFields([
-      { name: 'title', value: productBase.title },
-      { name: 'description', value: productBase.description },
+      { name: ['productBase', 'title'], value: productBase.title },
+      { name: ['productBase', 'description'], value: productBase.description },
+
+      // taxonomies
+      {
+        name: ['taxonomies', TaxonomyType.ProductBase_Category],
+        value: productBase[TaxonomyType.ProductBase_Category]
+          ? parseInt(productBase[TaxonomyType.ProductBase_Category].value, 10)
+          : null,
+      },
+      {
+        name: ['taxonomies', TaxonomyType.ProductBase_Tag],
+        value: productBase[TaxonomyType.ProductBase_Tag]
+          ? parseInt(productBase[TaxonomyType.ProductBase_Tag].value, 10)
+          : null,
+      },
+
+      // metadata
+      { name: ['metadata', 'printArea'], value: productBase.printArea },
     ]);
   };
 
@@ -45,6 +62,7 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
   /// EVENTS
   useImperativeHandle(ref, () => ({
     onSubmit,
+    getFieldsValue,
   }));
 
   const onSubmit = () => {
@@ -69,6 +87,8 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
   const onSetImageUrl = filename => {
     form.setFieldsValue({ image: filename });
   };
+
+  const getFieldsValue = () => form.getFieldsValue();
 
   return (
     <Form
@@ -116,14 +136,14 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
-        name={['taxonomies', 'productbase_category']}
+        name={['taxonomies', TaxonomyType.ProductBase_Category]}
         label={t('productBaseBasicForm.label.categories')}
       >
         <ComboBoxTaxonomy type={TaxonomyType.ProductBase_Category} />
       </Form.Item>
 
       <Form.Item
-        name={['taxonomies', 'productbase_tag']}
+        name={['taxonomies', TaxonomyType.ProductBase_Tag]}
         label={t('productBaseBasicForm.label.tags')}
       >
         <ComboBoxTaxonomy type={TaxonomyType.ProductBase_Tag} />
