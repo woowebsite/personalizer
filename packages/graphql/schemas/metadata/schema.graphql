@@ -1,0 +1,31 @@
+type ProductBaseMeta {
+  id: Int
+  data: String
+  key: String
+  value: String
+  type: String
+  productBase: ProductBase
+  productBaseId: Int
+}
+
+
+input MetadataInput {
+  data: String
+  key: String
+  value: String
+  type: String
+  refId: Int
+}
+
+input MetadataWhere {
+  id: Int
+  refType: String
+}
+
+type Query {
+  productBaseMetadata(where: MetadataWhere): [ProductBaseMeta]
+}
+
+type Mutation {
+  upsertProductBaseMetadata(refId: Int, metadata: [MetadataInput]): ProductBaseMeta
+}

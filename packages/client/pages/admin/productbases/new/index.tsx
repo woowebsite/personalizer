@@ -14,7 +14,7 @@ import { productBaseQuery } from 'services/productBaseService';
 
 // inner components
 import ProductBaseBasicForm from '~/features/productBases/ProductBaseBasicForm';
-import ProductBaseStatus from '~/features/productBases/productBaseStatus';
+import ProductBaseStatus from '~/features/productBases/ProductBaseStatus';
 import ProductBasePrintArea from '~/features/productBases/ProductBasePrintArea';
 import ProductBaseCombinePrintArea from '~/features/productBases/ProductBaseCombinePrintArea';
 import ProductBaseMockup from '~/features/productBases/ProductBaseMockup';
