@@ -24,12 +24,12 @@ const AddPrintAreaForm = ({ form, initialValues, onSubmit }) => {
     >
       <Row gutter={12}>
         <Col span={8}>
-          <Form.Item label="Name" tooltip="This is a required field">
+          <Form.Item label="Name" name="name" tooltip="This is a required field">
             <Input />
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item label="FrontLabel" tooltip="This is a required field">
+          <Form.Item label="FrontLabel" name="front" tooltip="This is a required field">
             <Input />
           </Form.Item>
         </Col>

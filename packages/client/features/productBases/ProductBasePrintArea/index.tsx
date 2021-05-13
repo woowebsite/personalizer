@@ -3,7 +3,7 @@ import { Form } from 'antd';
 import { useIntl } from 'react-intl';
 import CardForm from '~/components/CardForm';
 import PrintAreaTable from './PrintAreaTable';
-import productBaseService from '~/services/productBaseService';
+import metadataFactory from '~/services/metadataService';
 import AddPrintAreaForm from './AddPrintAreaForm';
 
 const formRender = props => <AddPrintAreaForm {...props} />;
@@ -18,7 +18,8 @@ const ProductBasePrintArea = () => {
     <>
       <CardForm
         className="mt-4"
-        mutation={productBaseService.upsert}
+        refId={1}     // productBaseId
+        mutation={metadataFactory('ProductBase').upsertMetadata}
         formRender={formRender}
         title={t('printAreaBox.title')}
       >

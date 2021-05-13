@@ -5,9 +5,11 @@ import Card from 'components/Card';
 import filterService from 'services/filterService';
 import { MutationTuple, OperationVariables, QueryResult } from '@apollo/client';
 import style from './style.module.scss'
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 interface CardFormProps extends CardProps {
   title: string;
+  refId: number,
   okText?: string;
   cancelText?: string;
   mutation: (options?: any) => MutationTuple<any, OperationVariables>;
@@ -16,7 +18,7 @@ interface CardFormProps extends CardProps {
 
 const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
   // DECLARES ================================================================================================
-  const { children, formRender, okText, cancelText, className, ...others } = props;
+  const { children, refId, formRender, okText, cancelText, className, ...others } = props;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [mutate, result] = others.mutation();
@@ -29,9 +31,12 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
   // HANDLERS ================================================================================================
   const handleOnSave = () => {
     const values = form.getFieldsValue();
-    console.log('values', values)
+    const metadata = fieldsToMetadata(values);
     mutate({
-      variables: values,
+      variables: {
+        refId,// TODO: refId is productBaseId
+        metadata
+      },
     });
   };
 
