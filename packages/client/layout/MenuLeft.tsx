@@ -22,7 +22,7 @@ const MenuLeft = (props) => {
         if (menu.children) {
           return (
             <SubMenu
-              key={`menu-${i}`}
+              key={`sub-menu-${i}`}
               icon={<UserOutlined />}
               title={f(menu.title)}
             >

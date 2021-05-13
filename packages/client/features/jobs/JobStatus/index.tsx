@@ -34,15 +34,19 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         name: ['taxonomies', 'job_status'],
         value: parseInt(job.job_status.value),
       },
+
+      // metadata
       {
         name: ['metadata', 'employee'],
         value: job.employee,
       },
-
-      // metadata
       {
         name: ['metadata', 'leader'],
         value: job.leader,
+      },
+      {
+        name: ['metadata', 'customer'],
+        value: job.customer,
       },
     ]);
   };
@@ -54,7 +58,6 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
   }));
 
   const getFieldsValue = () => form.getFieldsValue();
- 
 
   return (
     <>
@@ -104,7 +107,7 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
                 textField="name"
                 valueField="id"
                 labelInValue
-                type={ComboBoxType.User}
+                type={ComboBoxType.Employee}
                 width="200"
                 {...rest}
               />
@@ -131,7 +134,36 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
                 onChange={handleOnChange}
                 textField="name"
                 valueField="id"
-                type={ComboBoxType.User}
+                type={ComboBoxType.Employee}
+                width="200"
+                labelInValue
+                {...rest}
+              />
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name={['metadata', 'customer']}
+          label={t('jobStatus.label.customer')}
+        >
+          <TextEditable
+            defaultValue={
+              initialValues.customer && !!JSON.parse(initialValues.customer)
+                ? JSON.parse(initialValues.customer)
+                : null
+            }
+            defaultText={
+              initialValues.customer && !!JSON.parse(initialValues.customer)
+                ? JSON.parse(initialValues.customer).label
+                : null
+            }
+            renderComponent={({ handleOnChange, ...rest }) => (
+              <ComboBox
+                onChange={handleOnChange}
+                textField="name"
+                valueField="id"
+                type={ComboBoxType.Customer}
                 width="200"
                 labelInValue
                 {...rest}

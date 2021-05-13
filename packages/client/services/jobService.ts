@@ -21,6 +21,7 @@ export const jobQuery = {
         link
         isDemoColor
         isDemoLayout
+        customer
         employee
         leader
         job_priority {

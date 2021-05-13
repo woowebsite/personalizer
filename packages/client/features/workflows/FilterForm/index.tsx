@@ -55,40 +55,37 @@ const FilterForm = forwardRef<any, any>(({ onFilter }, ref) => {
       size="small"
       onFinish={handleFinish}
     >
-      <Form.Item
-        label={t('filter.labels.employee')}
-        name={['metadata', 'employee']}
-      >
+      <Form.Item name={['metadata', 'employee']}>
         <ComboBox
+          placeholder={t('filter.labels.employee')}
           type={ComboBoxType.Employee}
+          allowClear
           textField="name"
           valueField="id"
           style={{ width: 150 }}
         />
       </Form.Item>
 
-      <Form.Item
-        data-type="object"
-        label={t('filter.labels.customer')}
-        name={['metadata', 'customer']}
-      >
+      <Form.Item data-type="object" name={['metadata', 'customer']}>
         <ComboBox
+          placeholder={t('filter.labels.customer')}
           type={ComboBoxType.Customer}
+          allowClear
           textField="name"
           valueField="id"
           style={{ width: 150 }}
         />
       </Form.Item>
 
-      <Form.Item label={t('filter.labels.title')} name="title">
-        <Input />
+      <Form.Item name="title">
+        <Input placeholder={t('filter.labels.title')} />
       </Form.Item>
 
-      <Form.Item
-        label={t('jobTable.columns.priority')}
-        name={['taxonomies', 'job_priority']}
-      >
-        <ComboBoxTaxonomy type={TaxonomyType.Job_Priority} />
+      <Form.Item name={['taxonomies', 'job_priority']}>
+        <ComboBoxTaxonomy
+          placeholder={t('jobTable.columns.priority')}
+          type={TaxonomyType.Job_Priority}
+        />
       </Form.Item>
 
       <Form.Item>
