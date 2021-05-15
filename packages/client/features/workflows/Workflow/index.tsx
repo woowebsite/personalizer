@@ -103,7 +103,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     eventBus = handle;
   };
   const handleDragEnd = (cardId, sourceLandId, targetLaneId, card) => {
-    if (eventBus) {
+    if (eventBus && eventBus.publish) {
       eventBus.publish({
         type: 'MOVE_CARD',
         fromLaneId: sourceLandId,

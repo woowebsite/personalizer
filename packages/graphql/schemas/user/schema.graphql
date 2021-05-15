@@ -14,7 +14,7 @@ type User {
   userMeta: [UserMeta]
   phone: String
   address: String
-  customerType: String
+  customerType: Int
   facebookUrl: String
 }
 
@@ -24,6 +24,8 @@ input UserWhere {
   role_id: Int
   status: String
   email: String
+  metadata: [UserInput]
+  taxonomies: [Int]
 }
 
 input UserInput {
@@ -33,6 +35,11 @@ input UserInput {
   email: String
   status: String
   role_id: Int
+
+  phone: String
+  address: String
+  customerType: Int
+  facebookUrl: String
 }
 
 input UserMetaInput{

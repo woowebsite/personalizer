@@ -64,7 +64,7 @@ export class User extends Model<User> {
   address: String;
 
   @Column(DataType.VIRTUAL)
-  customerType: String;
+  customerType: number;
 
   @Column(DataType.VIRTUAL)
   facebookUrl: String;

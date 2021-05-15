@@ -25,7 +25,7 @@ Default tab `All` has condition 'status=A'
   {
     "id": 1,
     "title": "Nhân viên",
-    "conditions": "{\"role_id\":4}",
+    "conditions": "{\"role_id\":4}",    // {"metadata":{"customerType":1}}, {"taxonomies":[1,23,4]}
     "model_name": "User",     // The table that filter on
     "status": "A",
     "user_id": 1,
