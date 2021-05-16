@@ -23,6 +23,9 @@ export class UserMeta extends Model<UserMeta> {
   value: string;
 
   @Column
+  data: string;
+
+  @Column
   status: string;
 
   @ForeignKey(() => User)

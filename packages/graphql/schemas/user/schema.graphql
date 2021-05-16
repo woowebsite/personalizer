@@ -12,6 +12,7 @@ type User {
   userMeta: [UserMeta]
   havePassword: Boolean
 
+  metadata: [UserMeta]
   phone: String
   address: String
   customerType: String
@@ -24,6 +25,9 @@ input UserWhere {
   role_id: Int
   status: String
   email: String
+  
+  metadata: [UserMetaInput]
+  taxonomies: [Int]
 }
 
 input UserInput {
@@ -35,11 +39,12 @@ input UserInput {
   role_id: Int
 }
 
-input UserMetaInput{
+input UserMetaInput {
   user_id: Int
-  type: String
   key: String
   value: String
+  data: String
+  type: String
 }
 
 type UsersPaged {
@@ -49,12 +54,17 @@ type UsersPaged {
 
 type Query {
   user(where: UserWhere): User
-  users(where: UserWhere, limit: Int, offset: Int): UsersPaged 
+  users(where: UserWhere, limit: Int, offset: Int): UsersPaged
   loginUser(email: String!, password: String!): User
 }
 
 type Mutation {
   createUser(data: UserInput): User
-  upsertUser(data: UserInput, metadata: [UserMetaInput], taxonomies: [Int]): User
-  changePassword(currentPassword: String!, password: String!): BooleanResponse @isAuth
+  upsertUser(
+    data: UserInput
+    metadata: [UserMetaInput]
+    taxonomies: [Int]
+  ): User
+  changePassword(currentPassword: String!, password: String!): BooleanResponse
+    @isAuth
 }
