@@ -68,6 +68,10 @@ export const vi = {
         customerType: 'Nhóm khách hàng',
         createdAt: 'Ngày tạo',
       },
+      filter: {
+        name: "Tên",
+        type: "Loại KH"
+      }
     },
     jobTable: {
       columns: {

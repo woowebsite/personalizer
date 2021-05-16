@@ -1,11 +1,14 @@
 import { Form, Input, Select, Button } from 'antd';
+import { useIntl } from 'react-intl';
 import React from 'react';
 import CustomerType from '~/models/CustomerType';
-import ComboBoxEnum from 'components/ComboBoxEnum'
+import ComboBoxEnum from 'components/ComboBoxEnum';
 
 const FilterForm = ({ values, onFilter }) => {
   // DEFINE
   const [form] = Form.useForm();
+  const { formatMessage } = useIntl();
+  const t = (id, values?) => formatMessage({ id }, values);
 
   // EVENTS
   const handleFinish = () => {
@@ -23,8 +26,6 @@ const FilterForm = ({ values, onFilter }) => {
 
   return (
     <Form
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
       initialValues={values}
       layout="inline"
       onFinish={handleFinish}
@@ -32,17 +33,22 @@ const FilterForm = ({ values, onFilter }) => {
       form={form}
       labelAlign="left"
     >
-      <Form.Item label="Name" name="name">
-        <Input />
+      <Form.Item name="name">
+        <Input allowClear placeholder={t('customerTable.filter.type')} />
       </Form.Item>
 
-      <Form.Item label="Type" name="customerType">
-        <ComboBoxEnum  type={CustomerType} />
+      <Form.Item name="customerType">
+        <ComboBoxEnum
+          type={CustomerType}
+          placeholder={t('customerTable.filter.type')}
+          width={150}
+          allowClear
+        />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Filter
+          {t('buttons.filter')}
         </Button>
       </Form.Item>
     </Form>
