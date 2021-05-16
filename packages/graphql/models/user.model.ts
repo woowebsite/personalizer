@@ -54,7 +54,7 @@ export class User extends Model<User> {
   role: Role;
 
   @HasMany(() => UserMeta)
-  userMeta: UserMeta[];
+  metadata: UserMeta[];
 
   // CUSTOMER's metadata
   @Column(DataType.VIRTUAL)

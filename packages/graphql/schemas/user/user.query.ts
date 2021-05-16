@@ -15,25 +15,31 @@ export const Query = {
     after: async (user, args, context) => {
       const total = await User.count(args.where);
 
-      const transferData = metadataToField(user, 'userMeta') //user.map(u => metadataToField(u, 'userMeta'));
-      return transferData
+      const transferData = metadataToField(user, 'metadata'); //user.map(u => metadataToField(u, 'userMeta'));
+      return transferData;
     },
   }),
   users: resolver(User, {
     list: true,
     before: async (findOptions, { where, limit, offset }, context) => {
-      let conditions = where;
+      let conditions: any = {};
       if (where && where.name) conditions.name = { [Op.like]: where.name };
       if (where && where.email) conditions.email = { [Op.like]: where.email };
+
+      // metadata
+      let include: Array<any> = [
+        { model: UserMeta, require: false, where: where.metadata },
+      ];
+
       findOptions.where = conditions;
       findOptions.order = [['name', 'ASC']];
-      findOptions.include = [{ model: UserMeta }];
+      findOptions.include = include;
       return findOptions;
     },
     after: async (users, args, context) => {
       const total = await User.count(args.where);
 
-      const transferData = users.map(u => metadataToField(u, 'userMeta'));
+      const transferData = users.map(u => metadataToField(u, 'metadata'));
       return {
         rows: transferData,
         count: total,
