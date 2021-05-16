@@ -229,6 +229,7 @@ export const vi = {
         status: 'Tình trạng',
         employee: 'Thợ ảnh',
         leader: 'Leader',
+        customer: 'Khách hàng',
       },
     },
     jobMoney: {
@@ -254,6 +255,7 @@ export const vi = {
         status: 'Tình trạng',
         employee: 'Thợ ảnh',
         leader: 'Leader',
+        customer: 'Khách hàng',
       },
     },
     jobMoney: {
@@ -318,6 +320,7 @@ export const vi = {
         status: 'Tình trạng',
         employee: 'Thợ ảnh',
         leader: 'Leader',
+        customer: 'Khách hàng',
       },
     },
   },

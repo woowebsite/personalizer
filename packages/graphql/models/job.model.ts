@@ -80,6 +80,9 @@ export class Job extends Model<Job> {
 
   @Column(DataType.VIRTUAL)
   leader: any;
+  
+  @Column(DataType.VIRTUAL)
+  customer: any;
 
   // taxonomies
   @Column(DataType.VIRTUAL)

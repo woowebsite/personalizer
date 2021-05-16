@@ -55,6 +55,9 @@ const JobTable = props => {
   return (
     <>
       <TableFilter
+        filterOptions={{
+          modelName: 'Job',
+        }}
         modelName="Job"
         pluralName="Jobs"
         defaultFilter={defaultFilter}

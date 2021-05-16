@@ -54,7 +54,7 @@ export class User extends Model<User> {
   role: Role;
 
   @HasMany(() => UserMeta)
-  userMeta: UserMeta[];
+  metadata: UserMeta[];
 
   // CUSTOMER's metadata
   @Column(DataType.VIRTUAL)
@@ -64,7 +64,7 @@ export class User extends Model<User> {
   address: String;
 
   @Column(DataType.VIRTUAL)
-  customerType: String;
+  customerType: number;
 
   @Column(DataType.VIRTUAL)
   facebookUrl: String;

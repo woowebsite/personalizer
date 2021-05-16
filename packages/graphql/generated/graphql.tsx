@@ -140,6 +140,7 @@ export type Job = {
   link?: Maybe<Scalars['String']>;
   isDemoColor?: Maybe<Scalars['Boolean']>;
   isDemoLayout?: Maybe<Scalars['Boolean']>;
+  customer?: Maybe<Scalars['String']>;
   employee?: Maybe<Scalars['String']>;
   leader?: Maybe<Scalars['String']>;
   job_priority?: Maybe<NameValue>;
@@ -153,12 +154,14 @@ export type JobInput = {
   description?: Maybe<Scalars['String']>;
   dueDate?: Maybe<Scalars['Date']>;
   user_id?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
 };
 
 export type JobMeta = {
   __typename?: 'JobMeta';
   id?: Maybe<Scalars['Int']>;
   job_id?: Maybe<Scalars['Int']>;
+  data?: Maybe<Scalars['String']>;
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
@@ -169,6 +172,7 @@ export type JobMetaInput = {
   job_id?: Maybe<Scalars['Int']>;
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
+  data?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
 };
 
@@ -182,14 +186,22 @@ export type JobTerm = {
   __typename?: 'JobTerm';
   term_taxonomy_id?: Maybe<Scalars['Int']>;
   order?: Maybe<Scalars['Int']>;
-  ref_id?: Maybe<Job>;
-  termTaxonomies?: Maybe<TermTaxonomy>;
+  ref_id?: Maybe<Scalars['Int']>;
+  job?: Maybe<Job>;
+  termTaxonomy?: Maybe<TermTaxonomy>;
 };
 
 export type JobWhere = {
-  user_id?: Maybe<Scalars['Int']>;
+  job?: Maybe<JobInput>;
+  metadata?: Maybe<Array<Maybe<JobMetaInput>>>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
+};
+
+export type Lane = {
+  __typename?: 'Lane';
   id?: Maybe<Scalars['Int']>;
-  status?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  cards?: Maybe<Array<Maybe<Job>>>;
 };
 
 export type Mutation = {
@@ -199,7 +211,7 @@ export type Mutation = {
   deleteFilter?: Maybe<Scalars['Int']>;
   uploadFile: File;
   upsertJob?: Maybe<Job>;
-  deleteJob?: Maybe<Scalars['Int']>;
+  deleteJob?: Maybe<Scalars['Boolean']>;
   createRole?: Maybe<Role>;
   upsertTermTaxonomy?: Maybe<TermTaxonomy>;
   deleteTermTaxonomy?: Maybe<Scalars['Int']>;
@@ -294,6 +306,7 @@ export type Query = {
   filters?: Maybe<FiltersPaged>;
   job?: Maybe<Job>;
   jobs?: Maybe<JobsPaged>;
+  workflows?: Maybe<Workflow>;
   role?: Maybe<Role>;
   roles?: Maybe<Array<Maybe<Role>>>;
   termTaxonomy?: Maybe<TermTaxonomy>;
@@ -349,6 +362,11 @@ export type QueryJobsArgs = {
   where?: Maybe<JobWhere>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryWorkflowsArgs = {
+  where?: Maybe<WorkflowWhere>;
 };
 
 
@@ -440,6 +458,7 @@ export type TermTaxonomy = {
   termName?: Maybe<Scalars['String']>;
   order?: Maybe<Scalars['Int']>;
   term?: Maybe<Term>;
+  jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
 };
 
 export type TermTaxonomyInput = {
@@ -497,6 +516,7 @@ export type UserMeta = {
 
 export type UserMetaInput = {
   user_id?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
 };
@@ -513,4 +533,18 @@ export type UserWhere = {
   role_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+};
+
+export type Workflow = {
+  __typename?: 'Workflow';
+  lanes?: Maybe<Array<Maybe<Lane>>>;
+};
+
+export type WorkflowWhere = {
+  title?: Maybe<Scalars['String']>;
+  startDueDate?: Maybe<Scalars['String']>;
+  endDueDate?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['Int']>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  metadata?: Maybe<Array<Maybe<JobMetaInput>>>;
 };

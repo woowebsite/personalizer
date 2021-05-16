@@ -103,7 +103,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     eventBus = handle;
   };
   const handleDragEnd = (cardId, sourceLandId, targetLaneId, card) => {
-    if (eventBus) {
+    if (eventBus && eventBus.publish) {
       eventBus.publish({
         type: 'MOVE_CARD',
         fromLaneId: sourceLandId,
@@ -133,7 +133,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
           LaneHeader: MyLaneHeader,
         }}
         hideCardDeleteIcon={true}
-        laneStyle={{ backgroundColor: '#f0f2f5' }}
+        laneStyle={{ backgroundColor: '#e0e5ea' }}
         style={{ backgroundColor: 'inherit' }}
         cardDragClass={style.cardDragClass}
         onCardClick={onCardClick}

@@ -6,13 +6,14 @@ import filterService from 'services/filterService';
 import { OperationVariables, QueryResult } from '@apollo/client';
 import TabFilter from './components/TabFilter';
 import camelCase from 'lodash/camelCase';
-import { defaultConditions } from './constants';
+import { defaultConditions, FilterConfig } from './constants';
 
 export declare type FilterForm<RecordType> = (
   record: RecordType,
 ) => React.ReactNode;
 
 interface TableFilterProps<RecordType> extends TableProps<RecordType> {
+  filterOptions: FilterConfig;
   modelName: string;
   pluralName: string;
   filterRender: (any) => React.ReactNode;
@@ -22,7 +23,7 @@ interface TableFilterProps<RecordType> extends TableProps<RecordType> {
 }
 
 const TableFilter = forwardRef<any, TableFilterProps<any>>(
-  ({ defaultFilter = defaultConditions, ...props }, ref) => {
+  ({ defaultFilter = defaultConditions, filterOptions, ...props }, ref) => {
     // DECLARES ================================================================================================
     const {
       children,
@@ -40,7 +41,7 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>(
     const [tabFilterCondition, setTabFilterCondition] = useState({});
     const { data: tabs, loading: tabLoading } = filterService.getFiltersByModel(
       {
-        variables: { where: { model_name: modelName } },
+        variables: { where: { model_name: filterOptions.modelName } },
       },
     );
     const [selectedTab, setSelectedTab] = useState(0);

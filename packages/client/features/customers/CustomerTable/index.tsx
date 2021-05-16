@@ -74,6 +74,9 @@ const CustomerTable = props => {
   return (
     <>
       <TableFilter
+        filterOptions={{
+          modelName: "Customer"
+        }}
         modelName="User"
         pluralName="Users"
         defaultFilter={defaultFilter}

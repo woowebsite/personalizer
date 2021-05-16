@@ -11,6 +11,7 @@ type Job {
   link: String
   isDemoColor: Boolean
   isDemoLayout: Boolean
+  customer: String
   employee: String
   leader: String
   job_priority: NameValue
