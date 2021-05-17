@@ -12,3 +12,5 @@ export enum PermissionActions {
   Update = 4,
   Delete = 8,
 }
+
+export const PermissionFullAccessCode = 15;

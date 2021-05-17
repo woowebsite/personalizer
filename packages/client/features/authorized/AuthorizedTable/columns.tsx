@@ -4,7 +4,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { Table, Space, Menu, Dropdown, Button, Checkbox } from 'antd';
 import { DownOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
 import { enumToDitionary } from '~/shared/enumHelper';
-import { PermissionActions } from './constants';
+import { PermissionActions, PermissionFullAccessCode } from './constants';
 const menu = (
   <Menu>
     <Menu.Item key="1" icon={<UserOutlined />}>
@@ -21,8 +21,8 @@ const menu = (
 
 export const columns = (
   t,
-  onCheckboxChanged,
-  onRoleChanged,
+  onCheckChanged,
+  onCheckAllChanged,
 ): ColumnsType<any> => {
   const actionCols = enumToDitionary(PermissionActions).map(x => ({
     title: t(`authorizedTable.columns.${x.name.toLowerCase()}`),
@@ -32,7 +32,8 @@ export const columns = (
     render: (value, row, index) => (
       <Checkbox
         defaultChecked={value !== 0}
-        onChange={e => onCheckboxChanged(row, x, e)}
+        checked={value !== 0}
+        onChange={e => onCheckChanged(row, x, e)}
       />
     ),
   }));
@@ -43,6 +44,25 @@ export const columns = (
       dataIndex: 'featureName',
       key: 'featureName',
       align: 'left',
+    },
+    {
+      title: t('authorizedTable.columns.full'),
+      dataIndex: 'full',
+      key: 'full',
+      align: 'center',
+      render: (value, row, index) => {
+        const indeterminate =
+          row.code === PermissionFullAccessCode || row.code === 0
+            ? false
+            : true;
+        return (
+          <Checkbox
+            indeterminate={indeterminate}
+            checked={row.code === PermissionFullAccessCode}
+            onChange={e => onCheckAllChanged(row, e)}
+          />
+        );
+      },
     },
     ...actionCols,
   ];

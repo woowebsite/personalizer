@@ -6,7 +6,11 @@ import { Table } from 'antd';
 import { columns } from './columns';
 import TableFilter from '~/components/TableFilter';
 import FilterForm from './FilterForm';
-import { defaultFilter, PermissionActions } from './constants';
+import {
+  defaultFilter,
+  PermissionActions,
+  PermissionFullAccessCode,
+} from './constants';
 import { enumToDitionary } from '~/shared/enumHelper';
 
 // graphql
@@ -35,6 +39,18 @@ const AuthorizedTable = props => {
     });
   };
 
+  const onCheckAllChanged = (record, e) => {
+    const code = e.target.checked ? PermissionFullAccessCode : 0;
+    upsertPermission({
+      variables: {
+        permission: {
+          id: record.id,
+          code,
+        },
+      },
+    });
+  };
+
   // RENDER
   const renderFilter = props => <FilterForm {...props} />;
   const renderTable = props => {
@@ -44,7 +60,7 @@ const AuthorizedTable = props => {
         ref={tableRef}
         rowKey="id"
         dataSource={transformData(props.dataSource)}
-        columns={columns(t, onCheckboxChanged, null)}
+        columns={columns(t, onCheckboxChanged, onCheckAllChanged)}
         {...rest}
       />
     );

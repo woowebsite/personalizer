@@ -5,4 +5,6 @@ enum PermissionActions {
   Delete = 8,
 }
 
+export const PermissionFullAccessCode = 15;
+
 export default PermissionActions;
