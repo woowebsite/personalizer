@@ -5,18 +5,35 @@ import { Table } from 'antd';
 // components
 import { columns } from './columns';
 import TableFilter from '~/components/TableFilter';
-import permissionService from '~/services/permissionService';
 import FilterForm from './FilterForm';
 import { defaultFilter, PermissionActions } from './constants';
 import { enumToDitionary } from '~/shared/enumHelper';
+
+// graphql
+import permissionService from 'services/permissionService';
 
 const AuthorizedTable = props => {
   // DEFINES
   const tableRef = React.useRef(null);
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
+  const [upsertPermission] = permissionService.upsert();
 
   // EVENTS
+  const onCheckboxChanged = (record, action, e) => {
+    const sum = e.target.checked
+      ? record.code + action.id
+      : record.code - action.id;
+
+    upsertPermission({
+      variables: {
+        permission: {
+          id: record.id,
+          code: sum,
+        },
+      },
+    });
+  };
 
   // RENDER
   const renderFilter = props => <FilterForm {...props} />;
@@ -25,9 +42,9 @@ const AuthorizedTable = props => {
     return (
       <Table
         ref={tableRef}
-        dataSource={transformData(props.dataSource)}
         rowKey="id"
-        columns={columns(t, null, null)}
+        dataSource={transformData(props.dataSource)}
+        columns={columns(t, onCheckboxChanged, null)}
         {...rest}
       />
     );
@@ -38,7 +55,7 @@ const AuthorizedTable = props => {
       const bitFields = enumToDitionary(PermissionActions).reduce(
         (obj, x) => ({
           ...obj,
-          [x.name]: p.code & x.id,
+          [x.name]: p.code & x.id, // convert int to bit
         }),
         {},
       );
@@ -47,7 +64,6 @@ const AuthorizedTable = props => {
         ...bitFields,
       };
     });
-    console.log('rows', rows);
 
     return rows;
   };

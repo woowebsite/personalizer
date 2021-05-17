@@ -1,10 +1,8 @@
+import React from 'react';
 import Link from 'next/link';
 import { ColumnsType } from 'antd/lib/table';
-import { Table, Space, Menu, Dropdown, Button } from 'antd';
-import { useIntl } from 'react-intl';
+import { Table, Space, Menu, Dropdown, Button, Checkbox } from 'antd';
 import { DownOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
-import Avatar from 'components/Avatar';
-import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import { enumToDitionary } from '~/shared/enumHelper';
 import { PermissionActions } from './constants';
 const menu = (
@@ -21,12 +19,22 @@ const menu = (
   </Menu>
 );
 
-export const columns = (t, onDeleteUser, onRoleChanged): ColumnsType<any> => {
+export const columns = (
+  t,
+  onCheckboxChanged,
+  onRoleChanged,
+): ColumnsType<any> => {
   const actionCols = enumToDitionary(PermissionActions).map(x => ({
     title: t(`authorizedTable.columns.${x.name.toLowerCase()}`),
     dataIndex: x.name,
     key: x.name,
     width: '5%',
+    render: (value, row, index) => (
+      <Checkbox
+        defaultChecked={value !== 0}
+        onChange={e => onCheckboxChanged(row, x, e)}
+      />
+    ),
   }));
 
   return [

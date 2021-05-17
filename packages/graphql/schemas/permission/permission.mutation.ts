@@ -5,14 +5,10 @@ import to from 'await-to-js';
 export const Mutation = {
   upsertPermission: resolver(Permission, {
     before: async (findOptions, { data }, ctx) => {
-      let err, permission;
-      const { currentUser } = ctx;
-      const obj = { ...data, userId: currentUser.id };
+      const [permission, created0] = await Permission.upsert(data, {
+        returning: true,
+      });
 
-      [err, permission] = await to(Permission.create(obj));
-      if (err) {
-        throw err;
-      }
       findOptions.where = { id: permission.id };
       return findOptions;
     },
