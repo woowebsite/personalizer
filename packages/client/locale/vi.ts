@@ -63,6 +63,7 @@ export const vi = {
     authorizedTable: {
       columns: {
         featureName: 'Chức năng',
+        full: 'Toàn bộ',
         create: 'Thêm',
         update: 'Sửa',
         delete: 'Xoá',
