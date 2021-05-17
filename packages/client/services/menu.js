@@ -16,6 +16,11 @@ export default function getMenuData() {
           key: 'changePassword',
           url: '/settings/changePassword',
         },
+        {
+          title: 'menu.users.authorized',
+          key: 'permission',
+          url: '/admin/authorized/groups',
+        },
       ],
     },
     {
