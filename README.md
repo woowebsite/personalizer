@@ -81,7 +81,7 @@ query {
 
 # Graphql generator
 
-Run graphql server at `http://localhoast:3001/graphql`
+Restart graphql server at `http://localhoast:3001/graphql`
 Go to packages/graphql run
 
 ```console

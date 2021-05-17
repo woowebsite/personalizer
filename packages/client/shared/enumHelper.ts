@@ -1,4 +1,4 @@
-export const enumToDitionary = type => {
+export const enumToDitionary = (type): any[] => {
   if (typeof type !== 'object') throw new Error(`${type} is not enum`);
 
   const dataSource = Object.values<string>(type)
