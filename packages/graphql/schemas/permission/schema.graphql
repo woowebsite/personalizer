@@ -1,0 +1,38 @@
+type Permission {
+  id: Int
+  type: String
+  refId: Int
+  featureName: String
+  code: Int
+  status: String
+}
+
+input PermissionWhere {
+  featureName: String
+  type: String
+  status: String
+  refId: Int
+}
+
+input PermissionInput {
+  id: Int
+  type: String
+  refId: Int
+  featureName: String
+  code: Int
+  status: String
+}
+
+type PermissionsPaged {
+  rows: [Permission]
+  count: Int
+}
+
+type Query {
+  permissions(where: PermissionWhere, limit: Int, offset: Int): PermissionsPaged
+}
+
+type Mutation {
+  upsertPermission(data: PermissionInput): Permission
+  deletePermission(id: Int): Int
+}

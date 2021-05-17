@@ -212,6 +212,8 @@ export type Mutation = {
   uploadFile: File;
   upsertJob?: Maybe<Job>;
   deleteJob?: Maybe<Scalars['Boolean']>;
+  upsertPermission?: Maybe<Permission>;
+  deletePermission?: Maybe<Scalars['Int']>;
   createRole?: Maybe<Role>;
   upsertTermTaxonomy?: Maybe<TermTaxonomy>;
   deleteTermTaxonomy?: Maybe<Scalars['Int']>;
@@ -249,6 +251,16 @@ export type MutationUpsertJobArgs = {
 
 
 export type MutationDeleteJobArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
+export type MutationUpsertPermissionArgs = {
+  data?: Maybe<PermissionInput>;
+};
+
+
+export type MutationDeletePermissionArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 
@@ -296,6 +308,37 @@ export type PaginationInfo = {
   total?: Maybe<Scalars['Int']>;
 };
 
+export type Permission = {
+  __typename?: 'Permission';
+  id?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  refId?: Maybe<Scalars['Int']>;
+  featureName?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
+export type PermissionInput = {
+  id?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  refId?: Maybe<Scalars['Int']>;
+  featureName?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
+export type PermissionsPaged = {
+  __typename?: 'PermissionsPaged';
+  rows?: Maybe<Array<Maybe<Permission>>>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type PermissionWhere = {
+  featureName?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  refId?: Maybe<Scalars['Int']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   account?: Maybe<Account>;
@@ -307,6 +350,7 @@ export type Query = {
   job?: Maybe<Job>;
   jobs?: Maybe<JobsPaged>;
   workflows?: Maybe<Workflow>;
+  permissions?: Maybe<PermissionsPaged>;
   role?: Maybe<Role>;
   roles?: Maybe<Array<Maybe<Role>>>;
   termTaxonomy?: Maybe<TermTaxonomy>;
@@ -367,6 +411,13 @@ export type QueryJobsArgs = {
 
 export type QueryWorkflowsArgs = {
   where?: Maybe<WorkflowWhere>;
+};
+
+
+export type QueryPermissionsArgs = {
+  where?: Maybe<PermissionWhere>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -489,10 +540,10 @@ export type User = {
   status?: Maybe<Scalars['String']>;
   role?: Maybe<Role>;
   havePassword?: Maybe<Scalars['Boolean']>;
-  userMeta?: Maybe<Array<Maybe<UserMeta>>>;
+  metadata?: Maybe<Array<Maybe<UserMeta>>>;
   phone?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
-  customerType?: Maybe<Scalars['String']>;
+  customerType?: Maybe<Scalars['Int']>;
   facebookUrl?: Maybe<Scalars['String']>;
 };
 
@@ -503,6 +554,10 @@ export type UserInput = {
   email?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   role_id?: Maybe<Scalars['Int']>;
+  phone?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  customerType?: Maybe<Scalars['Int']>;
+  facebookUrl?: Maybe<Scalars['String']>;
 };
 
 export type UserMeta = {
@@ -516,9 +571,10 @@ export type UserMeta = {
 
 export type UserMetaInput = {
   user_id?: Maybe<Scalars['Int']>;
-  type?: Maybe<Scalars['String']>;
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
+  data?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type UsersPaged = {
@@ -533,6 +589,8 @@ export type UserWhere = {
   role_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  metadata?: Maybe<Array<Maybe<UserMetaInput>>>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
 export type Workflow = {
