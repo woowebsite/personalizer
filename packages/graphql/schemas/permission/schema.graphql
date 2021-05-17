@@ -1,0 +1,50 @@
+type Permission {
+  id: Int
+  type: String
+  refId: Int
+  featureName: String
+  code: Int
+  status: String
+}
+
+input PermissionWhere {
+  featureName: String
+  type: String
+  status: String
+  refId: Int
+}
+
+input PermissionInput {
+  id: Int
+  type: String
+  refId: Int
+  featureName: String
+  code: Int
+  status: String
+}
+
+input PermissionMetaInput {
+  permission_id: Int
+  key: String
+  value: String
+  data: String
+  type: String
+}
+
+type PermissionsPaged {
+  rows: [Permission]
+  count: Int
+}
+
+type Query {
+  permissions(where: PermissionWhere, limit: Int, offset: Int): PermissionsPaged
+}
+
+type Mutation {
+  upsertPermission(
+    data: PermissionInput
+    metadata: [PermissionMetaInput]
+    taxonomies: [Int]
+  ): Permission
+  deletePermission(id: Int): Int
+}

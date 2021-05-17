@@ -16,6 +16,7 @@ export const vi = {
         title: 'Người dùng',
         allUsers: 'Danh sách người dùng',
         createUser: 'Tạo người dùng',
+        authorized: 'Phân quyền',
       },
       customers: {
         title: 'Khách hàng',
@@ -59,6 +60,16 @@ export const vi = {
         createdAt: 'Ngày tạo',
       },
     },
+    authorizedTable: {
+      columns: {
+        featureName: 'Chức năng',
+        full: 'Toàn bộ',
+        create: 'Thêm',
+        update: 'Sửa',
+        delete: 'Xoá',
+        read: 'Đọc',
+      },
+    },
     customerTable: {
       columns: {
         id: 'Id',
@@ -69,9 +80,9 @@ export const vi = {
         createdAt: 'Ngày tạo',
       },
       filter: {
-        name: "Tên",
-        type: "Loại KH"
-      }
+        name: 'Tên',
+        type: 'Loại KH',
+      },
     },
     jobTable: {
       columns: {

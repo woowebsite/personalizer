@@ -17,6 +17,11 @@ export default function getMenuData() {
           key: 'dashboardBeta',
           url: '/admin/users/new',
         },
+        {
+          title: 'menu.users.authorized',
+          key: 'permission',
+          url: '/admin/authorized/groups',
+        },
       ],
     },
     {
