@@ -23,6 +23,14 @@ input PermissionInput {
   status: String
 }
 
+input PermissionMetaInput {
+  permission_id: Int
+  key: String
+  value: String
+  data: String
+  type: String
+}
+
 type PermissionsPaged {
   rows: [Permission]
   count: Int
@@ -33,6 +41,10 @@ type Query {
 }
 
 type Mutation {
-  upsertPermission(data: PermissionInput): Permission
+  upsertPermission(
+    data: PermissionInput
+    metadata: [PermissionMetaInput]
+    taxonomies: [Int]
+  ): Permission
   deletePermission(id: Int): Int
 }
