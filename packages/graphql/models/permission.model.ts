@@ -8,6 +8,7 @@ import {
   AllowNull,
   BeforeSave,
 } from 'sequelize-typescript';
+import { Role } from './role.model';
 import { User } from './user.model';
 
 // timestamps = false : Use from NextAuth are created_at, updated_at
@@ -20,9 +21,6 @@ export class Permission extends Model<Permission> {
   type: string; // User, Role
 
   @Column
-  refId: number; //UserId or RoleId
-
-  @Column
   featureName: string; // Customer, User, Job
 
   @Column
@@ -30,4 +28,11 @@ export class Permission extends Model<Permission> {
 
   @Column
   status: string; // A, D
+
+  @ForeignKey(() => Role)
+  @Column
+  refId: number; //RoleId
+
+  @BelongsTo(() => Role)
+  role: Role;
 }
