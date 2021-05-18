@@ -2,7 +2,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import Router from 'next/router';
 import { useIntl } from 'react-intl';
 import MenuLeft from './MenuLeft';
-import getMenuData from 'services/menu';
+import getMenuData, { hasPemission } from 'services/menu';
 import { getSession } from 'next-auth/client';
 
 // components
@@ -50,6 +50,12 @@ function withUserLayout(WrappedComponent) {
     // We already checked for server. This should only happen on client.
     if (!session && typeof window !== 'undefined') {
       Router.push('/login');
+    }
+
+    if (!hasPemission(session, ctx.req.url)) {
+      console.error('Error: You have not permission to access', session.user);
+      ctx.res.writeHead(302, { Location: '/login' });
+      ctx.res.end();
     }
 
     const componentProps =
