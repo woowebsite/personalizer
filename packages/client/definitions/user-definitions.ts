@@ -32,6 +32,10 @@ export const GET_USER = gql`
       status
       role {
         id
+        permissions {
+          featureName
+          code
+        }
       }
       havePassword
       role_id

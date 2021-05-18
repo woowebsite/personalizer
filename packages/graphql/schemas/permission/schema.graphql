@@ -5,6 +5,8 @@ type Permission {
   featureName: String
   code: Int
   status: String
+
+  role: Role
 }
 
 input PermissionWhere {
