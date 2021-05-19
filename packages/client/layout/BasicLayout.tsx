@@ -1,10 +1,4 @@
 import { Layout, Menu, Breadcrumb } from 'antd';
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from '@ant-design/icons';
-import Link from 'next/link';
 import TopBar from '~/components/TopBar';
 import MenuLeft from './MenuLeft';
 import getMenuData from 'services/menu';
@@ -17,7 +11,7 @@ const BasicLayout = props => {
     <Layout>
       <Header className="header">
         <div className="logo" />
-        <TopBar />
+        <TopBar data={getMenuData()}/>
       </Header>
 
       <Layout>
