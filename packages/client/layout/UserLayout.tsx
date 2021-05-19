@@ -19,7 +19,7 @@ function withUserLayout(WrappedComponent) {
     return (
       <Layout>
         <Header className="header">
-          <TopBar />
+          <TopBar data={getMenuData()} />
         </Header>
         <Layout>
           <Sider width={200} className="site-layout-background">
