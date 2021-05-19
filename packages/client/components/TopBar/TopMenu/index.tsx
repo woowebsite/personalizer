@@ -1,15 +1,22 @@
 import React from 'react';
 import { Menu } from 'antd';
 import Link from 'next/link';
+import { useIntl } from 'react-intl';
 
-const TopMenu = () => {
+const TopMenu = props => {
+  const { formatMessage } = useIntl();
+  const f = id => formatMessage({ id });
   return (
     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-      <Menu.Item key="1">
-        <Link href="/workflow">Bảng công việc</Link>{' '}
-      </Menu.Item>
-      <Menu.Item key="2">Tính lương</Menu.Item>
-      <Menu.Item key="3">Báo cáo</Menu.Item>
+      {props.data
+        .filter(x => x.position === 'top')
+        .map((menu, i) => {
+          return menu.children.map((child, c) => (
+            <Menu.Item key={`child-menu-${c}`}>
+              <Link href={child.url}>{f(child.title)}</Link>
+            </Menu.Item>
+          ));
+        })}
     </Menu>
   );
 };

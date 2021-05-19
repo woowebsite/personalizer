@@ -29,6 +29,12 @@ export const vi = {
         createJob: 'Tạo công việc',
       },
     },
+    topbar: {
+      workflow: 'Bảng công việc',
+      salary: 'Tính lương',
+      report: 'Báo cáo',
+
+    },
     validator: {
       required: 'Bạn vui lòng nhập {field}',
     },
