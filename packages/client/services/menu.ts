@@ -9,6 +9,7 @@ export default function getMenuData() {
       key: 'dashboards',
       icon: 'fe fe-home',
       count: 4,
+      position: 'left',
       children: [
         {
           title: 'menu.users.allUsers',
@@ -21,11 +22,15 @@ export default function getMenuData() {
           title: 'menu.users.createUser',
           key: 'dashboardBeta',
           url: '/admin/users/new',
+          roles: [RoleType.SysAdmin],
+          permission: { featureName: 'User', code: PermissionActions.Create },
         },
         {
           title: 'menu.users.authorized',
           key: 'permission',
           url: '/admin/authorized/groups',
+          roles: [RoleType.SysAdmin],
+          permission: { featureName: 'User', code: PermissionActions.Create },
         },
       ],
     },
@@ -35,18 +40,24 @@ export default function getMenuData() {
       icon: 'fe fe-home',
       roles: ['admin'],
       count: 4,
+      position: 'left',
       children: [
         {
           title: 'menu.customers.allCustomers',
           key: 'all',
           url: '/admin/customers',
-          roles: [RoleType.SysAdmin],
+          roles: [RoleType.SysAdmin, RoleType.Customer],
           permission: { featureName: 'Customer', code: PermissionActions.Read },
         },
         {
           title: 'menu.customers.createCustomer',
           key: 'new',
           url: '/admin/customers/new',
+          roles: [RoleType.SysAdmin, RoleType.Customer],
+          permission: {
+            featureName: 'Customer',
+            code: PermissionActions.Create,
+          },
         },
       ],
     },
@@ -56,16 +67,24 @@ export default function getMenuData() {
       icon: 'fe fe-home',
       roles: ['admin'],
       count: 4,
+      position: 'left',
       children: [
         {
           title: 'menu.jobs.allJobs',
           key: 'all',
           url: '/customer/jobs',
+          roles: [RoleType.SysAdmin, RoleType.Customer],
+          permission: { featureName: 'Job', code: PermissionActions.Read },
         },
         {
           title: 'menu.jobs.createJob',
           key: 'new',
           url: '/customer/jobs/new',
+          roles: [RoleType.SysAdmin, RoleType.Customer],
+          permission: {
+            featureName: 'Customer',
+            code: PermissionActions.Create,
+          },
         },
       ],
     },
@@ -74,16 +93,71 @@ export default function getMenuData() {
       key: 'settings',
       icon: 'fe fe-home',
       count: 1,
+      position: 'left',
       children: [
         {
           title: 'menu.settings.profile',
           key: 'profile',
           url: '/settings/profile',
+          roles: [
+            RoleType.SysAdmin,
+            RoleType.Customer,
+            RoleType.Employee,
+            RoleType.HelpDesk,
+            RoleType.Leader,
+          ],
+          permission: {},
         },
         {
           title: 'menu.settings.changePassword',
           key: 'changePassword',
           url: '/settings/changePassword',
+        },
+      ],
+    },
+    {
+      title: 'topbar',
+      key: 'topbar',
+      position: 'top',
+      children: [
+        {
+          title: 'topbar.workflow',
+          key: 'workflow',
+          icon: 'fe fe-home',
+          position: 'top',
+          url: '/workflow',
+          roles: [
+            RoleType.SysAdmin,
+            RoleType.Customer,
+            RoleType.Employee,
+            RoleType.HelpDesk,
+            RoleType.Leader,
+          ],
+          permission: {},
+        },
+        {
+          title: 'topbar.salary',
+          key: 'salary',
+          icon: 'fe fe-home',
+          url: '/salary',
+          position: 'top',
+          roles: [
+            RoleType.SysAdmin,
+            RoleType.Customer,
+            RoleType.Employee,
+            RoleType.HelpDesk,
+            RoleType.Leader,
+          ],
+          permission: {},
+        },
+        {
+          title: 'topbar.report',
+          key: 'report',
+          icon: 'fe fe-home',
+          url: '/report',
+          position: 'top',
+          roles: [RoleType.SysAdmin, RoleType.HelpDesk],
+          permission: {},
         },
       ],
     },
@@ -109,8 +183,6 @@ export function hasPemission(session, url) {
     x => x.featureName === featureName,
   );
   const hasPermission = (userPermission && userPermission.code & code) !== 0;
-  console.log('hasRole', hasRole);
-  console.log('userPermissions', userPermissions);
 
   return hasRole && hasPermission;
 }
