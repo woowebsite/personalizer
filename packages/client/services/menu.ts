@@ -15,6 +15,7 @@ export default function getMenuData() {
           title: 'menu.users.allUsers',
           key: 'dashboard',
           url: '/admin/users',
+          visible: true,
           roles: [RoleType.SysAdmin],
           permission: { featureName: 'User', code: PermissionActions.Read },
         },
@@ -22,6 +23,7 @@ export default function getMenuData() {
           title: 'menu.users.createUser',
           key: 'dashboardBeta',
           url: '/admin/users/new',
+          visible: true,
           roles: [RoleType.SysAdmin],
           permission: { featureName: 'User', code: PermissionActions.Create },
         },
@@ -29,6 +31,7 @@ export default function getMenuData() {
           title: 'menu.users.authorized',
           key: 'permission',
           url: '/admin/authorized/groups',
+          visible: true,
           roles: [RoleType.SysAdmin],
           permission: { featureName: 'User', code: PermissionActions.Create },
         },
@@ -46,6 +49,7 @@ export default function getMenuData() {
           title: 'menu.customers.allCustomers',
           key: 'all',
           url: '/admin/customers',
+          visible: true,
           roles: [RoleType.SysAdmin, RoleType.Customer],
           permission: { featureName: 'Customer', code: PermissionActions.Read },
         },
@@ -53,6 +57,7 @@ export default function getMenuData() {
           title: 'menu.customers.createCustomer',
           key: 'new',
           url: '/admin/customers/new',
+          visible: true,
           roles: [RoleType.SysAdmin, RoleType.Customer],
           permission: {
             featureName: 'Customer',
@@ -73,6 +78,7 @@ export default function getMenuData() {
           title: 'menu.jobs.allJobs',
           key: 'all',
           url: '/customer/jobs',
+          visible: true,
           roles: [RoleType.SysAdmin, RoleType.Customer],
           permission: { featureName: 'Job', code: PermissionActions.Read },
         },
@@ -80,10 +86,22 @@ export default function getMenuData() {
           title: 'menu.jobs.createJob',
           key: 'new',
           url: '/customer/jobs/new',
+          visible: true,
           roles: [RoleType.SysAdmin, RoleType.Customer],
           permission: {
             featureName: 'Customer',
             code: PermissionActions.Create,
+          },
+        },
+        {
+          title: 'menu.jobs.updateJob',
+          key: 'update',
+          url: '/customer/jobs/{id}',
+          roles: [RoleType.SysAdmin, RoleType.Customer],
+          visible: false,
+          permission: {
+            featureName: 'Customer',
+            code: PermissionActions.Update,
           },
         },
       ],
@@ -99,6 +117,7 @@ export default function getMenuData() {
           title: 'menu.settings.profile',
           key: 'profile',
           url: '/settings/profile',
+          visible: true,
           roles: [
             RoleType.SysAdmin,
             RoleType.Customer,
@@ -112,6 +131,7 @@ export default function getMenuData() {
           title: 'menu.settings.changePassword',
           key: 'changePassword',
           url: '/settings/changePassword',
+          visible: true,
         },
       ],
     },
@@ -126,6 +146,7 @@ export default function getMenuData() {
           icon: 'fe fe-home',
           position: 'top',
           url: '/workflow',
+          visible: true,
           roles: [
             RoleType.SysAdmin,
             RoleType.Customer,
@@ -140,6 +161,7 @@ export default function getMenuData() {
           key: 'salary',
           icon: 'fe fe-home',
           url: '/salary',
+          visible: true,
           position: 'top',
           roles: [
             RoleType.SysAdmin,
@@ -155,6 +177,7 @@ export default function getMenuData() {
           key: 'report',
           icon: 'fe fe-home',
           url: '/report',
+          visible: true,
           position: 'top',
           roles: [RoleType.SysAdmin, RoleType.HelpDesk],
           permission: {},
@@ -165,12 +188,20 @@ export default function getMenuData() {
 }
 
 export function getMenuByUrl(url) {
+  let menuUrl = url;
   const menus = getMenuData().reduce((arr: any[], m) => {
     arr.push(...m.children);
     return arr;
   }, []);
 
-  const menu = menus.find(x => x.url === url);
+  // For detail url. Ex: /customer/job/{id}
+  const path = url.split('/');
+  const lastWord = path[path.length - 1];
+  if (typeof +lastWord === 'number') {
+    menuUrl = `/${path[1]}/${path[2]}/{id}`; //  Ex: /customer/job/{id}
+  }
+
+  const menu = menus.find(x => x.url === menuUrl);
   return menu;
 }
 

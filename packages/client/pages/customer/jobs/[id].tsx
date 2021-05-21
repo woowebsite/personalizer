@@ -87,17 +87,7 @@ const JobDetail = props => {
             <Card className="status-form" title={t('jobStatus.title')}>
               <JobStatus ref={formStatusRef} initialValues={data.job} />
             </Card>
-            <Card
-              className="mt-4 status-form"
-              title={t('jobMoney.title')}
-              actions={[
-                <Button type="primary" size="small">
-                  Thanh toán
-                </Button>,
-              ]}
-            >
-              <JobMoney />
-            </Card>
+              <JobMoney job={data.job} />
           </Col>
         </Row>
       </Content>

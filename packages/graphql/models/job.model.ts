@@ -41,6 +41,9 @@ export class Job extends Model<Job> {
   @Default(moment().toDate())
   @Column
   publishDate: Date;
+  
+  @Column
+  finishDate?: Date;
 
   @Default(
     moment()
@@ -68,6 +71,9 @@ export class Job extends Model<Job> {
   // metadata
   @Column(DataType.VIRTUAL)
   link: string;
+  
+  @Column(DataType.VIRTUAL)
+  cost: number;
 
   @Column(DataType.VIRTUAL)
   isDemoColor: boolean;

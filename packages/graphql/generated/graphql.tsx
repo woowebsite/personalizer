@@ -134,6 +134,7 @@ export type Job = {
   description?: Maybe<Scalars['String']>;
   dueDate?: Maybe<Scalars['Date']>;
   publishDate?: Maybe<Scalars['Date']>;
+  finishDate?: Maybe<Scalars['Date']>;
   user?: Maybe<User>;
   metadata?: Maybe<Array<Maybe<JobMeta>>>;
   jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
@@ -150,8 +151,9 @@ export type Job = {
 export type JobInput = {
   id?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
-  publishDate?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
+  publishDate?: Maybe<Scalars['Date']>;
+  finishDate?: Maybe<Scalars['Date']>;
   dueDate?: Maybe<Scalars['Date']>;
   user_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
@@ -257,6 +259,8 @@ export type MutationDeleteJobArgs = {
 
 export type MutationUpsertPermissionArgs = {
   data?: Maybe<PermissionInput>;
+  metadata?: Maybe<Array<Maybe<PermissionMetaInput>>>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
 
@@ -314,8 +318,9 @@ export type Permission = {
   type?: Maybe<Scalars['String']>;
   refId?: Maybe<Scalars['Int']>;
   featureName?: Maybe<Scalars['String']>;
-  code?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
+  role?: Maybe<Role>;
 };
 
 export type PermissionInput = {
@@ -323,8 +328,16 @@ export type PermissionInput = {
   type?: Maybe<Scalars['String']>;
   refId?: Maybe<Scalars['Int']>;
   featureName?: Maybe<Scalars['String']>;
-  code?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
+};
+
+export type PermissionMetaInput = {
+  permission_id?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  data?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type PermissionsPaged = {
@@ -336,6 +349,7 @@ export type PermissionsPaged = {
 export type PermissionWhere = {
   featureName?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
   refId?: Maybe<Scalars['Int']>;
 };
 
@@ -469,6 +483,7 @@ export type Role = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   users?: Maybe<Array<Maybe<User>>>;
+  permissions?: Maybe<Array<Maybe<Permission>>>;
 };
 
 export type RoleInput = {

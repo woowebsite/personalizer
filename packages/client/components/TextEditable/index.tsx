@@ -76,7 +76,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
   const handleOnChange = (value, option) => {
     setTimeout(() => {
       setSelectedValue(value);
-      setSelectedText(option.children);
+      option.children ? setSelectedText(option.children) : setSelectedText(option);
     }, 100);
 
     onChange?.(value);
