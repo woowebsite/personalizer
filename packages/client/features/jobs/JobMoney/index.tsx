@@ -10,7 +10,6 @@ const JobMoney = props => {
   const { formatMessage } = useIntl();
   const { userId, cost } = props.job;
   const t = (id, values?) => formatMessage({ id }, values);
-  const ref = React.useRef<any>();
 
   // Render
   return (
@@ -22,15 +21,10 @@ const JobMoney = props => {
           <TextEditable
             defaultValue={cost}
             defaultText={formatMoney(cost)}
-            renderComponent={({ handleOnChange, ...rest }) => {
-              if (ref.current) {
-                console.log('ref', ref);
-
-                ref.current.focus();
-              }
+            renderComponent={({ handleOnChange, ref, ...rest }) => {
               return (
                 <Input
-                  ref={ref as any}
+                  ref={ref}
                   onChange={e =>
                     handleOnChange(e.target.value, formatMoney(e.target.value))
                   }
