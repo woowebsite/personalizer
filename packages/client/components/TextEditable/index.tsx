@@ -26,6 +26,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
   const [selectedValue, setSelectedValue] = useState(null);
   const [selectedText, setSelectedText] = useState(defaultText);
   const [isEditable, setEditable] = useState(false);
+  const ref = React.useRef<any>();
 
   // Effect
   useEffect(() => {
@@ -33,6 +34,12 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
       setSelectedValue(defaultValue);
     }
   }, []);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  }, [isEditable]);
 
   // Key events
   const onKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = ({
@@ -96,6 +103,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
       onKeyUp,
       onBlur,
       handleOnChange,
+      ref
     });
   };
   return (
