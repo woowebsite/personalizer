@@ -25,21 +25,28 @@ const JobDetail = props => {
   const { messages, t, query, data } = props;
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
+  const formMoneyRef: any = React.createRef();
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
 
   // EVENTS
   const onSave = () => {
     const formValues = formRef.current.getFieldsValue();
     const statusValues = formStatusRef.current.getFieldsValue();
+    const moneyValues = formMoneyRef.current.getFieldsValue();
 
     // metadata fields
-    const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
+    const metadataFields = {
+      ...formValues.metadata,
+      ...statusValues.metadata,
+      ...moneyValues.metadata,
+    };
     const metadata = fieldsToMetadata(metadataFields);
 
     // taxonomies fields
     const taxonomyFields = {
       ...formValues.taxonomies,
       ...statusValues.taxonomies,
+      ...moneyValues.taxonomies,
     };
     const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
 
@@ -87,7 +94,7 @@ const JobDetail = props => {
             <Card className="status-form" title={t('jobStatus.title')}>
               <JobStatus ref={formStatusRef} initialValues={data.job} />
             </Card>
-              <JobMoney job={data.job} />
+            <JobMoney ref={formMoneyRef} job={data.job} />
           </Col>
         </Row>
       </Content>

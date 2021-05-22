@@ -16,6 +16,7 @@ type Job {
   customer: String
   employee: String
   leader: String
+  
   job_priority: NameValue
   job_status: NameValue
 }

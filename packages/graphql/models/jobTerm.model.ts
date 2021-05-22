@@ -6,7 +6,9 @@ import {
   ForeignKey,
   HasOne,
   BelongsTo,
+  Default,
 } from 'sequelize-typescript';
+import StatusType from '../constants/StatusType';
 import { Job } from './job.model';
 import { TermTaxonomy } from './termTaxonomy.model';
 import { User } from './user.model';
@@ -23,6 +25,7 @@ export class JobTerm extends Model<JobTerm> {
   @Column
   order: number;
 
+  @Default(StatusType.Actived)
   @Column
   status: string;
 
@@ -40,7 +43,7 @@ export class JobTerm extends Model<JobTerm> {
   // assignee
   @Column
   @ForeignKey(() => User)
-  assignee_id: number;
+  assignee_id?: number;
 
   @BelongsTo(() => User)
   assignee: User;
