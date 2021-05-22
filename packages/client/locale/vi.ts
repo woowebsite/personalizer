@@ -53,6 +53,7 @@ export const vi = {
       more: 'Thêm nữa',
       cancel: 'Tạm hoãn',
       filter: 'Lọc',
+      payment: 'Thanh toán',
     },
     userTable: {
       columns: {
@@ -256,6 +257,7 @@ export const vi = {
     jobMoney: {
       title: 'Chi phí',
       label: {
+        cost: 'Chi phí',
         paid: 'Đã thanh toán',
         debt: 'Còn nợ',
       },
@@ -282,6 +284,7 @@ export const vi = {
     jobMoney: {
       title: 'Chi phí',
       label: {
+        cost: 'Chi phí',
         paid: 'Đã thanh toán',
         debt: 'Còn nợ',
       },

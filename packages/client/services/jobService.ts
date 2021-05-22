@@ -19,6 +19,7 @@ export const jobQuery = {
         dueDate
         publishDate
         link
+        cost
         isDemoColor
         isDemoLayout
         customer

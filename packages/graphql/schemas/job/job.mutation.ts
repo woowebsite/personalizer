@@ -9,6 +9,8 @@ export const Mutation = {
     before: async (findOptions, { data, metadata, taxonomies }, ctx) => {
       const { currentUser } = ctx;
       const obj = { ...data, userId: currentUser.id };
+      const oldJob = await Job.findOne({ where: { id: data.id } });
+      obj.latestVersion = oldJob.version++;
 
       const [job, createJob] = await Job.upsert(obj, {
         returning: true,
@@ -16,16 +18,23 @@ export const Mutation = {
 
       // Update taxonomies
       if (job && taxonomies) {
-        const terms = taxonomies.map(termId => ({
-          term_taxonomy_id: termId,
-          ref_id: job.id,
-        }));
-        await JobMeta.destroy({
-          where: { job_id: job.id },
-        });
-        await JobTerm.destroy({
+        const allOldTaxonomies: JobTerm[] = await JobTerm.findAll({
           where: { ref_id: job.id },
+          raw: true,
         });
+        const terms = taxonomies.map(termId => {
+          const old = allOldTaxonomies.find(
+            (x: any) => x.ref_id === job.id && x.term_taxonomy_id === termId,
+          );
+
+          return {
+            term_taxonomy_id: termId,
+            ref_id: job.id,
+            version: old ? old.version + 1 : 1,
+            latestVersion: old ? old.version + 1 : 1,
+          };
+        });
+
         await JobTerm.bulkCreate(terms);
       }
 
@@ -36,6 +45,9 @@ export const Mutation = {
           job_id: job.id,
         }));
 
+        await JobMeta.destroy({
+          where: { job_id: job.id },
+        });
         await JobMeta.bulkCreate(meta);
       }
       findOptions.where = { id: job.id };

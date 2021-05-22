@@ -4,16 +4,19 @@ type Job {
   description: String
   dueDate: Date
   publishDate: Date
+  finishDate: Date
   user: User
   metadata: [JobMeta]
   jobTerms: [JobTerm]
 
   link: String
+  cost: Int 
   isDemoColor: Boolean
   isDemoLayout: Boolean
   customer: String
   employee: String
   leader: String
+  
   job_priority: NameValue
   job_status: NameValue
 }
@@ -27,8 +30,9 @@ input JobWhere {
 input JobInput {
   id: Int
   title: String
-  publishDate: Date
   description: String
+  publishDate: Date
+  finishDate: Date
   dueDate: Date
   user_id: Int
   status: String
