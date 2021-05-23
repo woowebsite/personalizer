@@ -25,6 +25,7 @@ input JobWhere {
   job: JobInput
   metadata: [JobMetaInput]
   taxonomies: [Int]
+  taxonomyNames: [String]
 }
 
 input JobInput {

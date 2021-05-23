@@ -34,6 +34,24 @@ export const jobQuery = {
           value
         }
       }
+
+      jobTerms(where: $where) {
+        id
+        term_taxonomy_id
+        order
+        ref_id
+        assignee_id
+        updatedAt
+        termTaxonomy {
+          term {
+            name
+          }
+        }
+        assignee {
+          id
+          name
+        }
+      }
     }
   `,
   getWorkflow: gql`

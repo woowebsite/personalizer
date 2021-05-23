@@ -246,9 +246,9 @@ export const vi = {
       },
     },
     jobStatus: {
-      title: 'Tình trạng công việc',
+      title: 'Tình trạng',
       label: {
-        status: 'Tình trạng',
+        status: 'Trạng thái',
         employee: 'Thợ ảnh',
         leader: 'Leader',
         customer: 'Khách hàng',
@@ -273,9 +273,9 @@ export const vi = {
       },
     },
     jobStatus: {
-      title: 'Tình trạng công việc',
+      title: 'Tình trạng',
       label: {
-        status: 'Tình trạng',
+        status: 'Trạng thái',
         employee: 'Thợ ảnh',
         leader: 'Leader',
         customer: 'Khách hàng',
@@ -287,6 +287,14 @@ export const vi = {
         cost: 'Chi phí',
         paid: 'Đã thanh toán',
         debt: 'Còn nợ',
+      },
+    },
+    jobAssignee: {
+      title: 'Thực hiện',
+      columns: {
+        assignee: 'Nhân viên',
+        action: 'Thực hiện',
+        updatedAt: 'Ngày',
       },
     },
   },
@@ -339,9 +347,9 @@ export const vi = {
       title: 'Chi tiết công việc',
     },
     jobStatus: {
-      title: 'Tình trạng công việc',
+      title: 'Tình trạng',
       label: {
-        status: 'Tình trạng',
+        status: 'Trạng thái',
         employee: 'Thợ ảnh',
         leader: 'Leader',
         customer: 'Khách hàng',

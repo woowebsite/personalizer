@@ -1,7 +1,14 @@
 import { resolver } from 'graphql-sequelize';
 import { Sequelize } from 'sequelize';
 import { Op } from 'sequelize';
-import { Job, JobMeta, JobTerm, TermTaxonomy } from '../../models';
+import {
+  Job,
+  JobMeta,
+  JobTerm,
+  sequelize,
+  TermTaxonomy,
+  User,
+} from '../../models';
 import { Term } from '../../models/term.model';
 import { metadataToField, taxonomyToField } from '../../utils/dataUtil';
 
@@ -73,6 +80,42 @@ export const Query = {
       const rows = jobs.map(u => metadataToField(u, 'metadata'));
 
       return { rows, count };
+    },
+  }),
+  jobTerms: resolver(JobTerm, {
+    list: true,
+    before: async (findOptions, { where }, context) => {
+      const { job, taxonomyNames } = where;
+
+      findOptions.where = {
+        ref_id: job.id,
+        id: {
+          [Op.in]: Sequelize.literal(
+            `(SELECT DISTINCT a.id FROM JobTerms a
+            INNER JOIN (SELECT id, MAX(updatedAt) latestUpdated
+            FROM JobTerms WHERE ref_id=${
+              job.id
+            } GROUP BY term_taxonomy_id) b ON a.updatedAt = b.latestUpdated
+            WHERE ref_id=${job.id})`,
+          ),
+        },
+      };
+
+      findOptions.include = [
+        {
+          model: TermTaxonomy,
+          where: { taxonomy: taxonomyNames || [] },
+          require: true,
+          include: [
+            {
+              model: Term,
+              require: true,
+            },
+          ],
+        },
+        { model: User },
+      ];
+      return findOptions;
     },
   }),
   workflows: resolver(TermTaxonomy, {

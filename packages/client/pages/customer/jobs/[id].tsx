@@ -17,6 +17,7 @@ import JobForm from '~/features/jobs/JobForm';
 import JobStatus from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
 import { jobQuery } from '~/services/jobService';
+import JobAssignee from '~/features/jobs/JobAssignee';
 
 const { Content } = Layout;
 
@@ -89,6 +90,9 @@ const JobDetail = props => {
             <Card className="pt-3">
               <JobForm ref={formRef} initialValues={data.job} />
             </Card>
+            <Card className="pt-3">
+              <JobAssignee ref={formRef} jobTerms={data.jobTerms} />
+            </Card>
           </Col>
           <Col span="8">
             <Card className="status-form" title={t('jobStatus.title')}>
@@ -110,7 +114,7 @@ JobDetail.getInitialProps = async ({ ctx }) => {
   const { data, loading, refetch } = await apolloClient.query({
     query: jobQuery.getJob,
     variables: {
-      where: { job: { id: parseInt(query.id) } },
+      where: { job: { id: parseInt(query.id) }, taxonomyNames: ['job_status'] },
     },
   });
 
