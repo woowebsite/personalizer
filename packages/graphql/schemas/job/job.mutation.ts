@@ -9,8 +9,6 @@ export const Mutation = {
     before: async (findOptions, { data, metadata, taxonomies }, ctx) => {
       const { currentUser } = ctx;
       const obj = { ...data, userId: currentUser.id };
-      const oldJob = await Job.findOne({ where: { id: data.id } });
-      obj.latestVersion = oldJob.version++;
 
       const [job, createJob] = await Job.upsert(obj, {
         returning: true,

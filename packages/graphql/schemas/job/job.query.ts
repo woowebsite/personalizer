@@ -86,6 +86,7 @@ export const Query = {
     list: true,
     before: async (findOptions, { where }, context) => {
       const { job, taxonomyNames } = where;
+      const whereTaxonomies = taxonomyNames ? { taxonomy: taxonomyNames } : {};
 
       findOptions.where = {
         ref_id: job.id,
@@ -104,7 +105,7 @@ export const Query = {
       findOptions.include = [
         {
           model: TermTaxonomy,
-          where: { taxonomy: taxonomyNames || [] },
+          where: whereTaxonomies,
           require: true,
           include: [
             {
@@ -122,7 +123,9 @@ export const Query = {
     list: true,
     before: async (findOptions, { where }, context) => {
       // Find
-      findOptions.where = { taxonomy: 'job_status' };
+      findOptions.where = {
+        taxonomy: 'job_status',
+      };
 
       let query: any = {};
       if (where && where.title) query.title = { [Op.like]: where.title };
@@ -172,16 +175,35 @@ export const Query = {
       return findOptions;
     },
     after: async (termTaxonomies, args) => {
+      const jobTerms = await JobTerm.findAll({
+        where: {
+          id: {
+            [Op.in]: Sequelize.literal(
+              `(SELECT DISTINCT a.id FROM JobTerms a
+              INNER JOIN (SELECT id, MAX(updatedAt) latestUpdated
+              FROM JobTerms GROUP BY ref_id) b ON a.updatedAt = b.latestUpdated)`,
+            ),
+          },
+        },
+        raw: true,
+      });
+
+      const latestJobTermIds = jobTerms.map(x => x.id);
       const lanes = termTaxonomies.map(x => {
         return {
           id: x.dataValues.id,
           title: x.dataValues.term.dataValues.name,
-          cards: x.dataValues.jobTerms.map(x => {
-            if (x) {
-              const jobTransfer = taxonomyToField(x.dataValues.job, 'jobTerms');
-              return jobTransfer;
-            }
-          }),
+          cards: x.dataValues.jobTerms
+            .filter(x => latestJobTermIds.includes(x.id))
+            .map(x => {
+              if (x) {
+                const jobTransfer = taxonomyToField(
+                  x.dataValues.job,
+                  'jobTerms',
+                );
+                return jobTransfer;
+              }
+            }),
         };
       });
 

@@ -8,9 +8,10 @@ import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import jobService from '~/services/jobService';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
+import JobStatus from '~/constants/jobStatus';
 
 // utils
-const JobStatus = forwardRef<any, any>((props, ref) => {
+const JobStatusBox = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
   const { initialValues } = props;
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
@@ -32,7 +33,7 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
       // taxonomies
       {
         name: ['taxonomies', 'job_status'],
-        value: parseInt(job.job_status.value),
+        value: parseInt(job.job_status ? job.job_status.value : JobStatus.Active),
       },
 
       // metadata
@@ -176,4 +177,4 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
   );
 });
 
-export default JobStatus;
+export default JobStatusBox;
