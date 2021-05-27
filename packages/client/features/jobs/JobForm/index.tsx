@@ -82,9 +82,11 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
   useImperativeHandle(ref, () => ({
     onSubmit,
     getFieldsValue,
+    validateFields,
   }));
 
   const getFieldsValue = () => form.getFieldsValue();
+  const validateFields = () => form.validateFields();
 
   const onSubmit = () => {
     form
@@ -121,6 +123,9 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         metadata: {
           isDemoColor: false,
           isDemoLayout: false,
+        },
+        taxonomies: {
+          job_priority: 4,    // Normal
         },
       }}
       onFinish={onSubmit}

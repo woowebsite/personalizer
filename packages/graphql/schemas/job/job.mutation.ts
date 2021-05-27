@@ -14,6 +14,15 @@ export const Mutation = {
         returning: true,
       });
 
+      const jobMeta = await JobMeta.findOne({
+        where: { job_id: job.id, key: 'employee' },
+      });
+
+      // Assignee
+      const assignee = metadata
+        ? metadata.find(x => x.key === 'employee') || jobMeta
+        : jobMeta;
+
       // Update taxonomies
       if (job && taxonomies) {
         const allOldTaxonomies: JobTerm[] = await JobTerm.findAll({
@@ -28,6 +37,7 @@ export const Mutation = {
           return {
             term_taxonomy_id: termId,
             ref_id: job.id,
+            assignee_id: assignee.value, // assignee_id must be not null
             version: old ? old.version + 1 : 1,
             latestVersion: old ? old.version + 1 : 1,
           };

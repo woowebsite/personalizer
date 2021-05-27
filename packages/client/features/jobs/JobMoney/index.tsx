@@ -8,16 +8,21 @@ import useTranslate from 'hooks/useTranslate';
 
 const JobMoney = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
-  const { userId, cost } = props.job;
+  const { job } = props;
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
+  const initialValues = {
+    cost: job ? job.cost : 0,
+  };
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
     getFieldsValue,
+    validateFields
   }));
 
   const getFieldsValue = () => form.getFieldsValue();
+  const validateFields = () => form.validateFields();
 
   // Render
   return (
@@ -39,8 +44,8 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
               ]}
             >
               <TextEditable
-                defaultValue={cost}
-                defaultText={formatMoney(cost)}
+                defaultValue={initialValues.cost}
+                defaultText={formatMoney(initialValues.cost)}
                 renderComponent={({ handleOnChange, ref, ...rest }) => {
                   return (
                     <Input
@@ -66,18 +71,18 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
           ]}
         >
           <Form.Item
-            name={['metadata', 'link']}
+            // name={['metadata', 'paid']}
             className="field-number"
             label={t('jobMoney.label.paid')}
           >
-            <Button type="link"> 100,000 VND</Button>
+            <Button type="link"> {formatMoney(100000)}</Button>
           </Form.Item>
           <Form.Item
-            name={['metadata', 'link']}
+            // name={['metadata', 'debt']}
             className="field-number"
             label={t('jobMoney.label.debt')}
           >
-            <Button type="link">70,000 VND</Button>
+            <Button type="link">{formatMoney(70000)}</Button>
           </Form.Item>
         </Card>
       </Form>
