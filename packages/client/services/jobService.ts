@@ -22,9 +22,18 @@ export const jobQuery = {
         cost
         isDemoColor
         isDemoLayout
-        customer
-        employee
-        leader
+        customer {
+          name
+          value
+        }
+        employee {
+          name
+          value
+        }
+        leader {
+          name
+          value
+        }
         job_priority {
           name
           value

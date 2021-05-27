@@ -30,7 +30,22 @@ const JobDetail = props => {
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
 
   // EVENTS
-  const onSave = () => {
+  const onSave = async () => {
+    // check if valid all forms
+    let isValid = true;
+    await formRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+    await formStatusRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+    await formMoneyRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+
+    if (!isValid) return;
+
+    // prepare data
     const formValues = formRef.current.getFieldsValue();
     const statusValues = formStatusRef.current.getFieldsValue();
     const moneyValues = formMoneyRef.current.getFieldsValue();

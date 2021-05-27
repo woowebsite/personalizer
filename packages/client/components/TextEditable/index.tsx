@@ -28,8 +28,9 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
 
   // Effect
   useEffect(() => {
-    if (defaultValue) {
+    if (defaultValue !== null) {
       setSelectedValue(defaultValue);
+      onChange?.(defaultValue);
     }
   }, []);
 
@@ -98,6 +99,8 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
 
   // render
   const renderEditInput = () => {
+    console.log('selectedValue', selectedValue);
+    
     return others.renderComponent({
       defaultValue: selectedValue,
       onKeyDown,

@@ -25,7 +25,13 @@ export const metadataToField = (obj, metadata = 'metadata') => {
       // parse data by 'type'
       if (type === 'boolean') value = !!JSON.parse(value);
       if (type === 'number') value = parseFloat(value);
-      if (type === 'object') value = data;
+      if (type === 'object') {
+        const m = JSON.parse(data);
+        value = {
+          name: m.label,
+          value: m.value,
+        };
+      }
 
       // setValue
       obj.setDataValue(x.dataValues.key, value);

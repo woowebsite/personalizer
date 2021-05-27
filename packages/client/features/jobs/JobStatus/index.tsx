@@ -114,13 +114,13 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues && !!JSON.parse(initialValues.employee)
-                ? parseInt(JSON.parse(initialValues.employee).value, 10)
+              initialValues && initialValues.employee
+                ? parseInt(initialValues.employee.value, 10)
                 : null
             }
             defaultText={
-              initialValues && !!JSON.parse(initialValues.employee)
-                ? JSON.parse(initialValues.employee).label
+              initialValues && initialValues.employee
+                ? initialValues.employee.name
                 : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
@@ -150,13 +150,13 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues && !!JSON.parse(initialValues.leader)
-                ? parseInt(JSON.parse(initialValues.leader).value, 10)
+              initialValues && initialValues.leader
+                ? parseInt(initialValues.leader.value, 10)
                 : null
             }
             defaultText={
-              initialValues && !!JSON.parse(initialValues.leader)
-                ? JSON.parse(initialValues.leader).label
+              initialValues && initialValues.leader
+                ? initialValues.leader.name
                 : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
@@ -187,13 +187,13 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
         >
           <TextEditable
             defaultValue={
-              initialValues && !!JSON.parse(initialValues.customer) // initialValues.customer must be not null
-                ? parseInt(JSON.parse(initialValues.customer).value, 10)
+              initialValues && initialValues.customer // initialValues.customer must be not null
+                ? parseInt(initialValues.customer.value, 10)
                 : null
             }
             defaultText={
-              initialValues && !!JSON.parse(initialValues.customer)
-                ? JSON.parse(initialValues.customer).label
+              initialValues && initialValues.customer
+                ? initialValues.customer.name
                 : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
