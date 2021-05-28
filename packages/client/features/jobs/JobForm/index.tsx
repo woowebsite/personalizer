@@ -25,6 +25,7 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 interface IProps {
   initialValues?: any;
   layout?: any;
+  onFieldChange?: (path: string | string[], value: string) => void;
 }
 
 const defaultLayout = {
@@ -110,6 +111,10 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       });
   };
 
+  const onTitleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    props.onFieldChange(['job', 'title'], form.getFieldValue(['job', 'title']));
+  };
+
   return (
     <Form
       id="JobForm"
@@ -125,7 +130,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
           isDemoLayout: false,
         },
         taxonomies: {
-          job_priority: 4,    // Normal
+          job_priority: 4, // Normal
         },
       }}
       onFinish={onSubmit}
@@ -143,7 +148,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         ]}
         label={t('jobCreateform.label.title')}
       >
-        <Input />
+        <Input onChange={onTitleChange} />
       </Form.Item>
 
       <Form.Item
