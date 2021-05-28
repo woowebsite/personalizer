@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
+import set from 'lodash/set';
+import cloneDeep from 'lodash/cloneDeep';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
@@ -18,12 +20,17 @@ import JobStatus from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
 import { jobQuery } from '~/services/jobService';
 import JobAssignee from '~/features/jobs/JobAssignee';
+import PageProps from '~/models/PageProps';
+import useStateFields from '~/hooks/useStateFields';
 
 const { Content } = Layout;
 
-const JobDetail = props => {
+// CONFIG
+
+const JobDetail = (props: PageProps & any) => {
   // DECLARE
-  const { messages, t, query, data } = props;
+  const { messages, t, query, data: dataJob } = props;
+  const [data, setJob] = useStateFields(dataJob);
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
   const formMoneyRef: any = React.createRef();
@@ -76,6 +83,11 @@ const JobDetail = props => {
     });
   };
 
+  // EVENTS
+  const handleFieldChanged = (path, title: string) => {
+    setJob(path, title);
+  };
+
   // RENDER
   const title = data.job.title || t('pageHeader.title');
   return (
@@ -103,7 +115,11 @@ const JobDetail = props => {
         <Row gutter={24}>
           <Col span="16">
             <Card className="pt-3">
-              <JobForm ref={formRef} initialValues={data.job} />
+              <JobForm
+                ref={formRef}
+                initialValues={data.job}
+                onFieldChange={handleFieldChanged}
+              />
             </Card>
             <Card className="pt-3">
               <JobAssignee ref={formRef} jobTerms={data.jobTerms} />

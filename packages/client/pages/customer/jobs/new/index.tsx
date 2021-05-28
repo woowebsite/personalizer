@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Layout,
   Button,
@@ -33,6 +33,7 @@ const JobNew = props => {
   const formStatusRef: any = React.createRef();
   const formMoneyRef: any = React.createRef();
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
+  const [title, setTitle] = useState(messages.title);
 
   // EVENTS
   const onSave = async () => {
@@ -80,12 +81,17 @@ const JobNew = props => {
     });
   };
 
+  // EVENTS
+  const handleFieldChanged = (path, title: string) => {
+    setTitle(title);
+  };
+
   // RENDER
   return (
     <>
       <PageHeader
         className="mb-4 pl-0 pr-0"
-        title={messages.title}
+        title={title}
         extra={[
           <RedirectButton url={'/customer/jobs'}>
             {messages['pageHeader.buttons.all']}
@@ -99,7 +105,7 @@ const JobNew = props => {
         <Row gutter={24}>
           <Col span="16">
             <Card className="pt-3">
-              <JobForm ref={formRef} />
+              <JobForm ref={formRef} onFieldChange={handleFieldChanged} />
             </Card>
           </Col>
           <Col span="8">
