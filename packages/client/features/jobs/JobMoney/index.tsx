@@ -13,12 +13,14 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   const [form] = Form.useForm();
   const initialValues = {
     cost: job ? job.cost : 0,
+    paid: 0,
+    debt: 0,
   };
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
     getFieldsValue,
-    validateFields
+    validateFields,
   }));
 
   const getFieldsValue = () => form.getFieldsValue();
@@ -71,18 +73,54 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
           ]}
         >
           <Form.Item
-            // name={['metadata', 'paid']}
+            name={['metadata', 'paid']}
             className="field-number"
             label={t('jobMoney.label.paid')}
           >
-            <Button type="link"> {formatMoney(100000)}</Button>
+            <TextEditable
+              defaultValue={initialValues.paid}
+              defaultText={formatMoney(initialValues.paid)}
+              renderComponent={({ handleOnChange, ref, ...rest }) => {
+                return (
+                  <Input
+                    ref={ref}
+                    onChange={e =>
+                      handleOnChange(
+                        e.target.value,
+                        formatMoney(e.target.value),
+                      )
+                    }
+                    style={{ width: '150px', textAlign: 'right' }}
+                    {...rest}
+                  />
+                );
+              }}
+            />
           </Form.Item>
           <Form.Item
-            // name={['metadata', 'debt']}
+            name={['metadata', 'debt']}
             className="field-number"
             label={t('jobMoney.label.debt')}
           >
-            <Button type="link">{formatMoney(70000)}</Button>
+            <TextEditable
+              defaultValue={initialValues.debt}
+              defaultText={formatMoney(initialValues.debt)}
+              renderComponent={({ handleOnChange, ref, ...rest }) => {
+                return (
+                  <Input
+                    ref={ref}
+                    onChange={e =>
+                      handleOnChange(
+                        e.target.value,
+                        formatMoney(e.target.value),
+                      )
+                    }
+                    style={{ width: '150px', textAlign: 'right' }}
+                    {...rest}
+                  />
+                );
+              }}
+            />
           </Form.Item>
         </Card>
       </Form>
