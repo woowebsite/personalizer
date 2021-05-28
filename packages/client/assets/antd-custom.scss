@@ -61,3 +61,16 @@ html {
     margin-bottom: 0;
   }
 }
+
+/* CARD */
+.card-required-title .ant-card-head-title::after {
+  display: inline-block;
+  margin-right: 4px;
+  color: #ff4d4f;
+  font-size: 14px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: '*';
+  left: 5px;
+  position: relative;
+}

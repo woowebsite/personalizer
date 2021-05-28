@@ -22,9 +22,18 @@ export const jobQuery = {
         cost
         isDemoColor
         isDemoLayout
-        customer
-        employee
-        leader
+        customer {
+          name
+          value
+        }
+        employee {
+          name
+          value
+        }
+        leader {
+          name
+          value
+        }
         job_priority {
           name
           value
@@ -32,6 +41,24 @@ export const jobQuery = {
         job_status {
           name
           value
+        }
+      }
+
+      jobTerms(where: $where) {
+        id
+        term_taxonomy_id
+        order
+        ref_id
+        assignee_id
+        updatedAt
+        termTaxonomy {
+          term {
+            name
+          }
+        }
+        assignee {
+          id
+          name
         }
       }
     }

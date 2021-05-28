@@ -103,15 +103,6 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     eventBus = handle;
   };
   const handleDragEnd = (cardId, sourceLandId, targetLaneId, card) => {
-    if (eventBus && eventBus.publish) {
-      eventBus.publish({
-        type: 'MOVE_CARD',
-        fromLaneId: sourceLandId,
-        toLaneId: targetLaneId,
-        cardId,
-        index: card,
-      });
-    }
     upsertJob({
       variables: {
         job: {
@@ -119,6 +110,18 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
         },
         taxonomies: [targetLaneId],
       },
+    });
+
+    setTimeout(() => {
+      if (eventBus) {
+        eventBus.publish({
+          type: 'MOVE_CARD',
+          fromLaneId: sourceLandId,
+          toLaneId: targetLaneId,
+          cardId,
+          index: card,
+        });
+      }
     });
   };
 

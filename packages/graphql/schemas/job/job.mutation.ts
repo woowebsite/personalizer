@@ -9,12 +9,19 @@ export const Mutation = {
     before: async (findOptions, { data, metadata, taxonomies }, ctx) => {
       const { currentUser } = ctx;
       const obj = { ...data, userId: currentUser.id };
-      const oldJob = await Job.findOne({ where: { id: data.id } });
-      obj.latestVersion = oldJob.version++;
 
       const [job, createJob] = await Job.upsert(obj, {
         returning: true,
       });
+
+      const jobMeta = await JobMeta.findOne({
+        where: { job_id: job.id, key: 'employee' },
+      });
+
+      // Assignee
+      const assignee = metadata
+        ? metadata.find(x => x.key === 'employee') || jobMeta
+        : jobMeta;
 
       // Update taxonomies
       if (job && taxonomies) {
@@ -30,6 +37,7 @@ export const Mutation = {
           return {
             term_taxonomy_id: termId,
             ref_id: job.id,
+            assignee_id: assignee.value, // assignee_id must be not null
             version: old ? old.version + 1 : 1,
             latestVersion: old ? old.version + 1 : 1,
           };

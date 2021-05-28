@@ -25,6 +25,7 @@ export const Query = {
       let conditions: any = {};
       if (where && where.name) conditions.name = { [Op.like]: where.name };
       if (where && where.email) conditions.email = { [Op.like]: where.email };
+      if (where && where.role_id) conditions.role_id = where.role_id;
 
       // metadata
       let include: Array<any> = [

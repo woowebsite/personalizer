@@ -31,20 +31,43 @@ const JobNew = props => {
   const { messages, t } = props;
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
+  const formMoneyRef: any = React.createRef();
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
 
   // EVENTS
-  const onSave = () => {
+  const onSave = async () => {
+    // check if valid all forms
+    let isValid = true;
+    await formRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+    await formStatusRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+    await formMoneyRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+    console.log('isValid', isValid);
+
+    if (!isValid) return;
+
+    // prepare data
     const formValues = formRef.current.getFieldsValue();
     const statusValues = formStatusRef.current.getFieldsValue();
-    
+    const moneyValues = formMoneyRef.current.getFieldsValue();
+
     // metadata fields
-    const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
+    const metadataFields = {
+      ...formValues.metadata,
+      ...statusValues.metadata,
+      ...moneyValues.metadata,
+    };
 
     // taxonomies fields
     const taxonomyFields = {
       ...formValues.taxonomies,
       ...statusValues.taxonomies,
+      ...moneyValues.taxonomies,
     };
 
     // parse
@@ -83,17 +106,7 @@ const JobNew = props => {
             <Card className="status-form" title={t('jobStatus.title')}>
               <JobStatus ref={formStatusRef} />
             </Card>
-            <Card
-              className="mt-4 status-form"
-              title={t('jobMoney.title')}
-              actions={[
-                <Button type="primary" size="small">
-                  Thanh toán
-                </Button>,
-              ]}
-            >
-              <JobMoney />
-            </Card>
+            <JobMoney ref={formMoneyRef} />
           </Col>
         </Row>
       </Content>

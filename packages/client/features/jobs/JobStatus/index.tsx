@@ -8,9 +8,11 @@ import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import jobService from '~/services/jobService';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
+import JobStatus from '~/constants/jobStatus';
+import useTranslate from '~/hooks/useTranslate';
 
 // utils
-const JobStatus = forwardRef<any, any>((props, ref) => {
+const JobStatusBox = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
   const { initialValues } = props;
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
@@ -32,7 +34,9 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
       // taxonomies
       {
         name: ['taxonomies', 'job_status'],
-        value: parseInt(job.job_status.value),
+        value: parseInt(
+          job.job_status ? job.job_status.value : JobStatus.Active,
+        ),
       },
 
       // metadata
@@ -55,9 +59,11 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
   useImperativeHandle(ref, () => ({
     // onSubmit,
     getFieldsValue,
+    validateFields,
   }));
 
   const getFieldsValue = () => form.getFieldsValue();
+  const validateFields = () => form.validateFields();
 
   return (
     <>
@@ -65,6 +71,14 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         <Form.Item
           name={['taxonomies', 'job_status']}
           label={t('jobStatus.label.status')}
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                field: 'jobStatus.label.status',
+              }),
+            },
+          ]}
         >
           <TextEditable
             defaultValue={
@@ -89,16 +103,24 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         <Form.Item
           name={['metadata', 'employee']}
           label={t('jobStatus.label.employee')}
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                field: 'jobStatus.label.employee',
+              }),
+            },
+          ]}
         >
           <TextEditable
             defaultValue={
-              initialValues && !!JSON.parse(initialValues.employee)
-                ? JSON.parse(initialValues.employee)
+              initialValues && initialValues.employee
+                ? parseInt(initialValues.employee.value, 10)
                 : null
             }
             defaultText={
-              initialValues && !!JSON.parse(initialValues.employee)
-                ? JSON.parse(initialValues.employee).label
+              initialValues && initialValues.employee
+                ? initialValues.employee.name
                 : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
@@ -117,16 +139,24 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         <Form.Item
           name={['metadata', 'leader']}
           label={t('jobStatus.label.leader')}
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                field: 'jobStatus.label.leader',
+              }),
+            },
+          ]}
         >
           <TextEditable
             defaultValue={
-              initialValues && !!JSON.parse(initialValues.leader)
-                ? JSON.parse(initialValues.leader)
+              initialValues && initialValues.leader
+                ? parseInt(initialValues.leader.value, 10)
                 : null
             }
             defaultText={
-              initialValues && !!JSON.parse(initialValues.leader)
-                ? JSON.parse(initialValues.leader).label
+              initialValues && initialValues.leader
+                ? initialValues.leader.name
                 : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
@@ -146,16 +176,24 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
         <Form.Item
           name={['metadata', 'customer']}
           label={t('jobStatus.label.customer')}
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                field: 'jobStatus.label.customer',
+              }),
+            },
+          ]}
         >
           <TextEditable
             defaultValue={
-              initialValues.customer && !!JSON.parse(initialValues.customer)
-                ? JSON.parse(initialValues.customer)
+              initialValues && initialValues.customer // initialValues.customer must be not null
+                ? parseInt(initialValues.customer.value, 10)
                 : null
             }
             defaultText={
-              initialValues.customer && !!JSON.parse(initialValues.customer)
-                ? JSON.parse(initialValues.customer).label
+              initialValues && initialValues.customer
+                ? initialValues.customer.name
                 : null
             }
             renderComponent={({ handleOnChange, ...rest }) => (
@@ -176,4 +214,4 @@ const JobStatus = forwardRef<any, any>((props, ref) => {
   );
 });
 
-export default JobStatus;
+export default JobStatusBox;
