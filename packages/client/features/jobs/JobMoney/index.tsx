@@ -1,4 +1,9 @@
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { Form, Button, Card, Input } from 'antd';
 import { useIntl } from 'react-intl';
 import { formatMoney } from '~/shared/formatHelper';
@@ -13,9 +18,20 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   const [form] = Form.useForm();
   const initialValues = {
     cost: job ? job.cost : 0,
-    paid: 0,
+    paid: job.paid,
     debt: 0,
   };
+  const [dept, setDept] = useState(0);
+
+  // EFFECTS
+  useEffect(() => {
+    if (job) {
+      const cost = parseInt(job.cost);
+      const paid = parseInt(job.paid);
+
+      setDept(cost - paid);
+    }
+  }, []);
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
@@ -25,6 +41,17 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
 
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
+
+  const updateDept = () => {
+    const cost = parseInt(form.getFieldValue(['metadata', 'cost']));
+    const paid = parseInt(form.getFieldValue(['metadata', 'paid']));
+
+    setDept(cost - paid);
+  };
+
+  const onFieldBlur = () => {
+    updateDept();
+  };
 
   // Render
   return (
@@ -48,10 +75,11 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
               <TextEditable
                 defaultValue={initialValues.cost}
                 defaultText={formatMoney(initialValues.cost)}
-                renderComponent={({ handleOnChange, ref, ...rest }) => {
+                renderInput={({ handleOnChange, ref, ...rest }) => {
                   return (
                     <Input
                       ref={ref}
+                      onPressEnter={onFieldBlur}
                       onChange={e =>
                         handleOnChange(
                           e.target.value,
@@ -80,10 +108,11 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
             <TextEditable
               defaultValue={initialValues.paid}
               defaultText={formatMoney(initialValues.paid)}
-              renderComponent={({ handleOnChange, ref, ...rest }) => {
+              renderInput={({ handleOnChange, ref, ...rest }) => {
                 return (
                   <Input
                     ref={ref}
+                    onPressEnter={onFieldBlur}
                     onChange={e =>
                       handleOnChange(
                         e.target.value,
@@ -102,25 +131,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
             className="field-number"
             label={t('jobMoney.label.debt')}
           >
-            <TextEditable
-              defaultValue={initialValues.debt}
-              defaultText={formatMoney(initialValues.debt)}
-              renderComponent={({ handleOnChange, ref, ...rest }) => {
-                return (
-                  <Input
-                    ref={ref}
-                    onChange={e =>
-                      handleOnChange(
-                        e.target.value,
-                        formatMoney(e.target.value),
-                      )
-                    }
-                    style={{ width: '150px', textAlign: 'right' }}
-                    {...rest}
-                  />
-                );
-              }}
-            />
+            <span className="text-danger">{formatMoney(dept)}</span>
           </Form.Item>
         </Card>
       </Form>

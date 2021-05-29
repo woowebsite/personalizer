@@ -20,6 +20,8 @@ export const jobQuery = {
         publishDate
         link
         cost
+        paid
+        dept
         isDemoColor
         isDemoLayout
         customer {

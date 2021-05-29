@@ -91,7 +91,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
                 ? initialValues.job_status.name
                 : null
             }
-            renderComponent={({ handleOnChange, ...rest }) => (
+            renderComboBox={({ handleOnChange, ...rest }) => (
               <ComboBoxTaxonomy
                 onChange={handleOnChange}
                 type={TaxonomyType.Job_Status}
@@ -123,7 +123,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
                 ? initialValues.employee.name
                 : null
             }
-            renderComponent={({ handleOnChange, ...rest }) => (
+            renderComboBox={({ handleOnChange, ...rest }) => (
               <ComboBox
                 onChange={handleOnChange}
                 textField="name"
@@ -159,7 +159,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
                 ? initialValues.leader.name
                 : null
             }
-            renderComponent={({ handleOnChange, ...rest }) => (
+            renderComboBox={({ handleOnChange, ...rest }) => (
               <ComboBox
                 onChange={handleOnChange}
                 textField="name"
@@ -196,7 +196,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
                 ? initialValues.customer.name
                 : null
             }
-            renderComponent={({ handleOnChange, ...rest }) => (
+            renderComboBox={({ handleOnChange, ...rest }) => (
               <ComboBox
                 onChange={handleOnChange}
                 textField="name"

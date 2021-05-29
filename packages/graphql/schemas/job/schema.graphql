@@ -11,6 +11,8 @@ type Job {
 
   link: String
   cost: Int 
+  paid: Int 
+  dept: Int 
   isDemoColor: Boolean
   isDemoLayout: Boolean
   customer: NameValue

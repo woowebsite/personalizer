@@ -74,6 +74,12 @@ export class Job extends Model<Job> {
   
   @Column(DataType.VIRTUAL)
   cost: number;
+  
+  @Column(DataType.VIRTUAL)
+  paid: number;
+  
+  @Column(DataType.VIRTUAL)
+  dept: number;
 
   @Column(DataType.VIRTUAL)
   isDemoColor: boolean;
