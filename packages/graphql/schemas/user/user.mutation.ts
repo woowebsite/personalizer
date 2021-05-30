@@ -1,7 +1,8 @@
 import { resolver } from 'graphql-sequelize';
-import { User } from '../../models';
+import { TermTaxonomy, User, UserTerm } from '../../models';
 import to from 'await-to-js';
 import { UserMeta } from '../../models/userMeta.model';
+import StatusType from '../../constants/StatusType';
 
 export const Mutation = {
   createUser: resolver(User, {
@@ -20,22 +21,43 @@ export const Mutation = {
   }),
 
   upsertUser: resolver(User, {
-    before: async (findOptions, { data, metadata }) => {
+    before: async (findOptions, { data, metadata, taxonomies }) => {
       const [user, created0] = await User.upsert(data, { returning: true });
 
+      // Metadata
       if (user && metadata) {
         const userMeta = metadata.map(x => ({
           ...x,
           user_id: user.id,
         }));
 
+        await UserMeta.destroy({
+          where: { user_id: user.id },
+        });
         await UserMeta.bulkCreate(userMeta);
+      }
+
+      // Taxonomies is object
+      if (user && taxonomies) {
+        const allTaxonomies = await TermTaxonomy.findAll({ raw: true });
+        let userTerms = [];
+        for (const key in taxonomies) {
+          const taxonomy = allTaxonomies.find(x => x.taxonomy === key);
+          userTerms.push({
+            term_taxonomy_id: taxonomy.id,
+            user_id: user.id,
+            money: taxonomies[key],
+            status: StatusType.Actived,
+          });
+        }
+
+        await UserTerm.bulkCreate(userTerms);
       }
 
       findOptions.where = { id: user.id };
       return findOptions;
     },
-    after: (user) => {
+    after: user => {
       user.login = true;
       return user;
     },

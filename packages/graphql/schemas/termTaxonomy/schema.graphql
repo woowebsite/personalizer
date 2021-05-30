@@ -6,6 +6,7 @@ type TermTaxonomy {
   order: Int
   term: Term
   jobTerms: [JobTerm]
+  userTerms: [UserTerm]
 }
 
 input TermTaxonomyWhere {

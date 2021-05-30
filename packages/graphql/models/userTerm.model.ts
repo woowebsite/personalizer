@@ -12,13 +12,6 @@ import { User } from './user.model';
 
 @Table({ version: true })
 export class UserTerm extends Model<UserTerm> {
-  @BelongsTo(() => TermTaxonomy)
-  termTaxonomy: TermTaxonomy;
-
-  @ForeignKey(() => TermTaxonomy)
-  @Column
-  term_taxonomy_id: number;
-
   @Column
   order: number;
 
@@ -38,4 +31,12 @@ export class UserTerm extends Model<UserTerm> {
 
   @BelongsTo(() => User)
   user: User;
+
+  // taxonomy
+  @BelongsTo(() => TermTaxonomy)
+  termTaxonomy: TermTaxonomy;
+
+  @ForeignKey(() => TermTaxonomy)
+  @Column
+  term_taxonomy_id: number;
 }
