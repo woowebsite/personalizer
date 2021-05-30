@@ -18,7 +18,7 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
-  const [upsertUser] = userService.updateUser(); //(userQueries.UPSERT_USER);
+  const [transactionMoney] = userService.accountTransactionMoney(); //(userQueries.UPSERT_USER);
   const initialValues = {
     money: 0,
   };
@@ -37,10 +37,9 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
     const metadata = fieldsToMetadata(fieldsValue.metadata);
     console.log('fieldsValue.taxonomies', fieldsValue.taxonomies);
 
-    upsertUser({
+    transactionMoney({
       variables: {
         user: { id: user.id, email: user.email },
-        metadata,
         taxonomies: fieldsValue.taxonomies,
       },
     });

@@ -25,7 +25,7 @@ input UserWhere {
   role_id: Int
   status: String
   email: String
-  
+
   metadata: [UserMetaInput]
   taxonomies: [Int]
 }
@@ -70,6 +70,12 @@ type Mutation {
     metadata: [UserMetaInput]
     taxonomies: UserTaxonomies
   ): User
+
+  accountTransactionMoney(
+    data: UserInput
+    taxonomies: UserTaxonomies
+  ): User
+  
   changePassword(currentPassword: String!, password: String!): BooleanResponse
     @isAuth
 }

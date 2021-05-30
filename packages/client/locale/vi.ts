@@ -108,6 +108,7 @@ export const vi = {
     },
     jobCreateform: {
       label: {
+        code: 'Mã số',
         title: 'Tiêu đề',
         link: 'Link',
         priority: 'Ưu tiên',

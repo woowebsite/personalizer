@@ -29,7 +29,7 @@ const MenuLeft = props => {
                 title={f(menu.title)}
               >
                 {menu.children.map((child, c) => (
-                  <Menu.Item key={`child-menu-${c}`}>
+                  <Menu.Item key={`child-menu-${i}-${c}`}>
                     <Link href={child.url}>{f(child.title)}</Link>
                   </Menu.Item>
                 ))}

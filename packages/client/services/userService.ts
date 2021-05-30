@@ -66,6 +66,39 @@ const definitions = {
 
     return withMutation(query, options);
   },
+
+  accountTransactionMoney: options => {
+    const query = gql`
+      mutation AccountTransactionMoney(
+        $user: UserInput
+        $taxonomies: UserTaxonomies
+      ) {
+        accountTransactionMoney(
+          data: $user
+          taxonomies: $taxonomies
+        ) {
+          id
+          email
+          name
+          image
+          created_at
+          updated_at
+          email_verified
+          role_id
+          status
+          havePassword
+          account_money
+          phone
+          address
+          customerType
+          facebookUrl
+          __typename
+        }
+      }
+    `;
+
+    return withMutation(query, options);
+  },
 };
 
 const userService = baseService({
