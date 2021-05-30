@@ -56,7 +56,7 @@ const JobDetail = (props: PageProps & any) => {
     const formValues = formRef.current.getFieldsValue();
     const statusValues = formStatusRef.current.getFieldsValue();
     const moneyValues = formMoneyRef.current.getFieldsValue();
-
+    
     // metadata fields
     const metadataFields = {
       ...formValues.metadata,
@@ -103,7 +103,7 @@ const JobDetail = (props: PageProps & any) => {
           <Button key="2" danger>
             {t('buttons.delete')}
           </Button>,
-          <RedirectButton url={'/customer/jobs/new'}>
+          <RedirectButton url={'/customer/jobs/new'} type="primary" ghost>
             {t('buttons.create')}
           </RedirectButton>,
           <Button key="1" type="primary" onClick={onSave}>

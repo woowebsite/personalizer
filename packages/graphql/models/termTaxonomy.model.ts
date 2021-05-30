@@ -8,6 +8,7 @@ import {
   Default,
   HasMany,
 } from 'sequelize-typescript';
+import { UserTerm } from './userTerm.model';
 import { JobTerm } from './jobTerm.model';
 import { Term } from './term.model';
 
@@ -48,4 +49,7 @@ export class TermTaxonomy extends Model<TermTaxonomy> {
   // foreign 
   @HasMany(() => JobTerm)
   jobTerms: JobTerm[];
+  
+  @HasMany(() => UserTerm)
+  userTerms: UserTerm[];
 }

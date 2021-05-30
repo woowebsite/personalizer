@@ -140,6 +140,8 @@ export type Job = {
   jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
   link?: Maybe<Scalars['String']>;
   cost?: Maybe<Scalars['Int']>;
+  paid?: Maybe<Scalars['Int']>;
+  dept?: Maybe<Scalars['Int']>;
   isDemoColor?: Maybe<Scalars['Boolean']>;
   isDemoLayout?: Maybe<Scalars['Boolean']>;
   customer?: Maybe<NameValue>;
@@ -308,7 +310,7 @@ export type MutationCreateUserArgs = {
 export type MutationUpsertUserArgs = {
   data?: Maybe<UserInput>;
   metadata?: Maybe<Array<Maybe<UserMetaInput>>>;
-  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  taxonomies?: Maybe<UserTaxonomies>;
 };
 
 
@@ -547,6 +549,7 @@ export type TermTaxonomy = {
   order?: Maybe<Scalars['Int']>;
   term?: Maybe<Term>;
   jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
+  userTerms?: Maybe<Array<Maybe<UserTerm>>>;
 };
 
 export type TermTaxonomyInput = {
@@ -578,6 +581,7 @@ export type User = {
   role?: Maybe<Role>;
   havePassword?: Maybe<Scalars['Boolean']>;
   metadata?: Maybe<Array<Maybe<UserMeta>>>;
+  account_money?: Maybe<Scalars['Int']>;
   phone?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
   customerType?: Maybe<Scalars['Int']>;
@@ -618,6 +622,23 @@ export type UsersPaged = {
   __typename?: 'UsersPaged';
   rows?: Maybe<Array<Maybe<User>>>;
   count?: Maybe<Scalars['Int']>;
+};
+
+export type UserTaxonomies = {
+  account_deposit?: Maybe<Scalars['Int']>;
+  account_withdraw?: Maybe<Scalars['Int']>;
+  account_earning?: Maybe<Scalars['Int']>;
+  account_holding?: Maybe<Scalars['Int']>;
+};
+
+export type UserTerm = {
+  __typename?: 'UserTerm';
+  term_taxonomy_id?: Maybe<Scalars['Int']>;
+  order?: Maybe<Scalars['Int']>;
+  ref_id?: Maybe<Scalars['Int']>;
+  money?: Maybe<Scalars['Int']>;
+  user?: Maybe<User>;
+  termTaxonomy?: Maybe<TermTaxonomy>;
 };
 
 export type UserWhere = {

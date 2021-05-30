@@ -12,6 +12,7 @@ type User {
   havePassword: Boolean
 
   metadata: [UserMeta]
+  account_money: Int
   phone: String
   address: String
   customerType: Int
@@ -67,7 +68,7 @@ type Mutation {
   upsertUser(
     data: UserInput
     metadata: [UserMetaInput]
-    taxonomies: [Int]
+    taxonomies: UserTaxonomies
   ): User
   changePassword(currentPassword: String!, password: String!): BooleanResponse
     @isAuth

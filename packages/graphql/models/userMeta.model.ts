@@ -20,6 +20,9 @@ export class UserMeta extends Model<UserMeta> {
   key: string;
 
   @Column
+  type: string;
+
+  @Column
   value: string;
 
   @Column

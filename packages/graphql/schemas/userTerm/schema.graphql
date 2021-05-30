@@ -1,0 +1,16 @@
+type UserTerm {
+  term_taxonomy_id: Int
+  order: Int
+  ref_id: Int
+  money: Int
+
+  user: User
+  termTaxonomy: TermTaxonomy
+}
+
+input UserTaxonomies {
+  account_deposit: Int
+  account_withdraw: Int
+  account_earning: Int
+  account_holding: Int
+}
