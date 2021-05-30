@@ -6,7 +6,9 @@ import {
   BelongsTo,
   DataType,
   Default,
+  HasMany,
 } from 'sequelize-typescript';
+import { UserTerm } from './userTerm.model';
 import { Term } from './term.model';
 
 @Table({ timestamps: false })
@@ -42,4 +44,8 @@ export class TermTaxonomy extends Model<TermTaxonomy> {
   @ForeignKey(() => Term)
   @Column
   term_id: number;
+
+  // foreign 
+  @HasMany(() => UserTerm)
+  userTerms: UserTerm[];
 }

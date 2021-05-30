@@ -35,6 +35,37 @@ const definitions = {
 
     return withMutation(query, options);
   },
+
+  updateUser: options => {
+    const query = gql`
+      mutation UpsertUser(
+        $user: UserInput
+        $metadata: [UserMetaInput]
+        $taxonomies: UserTaxonomies
+      ) {
+        upsertUser(data: $user, metadata: $metadata, taxonomies: $taxonomies) {
+          id
+          email
+          name
+          image
+          created_at
+          updated_at
+          email_verified
+          role_id
+          status
+          havePassword
+          account_money
+          phone
+          address
+          customerType
+          facebookUrl
+          __typename
+        }
+      }
+    `;
+
+    return withMutation(query, options);
+  },
 };
 
 const userService = baseService({

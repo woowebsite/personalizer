@@ -10,7 +10,8 @@ interface TextEditable {
   btnText?: string;
   value?: any;
   onChange?: (value: any) => void;
-  renderComponent: (value: any) => React.ReactElement;
+  renderComboBox?: (value: any) => React.ReactElement;
+  renderInput?: (value: any) => React.ReactElement;
 }
 
 const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
@@ -82,12 +83,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
       setEditable(false);
     }, 100);
   };
-  const handleOnChange = (value, option) => {
-    setTimeout(() => {
-      setSelectedValue(value);
-      setSelectedText(option.children);
-    }, 100);
-  };
+  
   const end = () => {
     setEditable(false);
   };
@@ -95,16 +91,54 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
     setEditable(false);
   };
 
+  // EVENTS
+  const handleInputChange = (value, option) => {
+    setTimeout(() => {
+      setSelectedValue(value);
+      setSelectedText(option);
+    }, 100);
+
+    onChange?.(value);
+  };
+
+  const handleComboBoxChange = (value, option) => {
+    const val = {
+      value: value.value,
+      name: value.label
+    };
+    setTimeout(() => {
+      setSelectedValue(val);
+      setSelectedText(option.children);
+    }, 100);
+
+    onChange?.(val);
+  };
+
   // render
   const renderEditInput = () => {
-    return others.renderComponent({
-      defaultValue,
-      onKeyDown,
-      onKeyUp,
-      onBlur,
-      handleOnChange,
-      ref
-    });
+    // render for input
+    if(others.renderInput) {
+      return others.renderInput({
+        defaultValue: selectedValue,
+        onKeyDown,
+        onKeyUp,
+        onBlur,
+        handleOnChange: handleInputChange,
+        ref
+      });
+    }
+
+    // render for combobox
+    if(others.renderComboBox) {
+      return others.renderComboBox({
+        defaultValue: selectedValue,
+        onKeyDown,
+        onKeyUp,
+        onBlur,
+        handleOnChange: handleComboBoxChange,
+        ref
+      });
+    }
   };
   return (
     <>
