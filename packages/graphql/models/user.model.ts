@@ -58,6 +58,9 @@ export class User extends Model<User> {
 
   // CUSTOMER's metadata
   @Column(DataType.VIRTUAL)
+  account_money: number;
+
+  @Column(DataType.VIRTUAL)
   phone: String;
 
   @Column(DataType.VIRTUAL)

@@ -13,12 +13,12 @@ export const Mutation = {
       const [job, createJob] = await Job.upsert(obj, {
         returning: true,
       });
-
+      
+      // Assignee
       const jobMeta = await JobMeta.findOne({
         where: { job_id: job.id, key: 'employee' },
       });
 
-      // Assignee
       const assignee = metadata
         ? metadata.find(x => x.key === 'employee') || jobMeta
         : jobMeta;

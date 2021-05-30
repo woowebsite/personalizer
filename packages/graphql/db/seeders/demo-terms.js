@@ -36,6 +36,22 @@ module.exports = {
         name: 'Hoàn thiện',
         slug: 'hoan-thien',
       },
+      {
+        name: 'Nạp tiền',
+        slug: 'nap-tien',
+      },
+      {
+        name: 'Rút tiền',
+        slug: 'rut-tien',
+      },
+      {
+        name: 'Nhận tiền',
+        slug: 'nhan-tien',
+      },
+      {
+        name: 'Tạm giữ',
+        slug: 'tam-giu',
+      },
     ]);
   },
 

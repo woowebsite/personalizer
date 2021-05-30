@@ -124,6 +124,11 @@ const ChangePasswordForm = forwardRef<any, IProps>((props, ref) => {
       >
         <Input.Password />
       </Form.Item>
+      <Form.Item>
+        <Button key="1" type="primary" onClick={handleFinish}>
+          {t('buttons.save')}
+        </Button>
+      </Form.Item>
     </Form>
   );
 });

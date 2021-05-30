@@ -33,7 +33,6 @@ export const vi = {
       workflow: 'Bảng công việc',
       salary: 'Tính lương',
       report: 'Báo cáo',
-
     },
     validator: {
       required: 'Bạn vui lòng nhập {field}',
@@ -54,6 +53,7 @@ export const vi = {
       cancel: 'Tạm hoãn',
       filter: 'Lọc',
       payment: 'Thanh toán',
+      deposit: 'Nạp tiền',
     },
     userTable: {
       columns: {
@@ -323,6 +323,15 @@ export const vi = {
     },
     socialBox: {
       title: 'Liên kết mạng xã hội',
+    },
+    accountMoney: {
+      title: 'Tài khoản',
+      placeholder: {
+        deposit: 'Nhập số tiền cần nạp',
+      },
+      label: {
+        holding: 'Tạm giữ',
+      },
     },
   },
   '/workflow': {
