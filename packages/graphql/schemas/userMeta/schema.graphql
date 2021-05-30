@@ -2,6 +2,7 @@ type UserMeta {
   id: Int
   user_id: Int
   key: String
+  type: String
   value: String
   user: User
 }
