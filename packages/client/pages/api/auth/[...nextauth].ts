@@ -108,15 +108,16 @@ const options = {
   callbacks: {
     session: async (session, user, sessionToken) => {
       const client = createApolloClient({}, undefined);
-      const userResp: any = await client.query({
+      const { data, error, loading }: any = await client.query({
         query: GET_USER,
         variables: { where: { email: user.email } },
       });
 
-      if (userResp.data) {
-        const loggedUser = userResp.data.user;
+      if (data) {
+        const loggedUser = data.user;
         session.user = loggedUser;
       } else {
+        error.networkError.map(({ message }, i) => console.error(message));
         console.error('Error: The user ' + user.email + 'is not available');
       }
       console.log('session', session);

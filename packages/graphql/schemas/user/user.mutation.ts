@@ -5,6 +5,7 @@ import { UserMeta } from '../../models/userMeta.model';
 import StatusType from '../../constants/StatusType';
 import UserMetaType from '../../constants/UserMetaType';
 import TaxonomyType from '../../constants/TaxonomyType';
+import { metadataToField } from '../../utils/dataUtil';
 
 export const Mutation = {
   createUser: resolver(User, {
@@ -96,7 +97,7 @@ export const Mutation = {
             user_id: data.id,
             key: UserMetaType.AccountMoney,
           },
-          raw: true
+          raw: true,
         });
         const prevMoney = accountMoneyMetadata ? accountMoneyMetadata.value : 0;
         const userMeta: any = {
@@ -113,11 +114,12 @@ export const Mutation = {
       }
 
       findOptions.where = { id: data.id };
+      findOptions.include = [{ model: UserMeta }];
       return findOptions;
     },
-    after: user => {
-      user.login = true;
-      return user;
+    after: async user => {
+      const transferData = metadataToField(user, 'metadata');
+      return transferData;
     },
   }),
 

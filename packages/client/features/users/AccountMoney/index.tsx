@@ -1,8 +1,17 @@
-import { Button, Card, Form, Input, InputNumber, Typography } from 'antd';
-import React, { forwardRef, useImperativeHandle } from 'react';
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  InputNumber,
+  notification,
+  Typography,
+} from 'antd';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import TextEditable from '~/components/TextEditable';
+import UserMetaType from '~/features/users/constants/UserMetaType';
 import userService from '~/services/userService';
 import { formatMoney } from '~/shared/formatHelper';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
@@ -14,14 +23,11 @@ interface AccountMoneyProps {
 const { Search } = Input;
 
 const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
-  const { className, user, ...rest } = props;
+  const { className, ...rest } = props;
+  const [user, setUser] = useState(props.user);
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
-  const [transactionMoney] = userService.accountTransactionMoney(); //(userQueries.UPSERT_USER);
-  const initialValues = {
-    money: 0,
-  };
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
@@ -29,13 +35,30 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
     validateFields,
   }));
 
+  const handleDepositCompleted = result => {
+    // update balance
+    setUser(result.accountTransactionMoney);
+    form.resetFields();
+    
+    notification.success({
+      message: 'Notification Success',
+      description: 'Save successfully',
+      placement: 'bottomLeft',
+      onClick: () => {
+        console.log('Notification Clicked!');
+      },
+    });
+  };
+
+  const [transactionMoney] = userService.accountTransactionMoney({
+    onCompleted: handleDepositCompleted,
+  });
+
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
 
   const handleDeposit = () => {
     const fieldsValue = form.getFieldsValue();
-    const metadata = fieldsToMetadata(fieldsValue.metadata);
-    console.log('fieldsValue.taxonomies', fieldsValue.taxonomies);
 
     transactionMoney({
       variables: {
@@ -50,7 +73,12 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
       <Card
         title={t('accountMoney.title')}
         className={`${className} status-form`}
-        extra={<span> {initialValues.money}</span>}
+        extra={
+          <span className="h5 text-primary">
+            {' '}
+            {formatMoney(user[UserMetaType.AccountMoney])}
+          </span>
+        }
         actions={[
           <>
             <Input.Group compact>
@@ -77,22 +105,16 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
           className="field-number"
           label={t('accountMoney.label.holding')}
         >
-          <TextEditable
-            defaultValue={initialValues.money}
-            defaultText={formatMoney(initialValues.money)}
-            renderInput={({ handleOnChange, ref, ...rest }) => {
-              return (
-                <Input
-                  ref={ref}
-                  onChange={e =>
-                    handleOnChange(e.target.value, formatMoney(e.target.value))
-                  }
-                  style={{ width: '150px', textAlign: 'right' }}
-                  {...rest}
-                />
-              );
-            }}
-          />
+          {formatMoney(user[UserMetaType.AccountHolding])}
+        </Form.Item>
+        <Form.Item
+          name={['metadata', 'account_dept']}
+          className="field-number"
+          label={t('accountMoney.label.dept')}
+        >
+          <span className="text-danger">
+            {formatMoney(user[UserMetaType.AccountDept])}
+          </span>
         </Form.Item>
       </Card>
     </Form>

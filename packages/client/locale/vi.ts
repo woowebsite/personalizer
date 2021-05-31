@@ -332,6 +332,7 @@ export const vi = {
       },
       label: {
         holding: 'Tạm giữ',
+        dept: 'Nợ',
       },
     },
   },
