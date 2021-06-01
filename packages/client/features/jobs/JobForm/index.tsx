@@ -137,6 +137,21 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       layout="vertical"
     >
       <Form.Item
+        name={['job', 'code']}
+        initialValue="C01J023"
+        rules={[
+          {
+            required: true,
+            message: useTranslate('validator.required', {
+              field: 'jobCreateform.label.code',
+            }),
+          },
+        ]}
+        label={t('jobCreateform.label.code')}
+      >
+        <Input defaultValue="C01J023" disabled />
+      </Form.Item>
+      <Form.Item
         name={['job', 'title']}
         rules={[
           {

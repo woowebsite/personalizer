@@ -40,6 +40,10 @@ export const GET_USER = gql`
         }
       }
       havePassword
+      account_money
+      phone
+      address
+      facebookUrl
       role_id
       created_at
     }

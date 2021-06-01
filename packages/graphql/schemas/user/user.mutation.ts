@@ -3,6 +3,9 @@ import { TermTaxonomy, User, UserTerm } from '../../models';
 import to from 'await-to-js';
 import { UserMeta } from '../../models/userMeta.model';
 import StatusType from '../../constants/StatusType';
+import UserMetaType from '../../constants/UserMetaType';
+import TaxonomyType from '../../constants/TaxonomyType';
+import { metadataToField } from '../../utils/dataUtil';
 
 export const Mutation = {
   createUser: resolver(User, {
@@ -60,6 +63,63 @@ export const Mutation = {
     after: user => {
       user.login = true;
       return user;
+    },
+  }),
+
+  accountTransactionMoney: resolver(User, {
+    before: async (findOptions, { data, taxonomies }) => {
+      // Taxonomies is object
+      let action = '';
+      let money = 0;
+      if (data && taxonomies) {
+        action = Object.keys(taxonomies)[0];
+        const allTaxonomies = await TermTaxonomy.findAll({ raw: true });
+        const taxonomy = allTaxonomies.find(x => x.taxonomy === action);
+        money = parseInt(taxonomies[action]);
+
+        switch (action) {
+          case (TaxonomyType.Account_Withdraw, TaxonomyType.Account_Hoding):
+            money = -money;
+            break;
+        }
+
+        const userTerm: any = {
+          term_taxonomy_id: taxonomy.id,
+          user_id: data.id,
+          money: money,
+          status: StatusType.Actived,
+        };
+
+        await UserTerm.create(userTerm);
+
+        const accountMoneyMetadata = await UserMeta.findOne({
+          where: {
+            user_id: data.id,
+            key: UserMetaType.AccountMoney,
+          },
+          raw: true,
+        });
+        const prevMoney = accountMoneyMetadata ? accountMoneyMetadata.value : 0;
+        const userMeta: any = {
+          ...accountMoneyMetadata,
+          key: UserMetaType.AccountMoney,
+          type: 'number',
+          data: +prevMoney + money,
+          value: +prevMoney + money,
+          status: StatusType.Actived,
+          user_id: data.id,
+        };
+
+        await UserMeta.upsert(userMeta);
+      }
+
+      findOptions.where = { id: data.id };
+      findOptions.include = [{ model: UserMeta }];
+      return findOptions;
+    },
+    after: async user => {
+      const transferData = metadataToField(user, 'metadata');
+      return transferData;
     },
   }),
 

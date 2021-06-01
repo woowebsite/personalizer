@@ -54,6 +54,16 @@ export const vi = {
       filter: 'Lọc',
       payment: 'Thanh toán',
       deposit: 'Nạp tiền',
+      send: 'Gửi đi'
+    },
+    enum: {
+      JobStatus: {
+        Active: 'Mở',
+        Dective: 'Đóng',
+        Finish: 'Hoàn thành',
+        Publish: 'Đã gửi',
+        Draft: 'Hoàn thành'
+      }
     },
     userTable: {
       columns: {
@@ -108,6 +118,7 @@ export const vi = {
     },
     jobCreateform: {
       label: {
+        code: 'Mã số',
         title: 'Tiêu đề',
         link: 'Link',
         priority: 'Ưu tiên',
@@ -331,6 +342,7 @@ export const vi = {
       },
       label: {
         holding: 'Tạm giữ',
+        dept: 'Nợ',
       },
     },
   },
@@ -358,7 +370,7 @@ export const vi = {
     jobStatus: {
       title: 'Tình trạng',
       label: {
-        status: 'Trạng thái',
+        status: 'Giai đoạn',
         employee: 'Thợ ảnh',
         leader: 'Leader',
         customer: 'Khách hàng',

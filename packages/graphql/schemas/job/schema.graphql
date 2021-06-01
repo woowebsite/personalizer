@@ -8,6 +8,7 @@ type Job {
   user: User
   metadata: [JobMeta]
   jobTerms: [JobTerm]
+  status: String
 
   link: String
   cost: Int 
