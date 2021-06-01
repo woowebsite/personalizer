@@ -22,6 +22,7 @@ export const jobQuery = {
         cost
         paid
         dept
+        status
         isDemoColor
         isDemoLayout
         customer {

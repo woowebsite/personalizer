@@ -239,6 +239,7 @@ export type Mutation = {
   deleteTermTaxonomy?: Maybe<Scalars['Int']>;
   createUser?: Maybe<User>;
   upsertUser?: Maybe<User>;
+  accountTransactionMoney?: Maybe<User>;
   changePassword?: Maybe<BooleanResponse>;
 };
 
@@ -310,6 +311,12 @@ export type MutationCreateUserArgs = {
 export type MutationUpsertUserArgs = {
   data?: Maybe<UserInput>;
   metadata?: Maybe<Array<Maybe<UserMetaInput>>>;
+  taxonomies?: Maybe<UserTaxonomies>;
+};
+
+
+export type MutationAccountTransactionMoneyArgs = {
+  data?: Maybe<UserInput>;
   taxonomies?: Maybe<UserTaxonomies>;
 };
 
@@ -606,6 +613,7 @@ export type UserMeta = {
   id?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['Int']>;
   key?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
   user?: Maybe<User>;
 };

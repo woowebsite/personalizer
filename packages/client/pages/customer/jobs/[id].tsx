@@ -56,7 +56,7 @@ const JobDetail = (props: PageProps & any) => {
     const formValues = formRef.current.getFieldsValue();
     const statusValues = formStatusRef.current.getFieldsValue();
     const moneyValues = formMoneyRef.current.getFieldsValue();
-    
+
     // metadata fields
     const metadataFields = {
       ...formValues.metadata,
@@ -126,9 +126,7 @@ const JobDetail = (props: PageProps & any) => {
             </Card>
           </Col>
           <Col span="8">
-            <Card className="status-form" title={t('jobStatus.title')}>
-              <JobStatus ref={formStatusRef} initialValues={data.job} />
-            </Card>
+            <JobStatus ref={formStatusRef} initialValues={data.job} />
             <JobMoney ref={formMoneyRef} job={data.job} />
           </Col>
         </Row>

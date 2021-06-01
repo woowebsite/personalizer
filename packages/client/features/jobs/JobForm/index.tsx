@@ -138,6 +138,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
     >
       <Form.Item
         name={['job', 'code']}
+        initialValue="C01J023"
         rules={[
           {
             required: true,
@@ -148,7 +149,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         ]}
         label={t('jobCreateform.label.code')}
       >
-        <Input />
+        <Input defaultValue="C01J023" disabled />
       </Form.Item>
       <Form.Item
         name={['job', 'title']}

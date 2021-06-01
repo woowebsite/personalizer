@@ -54,6 +54,16 @@ export const vi = {
       filter: 'Lọc',
       payment: 'Thanh toán',
       deposit: 'Nạp tiền',
+      send: 'Gửi đi'
+    },
+    enum: {
+      JobStatus: {
+        Active: 'Mở',
+        Dective: 'Đóng',
+        Finish: 'Hoàn thành',
+        Publish: 'Đã gửi',
+        Draft: 'Hoàn thành'
+      }
     },
     userTable: {
       columns: {
@@ -360,7 +370,7 @@ export const vi = {
     jobStatus: {
       title: 'Tình trạng',
       label: {
-        status: 'Trạng thái',
+        status: 'Giai đoạn',
         employee: 'Thợ ảnh',
         leader: 'Leader',
         customer: 'Khách hàng',
