@@ -1,6 +1,9 @@
 export const en = {
   common: {
     topBar: {
+      menu: {
+        report: 'Report',
+      },
       profileMenu: {
         profile: 'Basic information',
         logout: 'Log out',
@@ -16,6 +19,7 @@ export const en = {
         title: 'Users',
         allUsers: 'All users',
         createUser: 'Create an user',
+        authorized: 'Authorized',
       },
       productBases: {
         title: 'Product bases',
@@ -165,7 +169,8 @@ export const en = {
         preview: 'Preview',
         noise: 'Noise',
         renderNoise: 'Render Noise',
-        renderNoiseDesc: 'Extra noise layer will be placed on the top of your mockup to make it look more realistic',
+        renderNoiseDesc:
+          'Extra noise layer will be placed on the top of your mockup to make it look more realistic',
       },
     },
   },
