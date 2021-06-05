@@ -28,11 +28,13 @@ const MenuLeft = props => {
                 icon={<UserOutlined />}
                 title={f(menu.title)}
               >
-                {menu.children.map((child, c) => (
-                  <Menu.Item key={`child-menu-${c}`}>
-                    <Link href={child.url}>{f(child.title)}</Link>
-                  </Menu.Item>
-                ))}
+                {menu.children
+                  .filter(x => x.visible === true)
+                  .map((child, c) => (
+                    <Menu.Item key={`child-menu-${c}`}>
+                      <Link href={child.url}>{f(child.title)}</Link>
+                    </Menu.Item>
+                  ))}
               </SubMenu>
             );
           } else {

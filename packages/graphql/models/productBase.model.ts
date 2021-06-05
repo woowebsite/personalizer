@@ -6,6 +6,7 @@ import {
   ForeignKey,
   AllowNull,
   BelongsToMany,
+  Default,
 } from 'sequelize-typescript';
 import { User } from './user.model';
 import { Category } from './category.model';
@@ -14,6 +15,7 @@ import { Provider } from './provider.model';
 import { Image } from './image.model';
 import { ProductBaseImage } from './productbaseimage.model';
 import { ProductBaseTag } from './productBaseTag.model';
+import StatusType from '../constants/StatusType';
 
 @Table({ timestamps: true })
 export class ProductBase extends Model<ProductBase> {
@@ -26,9 +28,10 @@ export class ProductBase extends Model<ProductBase> {
   @Column
   description: string;
 
+  @Default(StatusType.Actived)
   @Column
   status: string;
- 
+
   @Column
   primaryImageUrl: string;
 
@@ -46,14 +49,6 @@ export class ProductBase extends Model<ProductBase> {
   // images
   @BelongsToMany(() => ProductBaseImage, () => Image)
   images: ProductBaseImage[];
-
-  // primary image
-  // @ForeignKey(() => Image)
-  // @Column
-  // primaryImageId: number;
-
-  // @BelongsTo(() => Image)
-  // primaryImage: Image;
 
   // category
   @ForeignKey(() => Category)

@@ -11,7 +11,7 @@ import { withApollo } from 'apollo/apollo';
 
 const { Content } = Layout;
 
-const ManagementMembers = (props) => {
+const ManagementProductBases = (props) => {
   const { messages, t } = props;
   return (
     <>
@@ -34,4 +34,4 @@ const ManagementMembers = (props) => {
   );
 };
 
-export default withAdminLayout(withApollo({ ssr: false })(ManagementMembers));
+export default withAdminLayout(withApollo({ ssr: false })(ManagementProductBases));

@@ -50,7 +50,7 @@ const ProductBaseStatusBox = props => {
             <TextEditable
               defaultValue={enumToDitionary(ProductBaseVisibility)[0].id}
               defaultText={enumToDitionary(ProductBaseVisibility)[0].name}
-              renderComponent={props => (
+              renderComboBox={props => (
                 <ComboBoxEnum
                   type={ProductBaseVisibility}
                   onChange={props.handleOnChange}
@@ -66,7 +66,7 @@ const ProductBaseStatusBox = props => {
             <TextEditable
               defaultValue={enumToDitionary(ProductBaseStatus)[0].id}
               defaultText={enumToDitionary(ProductBaseStatus)[0].name}
-              renderComponent={props => (
+              renderComboBox={props => (
                 <ComboBoxEnum
                   type={ProductBaseStatus}
                   onChange={props.handleOnChange}
