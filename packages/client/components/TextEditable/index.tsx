@@ -114,7 +114,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
     onChange?.(val);
   };
 
-  // render
+  // RENDER
   const renderEditInput = () => {
     // render for input
     if(others.renderInput) {

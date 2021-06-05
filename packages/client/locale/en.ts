@@ -19,7 +19,7 @@ export const en = {
         title: 'Users',
         allUsers: 'All users',
         createUser: 'Create an user',
-        authorized: 'Authorized',
+        authorized: 'Authorization',
       },
       productBases: {
         title: 'Product bases',
@@ -44,6 +44,16 @@ export const en = {
       actions: 'Actions',
       more: 'More',
       cancel: 'Cancel',
+    },
+    authorizedTable: {
+      columns: {
+        featureName: 'Features',
+        full: 'Full',
+        create: 'Create',
+        update: 'Update',
+        delete: 'Delete',
+        read: 'List',
+      },
     },
     userTable: {
       columns: {

@@ -16,6 +16,7 @@ import ProviderEnum from '~/models/ProviderEnum';
 
 interface IProps {
   data?: any;
+  onFieldChange?: (path: string | string[], value: string) => void;
 }
 const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
@@ -63,7 +64,11 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
   useImperativeHandle(ref, () => ({
     onSubmit,
     getFieldsValue,
+    validateFields,
   }));
+
+  const getFieldsValue = () => form.getFieldsValue();
+  const validateFields = () => form.validateFields();
 
   const onSubmit = () => {
     form
@@ -88,7 +93,9 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
     form.setFieldsValue({ image: filename });
   };
 
-  const getFieldsValue = () => form.getFieldsValue();
+  const onTitleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    props.onFieldChange(['productBase', 'title'], form.getFieldValue(['productBase', 'title']));
+  };
 
   return (
     <Form
@@ -100,7 +107,7 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
       layout="vertical"
     >
       <Form.Item
-        name="title"
+        name={['productBase', 'title']}
         rules={[
           {
             required: true,
@@ -111,25 +118,25 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
         ]}
         label={t('productBaseBasicForm.label.title')}
       >
-        <Input />
+        <Input onChange={onTitleChange} />
       </Form.Item>
 
       <Form.Item
-        name="description"
+        name={['productBase', 'description']}
         label={t('productBaseBasicForm.label.description')}
       >
         <Input.TextArea />
       </Form.Item>
 
       <Form.Item
-        name="provider_id"
+        name={['productBase', 'provider_id']}
         label={t('productBaseBasicForm.label.provider')}
       >
         <ComboBoxEnum type={ProviderEnum} />
       </Form.Item>
 
       <Form.Item
-        name="thumbnails"
+        name={['productBase', 'thumbnails']}
         label={t('productBaseBasicForm.label.thumbnails')}
       >
         <UploadImage setImageUrl={onSetImageUrl} />

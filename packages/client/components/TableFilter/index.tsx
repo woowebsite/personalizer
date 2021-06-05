@@ -14,8 +14,6 @@ export declare type FilterForm<RecordType> = (
 
 interface TableFilterProps<RecordType> extends TableProps<RecordType> {
   filterOptions: FilterConfig;
-  modelName: string;
-  pluralName: string;
   filterRender: (any) => React.ReactNode;
   tableRender: React.FunctionComponent<TableProps<RecordType>>;
   query: (any?) => QueryResult<any, OperationVariables>;
@@ -25,14 +23,7 @@ interface TableFilterProps<RecordType> extends TableProps<RecordType> {
 const TableFilter = forwardRef<any, TableFilterProps<any>>(
   ({ defaultFilter = defaultConditions, filterOptions, ...props }, ref) => {
     // DECLARES ================================================================================================
-    const {
-      children,
-      filterRender,
-      tableRender,
-      modelName,
-      pluralName,
-      ...others
-    } = props;
+    const { children, filterRender, tableRender, ...others } = props;
     const { data, loading, refetch } = props.query({
       variables: { where: defaultFilter },
     });
@@ -93,7 +84,8 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>(
           </div>
           <div className="table-wrapper">
             {tableRender({
-              dataSource: data && data[camelCase(pluralName)].rows,
+              dataSource:
+                data && data[camelCase(filterOptions.pluralName)].rows,
             })}
           </div>
         </Card>
