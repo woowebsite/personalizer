@@ -1,10 +1,32 @@
 import { resolver } from 'graphql-sequelize';
-import { ProductBase } from '../../models';
+import { ProductBase, ProductBaseMeta, TermTaxonomy } from '../../models';
+import { ProductBaseTerm } from '../../models/productBaseTerm.model';
+import { Term } from '../../models/term.model';
 
 export const Query = {
   productBase: resolver(ProductBase, {
     before: async (findOptions, { where }, context) => {
       findOptions.where = where;
+      findOptions.include = [
+        { model: ProductBaseMeta },
+        {
+          model: ProductBaseTerm,
+          require: true,
+          include: [
+            {
+              model: TermTaxonomy,
+              where: { taxonomy: ['job_priority', 'job_status'] },
+              require: true,
+              include: [
+                {
+                  model: Term,
+                  require: true,
+                },
+              ],
+            },
+          ],
+        },
+      ];
       return findOptions;
     },
     after: productBase => productBase,

@@ -42,29 +42,9 @@ export class ProductBase extends Model<ProductBase> {
   publishDate: Date;
 
   // Reference ================================
-  // tags
-  @BelongsToMany(() => ProductBaseTag, () => Tag)
-  tags: ProductBaseTag[];
-
   // images
   @BelongsToMany(() => ProductBaseImage, () => Image)
   images: ProductBaseImage[];
-
-  // category
-  @ForeignKey(() => Category)
-  @Column
-  categoryId: number;
-
-  @BelongsTo(() => Category)
-  category: Category;
-
-  // provider
-  @ForeignKey(() => Provider)
-  @Column
-  providerId: number;
-
-  @BelongsTo(() => Provider)
-  provider: Provider;
 
   // user
   @ForeignKey(() => User)
@@ -73,4 +53,7 @@ export class ProductBase extends Model<ProductBase> {
 
   @BelongsTo(() => User)
   user: User;
+
+  // Metadata ==================================
+
 }

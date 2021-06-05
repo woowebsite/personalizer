@@ -118,12 +118,22 @@ export default function getMenuData() {
 }
 
 export function getMenuByUrl(url) {
+  let menuUrl = url;
+
+  // get all children menu
   const menus = getMenuData().reduce((arr: any[], m) => {
     arr.push(...m.children);
     return arr;
   }, []);
 
-  const menu = menus.find(x => x.url === url);
+  // For detail url. Ex: /customer/job/{id}
+  const path = url.split('/');
+  const lastWord = path[path.length - 1];
+  if (+lastWord) {
+    menuUrl = `/${path[1]}/${path[2]}/{id}`; //  Ex: /customer/job/{id}
+  }
+
+  const menu = menus.find(x => x.url === menuUrl);
   return menu;
 }
 

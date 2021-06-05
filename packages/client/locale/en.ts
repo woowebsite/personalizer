@@ -184,6 +184,54 @@ export const en = {
       },
     },
   },
+  '/admin/productbases/[id]': {
+    title: 'Product Bases',
+    subTitle: 'This is subtitle',
+    pageHeader: {
+      buttons: {
+        create: 'Add new',
+      },
+    },
+    publishBox: {
+      title: 'Publish',
+      label: {
+        status: 'Status',
+        visibility: 'Visibility',
+        publish: 'Publish',
+      },
+    },
+    printAreaBox: {
+      title: 'Print Areas',
+      columns: {
+        name: 'Name',
+        width: 'Width',
+        height: 'Height',
+        action: 'Action',
+      },
+    },
+    combinePrintAreaBox: {
+      title: 'Combine Print Areas',
+      columns: {
+        name: 'Name',
+        width: 'Width',
+        height: 'Height',
+        action: 'Action',
+      },
+    },
+    mockupBox: {
+      title: 'Mockups',
+      fields: {
+        name: 'Name',
+        background: 'Background',
+        dimensions: 'Dimensions',
+        preview: 'Preview',
+        noise: 'Noise',
+        renderNoise: 'Render Noise',
+        renderNoiseDesc:
+          'Extra noise layer will be placed on the top of your mockup to make it look more realistic',
+      },
+    },
+  },
   '/admin/users/new': {
     title: 'Create an user',
   },

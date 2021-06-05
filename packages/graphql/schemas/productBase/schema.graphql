@@ -1,6 +1,12 @@
 type ProductBase {
   id: Int
   title: String
+  description: String
+  status: String
+  primaryImageUrl: String
+  visibility: String
+  publishDate: Date
+
   user: User
 }
 
@@ -14,8 +20,10 @@ input ProductBaseInput {
   id: Int
   title: String
   description: String
+  status: String
+  primaryImageUrl: String
+  visibility: String
   user_id: Int
-  provider_id: Int
 }
 
 type ProductBasesPaged {

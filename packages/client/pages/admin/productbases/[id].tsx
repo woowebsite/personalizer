@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
 import { gql } from '@apollo/client';
 
@@ -9,12 +9,18 @@ import Card from 'components/Card';
 // graphql
 import { withApollo } from 'apollo/apollo';
 import { useRouter } from 'next/dist/client/router';
-import userService from 'services/userService';
-import { productBaseQuery } from 'services/productBaseService';
+import productBaseService, {
+  productBaseQuery,
+} from 'services/productBaseService';
 
 // inner components
 import ProductBaseBasicForm from '~/features/productBases/ProductBaseBasicForm';
 import SocialConenct from '~/features/SocialConnect';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
+import ProductBaseStatus from '~/features/productBases/ProductBaseStatus';
+import ProductBasePrintArea from '~/features/productBases/ProductBasePrintArea';
+import ProductBaseMockup from '~/features/productBases/ProductBaseMockup';
+import ProductBaseCombinePrintArea from '~/features/productBases/ProductBaseCombinePrintArea';
 
 const { Content } = Layout;
 
@@ -24,14 +30,39 @@ const ProductBaseDetail = props => {
   const { messages, t, data, query } = props;
   const { id } = router.query;
   const formRef: any = React.createRef();
+  const [upsertProductBase] = productBaseService.upsert(); //(userQueries.UPSERT_USER);
+  const [title, setTitle] = useState(data.productBase.title);
 
   // EVENTS
-  const onSave = () => {
-    formRef.current.onSubmit();
+  const onSave = async () => {
+    let isValid = true;
+    await formRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+
+    // prepare data
+    const formValues = formRef.current.getFieldsValue();
+    const metadataFields = {
+      ...formValues.metadata,
+    };
+    const taxonomyFields = {
+      ...formValues.taxonomies,
+    };
+    // parse
+    const productBase = formValues.productBase;
+    const metadata = fieldsToMetadata(metadataFields);
+    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
+
+    upsertProductBase({
+      variables: { productBase, metadata, taxonomies },
+    });
+  };
+
+  const handleFieldChanged = (path, title: string) => {
+    setTitle(title);
   };
 
   // RENDER
-  const title = data.productBase.title || 'Unknow name';
   return (
     <>
       <PageHeader
@@ -52,16 +83,18 @@ const ProductBaseDetail = props => {
         <Row gutter={24}>
           <Col span="12">
             <Card className="pt-3">
-              <ProductBaseBasicForm ref={formRef} data={data.productBase} />
+              <ProductBaseBasicForm
+                ref={formRef}
+                onFieldChange={handleFieldChanged}
+                data={data.productBase}
+              />
             </Card>
           </Col>
-          <Col span="12">
-            <Card>
-              <Typography.Title level={5} className="mb-3">
-                {t('socialBox.title')}
-              </Typography.Title>
-              <SocialConenct />
-            </Card>
+          <Col span="8">
+            <ProductBaseStatus />
+            <ProductBasePrintArea />
+            <ProductBaseMockup />
+            <ProductBaseCombinePrintArea />
           </Col>
         </Row>
       </Content>
@@ -75,7 +108,7 @@ ProductBaseDetail.getInitialProps = async ({ ctx }) => {
   const { res, req, query, pathname, apolloClient } = ctx;
 
   const { data, loading, refetch } = await apolloClient.query({
-    query: productBaseQuery.get(),
+    query: productBaseQuery.get,
     variables: {
       where: { id: parseInt(query.id) },
     },
