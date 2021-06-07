@@ -18,10 +18,9 @@ const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
     getFieldsValue,
     validateFields,
   }));
-  
+
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
-
 
   // EFFECT
   useEffect(
@@ -33,28 +32,20 @@ const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
     [initialValues],
   );
 
-  const formSetFields = job => {
+  const formSetFields = pb => {
     form.setFields([
-      // taxonomies
+      // product base
       {
-        name: ['taxonomies', 'job_status'],
-        value: parseInt(
-          job.job_status ? job.job_status.value : ProductBaseStatus.Actived,
-        ),
-      },
-
-      // metadata
-      {
-        name: ['metadata', 'employee'],
-        value: job.employee,
+        name: ['productBase', 'status'],
+        value: pb.status,
       },
       {
-        name: ['metadata', 'leader'],
-        value: job.leader,
+        name: ['productBase', 'visibility'],
+        value: pb.visibility,
       },
       {
-        name: ['metadata', 'customer'],
-        value: job.customer,
+        name: ['productBase', 'publishDate'],
+        value: pb.publishDate,
       },
     ]);
   };
@@ -79,11 +70,11 @@ const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
             <TextEditable
               defaultValue={enumToDitionary(ProductBaseStatus)[0].id}
               defaultText={enumToDitionary(ProductBaseStatus)[0].name}
-              renderComboBox={props => (
+              renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBoxEnum
+                  {...rest}
+                  onChange={handleOnChange}
                   type={ProductBaseStatus}
-                  onChange={props.handleOnChange}
-                  {...props}
                 />
               )}
             />
@@ -95,11 +86,11 @@ const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
             <TextEditable
               defaultValue={enumToDitionary(ProductBaseVisibility)[0].id}
               defaultText={enumToDitionary(ProductBaseVisibility)[0].name}
-              renderComboBox={props => (
+              renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBoxEnum
+                  {...rest}
+                  onChange={handleOnChange}
                   type={ProductBaseVisibility}
-                  onChange={props.handleOnChange}
-                  {...props}
                 />
               )}
             />

@@ -9,3 +9,8 @@ export const enumToDitionary = (type): any[] => {
     }));
   return dataSource;
 };
+
+export const enumToTranslate = (type, enumName, value, t) => {
+  const label = type[value];
+  return t(`enum.${enumName}.${label}`);
+};
