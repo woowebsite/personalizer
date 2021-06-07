@@ -6,8 +6,10 @@ type ProductBase {
   primaryImageUrl: String
   visibility: String
   publishDate: Date
-
   user: User
+
+  metadata: [ProductBaseMeta]
+  productBaseTerms: [ProductBaseTerm]
 }
 
 input ProductBaseWhere {
@@ -22,6 +24,7 @@ input ProductBaseInput {
   description: String
   status: String
   primaryImageUrl: String
+  publishDate: Date
   visibility: String
   user_id: Int
 }

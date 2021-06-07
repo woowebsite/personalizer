@@ -10,6 +10,7 @@ import {
 } from 'sequelize-typescript';
 import { UserTerm } from './userTerm.model';
 import { Term } from './term.model';
+import { ProductBaseTerm } from './productBaseTerm.model';
 
 @Table({ timestamps: false })
 export class TermTaxonomy extends Model<TermTaxonomy> {
@@ -48,4 +49,7 @@ export class TermTaxonomy extends Model<TermTaxonomy> {
   // foreign 
   @HasMany(() => UserTerm)
   userTerms: UserTerm[];
+  
+  @HasMany(() => ProductBaseTerm)
+  productBaseTerms: ProductBaseTerm[];
 }
