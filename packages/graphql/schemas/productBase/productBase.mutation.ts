@@ -5,7 +5,7 @@ import { ProductBaseTerm } from '../../models/productBaseTerm.model';
 
 export const Mutation = {
   upsertProductBase: resolver(ProductBase, {
-    before: async (findOptions, { data }, ctx) => {
+    before: async (findOptions, { data, taxonomies }, ctx) => {
       const { currentUser } = ctx;
       const obj = { ...data, userId: currentUser.id };
 
@@ -14,12 +14,12 @@ export const Mutation = {
       });
 
       // Update taxonomyRelationship
-      if (productBase) {
-        const taxonomies = data.taxonomies.map(termId => ({
+      if (productBase && taxonomies) {
+        const pdterms = taxonomies.map(termId => ({
           term_taxonomy_id: termId,
           ref_id: productBase.id,
         }));
-        await ProductBaseTerm.bulkCreate(taxonomies);
+        await ProductBaseTerm.bulkCreate(pdterms);
       }
       return productBase;
     },

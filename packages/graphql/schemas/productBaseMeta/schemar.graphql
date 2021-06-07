@@ -1,0 +1,7 @@
+input ProductBaseMetaInput {
+  ref_id: Int
+  key: String
+  value: String
+  data: String
+  type: String
+}

@@ -32,6 +32,9 @@ export const columns = (t): ColumnsType<any> => {
       dataIndex: 'title',
       key: 'title',
       width: '25%',
+      render: (text, record) => {
+        return <Link href={`/admin/productbases/${record.id}`}>{text}</Link>;
+      },
     },
     {
       title: t('productBaseTable.columns.createdAt'),

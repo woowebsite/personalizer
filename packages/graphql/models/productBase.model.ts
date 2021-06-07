@@ -6,6 +6,8 @@ import {
   ForeignKey,
   AllowNull,
   BelongsToMany,
+  Default,
+  HasMany,
 } from 'sequelize-typescript';
 import { User } from './user.model';
 import { Category } from './category.model';
@@ -14,6 +16,9 @@ import { Provider } from './provider.model';
 import { Image } from './image.model';
 import { ProductBaseImage } from './productbaseimage.model';
 import { ProductBaseTag } from './productBaseTag.model';
+import StatusType from '../constants/StatusType';
+import { ProductBaseMeta } from './productBaseMeta.model';
+import { ProductBaseTerm } from './productBaseTerm.model';
 
 @Table({ timestamps: true })
 export class ProductBase extends Model<ProductBase> {
@@ -26,9 +31,10 @@ export class ProductBase extends Model<ProductBase> {
   @Column
   description: string;
 
+  @Default(StatusType.Actived)
   @Column
   status: string;
- 
+
   @Column
   primaryImageUrl: string;
 
@@ -39,37 +45,9 @@ export class ProductBase extends Model<ProductBase> {
   publishDate: Date;
 
   // Reference ================================
-  // tags
-  @BelongsToMany(() => ProductBaseTag, () => Tag)
-  tags: ProductBaseTag[];
-
   // images
   @BelongsToMany(() => ProductBaseImage, () => Image)
   images: ProductBaseImage[];
-
-  // primary image
-  // @ForeignKey(() => Image)
-  // @Column
-  // primaryImageId: number;
-
-  // @BelongsTo(() => Image)
-  // primaryImage: Image;
-
-  // category
-  @ForeignKey(() => Category)
-  @Column
-  categoryId: number;
-
-  @BelongsTo(() => Category)
-  category: Category;
-
-  // provider
-  @ForeignKey(() => Provider)
-  @Column
-  providerId: number;
-
-  @BelongsTo(() => Provider)
-  provider: Provider;
 
   // user
   @ForeignKey(() => User)
@@ -78,4 +56,12 @@ export class ProductBase extends Model<ProductBase> {
 
   @BelongsTo(() => User)
   user: User;
+
+  @HasMany(() => ProductBaseMeta)
+  metadata: ProductBaseMeta[];
+
+  @HasMany(() => ProductBaseTerm)
+  productBaseTerms: ProductBaseTerm[];
+
+  // Metadata ==================================
 }

@@ -6,4 +6,5 @@ export const defaultConditions = {
 
 export interface FilterConfig {
   modelName: string;
+  pluralName: string;
 }

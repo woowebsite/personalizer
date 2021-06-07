@@ -42,8 +42,10 @@ const ProductBaseTable = props => {
   return (
     <>
       <TableFilter
-        modelName="ProductBase"
-        pluralName="ProductBases"
+        filterOptions={{
+          modelName: 'ProductBase',
+          pluralName: 'ProductBases',
+        }}
         query={productBaseService.getAll}
         filterRender={props => renderFilter(props)}
         tableRender={props => renderTable(props)}

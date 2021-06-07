@@ -10,12 +10,14 @@ import useTranslate from 'hooks/useTranslate';
 
 // graphql
 import productBaseService from 'services/productBaseService';
-import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
+import ComboBoxTaxonomy from '~/components/ComboBoxTaxonomy';
 import ComboBoxEnum from '~/components/ComboBoxEnum';
 import ProviderEnum from '~/models/ProviderEnum';
+import ProductBaseTaxonomy from '../constants/ProductBaseTaxonomy';
 
 interface IProps {
   data?: any;
+  onFieldChange?: (path: string | string[], value: string) => void;
 }
 const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
   // DECLARES
@@ -32,15 +34,15 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
 
       // taxonomies
       {
-        name: ['taxonomies', TaxonomyType.ProductBase_Category],
-        value: productBase[TaxonomyType.ProductBase_Category]
-          ? parseInt(productBase[TaxonomyType.ProductBase_Category].value, 10)
+        name: ['taxonomies', ProductBaseTaxonomy.ProductBase_Category],
+        value: productBase[ProductBaseTaxonomy.ProductBase_Category]
+          ? parseInt(productBase[ProductBaseTaxonomy.ProductBase_Category].value, 10)
           : null,
       },
       {
-        name: ['taxonomies', TaxonomyType.ProductBase_Tag],
-        value: productBase[TaxonomyType.ProductBase_Tag]
-          ? parseInt(productBase[TaxonomyType.ProductBase_Tag].value, 10)
+        name: ['taxonomies', ProductBaseTaxonomy.ProductBase_Tag],
+        value: productBase[ProductBaseTaxonomy.ProductBase_Tag]
+          ? parseInt(productBase[ProductBaseTaxonomy.ProductBase_Tag].value, 10)
           : null,
       },
 
@@ -63,7 +65,11 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
   useImperativeHandle(ref, () => ({
     onSubmit,
     getFieldsValue,
+    validateFields,
   }));
+
+  const getFieldsValue = () => form.getFieldsValue();
+  const validateFields = () => form.validateFields();
 
   const onSubmit = () => {
     form
@@ -88,7 +94,9 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
     form.setFieldsValue({ image: filename });
   };
 
-  const getFieldsValue = () => form.getFieldsValue();
+  const onTitleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    props.onFieldChange(['productBase', 'title'], form.getFieldValue(['productBase', 'title']));
+  };
 
   return (
     <Form
@@ -100,7 +108,7 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
       layout="vertical"
     >
       <Form.Item
-        name="title"
+        name={['productBase', 'title']}
         rules={[
           {
             required: true,
@@ -111,42 +119,42 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
         ]}
         label={t('productBaseBasicForm.label.title')}
       >
-        <Input />
+        <Input onChange={onTitleChange} />
       </Form.Item>
 
       <Form.Item
-        name="description"
+        name={['productBase', 'description']}
         label={t('productBaseBasicForm.label.description')}
       >
         <Input.TextArea />
       </Form.Item>
 
       <Form.Item
-        name="provider_id"
+        name={['productBase', 'provider_id']}
         label={t('productBaseBasicForm.label.provider')}
       >
         <ComboBoxEnum type={ProviderEnum} />
       </Form.Item>
 
       <Form.Item
-        name="thumbnails"
+        name={['productBase', 'thumbnails']}
         label={t('productBaseBasicForm.label.thumbnails')}
       >
         <UploadImage setImageUrl={onSetImageUrl} />
       </Form.Item>
 
       <Form.Item
-        name={['taxonomies', TaxonomyType.ProductBase_Category]}
+        name={['taxonomies', ProductBaseTaxonomy.ProductBase_Category]}
         label={t('productBaseBasicForm.label.categories')}
       >
-        <ComboBoxTaxonomy type={TaxonomyType.ProductBase_Category} />
+        <ComboBoxTaxonomy type={ProductBaseTaxonomy.ProductBase_Category} />
       </Form.Item>
 
       <Form.Item
-        name={['taxonomies', TaxonomyType.ProductBase_Tag]}
+        name={['taxonomies', ProductBaseTaxonomy.ProductBase_Tag]}
         label={t('productBaseBasicForm.label.tags')}
       >
-        <ComboBoxTaxonomy type={TaxonomyType.ProductBase_Tag} />
+        <ComboBoxTaxonomy type={ProductBaseTaxonomy.ProductBase_Tag} />
       </Form.Item>
     </Form>
   );

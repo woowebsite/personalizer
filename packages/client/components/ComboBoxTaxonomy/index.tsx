@@ -1,5 +1,4 @@
 import React from 'react';
-import TaxonomyType from './TaxonomyType';
 import { Select } from 'antd';
 
 // graphql
@@ -22,5 +21,3 @@ const ComboBoxTaxonomy = ({ type, ...others }) => {
   );
 };
 export default ComboBoxTaxonomy;
-
-export { TaxonomyType };

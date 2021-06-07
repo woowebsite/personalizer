@@ -9,46 +9,62 @@ import Card from 'components/Card';
 // graphql
 import { withApollo } from 'apollo/apollo';
 import { useRouter } from 'next/dist/client/router';
-import userService from 'services/userService';
 import productBaseService, {
   productBaseQuery,
 } from 'services/productBaseService';
 
 // inner components
 import ProductBaseBasicForm from '~/features/productBases/ProductBaseBasicForm';
+import SocialConenct from '~/features/SocialConnect';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 import ProductBaseStatus from '~/features/productBases/ProductBaseStatus';
 import ProductBasePrintArea from '~/features/productBases/ProductBasePrintArea';
-import ProductBaseCombinePrintArea from '~/features/productBases/ProductBaseCombinePrintArea';
 import ProductBaseMockup from '~/features/productBases/ProductBaseMockup';
-import { fieldsToMetadata } from '~/shared/metadataHelper';
+import ProductBaseCombinePrintArea from '~/features/productBases/ProductBaseCombinePrintArea';
 
 const { Content } = Layout;
 
-const ProductBaseCreate = props => {
+const ProductBaseDetail = props => {
   // DECLARE
-  const { messages, t, data } = props;
+  const router = useRouter();
+  const { messages, t, data, query } = props;
+  const { id } = router.query;
   const formRef: any = React.createRef();
+  const formStatusRef: any = React.createRef();
   const [upsertProductBase] = productBaseService.upsert(); //(userQueries.UPSERT_USER);
-  const [title, setTitle] = useState(messages.title);
+  const [title, setTitle] = useState(data.productBase.title);
 
   // EVENTS
   const onSave = async () => {
-    // check if valid all forms
     let isValid = true;
     await formRef.current.validateFields().catch(() => {
       isValid = false;
     });
+    await formStatusRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+
+    if (!isValid) return;
 
     // prepare data
     const formValues = formRef.current.getFieldsValue();
+    const statusValues = formStatusRef.current.getFieldsValue();
+
     const metadataFields = {
       ...formValues.metadata,
     };
     const taxonomyFields = {
       ...formValues.taxonomies,
+      ...statusValues.taxonomies,
     };
     // parse
-    const productBase = formValues.productBase;
+    const productBase = data.productBase
+      ? {
+          id: data.productBase.id,
+          ...formValues.productBase,
+          ...statusValues.productBase,
+        }
+      : formValues.productBase;
     const metadata = fieldsToMetadata(metadataFields);
     const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
 
@@ -80,16 +96,17 @@ const ProductBaseCreate = props => {
       />
       <Content>
         <Row gutter={24}>
-          <Col span="16">
+          <Col span="12">
             <Card className="pt-3">
               <ProductBaseBasicForm
                 ref={formRef}
                 onFieldChange={handleFieldChanged}
+                data={data.productBase}
               />
             </Card>
           </Col>
           <Col span="8">
-            <ProductBaseStatus />
+            <ProductBaseStatus ref={formStatusRef} />
             <ProductBasePrintArea />
             <ProductBaseMockup />
             <ProductBaseCombinePrintArea />
@@ -100,4 +117,20 @@ const ProductBaseCreate = props => {
   );
 };
 
-export default withAdminLayout(withApollo({ ssr: false })(ProductBaseCreate));
+export default withAdminLayout(withApollo({ ssr: true })(ProductBaseDetail));
+
+ProductBaseDetail.getInitialProps = async ({ ctx }) => {
+  const { res, req, query, pathname, apolloClient } = ctx;
+
+  const { data, loading, refetch } = await apolloClient.query({
+    query: productBaseQuery.get,
+    variables: {
+      where: { id: parseInt(query.id) },
+    },
+  });
+
+  return {
+    query,
+    data,
+  };
+};
