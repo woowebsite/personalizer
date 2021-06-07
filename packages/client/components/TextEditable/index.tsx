@@ -1,7 +1,5 @@
 import { Button, Select, Typography, SelectProps } from 'antd';
 import React, { useEffect, useState } from 'react';
-import ComboBoxEnum from '~/components/ComboBoxEnum';
-import ProductBaseStatus from '~/models/ProductBaseStatus';
 import styles from './style.module.scss';
 import KeyCode from 'rc-util/lib/KeyCode';
 

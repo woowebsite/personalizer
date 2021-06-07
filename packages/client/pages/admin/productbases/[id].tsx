@@ -30,6 +30,7 @@ const ProductBaseDetail = props => {
   const { messages, t, data, query } = props;
   const { id } = router.query;
   const formRef: any = React.createRef();
+  const formStatusRef: any = React.createRef();
   const [upsertProductBase] = productBaseService.upsert(); //(userQueries.UPSERT_USER);
   const [title, setTitle] = useState(data.productBase.title);
 
@@ -39,17 +40,31 @@ const ProductBaseDetail = props => {
     await formRef.current.validateFields().catch(() => {
       isValid = false;
     });
+    await formStatusRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+
+    if (!isValid) return;
 
     // prepare data
     const formValues = formRef.current.getFieldsValue();
+    const statusValues = formStatusRef.current.getFieldsValue();
+
     const metadataFields = {
       ...formValues.metadata,
     };
     const taxonomyFields = {
       ...formValues.taxonomies,
+      ...statusValues.taxonomies,
     };
     // parse
-    const productBase = formValues.productBase;
+    const productBase = data.productBase
+      ? {
+          id: data.productBase.id,
+          ...formValues.productBase,
+          ...statusValues.productBase,
+        }
+      : formValues.productBase;
     const metadata = fieldsToMetadata(metadataFields);
     const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
 
@@ -91,7 +106,7 @@ const ProductBaseDetail = props => {
             </Card>
           </Col>
           <Col span="8">
-            <ProductBaseStatus />
+            <ProductBaseStatus ref={formStatusRef} />
             <ProductBasePrintArea />
             <ProductBaseMockup />
             <ProductBaseCombinePrintArea />

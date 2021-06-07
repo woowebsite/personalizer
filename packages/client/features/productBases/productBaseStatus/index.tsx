@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Form, Button, Select, Typography } from 'antd';
+import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { Form, Button, Select, Typography, DatePicker } from 'antd';
 import { useIntl } from 'react-intl';
 import Card from 'components/Card';
 import ComboBoxEnum from '~/components/ComboBoxEnum';
@@ -8,11 +8,20 @@ import { enumToDitionary } from '~/shared/enumHelper';
 import ProductBaseStatus from '../constants/ProductBaseStatus';
 import ProductBaseVisibility from '../constants/ProductBaseVisibility';
 
-const ProductBaseStatusBox = props => {
+const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
   const { initialValues, userId } = props;
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
+
+  useImperativeHandle(ref, () => ({
+    getFieldsValue,
+    validateFields,
+  }));
+  
+  const getFieldsValue = () => form.getFieldsValue();
+  const validateFields = () => form.validateFields();
+
 
   // EFFECT
   useEffect(
@@ -64,7 +73,7 @@ const ProductBaseStatusBox = props => {
           className="status-form"
         >
           <Form.Item
-            name={['metadata', 'status']}
+            name={['productBase', 'status']}
             label={t('publishBox.label.status')}
           >
             <TextEditable
@@ -80,7 +89,7 @@ const ProductBaseStatusBox = props => {
             />
           </Form.Item>
           <Form.Item
-            name={['metadata', 'visibility']}
+            name={['productBase', 'visibility']}
             label={t('publishBox.label.visibility')}
           >
             <TextEditable
@@ -96,25 +105,15 @@ const ProductBaseStatusBox = props => {
             />
           </Form.Item>
           <Form.Item
-            name={['metadata', 'publish']}
+            name={['productBase', 'publishDate']}
             label={t('publishBox.label.publish')}
           >
-            <TextEditable
-              defaultValue={enumToDitionary(ProductBaseStatus)[0].id}
-              defaultText={enumToDitionary(ProductBaseStatus)[0].name}
-              renderComboBox={props => (
-                <ComboBoxEnum
-                  type={ProductBaseStatus}
-                  onChange={props.handleOnChange}
-                  {...props}
-                />
-              )}
-            />
+            <DatePicker />
           </Form.Item>
         </Form>
       </Card>
     </>
   );
-};
+});
 
 export default ProductBaseStatusBox;
