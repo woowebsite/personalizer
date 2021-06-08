@@ -4,18 +4,13 @@ import {
   Model,
   BelongsTo,
   ForeignKey,
-  AllowNull,
   BelongsToMany,
   Default,
   HasMany,
 } from 'sequelize-typescript';
 import { User } from './user.model';
-import { Category } from './category.model';
-import { Tag } from './tag.model';
-import { Provider } from './provider.model';
 import { Image } from './image.model';
 import { ProductBaseImage } from './productbaseimage.model';
-import { ProductBaseTag } from './productBaseTag.model';
 import StatusType from '../constants/StatusType';
 import { ProductBaseMeta } from './productBaseMeta.model';
 import { ProductBaseTerm } from './productBaseTerm.model';
@@ -37,6 +32,9 @@ export class ProductBase extends Model<ProductBase> {
 
   @Column
   primaryImageUrl: string;
+  
+  @Column
+  providerId: string;
 
   @Column
   visibility: string;

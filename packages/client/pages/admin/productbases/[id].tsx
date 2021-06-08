@@ -106,10 +106,10 @@ const ProductBaseDetail = props => {
             </Card>
           </Col>
           <Col span="8">
-            <ProductBaseStatus ref={formStatusRef} />
-            <ProductBasePrintArea />
-            <ProductBaseMockup />
-            <ProductBaseCombinePrintArea />
+            <ProductBaseStatus initialValues={data.productBase} ref={formStatusRef} />
+            <ProductBasePrintArea initialValues={data.productBase} />
+            <ProductBaseMockup initialValues={data.productBase} />
+            <ProductBaseCombinePrintArea initialValues={data.productBase} />
           </Col>
         </Row>
       </Content>

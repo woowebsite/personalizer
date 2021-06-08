@@ -4,9 +4,14 @@ import { useIntl } from 'react-intl';
 import Card from 'components/Card';
 import ComboBoxEnum from '~/components/ComboBoxEnum';
 import TextEditable from '~/components/TextEditable';
-import { enumToDitionary } from '~/shared/enumHelper';
+import {
+  enumToDitionary,
+  enumToTranslate,
+  getEnumOptionByValue,
+} from '~/shared/enumHelper';
 import ProductBaseStatus from '../constants/ProductBaseStatus';
 import ProductBaseVisibility from '../constants/ProductBaseVisibility';
+import dayjs from 'dayjs';
 
 const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
@@ -45,7 +50,7 @@ const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
       },
       {
         name: ['productBase', 'publishDate'],
-        value: pb.publishDate,
+        value: dayjs(pb.publishDate),
       },
     ]);
   };
@@ -68,8 +73,15 @@ const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
             label={t('publishBox.label.status')}
           >
             <TextEditable
-              defaultValue={enumToDitionary(ProductBaseStatus)[0].id}
-              defaultText={enumToDitionary(ProductBaseStatus)[0].name}
+              defaultValue={
+                initialValues &&
+                getEnumOptionByValue(ProductBaseStatus, initialValues.status).id
+              }
+              defaultText={
+                initialValues &&
+                getEnumOptionByValue(ProductBaseStatus, initialValues.status)
+                  .name
+              }
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBoxEnum
                   {...rest}
@@ -84,8 +96,20 @@ const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
             label={t('publishBox.label.visibility')}
           >
             <TextEditable
-              defaultValue={enumToDitionary(ProductBaseVisibility)[0].id}
-              defaultText={enumToDitionary(ProductBaseVisibility)[0].name}
+              defaultValue={
+                initialValues &&
+                getEnumOptionByValue(
+                  ProductBaseVisibility,
+                  initialValues.visibility,
+                ).id
+              }
+              defaultText={
+                initialValues &&
+                getEnumOptionByValue(
+                  ProductBaseVisibility,
+                  initialValues.visibility,
+                ).name
+              }
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBoxEnum
                   {...rest}
@@ -99,7 +123,15 @@ const ProductBaseStatusBox = forwardRef<any, any>((props, ref) => {
             name={['productBase', 'publishDate']}
             label={t('publishBox.label.publish')}
           >
-            <DatePicker />
+            <TextEditable
+              defaultValue={initialValues && dayjs(initialValues.publishDate)}
+              defaultText={
+                initialValues &&
+                dayjs(initialValues.publishDate).format('DD/MM/YYYY')
+              }
+            >
+              <DatePicker />
+            </TextEditable>
           </Form.Item>
         </Form>
       </Card>

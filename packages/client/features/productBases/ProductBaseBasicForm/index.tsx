@@ -31,12 +31,16 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
     form.setFields([
       { name: ['productBase', 'title'], value: productBase.title },
       { name: ['productBase', 'description'], value: productBase.description },
+      { name: ['productBase', 'providerId'], value: productBase.providerId },
 
       // taxonomies
       {
         name: ['taxonomies', ProductBaseTaxonomy.ProductBase_Category],
         value: productBase[ProductBaseTaxonomy.ProductBase_Category]
-          ? parseInt(productBase[ProductBaseTaxonomy.ProductBase_Category].value, 10)
+          ? parseInt(
+              productBase[ProductBaseTaxonomy.ProductBase_Category].value,
+              10,
+            )
           : null,
       },
       {
@@ -95,7 +99,10 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
   };
 
   const onTitleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-    props.onFieldChange(['productBase', 'title'], form.getFieldValue(['productBase', 'title']));
+    props.onFieldChange(
+      ['productBase', 'title'],
+      form.getFieldValue(['productBase', 'title']),
+    );
   };
 
   return (
@@ -107,6 +114,7 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
       onFinish={onSubmit}
       layout="vertical"
     >
+      {JSON.stringify(data)}
       <Form.Item
         name={['productBase', 'title']}
         rules={[
@@ -130,7 +138,7 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
-        name={['productBase', 'provider_id']}
+        name={['productBase', 'providerId']}
         label={t('productBaseBasicForm.label.provider')}
       >
         <ComboBoxEnum type={ProviderEnum} />

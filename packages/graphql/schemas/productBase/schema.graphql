@@ -4,6 +4,7 @@ type ProductBase {
   description: String
   status: String
   primaryImageUrl: String
+  providerId: String
   visibility: String
   publishDate: Date
   user: User
@@ -24,6 +25,7 @@ input ProductBaseInput {
   description: String
   status: String
   primaryImageUrl: String
+  providerId: String
   publishDate: Date
   visibility: String
   user_id: Int
