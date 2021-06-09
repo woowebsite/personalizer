@@ -242,6 +242,12 @@ export type MutationChangePasswordArgs = {
   password: Scalars['String'];
 };
 
+export type NameValue = {
+  __typename?: 'NameValue';
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
 export type PaginationInfo = {
   __typename?: 'PaginationInfo';
   total?: Maybe<Scalars['Int']>;
@@ -301,6 +307,8 @@ export type ProductBase = {
   user?: Maybe<User>;
   metadata?: Maybe<Array<Maybe<ProductBaseMeta>>>;
   productBaseTerms?: Maybe<Array<Maybe<ProductBaseTerm>>>;
+  productbase_category?: Maybe<NameValue>;
+  productbase_tag?: Maybe<NameValue>;
 };
 
 export type ProductBaseInput = {
@@ -503,6 +511,14 @@ export type Term = {
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   term_group?: Maybe<Scalars['Int']>;
+};
+
+export type TermRelationship = {
+  __typename?: 'TermRelationship';
+  id?: Maybe<Scalars['Int']>;
+  term_taxonomy_id?: Maybe<Scalars['Int']>;
+  order?: Maybe<Scalars['Int']>;
+  ref_id?: Maybe<Scalars['Int']>;
 };
 
 export type TermTaxonomiesPaged = {

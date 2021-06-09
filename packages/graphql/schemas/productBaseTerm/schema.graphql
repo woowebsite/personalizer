@@ -8,3 +8,6 @@ type ProductBaseTerm {
   termTaxonomy: TermTaxonomy
 }
 
+type Query {
+  productBaseTerms(where: ProductBaseWhere): [ProductBaseTerm]
+}

@@ -7,6 +7,7 @@ import {
   BelongsToMany,
   Default,
   HasMany,
+  DataType,
 } from 'sequelize-typescript';
 import { User } from './user.model';
 import { Image } from './image.model';
@@ -32,7 +33,7 @@ export class ProductBase extends Model<ProductBase> {
 
   @Column
   primaryImageUrl: string;
-  
+
   @Column
   providerId: string;
 
@@ -62,4 +63,11 @@ export class ProductBase extends Model<ProductBase> {
   productBaseTerms: ProductBaseTerm[];
 
   // Metadata ==================================
+
+  // Taxonomies ================================
+  @Column(DataType.VIRTUAL)
+  productbase_category: any;
+
+  @Column(DataType.VIRTUAL)
+  productbase_tag: any;
 }

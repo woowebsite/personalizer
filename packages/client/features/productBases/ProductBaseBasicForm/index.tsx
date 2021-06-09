@@ -114,7 +114,6 @@ const ProductBaseBasicForm = forwardRef<any, IProps>((props, ref) => {
       onFinish={onSubmit}
       layout="vertical"
     >
-      {JSON.stringify(data)}
       <Form.Item
         name={['productBase', 'title']}
         rules={[

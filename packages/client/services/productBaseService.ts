@@ -4,11 +4,53 @@ import baseQuery from './baseQuery';
 import withMutation from 'shared/withMutation';
 import withQuery from 'shared/withQuery';
 
-const definitions = {};
-export const productBaseQuery = baseQuery({
+export const pdBaseQuery = baseQuery({
   name: 'ProductBase',
   plural: 'ProductBases',
 });
+
+export const pdQuery = {
+  getProductBase: gql`
+    query GetProductBase($where: ProductBaseWhere) {
+      productBase(where: $where) {
+        id
+        title
+        description
+        status
+        primaryImageUrl
+        providerId
+        visibility
+        publishDate
+        
+        productbase_category {
+          name
+          value
+        }
+        productbase_tag {
+          name
+          value
+        }
+      }
+      productBaseTerms(where: $where) {
+        id
+        term_taxonomy_id
+        order
+        ref_id
+        termTaxonomy {
+          term {
+            name
+          }
+        }
+      }
+    }
+  `,
+};
+
+export const definitions = {
+  getJob: options => {
+    return withQuery(pdQuery.getProductBase, options);
+  },
+};
 
 const productBaseService = baseService({
   name: 'ProductBase',
