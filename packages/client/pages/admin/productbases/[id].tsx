@@ -9,9 +9,7 @@ import Card from 'components/Card';
 // graphql
 import { withApollo } from 'apollo/apollo';
 import { useRouter } from 'next/dist/client/router';
-import productBaseService, {
-  productBaseQuery,
-} from 'services/productBaseService';
+import productBaseService, { pdQuery } from 'services/productBaseService';
 
 // inner components
 import ProductBaseBasicForm from '~/features/productBases/ProductBaseBasicForm';
@@ -106,10 +104,13 @@ const ProductBaseDetail = props => {
             </Card>
           </Col>
           <Col span="8">
-            <ProductBaseStatus ref={formStatusRef} />
-            <ProductBasePrintArea />
-            <ProductBaseMockup />
-            <ProductBaseCombinePrintArea />
+            <ProductBaseStatus
+              initialValues={data.productBase}
+              ref={formStatusRef}
+            />
+            <ProductBasePrintArea initialValues={data.productBase} />
+            <ProductBaseMockup initialValues={data.productBase} />
+            <ProductBaseCombinePrintArea initialValues={data.productBase} />
           </Col>
         </Row>
       </Content>
@@ -123,7 +124,7 @@ ProductBaseDetail.getInitialProps = async ({ ctx }) => {
   const { res, req, query, pathname, apolloClient } = ctx;
 
   const { data, loading, refetch } = await apolloClient.query({
-    query: productBaseQuery.get,
+    query: pdQuery.getProductBase,
     variables: {
       where: { id: parseInt(query.id) },
     },

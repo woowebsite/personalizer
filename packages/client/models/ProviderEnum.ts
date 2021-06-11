@@ -1,6 +1,6 @@
-
 enum ProviderEnum {
-  Fulfilment = 1,
+  Fulfilment = 'F',
+  Printer = 'P',
 }
 
 export default ProviderEnum;

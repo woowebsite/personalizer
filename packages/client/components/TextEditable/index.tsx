@@ -1,4 +1,4 @@
-import { Button, Select, Typography, SelectProps } from 'antd';
+import { Button, SelectProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import styles from './style.module.scss';
 import KeyCode from 'rc-util/lib/KeyCode';
@@ -29,8 +29,9 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
 
   // Effect
   useEffect(() => {
-    if (defaultValue) {
+    if (defaultValue !== null) {
       setSelectedValue(defaultValue);
+      onChange?.(defaultValue);
     }
   }, []);
 
@@ -100,10 +101,10 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
   };
 
   const handleComboBoxChange = (value, option) => {
-    const val = {
+    const val = typeof value === 'object' ? {
       value: value.value,
       name: value.label
-    };
+    }: value;
     setTimeout(() => {
       setSelectedValue(val);
       setSelectedText(option.children);
@@ -112,7 +113,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
     onChange?.(val);
   };
 
-  // RENDER
+  // render
   const renderEditInput = () => {
     // render for input
     if(others.renderInput) {

@@ -16,12 +16,10 @@ const ComboBoxEnum: React.FC<ComboBoxEnumProps & SelectProps<any>> = ({
 }) => {
   const selectedValue = defaultValue ? parseInt(defaultValue) : null;
   // defines
-  const dataSource = Object.values<string>(type)
-    .filter(e => typeof e === 'string')
-    .map(key => ({
-      id: type[key],
-      name: key,
-    }));
+  const dataSource = Object.keys(type).map(key => ({
+    id: type[key],
+    name: key,
+  }));
 
   // render
   return (

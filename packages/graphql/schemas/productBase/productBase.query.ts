@@ -1,11 +1,16 @@
 import { resolver } from 'graphql-sequelize';
+import ProductBaseTaxonomy from '../../constants/ProductBaseTaxonomy';
 import { ProductBase, ProductBaseMeta, TermTaxonomy } from '../../models';
 import { ProductBaseTerm } from '../../models/productBaseTerm.model';
 import { Term } from '../../models/term.model';
+import { metadataToField, taxonomyToField } from '../../utils/dataUtil';
+import { enum2ArrayValues } from '../../utils/enumUtil';
 
 export const Query = {
   productBase: resolver(ProductBase, {
     before: async (findOptions, { where }, context) => {
+      const productBaseTaxonomies = enum2ArrayValues(ProductBaseTaxonomy);
+
       findOptions.where = where;
       findOptions.include = [
         { model: ProductBaseMeta },
@@ -15,7 +20,7 @@ export const Query = {
           include: [
             {
               model: TermTaxonomy,
-              where: { taxonomy: ['job_priority', 'job_status'] },
+              where: { taxonomy: productBaseTaxonomies },
               require: true,
               include: [
                 {
@@ -29,7 +34,11 @@ export const Query = {
       ];
       return findOptions;
     },
-    after: productBase => productBase,
+    after: productBase => {
+      const transferData = metadataToField(productBase);
+      const transferTerm = taxonomyToField(transferData, 'productBaseTerms');
+      return transferTerm;
+    },
   }),
   productBases: resolver(ProductBase, {
     list: true,
