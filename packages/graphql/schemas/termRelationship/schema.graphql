@@ -1,0 +1,22 @@
+type TermRelationship {
+  id: Int
+  taxonomyId: Int
+  orderBy: Int
+  entityId: Int
+  entityType: String
+
+  termTaxonomy: TermTaxonomy
+}
+
+input TermRelationshipWhere {
+  id: Int
+  entityId: Int
+  entityType: String
+  taxonomyId: Int
+}
+
+
+type Query {
+  termRelationship(where: TermRelationshipWhere): TermRelationship
+  termRelationships(where: TermRelationshipWhere): [TermRelationship]
+}

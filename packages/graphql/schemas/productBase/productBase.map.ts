@@ -3,6 +3,6 @@ import { ProductBase } from '../../models';
 
 export const ProductBaseMap = {
   user: resolver(ProductBase.associations.user),
-  productBaseTerms: resolver(ProductBase.associations.productBaseTerms),
+  termRelationships: resolver(ProductBase.associations.termRelationships),
   metadata: resolver(ProductBase.associations.metadata),
 };

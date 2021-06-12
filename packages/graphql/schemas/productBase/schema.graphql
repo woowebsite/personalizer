@@ -10,7 +10,7 @@ type ProductBase {
 
   user: User
   metadata: [ProductBaseMeta]
-  productBaseTerms: [ProductBaseTerm]
+  termRelationships: [TermRelationship]
 
   productbase_category: NameValue
   productbase_tag: NameValue

@@ -1,7 +1,7 @@
 import { resolver } from 'graphql-sequelize';
-import { ProductBase } from '../../models';
+import { ProductBase, TermRelationship } from '../../models';
 import to from 'await-to-js';
-import { ProductBaseTerm } from '../../models/productBaseTerm.model';
+import EntityType from '../../constants/EntityType';
 
 export const Mutation = {
   upsertProductBase: resolver(ProductBase, {
@@ -15,12 +15,14 @@ export const Mutation = {
 
       // Update taxonomyRelationship
       if (productBase && taxonomies) {
-        const pdterms = taxonomies.map(termId => ({
-          term_taxonomy_id: termId,
-          ref_id: productBase.id,
+        const pdterms = taxonomies.map(taxonomy => ({
+          taxonomyId: taxonomy,
+          entityId: productBase.id,
+          entityType: EntityType.ProductBase,
         }));
-        await ProductBaseTerm.bulkCreate(pdterms);
+        await TermRelationship.bulkCreate(pdterms);
       }
+
       return productBase;
     },
     after: productBase => {

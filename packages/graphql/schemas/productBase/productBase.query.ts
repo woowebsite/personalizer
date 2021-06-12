@@ -1,7 +1,11 @@
 import { resolver } from 'graphql-sequelize';
 import ProductBaseTaxonomy from '../../constants/ProductBaseTaxonomy';
-import { ProductBase, ProductBaseMeta, TermTaxonomy } from '../../models';
-import { ProductBaseTerm } from '../../models/productBaseTerm.model';
+import {
+  ProductBase,
+  ProductBaseMeta,
+  TermRelationship,
+  TermTaxonomy,
+} from '../../models';
 import { Term } from '../../models/term.model';
 import { metadataToField, taxonomyToField } from '../../utils/dataUtil';
 import { enum2ArrayValues } from '../../utils/enumUtil';
@@ -15,7 +19,7 @@ export const Query = {
       findOptions.include = [
         { model: ProductBaseMeta },
         {
-          model: ProductBaseTerm,
+          model: TermRelationship,
           require: true,
           include: [
             {
@@ -36,7 +40,7 @@ export const Query = {
     },
     after: productBase => {
       const transferData = metadataToField(productBase);
-      const transferTerm = taxonomyToField(transferData, 'productBaseTerms');
+      const transferTerm = taxonomyToField(transferData, 'termRelationships');
       return transferTerm;
     },
   }),

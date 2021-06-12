@@ -7,7 +7,6 @@ import {
 } from 'sequelize-typescript';
 import { User } from './user.model';
 import { ProductBase } from './productBase.model';
-import { ProductBaseImage } from './productbaseimage.model';
 
 @Table({ timestamps: true })
 export class Image extends Model<Image> {
@@ -31,14 +30,6 @@ export class Image extends Model<Image> {
 
   @BelongsTo(() => ProductBase)
   productBase: ProductBase;
-
-  // product base image
-  @ForeignKey(() => ProductBaseImage)
-  @Column
-  productBaseImageId: number;
-
-  @BelongsTo(() => ProductBaseImage)
-  productBaseImage: ProductBaseImage;
 
   // user
   @ForeignKey(() => User)

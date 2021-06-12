@@ -6,7 +6,7 @@ type TermTaxonomy {
   order: Int
   term: Term
   userTerms: [UserTerm]
-  productBaseTerms: [ProductBaseTerm]
+  termRelationships: [TermRelationship]
 }
 
 input TermTaxonomyWhere {
