@@ -6,7 +6,6 @@ import {
   ForeignKey,
   AllowNull,
 } from 'sequelize-typescript';
-import { ProductBaseTag } from './productBaseTag.model';
 import { ProductBase } from './productBase.model';
 import { User } from './user.model';
 
@@ -20,9 +19,9 @@ export class Tag extends Model<Tag> {
 
   @Column
   status: string;
-  
+
   @Column
-  type: string;   // productBase
+  type: string; // productBase
 
   // Reference ================================
   // product base
@@ -33,14 +32,6 @@ export class Tag extends Model<Tag> {
   @BelongsTo(() => ProductBase)
   productBase: ProductBase;
 
-  // product base tags
-  @ForeignKey(() => ProductBaseTag)
-  @Column
-  productBaseTagId: number;
-
-  @BelongsTo(() => ProductBaseTag)
-  productBaseTag: ProductBaseTag;
-  
   // user
   @ForeignKey(() => User)
   @Column

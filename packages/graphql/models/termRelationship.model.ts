@@ -26,11 +26,7 @@ export class TermRelationship extends Model<TermRelationship> {
   orderBy: number;
 
   @Column
-  @ForeignKey(() => ProductBase)
   entityId: number;
-
-  @BelongsTo(() => ProductBase)
-  productBase: ProductBase;
 
   @ForeignKey(() => TermTaxonomy)
   @Column

@@ -1,7 +1,6 @@
 import { resolver } from 'graphql-sequelize';
 import { ProductBase, TermRelationship } from '../../models';
 import to from 'await-to-js';
-import { ProductBaseTerm } from '../../models/productBaseTerm.model';
 import EntityType from '../../constants/EntityType';
 
 export const Mutation = {
@@ -21,7 +20,6 @@ export const Mutation = {
           entityId: productBase.id,
           entityType: EntityType.ProductBase,
         }));
-        // await ProductBaseTerm.bulkCreate(pdterms);
         await TermRelationship.bulkCreate(pdterms);
       }
 

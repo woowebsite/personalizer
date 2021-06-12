@@ -36,8 +36,6 @@ export { Role } from './role.model';
 export { Album } from './album.model';
 export { Filter } from './filter.model';
 export { ProductBase } from './productBase.model';
-export { ProductBaseImage } from './productbaseimage.model';
-export { ProductBaseTag } from './productBaseTag.model';
 export { ProductBaseMeta } from './productBaseMeta.model';
 export { Term } from './term.model';
 export { TermMeta } from './termMeta.model';

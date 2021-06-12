@@ -5,7 +5,6 @@ type TermRelationship {
   entityId: Int
   entityType: String
 
-  productBase: ProductBase
   termTaxonomy: TermTaxonomy
 }
 

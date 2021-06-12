@@ -11,7 +11,6 @@ import {
 } from 'sequelize-typescript';
 import { User } from './user.model';
 import { Image } from './image.model';
-import { ProductBaseImage } from './productbaseimage.model';
 import StatusType from '../constants/StatusType';
 import { ProductBaseMeta } from './productBaseMeta.model';
 import { TermRelationship } from './termRelationship.model';
@@ -43,12 +42,7 @@ export class ProductBase extends Model<ProductBase> {
   @Column
   publishDate: Date;
 
-  // Reference ================================
-  // images
-  @BelongsToMany(() => ProductBaseImage, () => Image)
-  images: ProductBaseImage[];
-
-  // user
+  // foreign ================================
   @ForeignKey(() => User)
   @Column
   userId: number;
@@ -59,11 +53,15 @@ export class ProductBase extends Model<ProductBase> {
   @HasMany(() => ProductBaseMeta)
   metadata: ProductBaseMeta[];
 
-  @HasMany(() => TermRelationship)
+  @HasMany(() => TermRelationship, {
+    constraints: false,
+    foreignKey: 'entityId',
+  })
   termRelationships: TermRelationship[];
+
   // Metadata ==================================
 
-  // Virtual taxonomies ========================
+  // taxonomies ========================
   @Column(DataType.VIRTUAL)
   productbase_category: any;
 

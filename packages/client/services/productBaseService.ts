@@ -11,8 +11,8 @@ export const pdBaseQuery = baseQuery({
 
 export const pdQuery = {
   getProductBase: gql`
-    query GetProductBase($entityId: Int) {
-      productBase(where: { id: $entityId }) {
+    query GetProductBase($id: Int) {
+      productBase(where: { id: $id }) {
         id
         title
         description
@@ -34,7 +34,7 @@ export const pdQuery = {
           value
         }
       }
-      termRelationships(where: { entityId: $entityId }) {
+      termRelationships(where: { entityId: $id }) {
         id
         taxonomyId
         orderBy
