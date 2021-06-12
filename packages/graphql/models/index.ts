@@ -1,4 +1,4 @@
-import { Sequelize} from 'sequelize-typescript';
+import { Sequelize } from 'sequelize-typescript';
 import { ENV } from '../config/env.config';
 import camelCase from 'lodash/camelCase';
 
@@ -39,6 +39,9 @@ export { ProductBase } from './productBase.model';
 export { ProductBaseImage } from './productbaseimage.model';
 export { ProductBaseTag } from './productBaseTag.model';
 export { ProductBaseMeta } from './productBaseMeta.model';
+export { Term } from './term.model';
+export { TermMeta } from './termMeta.model';
 export { TermTaxonomy } from './termTaxonomy.model';
+export { TermRelationship } from './termRelationship.model';
 export { Image } from './image.model';
 export { Provider } from './provider.model';
