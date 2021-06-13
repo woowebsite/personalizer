@@ -10,6 +10,7 @@ import EntityType from '~/constants/EntityType';
 import TaxonomyType from '~/constants/TaxonomyType';
 import metadataFactory from '~/services/metadataService';
 import termService from '~/services/termService';
+import metadataService from '~/services/metadataService';
 
 interface CardFormProps extends CardProps {
   title: string;
@@ -23,11 +24,11 @@ interface CardFormProps extends CardProps {
 
 const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
   // DECLARES ================================================================================================
-  const { children, entityId, entityType, formRender, okText, cancelText, className, ...others } = props;
+  const { children, entityId, entityType, taxonomyType, formRender, okText, cancelText, className, ...others } = props;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [mutate, result] = metadataFactory(entityType).upsert()
-  const [upsertTerm] = termService.upsert();
+  const [upsertTermRelationship] = metadataFactory(entityType).upsertTermRelationship();
   const [form] = Form.useForm();
 
 
@@ -52,10 +53,13 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
     .then(values => {
       const term = values.term;
       const metadata = fieldsToMetadata(values.metadata);
-      upsertTerm({
+      upsertTermRelationship({
         variables: {
+          entityId,
+          entityType,
+          taxonomy: taxonomyType,
+          termMeta: metadata,
           term,
-          metadata,
         },
       });
     })

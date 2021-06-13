@@ -15,6 +15,15 @@ input TermRelationshipWhere {
   taxonomyId: Int
 }
 
+type Mutation {
+  upsertTermRelationship(
+    entityId: Int
+    entityType: String
+    taxonomy: String
+    termMeta: [TermMetaInput]
+    term: TermInput
+  ): TermRelationship
+}
 
 type Query {
   termRelationship(where: TermRelationshipWhere): TermRelationship

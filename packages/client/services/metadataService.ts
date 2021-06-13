@@ -49,6 +49,29 @@ const metadataFactory = (entityType: EntityType) => {
       `;
       return withMutation(query, options);
     },
+
+    upsertTermRelationship: options => {
+      const query = gql`
+        mutation UpsertTermRelationship(
+          $entityId: Int
+          $entityType: String
+          $taxonomy: String
+          $termMeta: [TermMetaInput]
+          $term: TermInput
+        ) {
+          upsertTermRelationship(
+            entityId: $entityId
+            entityType: $entityType
+            taxonomy: $taxonomy
+            termMeta: $termMeta
+            term: $term
+          ) {
+            id
+          }
+        }
+      `;
+      return withMutation(query, options);
+    },
   };
 
   const metadataService = baseService({
