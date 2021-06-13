@@ -126,7 +126,7 @@ ProductBaseDetail.getInitialProps = async ({ ctx }) => {
   const { data, loading, refetch } = await apolloClient.query({
     query: pdQuery.getProductBase,
     variables: {
-      entityId: parseInt(query.id),
+      id: parseInt(query.id),
     },
   });
 

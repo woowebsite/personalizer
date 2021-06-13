@@ -3,5 +3,29 @@ type Term {
   name: String
   slug: String
   term_group: Int
+
+  termTaxonomy: TermTaxonomy
 }
 
+input TermInput {
+  id: Int
+  name: String
+  slug: String
+  term_group: Int
+}
+
+input TermMetaInput {
+  key: String
+  value: String
+  data: String
+  type: String
+}
+
+type Mutation {
+  upsertTerm(
+    data: TermInput
+    metadata: [TermMetaInput]
+    taxonomies: [Int]
+  ): Term
+  deleteTerm(id: Int): Int
+}

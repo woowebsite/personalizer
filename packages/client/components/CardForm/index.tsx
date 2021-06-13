@@ -6,22 +6,28 @@ import filterService from 'services/filterService';
 import { MutationTuple, OperationVariables, QueryResult } from '@apollo/client';
 import style from './style.module.scss'
 import { fieldsToMetadata } from '~/shared/metadataHelper';
+import EntityType from '~/constants/EntityType';
+import TaxonomyType from '~/constants/TaxonomyType';
+import metadataFactory from '~/services/metadataService';
+import termService from '~/services/termService';
 
 interface CardFormProps extends CardProps {
   title: string;
-  refId: number,
+  entityId: number,
+  entityType: EntityType,
+  taxonomyType: TaxonomyType,
   okText?: string;
   cancelText?: string;
-  mutation: (options?: any) => MutationTuple<any, OperationVariables>;
   formRender: (any) => React.ReactNode;
 }
 
 const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
   // DECLARES ================================================================================================
-  const { children, refId, formRender, okText, cancelText, className, ...others } = props;
+  const { children, entityId, entityType, formRender, okText, cancelText, className, ...others } = props;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
-  const [mutate, result] = others.mutation();
+  const [mutate, result] = metadataFactory(entityType).upsert()
+  const [upsertTerm] = termService.upsert();
   const [form] = Form.useForm();
 
 
@@ -34,11 +40,29 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
     const metadata = fieldsToMetadata(values);
     mutate({
       variables: {
-        refId,// TODO: refId is productBaseId
+        entityType,
         metadata
       },
     });
   };
+
+  const  handleOnSaveTerm = () => {
+    form
+    .validateFields()
+    .then(values => {
+      const term = values.term;
+      const metadata = fieldsToMetadata(values.metadata);
+      upsertTerm({
+        variables: {
+          term,
+          metadata,
+        },
+      });
+    })
+    .catch(errorInfo => {
+      console.log('Error: ', errorInfo);
+    });
+  }
 
   // RENDER
   const ActionButtons = () => (
@@ -46,7 +70,7 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
       <Button type="default" >
         {cancelText ?? t('buttons.cancel')}
       </Button>
-      <Button type="primary"  onClick={handleOnSave}>
+      <Button type="primary"  onClick={handleOnSaveTerm}>
         {okText ?? t('buttons.save')}
       </Button>
     </div>

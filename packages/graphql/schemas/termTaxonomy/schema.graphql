@@ -38,6 +38,6 @@ type Query {
 }
 
 type Mutation {
-  upsertTermTaxonomy(data: TermTaxonomyInput): TermTaxonomy
+  upsertTermTaxonomy(entityType: String, data: TermTaxonomyInput): TermTaxonomy
   deleteTermTaxonomy(id: Int): Int
 }

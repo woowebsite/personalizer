@@ -19,6 +19,12 @@ export class TermMeta extends Model<TermMeta> {
   @Column
   value: string;
 
+  @Column
+  type: string;
+
+  @Column
+  data: string;
+
   @ForeignKey(() => Term)
   @Column
   term_id: number;

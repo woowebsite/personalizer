@@ -5,6 +5,8 @@ import CardForm from '~/components/CardForm';
 import PrintAreaTable from './PrintAreaTable';
 import metadataFactory from '~/services/metadataService';
 import AddPrintAreaForm from './AddPrintAreaForm';
+import EntityType from '~/constants/EntityType';
+import TaxonomyType from '~/constants/TaxonomyType';
 
 const formRender = props => <AddPrintAreaForm {...props} />;
 
@@ -18,8 +20,9 @@ const ProductBasePrintArea = () => {
     <>
       <CardForm
         className="mt-4"
-        refId={1}     // productBaseId
-        mutation={metadataFactory('ProductBase').upsertMetadata}
+        entityId={1} // productBaseId
+        entityType={EntityType.ProductBase}
+        taxonomyType={TaxonomyType.ProductBase_PrintArea}
         formRender={formRender}
         title={t('printAreaBox.title')}
       >
