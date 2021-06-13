@@ -13,6 +13,12 @@ input TermRelationshipWhere {
   entityId: Int
   entityType: String
   taxonomyId: Int
+  taxonomy: String
+}
+
+type TermRelationshipPaged {
+  rows: [TermRelationship]
+  count: Int
 }
 
 type Mutation {
@@ -27,5 +33,9 @@ type Mutation {
 
 type Query {
   termRelationship(where: TermRelationshipWhere): TermRelationship
-  termRelationships(where: TermRelationshipWhere): [TermRelationship]
+  termRelationships(
+    where: TermRelationshipWhere
+    limit: Int
+    offset: Int
+  ): TermRelationshipPaged
 }

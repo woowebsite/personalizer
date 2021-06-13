@@ -14,43 +14,28 @@ const metadataFactory = (entityType: EntityType) => {
   const definitions = {
     getMetadata: options => {
       const query = gql`
-        query GetMetadata($where: ${entityType}MetadataWhere) {
-          metadata(where: $where) {
+        query GetMetadata($where: TermRelationshipWhere) {
+          termRelationships(where: $where) {
             rows {
               id
-              taxonomy
-              description
-              termName
-              order
-              term {
-                id
-                name
+              entityType
+              entityId
+              orderBy
+              termTaxonomy {
+                taxonomy
+                term {
+                  id
+                  name
+                }
               }
             }
           }
         }
       `;
-
       return withQuery(query, options);
     },
 
     upsertMetadata: options => {
-      const query = gql`
-        mutation upsertTermTaxonomy(
-          $entityId: Int
-          $metadata: [MetadataInput]
-        ) {
-          upsertTermTaxonomy(refId: $entityId, metadata: $metadata) {
-            id
-            value
-            __typename
-          }
-        }
-      `;
-      return withMutation(query, options);
-    },
-
-    upsertTermRelationship: options => {
       const query = gql`
         mutation UpsertTermRelationship(
           $entityId: Int

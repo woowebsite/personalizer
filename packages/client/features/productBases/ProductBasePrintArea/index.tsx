@@ -24,6 +24,9 @@ const ProductBasePrintArea = () => {
         entityType={EntityType.ProductBase}
         taxonomyType={TaxonomyType.ProductBase_PrintArea}
         formRender={formRender}
+        mutation={
+          metadataFactory(EntityType.ProductBase).upsertMetadata
+        }
         title={t('printAreaBox.title')}
       >
         <PrintAreaTable />

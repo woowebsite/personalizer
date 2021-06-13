@@ -19,7 +19,6 @@ export const Mutation = {
         data: term,
         metadata: termMeta,
       });
-      console.log('newTerm', newTerm);
 
       //TermTaxnomy upsert
       const newTermTaxonomy = await termTaxonomyRepository.upsert(

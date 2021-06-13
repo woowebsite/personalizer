@@ -34,15 +34,18 @@ export const pdQuery = {
           value
         }
       }
-      termRelationships(where: { entityId: $id }) {
-        id
-        taxonomyId
-        orderBy
-        entityId
-        entityType
-        termTaxonomy {
-          term {
-            name
+      termRelationships(where: {entityId:$id, entityType:"ProductBase"}) {
+        rows {
+          id
+          entityType
+          entityId
+          orderBy
+          termTaxonomy {
+            taxonomy
+            term {
+              id
+              name
+            }
           }
         }
       }

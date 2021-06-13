@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
-const originData = [];
-
-for (let i = 0; i < 4; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
+import metadataFactory from '~/services/metadataService';
+import EntityType from '~/constants/EntityType';
+import TaxonomyType from '~/constants/TaxonomyType';
 
 const EditableCell = ({
   editing,
@@ -48,7 +41,18 @@ const EditableCell = ({
 
 const PrintAreaTable = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
+  const { data, loading, refetch, error } = metadataFactory(
+    EntityType.ProductBase,
+  ).getMetadata({
+    variables: {
+      where: {
+        entityId: 1,
+        entityType: EntityType.ProductBase,
+        taxonomy: TaxonomyType.ProductBase_PrintArea,
+      },
+    },
+  });
+
   const [editingKey, setEditingKey] = useState('');
 
   const isEditing = record => record.key === editingKey;
@@ -76,11 +80,9 @@ const PrintAreaTable = () => {
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
-        setData(newData);
         setEditingKey('');
       } else {
         newData.push(row);
-        setData(newData);
         setEditingKey('');
       }
     } catch (errInfo) {
@@ -96,14 +98,20 @@ const PrintAreaTable = () => {
       editable: true,
     },
     {
-      title: 'age',
-      dataIndex: 'age',
+      title: 'front',
+      dataIndex: 'front',
       width: '15%',
       editable: true,
     },
     {
-      title: 'address',
-      dataIndex: 'address',
+      title: 'width',
+      dataIndex: 'width',
+      width: '40%',
+      editable: true,
+    },
+    {
+      title: 'height',
+      dataIndex: 'height',
       width: '40%',
       editable: true,
     },
@@ -156,18 +164,20 @@ const PrintAreaTable = () => {
   });
   return (
     <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        size="small"
-        dataSource={data}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={false}
-      />
+      {data && data.termRelationships.rows && (
+        <Table
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          size="small"
+          dataSource={data.termRelationships.rows}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          pagination={false}
+        />
+      )}
     </Form>
   );
 };

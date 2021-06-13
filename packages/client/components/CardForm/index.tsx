@@ -8,15 +8,13 @@ import style from './style.module.scss'
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 import EntityType from '~/constants/EntityType';
 import TaxonomyType from '~/constants/TaxonomyType';
-import metadataFactory from '~/services/metadataService';
-import termService from '~/services/termService';
-import metadataService from '~/services/metadataService';
 
 interface CardFormProps extends CardProps {
   title: string;
   entityId: number,
   entityType: EntityType,
   taxonomyType: TaxonomyType,
+  mutation: (options?: any) => MutationTuple<any, OperationVariables>;
   okText?: string;
   cancelText?: string;
   formRender: (any) => React.ReactNode;
@@ -24,11 +22,10 @@ interface CardFormProps extends CardProps {
 
 const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
   // DECLARES ================================================================================================
-  const { children, entityId, entityType, taxonomyType, formRender, okText, cancelText, className, ...others } = props;
+  const { children, entityId, entityType, mutation, taxonomyType, formRender, okText, cancelText, className, ...others } = props;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
-  const [mutate, result] = metadataFactory(entityType).upsert()
-  const [upsertTermRelationship] = metadataFactory(entityType).upsertTermRelationship();
+  const [mutate, result] = mutation();
   const [form] = Form.useForm();
 
 
@@ -53,7 +50,7 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
     .then(values => {
       const term = values.term;
       const metadata = fieldsToMetadata(values.metadata);
-      upsertTermRelationship({
+      mutate({
         variables: {
           entityId,
           entityType,
