@@ -127,11 +127,11 @@ export const Query = {
         taxonomy: 'job_status',
       };
 
-      let query: any = {};
-      if (where && where.title) query.title = { [Op.like]: where.title };
+      let jobQuery: any = {};
+      if (where && where.title) jobQuery.title = { [Op.like]: where.title };
 
       if (where && where.startDueDate && where.endDueDate) {
-        query.dueDate = {
+        jobQuery.dueDate = {
           [Op.between]: [where.startDueDate, where.endDueDate],
         };
       }
@@ -147,7 +147,7 @@ export const Query = {
           include: [
             {
               model: Job,
-              where: query,
+              where: jobQuery,
               include: [
                 { model: JobMeta, where: where.metadata },
                 {
@@ -175,13 +175,14 @@ export const Query = {
       return findOptions;
     },
     after: async (termTaxonomies, args) => {
+      // get JobTerm that updatedAt is max
       const jobTerms = await JobTerm.findAll({
         where: {
           id: {
             [Op.in]: Sequelize.literal(
               `(SELECT DISTINCT a.id FROM JobTerms a
-              INNER JOIN (SELECT id, MAX(updatedAt) latestUpdated
-              FROM JobTerms GROUP BY ref_id) b ON a.updatedAt = b.latestUpdated)`,
+                INNER JOIN (SELECT ref_id, MAX(updatedAt) latestUpdated
+                FROM JobTerms GROUP BY ref_id) b ON a.updatedAt = b.latestUpdated AND a.ref_id = b.ref_id)`,
             ),
           },
         },

@@ -79,9 +79,16 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     ignoreResults: true,
   });
 
+  // METHODS
   useImperativeHandle(ref, () => ({
     filter: handleFilter,
   }));
+
+  const handleFilter = values => {
+    const hasValue = Object.values(values).some(x => x !== undefined);
+    if (hasValue) refetch({ where: { ...priorConditions, ...values } });
+    else refetch();
+  };
 
   // browser code
   if (typeof window !== 'undefined') {
@@ -89,16 +96,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     if (data) NProgress.done();
   }
 
-  if (loading) return <div />;
-  const workflows = cardDecorator(data.workflows);
-
   // EVENTS
-  const handleFilter = values => {
-    const hasValue = Object.values(values).some(x => x !== undefined);
-    if (hasValue) refetch({ where: { ...priorConditions, ...values } });
-    else refetch();
-  };
-
   const setEventBus = handle => {
     eventBus = handle;
   };
@@ -126,6 +124,9 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   };
 
   // RENDER
+  if (loading) return <div />;
+  const workflows = cardDecorator(data.workflows);
+
   return (
     <>
       <Board
