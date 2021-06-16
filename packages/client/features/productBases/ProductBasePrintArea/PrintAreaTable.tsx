@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import _ from 'lodash';
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
 import metadataFactory from '~/services/metadataService';
 import EntityType from '~/constants/EntityType';
 import TaxonomyType from '~/constants/TaxonomyType';
+import { metadata2Fields } from '~/shared/metadataHelper';
 
 const EditableCell = ({
   editing,
@@ -162,22 +164,35 @@ const PrintAreaTable = () => {
       }),
     };
   });
+
+  const transformData = data => {
+    if (!data || !data.termRelationships) return [];
+    const result = _.map(data.termRelationships.rows, 'termTaxonomy.term').map(
+      t => {
+        const term = {
+          ...t,
+          ...metadata2Fields(t.metadata),
+        };
+        return term;
+      },
+    );
+
+    return result;
+  };
   return (
     <Form form={form} component={false}>
-      {data && data.termRelationships.rows && (
-        <Table
-          components={{
-            body: {
-              cell: EditableCell,
-            },
-          }}
-          size="small"
-          dataSource={data.termRelationships.rows}
-          columns={mergedColumns}
-          rowClassName="editable-row"
-          pagination={false}
-        />
-      )}
+      <Table
+        components={{
+          body: {
+            cell: EditableCell,
+          },
+        }}
+        size="small"
+        dataSource={transformData(data)}
+        columns={mergedColumns}
+        rowClassName="editable-row"
+        pagination={false}
+      />
     </Form>
   );
 };

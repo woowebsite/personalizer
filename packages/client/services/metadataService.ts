@@ -26,6 +26,12 @@ const metadataFactory = (entityType: EntityType) => {
                 term {
                   id
                   name
+                  metadata {
+                    id
+                    key
+                    value
+                    data
+                  }
                 }
               }
             }

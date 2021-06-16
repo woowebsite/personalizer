@@ -34,7 +34,7 @@ export const pdQuery = {
           value
         }
       }
-      termRelationships(where: {entityId:$id, entityType:"ProductBase"}) {
+      termRelationships(where: { entityId: $id, entityType: "ProductBase" }) {
         rows {
           id
           entityType
@@ -45,6 +45,12 @@ export const pdQuery = {
             term {
               id
               name
+              metadata {
+                id
+                key
+                value
+                data
+              }
             }
           }
         }

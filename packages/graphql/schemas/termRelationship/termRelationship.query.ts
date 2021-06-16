@@ -1,5 +1,5 @@
 import { resolver } from 'graphql-sequelize';
-import { TermRelationship, TermTaxonomy } from '../../models';
+import { TermMeta, TermRelationship, TermTaxonomy } from '../../models';
 import { Term } from '../../models/term.model';
 import { metadataToField } from '../../utils/dataUtil';
 
@@ -29,6 +29,7 @@ export const Query = {
             {
               model: Term,
               require: true,
+              include: [{ model: TermMeta }],
             },
           ],
         },

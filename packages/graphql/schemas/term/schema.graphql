@@ -5,6 +5,7 @@ type Term {
   term_group: Int
 
   termTaxonomy: TermTaxonomy
+  metadata: [TermMeta]
 }
 
 input TermInput {
@@ -12,6 +13,15 @@ input TermInput {
   name: String
   slug: String
   term_group: Int
+}
+
+type TermMeta {
+  id: Int
+  key: String
+  value: String
+  data: String
+  type: String
+  term_id: Int
 }
 
 input TermMetaInput {
