@@ -306,7 +306,7 @@ export type ProductBase = {
   publishDate?: Maybe<Scalars['Date']>;
   user?: Maybe<User>;
   metadata?: Maybe<Array<Maybe<ProductBaseMeta>>>;
-  productBaseTerms?: Maybe<Array<Maybe<ProductBaseTerm>>>;
+  termRelationships?: Maybe<Array<Maybe<TermRelationship>>>;
   productbase_category?: Maybe<NameValue>;
   productbase_tag?: Maybe<NameValue>;
 };
@@ -348,16 +348,6 @@ export type ProductBasesPaged = {
   count?: Maybe<Scalars['Int']>;
 };
 
-export type ProductBaseTerm = {
-  __typename?: 'ProductBaseTerm';
-  id?: Maybe<Scalars['Int']>;
-  term_taxonomy_id?: Maybe<Scalars['Int']>;
-  order?: Maybe<Scalars['Int']>;
-  ref_id?: Maybe<Scalars['Int']>;
-  productBase?: Maybe<ProductBase>;
-  termTaxonomy?: Maybe<TermTaxonomy>;
-};
-
 export type ProductBaseWhere = {
   user_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
@@ -378,6 +368,8 @@ export type Query = {
   productBases?: Maybe<ProductBasesPaged>;
   role?: Maybe<Role>;
   roles?: Maybe<Array<Maybe<Role>>>;
+  termRelationship?: Maybe<TermRelationship>;
+  termRelationships?: Maybe<Array<Maybe<TermRelationship>>>;
   termTaxonomy?: Maybe<TermTaxonomy>;
   termTaxonomies?: Maybe<TermTaxonomiesPaged>;
   user?: Maybe<User>;
@@ -460,6 +452,16 @@ export type QueryRolesArgs = {
 };
 
 
+export type QueryTermRelationshipArgs = {
+  where?: Maybe<TermRelationshipWhere>;
+};
+
+
+export type QueryTermRelationshipsArgs = {
+  where?: Maybe<TermRelationshipWhere>;
+};
+
+
 export type QueryTermTaxonomyArgs = {
   where?: Maybe<TermTaxonomyWhere>;
 };
@@ -516,9 +518,18 @@ export type Term = {
 export type TermRelationship = {
   __typename?: 'TermRelationship';
   id?: Maybe<Scalars['Int']>;
-  term_taxonomy_id?: Maybe<Scalars['Int']>;
-  order?: Maybe<Scalars['Int']>;
-  ref_id?: Maybe<Scalars['Int']>;
+  taxonomyId?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Scalars['Int']>;
+  entityId?: Maybe<Scalars['Int']>;
+  entityType?: Maybe<Scalars['String']>;
+  termTaxonomy?: Maybe<TermTaxonomy>;
+};
+
+export type TermRelationshipWhere = {
+  id?: Maybe<Scalars['Int']>;
+  entityId?: Maybe<Scalars['Int']>;
+  entityType?: Maybe<Scalars['String']>;
+  taxonomyId?: Maybe<Scalars['Int']>;
 };
 
 export type TermTaxonomiesPaged = {
@@ -536,7 +547,7 @@ export type TermTaxonomy = {
   order?: Maybe<Scalars['Int']>;
   term?: Maybe<Term>;
   userTerms?: Maybe<Array<Maybe<UserTerm>>>;
-  productBaseTerms?: Maybe<Array<Maybe<ProductBaseTerm>>>;
+  termRelationships?: Maybe<Array<Maybe<TermRelationship>>>;
 };
 
 export type TermTaxonomyInput = {

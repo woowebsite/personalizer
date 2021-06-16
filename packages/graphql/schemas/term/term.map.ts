@@ -1,6 +1,7 @@
 import { resolver } from 'graphql-sequelize';
-import { TermTaxonomy } from '../../models';
+import { Term } from '../../models';
 
-export const TermTaxonomyMap = {
-  term: resolver(TermTaxonomy.associations.term),
+export const TermMap = {
+  metadata: resolver(Term.associations.metadata),
+  termTaxonomy: resolver(Term.associations.termTaxonomy),
 };

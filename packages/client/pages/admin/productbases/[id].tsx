@@ -109,8 +109,8 @@ const ProductBaseDetail = props => {
               ref={formStatusRef}
             />
             <ProductBasePrintArea initialValues={data.productBase} />
-            <ProductBaseMockup initialValues={data.productBase} />
-            <ProductBaseCombinePrintArea initialValues={data.productBase} />
+            {/* <ProductBaseMockup initialValues={data.productBase} />
+            <ProductBaseCombinePrintArea initialValues={data.productBase} /> */}
           </Col>
         </Row>
       </Content>
@@ -126,7 +126,7 @@ ProductBaseDetail.getInitialProps = async ({ ctx }) => {
   const { data, loading, refetch } = await apolloClient.query({
     query: pdQuery.getProductBase,
     variables: {
-      entityId: parseInt(query.id),
+      id: parseInt(query.id),
     },
   });
 
