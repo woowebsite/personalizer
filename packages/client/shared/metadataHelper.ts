@@ -9,6 +9,7 @@ export const fieldsToMetadata = (fields: object) => {
     let data;
     let value;
     if (typeof fields[prop] === 'object') {
+      if (!fields[prop].value) console.log('field error: ', fields[prop]);
       data = JSON.stringify(fields[prop]); // fields[prop]: {value: 1, label: "abc"}
       value = fields[prop].value.toString();
     } else if (typeof fields[prop] !== 'undefined')

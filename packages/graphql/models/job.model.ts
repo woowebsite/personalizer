@@ -23,6 +23,9 @@ export class Job extends Model<Job> {
   id: number;
 
   @Column
+  code: string;
+  
+  @Column
   title: string;
 
   @Column

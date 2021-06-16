@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
-import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
-import set from 'lodash/set';
-import cloneDeep from 'lodash/cloneDeep';
+import React from 'react';
+import { Layout, Row, Col } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
 import Card from 'components/Card';
-import RedirectButton from '~/components/RedirectButton';
 
 // graphql
 import { withApollo } from 'apollo/apollo';
-import { useRouter } from 'next/dist/client/router';
 import jobService from 'services/jobService';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 // inner components
+import PageTitle from '~/features/jobs/PageTitle';
 import JobForm from '~/features/jobs/JobForm';
 import JobStatus from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
@@ -31,6 +28,7 @@ const JobDetail = (props: PageProps & any) => {
   // DECLARE
   const { messages, t, query, data: dataJob } = props;
   const [data, setJob] = useStateFields(dataJob);
+  const pageTitleRef: any = React.createRef();
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
   const formMoneyRef: any = React.createRef();
@@ -85,31 +83,19 @@ const JobDetail = (props: PageProps & any) => {
 
   // EVENTS
   const handleFieldChanged = (path, title: string) => {
-    setJob(path, title);
+    pageTitleRef.current.setTitle(title);
   };
 
   // RENDER
   const title = data.job.title || t('pageHeader.title');
   return (
     <>
-      <PageHeader
-        className="mb-4 pl-0 pr-0"
-        title={title}
-        subTitle={messages.subTitle}
-        extra={[
-          <RedirectButton url={'/customer/jobs'}>
-            {t('pageHeader.buttons.all')}
-          </RedirectButton>,
-          <Button key="2" danger>
-            {t('buttons.delete')}
-          </Button>,
-          <RedirectButton url={'/customer/jobs/new'} type="primary" ghost>
-            {t('buttons.create')}
-          </RedirectButton>,
-          <Button key="1" type="primary" onClick={onSave}>
-            {t('buttons.save')}
-          </Button>,
-        ]}
+      <PageTitle
+        data={data}
+        ref={pageTitleRef}
+        messages={messages}
+        t={t}
+        onSave={onSave}
       />
       <Content>
         <Row gutter={24}>

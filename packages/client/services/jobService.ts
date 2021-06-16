@@ -14,6 +14,7 @@ export const jobQuery = {
     query GetJob($where: JobWhere) {
       job(where: $where) {
         id
+        code
         title
         description
         dueDate
