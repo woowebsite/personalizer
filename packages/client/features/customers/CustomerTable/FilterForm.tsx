@@ -27,8 +27,8 @@ const FilterForm = ({ values, onFilter }) => {
   return (
     <Form
       initialValues={values}
-      layout="inline"
       onFinish={handleFinish}
+      layout="inline"
       name="basic"
       form={form}
       labelAlign="left"

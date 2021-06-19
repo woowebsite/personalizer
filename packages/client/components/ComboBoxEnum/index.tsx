@@ -4,7 +4,7 @@ import { Select } from 'antd';
 // graphql
 
 const { Option } = Select;
-const ComboBoxEnum = ({ type, defaultValue, ...others }) => {
+const ComboBoxEnum = ({ type, defaultValue = null, ...others }) => {
   const selectedValue = defaultValue ? parseInt(defaultValue) : null;
   // defines
   const dataSource = Object.values<string>(type)

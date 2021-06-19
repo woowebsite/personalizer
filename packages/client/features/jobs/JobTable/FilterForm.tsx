@@ -46,48 +46,34 @@ const FilterForm = ({ values, onFilter }) => {
 
   return (
     <Form
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 14 }}
       initialValues={values}
       onFinish={handleFinish}
+      layout="inline"
       name="basic"
       size="small"
       form={form}
       labelAlign="left"
     >
-      <Row>
-        <Col span="6">
-          <Form.Item
-            label={t('jobTable.columns.title')}
-            name={['job', 'title']}
-          >
-            <Input />
-          </Form.Item>
-        </Col>
-        <Col span="6">
-          <Form.Item
-            label={t('jobTable.columns.status')}
-            name={['taxonomies', 'job_status']}
-          >
-            <ComboBoxTaxonomy type={TaxonomyType.Job_Status} />
-          </Form.Item>
-        </Col>
-        <Col span="6">
-          <Form.Item
-            label={t('jobTable.columns.priority')}
-            name={['taxonomies', 'job_priority']}
-          >
-            <ComboBoxTaxonomy type={TaxonomyType.Job_Priority} />
-          </Form.Item>
-        </Col>
-        <Col span="6">
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              {t('buttons.filter')}
-            </Button>
-          </Form.Item>
-        </Col>
-      </Row>
+      <Form.Item name={['job', 'title']}>
+        <Input placeholder={t('jobTable.columns.title')} />
+      </Form.Item>
+      <Form.Item name={['taxonomies', 'job_status']}>
+        <ComboBoxTaxonomy
+          type={TaxonomyType.Job_Status}
+          placeholder={t('jobTable.columns.status')}
+        />
+      </Form.Item>
+      <Form.Item name={['taxonomies', 'job_priority']}>
+        <ComboBoxTaxonomy
+          placeholder={t('jobTable.columns.priority')}
+          type={TaxonomyType.Job_Priority}
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          {t('buttons.filter')}
+        </Button>
+      </Form.Item>
     </Form>
   );
 };
