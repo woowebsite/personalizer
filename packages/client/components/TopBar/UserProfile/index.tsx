@@ -1,6 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { Menu, Dropdown, Badge, Avatar } from 'antd';
+import { signIn, signOut, useSession } from 'next-auth/client';
 
 const menu = t => (
   <Menu>
@@ -15,7 +16,7 @@ const menu = t => (
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item>
-      <a href="javascript: void(0);">
+      <a href="javascript: void(0);" onClick={() => signOut()}>
         <i className={`icmn-exit`} />
         {t('topBar.profileMenu.logout')}
       </a>

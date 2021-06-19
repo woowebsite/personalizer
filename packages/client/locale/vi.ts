@@ -54,7 +54,7 @@ export const vi = {
       filter: 'Lọc',
       payment: 'Thanh toán',
       deposit: 'Nạp tiền',
-      send: 'Gửi đi'
+      send: 'Gửi đi',
     },
     enum: {
       JobStatus: {
@@ -62,8 +62,8 @@ export const vi = {
         Dective: 'Đóng',
         Finish: 'Hoàn thành',
         Publish: 'Đã gửi',
-        Draft: 'Hoàn thành'
-      }
+        Draft: 'Hoàn thành',
+      },
     },
     userTable: {
       columns: {
@@ -173,6 +173,9 @@ export const vi = {
       connectToTwitter: 'Twitter',
       connectToGoogle: 'Google',
     },
+  },
+  '/': {
+    title: 'Index',
   },
   '/login': {
     signin: 'Đăng nhập',
