@@ -22,6 +22,7 @@ export class Job extends Model<Job> {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
 
+  @AllowNull(true)
   @Column
   code: string;
   

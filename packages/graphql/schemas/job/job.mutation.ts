@@ -13,7 +13,16 @@ export const Mutation = {
       const [job, createJob] = await Job.upsert(obj, {
         returning: true,
       });
-      
+
+      // update `code` field
+      if (!job.code) {
+        const updateCodeJob: any = {
+          id: job.getDataValue('id'),
+          code: `C${job.userId}J${job.id}`,
+        };
+        Job.upsert(updateCodeJob);
+      }
+
       // Assignee
       const jobMeta = await JobMeta.findOne({
         where: { job_id: job.id, key: 'employee' },

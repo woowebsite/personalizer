@@ -1,4 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import NProgress from 'nprogress';
 import Board from 'react-trello';
@@ -54,10 +59,10 @@ interface WorkflowProps {
   onCardClick?: any;
   onDragEnd?: any;
 }
-let eventBus = undefined;
 const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   // DECLARE
   const { formatMessage } = useIntl();
+  const [eventBus, setEventBus] = useState(undefined);
   const { prior, onCardClick, onDragEnd } = props;
   const t = id => formatMessage({ id });
   const priorConditions = {
@@ -97,9 +102,6 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   }
 
   // EVENTS
-  const setEventBus = handle => {
-    eventBus = handle;
-  };
   const handleDragEnd = (cardId, sourceLandId, targetLaneId, card) => {
     upsertJob({
       variables: {
@@ -110,17 +112,13 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
       },
     });
 
-    setTimeout(() => {
-      if (eventBus) {
-        eventBus.publish({
-          type: 'MOVE_CARD',
-          fromLaneId: sourceLandId,
-          toLaneId: targetLaneId,
-          cardId,
-          index: card,
-        });
-      }
-    });
+    // eventBus.publish({
+    //   type: 'MOVE_CARD',
+    //   fromLaneId: sourceLandId,
+    //   toLaneId: targetLaneId,
+    //   cardId,
+    //   index: card,
+    // });
   };
 
   // RENDER
