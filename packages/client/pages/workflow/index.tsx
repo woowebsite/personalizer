@@ -13,6 +13,7 @@ import { withApollo } from 'apollo/apollo';
 import FilterForm from 'features/workflows/FilterForm';
 import JobDrawer from 'features/workflows/JobDrawer';
 import WorkflowBoard from 'features/workflows/Workflow';
+import DividerVertical from '~/features/workflows/DividerVertical';
 
 const { Content } = Layout;
 
@@ -58,19 +59,20 @@ const Workflow = props => {
 
       <Content>
         <FilterForm onFilter={handleFilter} ref={formRef} />
-        <Divider orientation="left" plain>
-          {t('dividers.today')}
-        </Divider>
-        <WorkflowBoard prior="day" ref={dayRef} onCardClick={showJobDetail} />
-        <Divider orientation="left" plain>
-          {t('dividers.thisWeek')}
-        </Divider>
-        <WorkflowBoard
-          ref={weekRef}
-          prior="week"
-          hiddenLaneHeader={true}
-          onCardClick={showJobDetail}
-        />
+        <div className="position-relative">
+          <DividerVertical text={t('dividers.today')} />
+          <WorkflowBoard prior="day" ref={dayRef} onCardClick={showJobDetail} />
+        </div>
+
+        <div className="position-relative">
+          <DividerVertical text={t('dividers.thisWeek')} />
+          <WorkflowBoard
+            ref={weekRef}
+            prior="week"
+            hiddenLaneHeader={true}
+            onCardClick={showJobDetail}
+          />
+        </div>
       </Content>
       {currentJobId && (
         <JobDrawer
