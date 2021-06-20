@@ -11,6 +11,7 @@ import {
 } from '../../models';
 import { Term } from '../../models/term.model';
 import { metadataToField, taxonomyToField } from '../../utils/dataUtil';
+import { whereCurrentUser } from '../../utils/queryUtil';
 
 export const Query = {
   job: resolver(Job, {
@@ -48,12 +49,15 @@ export const Query = {
   }),
   jobs: resolver(Job, {
     list: true,
-    before: async (findOptions, { where }, context) => {
+    before: async (findOptions, { where }, ctx) => {
       if (where) {
         // job
         let { job } = where;
         if (where && where.job.title)
           job.title = { [Op.like]: where.job.title };
+
+        // filter by current user
+        job = whereCurrentUser(ctx, job);
 
         // metadata
         let include: Array<any> = [{ model: JobMeta }];
