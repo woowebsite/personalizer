@@ -48,18 +48,25 @@ const JobNew = props => {
 
   // EVENTS
   const onPublish = () => {};
+  const onSave2 = () => {
+    formRef.current.submit();
+  };
   const onSave = async () => {
     // check if valid all forms
     let isValid = true;
     await formRef.current.validateFields().catch(() => {
       isValid = false;
     });
-    await formStatusRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-    await formMoneyRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
+    if (formStatusRef.current) {
+      await formStatusRef.current.validateFields().catch(() => {
+        isValid = false;
+      });
+    }
+    if (formMoneyRef.current) {
+      await formMoneyRef.current.validateFields().catch(() => {
+        isValid = false;
+      });
+    }
 
     if (!isValid) return;
 
@@ -100,22 +107,18 @@ const JobNew = props => {
   // RENDER
   return (
     <>
-      <PageTitle ref={pageTitleRef} messages={messages} t={t} onSave={onSave} />
+      <PageTitle
+        ref={pageTitleRef}
+        messages={messages}
+        t={t}
+        onSave={onSave2}
+      />
       <Content>
         <Row gutter={24}>
           <Col span="16">
             <Card className="pt-3">
               <JobForm ref={formRef} onFieldChange={handleFieldChanged} />
             </Card>
-          </Col>
-          <Col span="8">
-            <AuthorizedWrapper
-              config={newJobAuthConfig.JobStatusBox}
-              session={props.session}
-            >
-              <JobStatusBox ref={formStatusRef} initialValues={initialValues} />
-            </AuthorizedWrapper>
-            <JobMoney ref={formMoneyRef} initialValues={initialValues} />
           </Col>
         </Row>
       </Content>

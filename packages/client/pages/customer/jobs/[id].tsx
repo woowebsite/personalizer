@@ -19,6 +19,10 @@ import { jobQuery } from '~/services/jobService';
 import JobAssignee from '~/features/jobs/JobAssignee';
 import PageProps from '~/models/PageProps';
 import useStateFields from '~/hooks/useStateFields';
+import AuthorizedWrapper from '~/components/AuthorizedWrapper';
+
+// utils
+import updateJobAuthConfig from '~/features/jobs/authorized/updateJob';
 
 const { Content } = Layout;
 
@@ -100,7 +104,7 @@ const JobDetail = (props: PageProps & any) => {
       <Content>
         <Row gutter={24}>
           <Col span="16">
-            <Card className="pt-3">
+            <Card className="pt-3 mb-4">
               <JobForm
                 ref={formRef}
                 initialValues={data.job}
@@ -112,7 +116,12 @@ const JobDetail = (props: PageProps & any) => {
             </Card>
           </Col>
           <Col span="8">
-            <JobStatus ref={formStatusRef} initialValues={data.job} />
+            <AuthorizedWrapper
+              config={updateJobAuthConfig.JobStatusBox}
+              session={props.session}
+            >
+              <JobStatus ref={formStatusRef} initialValues={data.job} />
+            </AuthorizedWrapper>
             <JobMoney ref={formMoneyRef} initialValues={data.job} />
           </Col>
         </Row>

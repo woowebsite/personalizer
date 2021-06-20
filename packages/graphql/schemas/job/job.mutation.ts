@@ -46,7 +46,7 @@ export const Mutation = {
           return {
             term_taxonomy_id: termId,
             ref_id: job.id,
-            assignee_id: assignee.value, // assignee_id must be not null
+            assignee_id: assignee ? assignee.value : null, // assignee_id must be not null
             version: old ? old.version + 1 : 1,
             latestVersion: old ? old.version + 1 : 1,
           };

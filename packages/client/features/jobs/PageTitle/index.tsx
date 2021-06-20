@@ -11,6 +11,7 @@ const PageTitle = ({ data = null, messages, t, onSave }, ref) => {
     setTitle,
   }));
 
+  // RENDER
   const createJobButtons = [
     <RedirectButton url={'/customer/jobs'}>
       {t('pageHeader.buttons.all')}

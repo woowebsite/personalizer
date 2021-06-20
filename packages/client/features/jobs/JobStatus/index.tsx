@@ -9,6 +9,7 @@ import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import jobService from '~/services/jobService';
 import JobStatus from '~/constants/jobStatus';
 import useTranslate from '~/hooks/useTranslate';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 // utils
 const JobStatusBox = forwardRef<any, any>((props, ref) => {
@@ -56,11 +57,35 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
-    // onSubmit,
+    submit,
     getFieldsValue,
     validateFields,
   }));
 
+  const submit = job => {
+    form
+      .validateFields()
+      .then(values => {
+        // metadata fields
+        const metadataFields = {
+          ...values.metadata,
+        };
+
+        // taxonomies fields
+        const taxonomyFields = values.taxonomies;
+
+        // parse
+        const metadata = fieldsToMetadata(metadataFields);
+        const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
+
+        upsertJob({
+          variables: { job, metadata, taxonomies },
+        });
+      })
+      .catch(errorInfo => {
+        console.log('Error: ', errorInfo);
+      });
+  };
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
 
