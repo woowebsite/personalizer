@@ -7,10 +7,8 @@ import TextEditable from '~/components/TextEditable';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import jobService from '~/services/jobService';
-import { fieldsToMetadata } from '~/shared/metadataHelper';
 import JobStatus from '~/constants/jobStatus';
 import useTranslate from '~/hooks/useTranslate';
-import { enumToTranslate } from '~/shared/enumHelper';
 
 // utils
 const JobStatusBox = forwardRef<any, any>((props, ref) => {
@@ -69,30 +67,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
   return (
     <>
       <Form form={form}>
-        <Card
-          className="status-form"
-          title={t('jobStatus.title')}
-          extra={
-            <>
-              {/* <span>{ enumToObject(JobStatus, true)[initialValues.status]}</span> */}
-              <span className="mr-3">
-                {enumToTranslate(
-                  JobStatus,
-                  'JobStatus',
-                  initialValues.status,
-                  t,
-                )}
-              </span>
-              {initialValues.status !== JobStatus.Publish ? (
-                <Button type="primary" size="small">
-                  {t('buttons.send')}
-                </Button>
-              ) : (
-                ''
-              )}
-            </>
-          }
-        >
+        <Card className="status-form" title={t('jobStatus.title')}>
           <Form.Item
             name={['taxonomies', 'job_status']}
             label={t('jobStatus.label.status')}

@@ -13,21 +13,16 @@ import useTranslate from 'hooks/useTranslate';
 
 const JobMoney = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
-  const { job } = props;
+  const { initialValues } = props;
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
-  const initialValues = {
-    cost: job ? job.cost : 0,
-    paid: job.paid,
-    debt: 0,
-  };
   const [dept, setDept] = useState(0);
 
   // EFFECTS
   useEffect(() => {
-    if (job) {
-      const cost = parseInt(job.cost);
-      const paid = parseInt(job.paid);
+    if (initialValues) {
+      const cost = parseInt(initialValues.cost);
+      const paid = parseInt(initialValues.paid);
 
       setDept(cost - paid);
     }

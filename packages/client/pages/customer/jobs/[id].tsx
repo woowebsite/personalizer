@@ -113,7 +113,7 @@ const JobDetail = (props: PageProps & any) => {
           </Col>
           <Col span="8">
             <JobStatus ref={formStatusRef} initialValues={data.job} />
-            <JobMoney ref={formMoneyRef} job={data.job} />
+            <JobMoney ref={formMoneyRef} initialValues={data.job} />
           </Col>
         </Row>
       </Content>

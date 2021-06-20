@@ -21,8 +21,12 @@ import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 // inner components
 import JobForm from '~/features/jobs/JobForm';
-import JobStatus from '~/features/jobs/JobStatus';
+import JobStatusBox from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
+
+// utils
+import JobStatus from '~/constants/jobStatus';
+import StatusType from '~/models/StatusType';
 
 const { Content } = Layout;
 
@@ -34,8 +38,15 @@ const JobNew = props => {
   const formMoneyRef: any = React.createRef();
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
   const [title, setTitle] = useState(messages.title);
+  const initialValues = {
+    cost: 0,
+    paid: 0,
+    status: JobStatus.Draft,
+    job_status: JobStatus.Publish,
+  };
 
   // EVENTS
+  const onPublish = () => {};
   const onSave = async () => {
     // check if valid all forms
     let isValid = true;
@@ -48,7 +59,6 @@ const JobNew = props => {
     await formMoneyRef.current.validateFields().catch(() => {
       isValid = false;
     });
-    console.log('isValid', isValid);
 
     if (!isValid) return;
 
@@ -96,8 +106,11 @@ const JobNew = props => {
           <RedirectButton url={'/customer/jobs'}>
             {messages['pageHeader.buttons.all']}
           </RedirectButton>,
-          <Button key="1" type="primary" onClick={onSave}>
+          <Button key="1" onClick={onSave} >
             {t('buttons.save')}
+          </Button>,
+          <Button key="1" type="primary" onClick={onPublish}>
+            {t('buttons.publish')}
           </Button>,
         ]}
       />
@@ -109,10 +122,8 @@ const JobNew = props => {
             </Card>
           </Col>
           <Col span="8">
-            <Card className="status-form" title={t('jobStatus.title')}>
-              <JobStatus ref={formStatusRef} />
-            </Card>
-            <JobMoney ref={formMoneyRef} />
+            <JobStatusBox ref={formStatusRef} initialValues={initialValues} />
+            <JobMoney ref={formMoneyRef} initialValues={initialValues} />
           </Col>
         </Row>
       </Content>

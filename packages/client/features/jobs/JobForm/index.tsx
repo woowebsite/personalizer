@@ -44,6 +44,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
   const formSetFields = job => {
     form.setFields([
       { name: ['job', 'title'], value: job.title },
+      { name: ['job', 'code'], value: job.code },
       { name: ['job', 'link'], value: job.link },
       { name: ['job', 'description'], value: job.description },
       { name: ['job', 'publishDate'], value: moment(job.publishDate) },
@@ -138,7 +139,6 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
     >
       <Form.Item
         name={['job', 'code']}
-        initialValue="C01J023"
         rules={[
           {
             required: true,
@@ -149,7 +149,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         ]}
         label={t('jobCreateform.label.code')}
       >
-        <Input defaultValue="C01J023" disabled />
+        <Input disabled />
       </Form.Item>
       <Form.Item
         name={['job', 'title']}

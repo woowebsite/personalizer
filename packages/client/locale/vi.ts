@@ -55,14 +55,18 @@ export const vi = {
       payment: 'Thanh toán',
       deposit: 'Nạp tiền',
       send: 'Gửi đi',
+      publish: 'Gửi đi',
     },
     enum: {
+      StatusType: {
+        Actived: 'Hoạt động',
+        Deactive: 'Vô hiệu',
+      },
       JobStatus: {
-        Active: 'Mở',
-        Dective: 'Đóng',
+        Deactive: 'Vô hiệu', // delete
         Finish: 'Hoàn thành',
         Publish: 'Đã gửi',
-        Draft: 'Hoàn thành',
+        Draft: 'Đã lưu',
       },
     },
     userTable: {
