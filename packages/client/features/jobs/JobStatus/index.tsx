@@ -67,7 +67,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
   return (
     <>
       <Form form={form}>
-        <Card className="status-form" title={t('jobStatus.title')}>
+        <Card className="status-form mb-4" title={t('jobStatus.title')}>
           <Form.Item
             name={['taxonomies', 'job_status']}
             label={t('jobStatus.label.status')}

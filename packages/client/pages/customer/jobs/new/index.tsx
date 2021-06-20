@@ -26,18 +26,19 @@ import JobMoney from '~/features/jobs/JobMoney';
 
 // utils
 import JobStatus from '~/constants/jobStatus';
-import StatusType from '~/models/StatusType';
+import PageTitle from '~/features/jobs/PageTitle';
+import newJobAuthConfig from '~/features/jobs/authorized/newJob';
+import AuthorizedWrapper from '~/components/AuthorizedWrapper';
 
 const { Content } = Layout;
-
 const JobNew = props => {
   // DECLARE
   const { messages, t } = props;
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
   const formMoneyRef: any = React.createRef();
+  const pageTitleRef: any = React.createRef();
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
-  const [title, setTitle] = useState(messages.title);
   const initialValues = {
     cost: 0,
     paid: 0,
@@ -93,27 +94,13 @@ const JobNew = props => {
 
   // EVENTS
   const handleFieldChanged = (path, title: string) => {
-    setTitle(title);
+    pageTitleRef.current.setTitle(title);
   };
 
   // RENDER
   return (
     <>
-      <PageHeader
-        className="mb-4 pl-0 pr-0"
-        title={title}
-        extra={[
-          <RedirectButton url={'/customer/jobs'}>
-            {messages['pageHeader.buttons.all']}
-          </RedirectButton>,
-          <Button key="1" onClick={onSave} >
-            {t('buttons.save')}
-          </Button>,
-          <Button key="1" type="primary" onClick={onPublish}>
-            {t('buttons.publish')}
-          </Button>,
-        ]}
-      />
+      <PageTitle ref={pageTitleRef} messages={messages} t={t} onSave={onSave} />
       <Content>
         <Row gutter={24}>
           <Col span="16">
@@ -122,7 +109,12 @@ const JobNew = props => {
             </Card>
           </Col>
           <Col span="8">
-            <JobStatusBox ref={formStatusRef} initialValues={initialValues} />
+            <AuthorizedWrapper
+              config={newJobAuthConfig.JobStatusBox}
+              session={props.session}
+            >
+              <JobStatusBox ref={formStatusRef} initialValues={initialValues} />
+            </AuthorizedWrapper>
             <JobMoney ref={formMoneyRef} initialValues={initialValues} />
           </Col>
         </Row>

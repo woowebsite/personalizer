@@ -53,7 +53,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
     <>
       <Form form={form}>
         <Card
-          className="mt-4 status-form card-required-title"
+          className="mb-4 status-form card-required-title"
           title={t('jobMoney.title')}
           extra={
             <Form.Item
