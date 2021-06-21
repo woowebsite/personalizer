@@ -53,7 +53,7 @@ export const Query = {
       if (where) {
         // job
         let { job } = where;
-        if (where && where.job.title)
+        if (where.job && where.job.title)
           job.title = { [Op.like]: where.job.title };
 
         // filter by current user

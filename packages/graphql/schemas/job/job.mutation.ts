@@ -3,6 +3,7 @@ import { Job } from '../../models';
 import to from 'await-to-js';
 import { JobTerm } from '../../models/jobTerm.model';
 import { JobMeta } from '../../models/jobMeta.model';
+import JobTaxonomy from '../../constants/JobTaxonomy';
 
 export const Mutation = {
   upsertJob: resolver(Job, {
@@ -53,6 +54,18 @@ export const Mutation = {
         });
 
         await JobTerm.bulkCreate(terms);
+      }
+
+      // Create 'new' mode
+      if (!data.id) {
+        const jt: any = {
+          term_taxonomy_id: JobTaxonomy.New,
+          ref_id: job.id,
+          assignee_id: null,
+          version: 1,
+          latestVersion: 1,
+        };
+        JobTerm.create(jt);
       }
 
       // Metadata
