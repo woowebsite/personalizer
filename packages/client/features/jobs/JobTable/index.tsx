@@ -11,6 +11,7 @@ import { columns } from './columns';
 import jobService from 'services/jobService';
 import StatusType from '~/models/StatusType';
 import { defaultFilter } from './constants';
+import JobTaxonomy from '~/models/JobTaxonomy';
 
 const JobTable = props => {
   // DEFINES
@@ -18,7 +19,7 @@ const JobTable = props => {
   const tableFilterRef = React.useRef(null);
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
-  const [upsertUser] = jobService.upsert();
+  const [updateJob] = jobService.upsert();
   const [deleteJob] = jobService.delete({
     onCompleted: () => {
       tableFilterRef.current.refetch();
@@ -35,6 +36,15 @@ const JobTable = props => {
     deleteJob({
       variables: {
         id,
+      },
+    });
+  };
+
+  const handleSendJob = id => {
+    updateJob({
+      variables: {
+        job: { id },
+        taxonomies: [JobTaxonomy.Todo],
       },
     });
   };
@@ -57,7 +67,7 @@ const JobTable = props => {
           }
         />
       )}
-      columns={columns(t, handleDeleteJob)}
+      columns={columns(t, { delete: handleDeleteJob, send: handleSendJob })}
       {...props}
     />
   );

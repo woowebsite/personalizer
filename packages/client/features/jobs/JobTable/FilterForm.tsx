@@ -51,6 +51,7 @@ const FilterForm = ({ values, onFilter }) => {
       layout="inline"
       name="basic"
       size="small"
+      className="mb-3"
       form={form}
       labelAlign="left"
     >

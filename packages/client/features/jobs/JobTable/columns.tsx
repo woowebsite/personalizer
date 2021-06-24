@@ -13,24 +13,24 @@ import ComboBoxEnum from '~/components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
 import ButtonModal from '~/components/ButtonModal';
 
-const menu = t => (
+const menu = (t, actions) => (
   <Menu>
-    <Menu.Item key="1" icon={<SendOutlined />}>
+    <Menu.Item key="1" icon={<SendOutlined />} onClick={actions.send}>
       {t('buttons.send')}
     </Menu.Item>
     <Menu.Item key="2" icon={<SendOutlined />}>
-      {t('buttons.delete')}
+      ...
     </Menu.Item>
   </Menu>
 );
 
-export const columns = (t, onDeleteJob): ColumnsType<any> => {
+export const columns = (t, handlers): ColumnsType<any> => {
   const configDeleteModal = record => ({
     icon: <CloseCircleFilled style={{ color: 'rgb(244, 85, 53)' }} />,
     title: t('jobTable.deleteModal.title'),
     content: t('jobTable.deleteModal.content'),
     onOk() {
-      onDeleteJob(record.id);
+      handlers.delete(record.id);
     },
   });
 
@@ -82,7 +82,10 @@ export const columns = (t, onDeleteJob): ColumnsType<any> => {
             {t('buttons.delete')}
           </ButtonModal>
 
-          <Dropdown placement="bottomRight" overlay={menu(t)}>
+          <Dropdown
+            placement="bottomRight"
+            overlay={menu(t, { send: () => handlers.send(record.id) })}
+          >
             <Button type="text">
               <MenuOutlined />
             </Button>
