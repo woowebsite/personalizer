@@ -4,7 +4,8 @@ import { Table, Space, Menu, Dropdown, Modal, Button } from 'antd';
 import {
   DownOutlined,
   UserOutlined,
-  MoreOutlined,
+  SendOutlined,
+  MenuOutlined,
   CloseCircleFilled,
 } from '@ant-design/icons';
 import Avatar from 'components/Avatar';
@@ -12,16 +13,13 @@ import ComboBoxEnum from '~/components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
 import ButtonModal from '~/components/ButtonModal';
 
-const menu = (
+const menu = t => (
   <Menu>
-    <Menu.Item key="1" icon={<UserOutlined />}>
-      Reset Password
+    <Menu.Item key="1" icon={<SendOutlined />}>
+      {t('buttons.send')}
     </Menu.Item>
-    <Menu.Item key="2" icon={<UserOutlined />}>
-      2nd menu item
-    </Menu.Item>
-    <Menu.Item key="3" icon={<UserOutlined />}>
-      3rd menu item
+    <Menu.Item key="2" icon={<SendOutlined />}>
+      {t('buttons.delete')}
     </Menu.Item>
   </Menu>
 );
@@ -84,10 +82,9 @@ export const columns = (t, onDeleteJob): ColumnsType<any> => {
             {t('buttons.delete')}
           </ButtonModal>
 
-          <Dropdown placement="bottomRight" overlay={menu}>
-            <Button>
-              {t('buttons.actions')}
-              <DownOutlined />
+          <Dropdown placement="bottomRight" overlay={menu(t)}>
+            <Button type="text">
+              <MenuOutlined />
             </Button>
           </Dropdown>
         </Button.Group>

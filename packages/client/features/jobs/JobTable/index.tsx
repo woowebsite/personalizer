@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 
 // components
@@ -15,10 +15,20 @@ import { defaultFilter } from './constants';
 const JobTable = props => {
   // DEFINES
   const tableRef = React.useRef(null);
+  const tableFilterRef = React.useRef(null);
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
   const [upsertUser] = jobService.upsert();
-  const [deleteJob] = jobService.delete();
+  const [deleteJob] = jobService.delete({
+    onCompleted: () => {
+      tableFilterRef.current.refetch();
+    },
+  });
+
+  // EFFECTS
+  useEffect(() => {
+    tableFilterRef.current.refetch();
+  }, []);
 
   // EVENTS
   const handleDeleteJob = id => {
@@ -55,6 +65,7 @@ const JobTable = props => {
   return (
     <>
       <TableFilter
+        ref={tableFilterRef}
         filterOptions={{
           modelName: 'Job',
         }}

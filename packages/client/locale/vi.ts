@@ -157,7 +157,7 @@ export const vi = {
       },
     },
     tableQuickEdit: {
-      btnQuickEdit: 'Sửa',
+      btnQuickEdit: 'Sửa nhanh',
     },
     tableFilter: {
       tabFilter: {

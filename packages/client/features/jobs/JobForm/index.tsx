@@ -69,10 +69,10 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         name: ['metadata', 'isDemoLayout'],
         value: !!job.isDemoLayout,
       },
-      {
-        name: ['metadata', 'customer'],
-        value: parseInt(job.metadata.find(x => x.key === 'customer').value, 10),
-      },
+      // {
+      //   name: ['metadata', 'customer'],
+      //   value: parseInt(job.metadata.find(x => x.key === 'customer').value, 10),
+      // },
     ]);
   };
 
@@ -142,7 +142,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       onFinish={submit}
       layout="vertical"
     >
-      <Form.Item
+      {/* <Form.Item
         name={['metadata', 'customer']}
         label={t('jobStatus.label.customer')}
         rules={[
@@ -160,7 +160,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
           type={ComboBoxType.Customer}
           width="200"
         />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item name={['job', 'code']} label={t('jobCreateform.label.code')}>
         <Input disabled />
       </Form.Item>
