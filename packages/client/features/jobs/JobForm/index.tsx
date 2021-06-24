@@ -42,6 +42,8 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
   const layout = props.layout || defaultLayout;
 
   const formSetFields = job => {
+    console.log('job', job);
+
     form.setFields([
       { name: ['job', 'title'], value: job.title },
       { name: ['job', 'code'], value: job.code },
@@ -69,7 +71,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       },
       {
         name: ['metadata', 'customer'],
-        value: parseInt(job.customer.value, 10),
+        value: parseInt(job.metadata.find(x => x.key === 'customer').value, 10),
       },
     ]);
   };

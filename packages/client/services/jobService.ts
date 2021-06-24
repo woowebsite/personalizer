@@ -26,6 +26,12 @@ export const jobQuery = {
         status
         isDemoColor
         isDemoLayout
+        metadata {
+          key
+          type
+          data
+          value
+        }
         customer {
           name
           value
