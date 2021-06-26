@@ -67,7 +67,10 @@ export const Query = {
           include.push({
             model: JobTerm,
             require: true,
-            where: { term_taxonomy_id: where.taxonomies },
+            where: {
+              term_taxonomy_id: where.taxonomies,
+              version: { [Op.col]: 'latestVersion' },
+            },
           });
         }
 

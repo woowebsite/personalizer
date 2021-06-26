@@ -39,6 +39,9 @@ const JobDetail = (props: PageProps & any) => {
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
 
   // EVENTS
+  const onSave2 = () => {
+    formRef.current.submit();
+  };
   const onSave = async () => {
     // check if valid all forms
     let isValid = true;
@@ -99,7 +102,7 @@ const JobDetail = (props: PageProps & any) => {
         ref={pageTitleRef}
         messages={messages}
         t={t}
-        onSave={onSave}
+        onSave={onSave2}
       />
       <Content>
         <Row gutter={24}>

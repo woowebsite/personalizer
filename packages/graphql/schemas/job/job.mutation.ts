@@ -39,17 +39,21 @@ export const Mutation = {
           where: { ref_id: job.id },
           raw: true,
         });
-        const terms = taxonomies.map(termId => {
-          const old = allOldTaxonomies.find(
-            (x: any) => x.ref_id === job.id && x.term_taxonomy_id === termId,
-          );
 
+        JobTerm.update(
+          { latestVersion: allOldTaxonomies.length + 1 },
+          {
+            where: { ref_id: job.id },
+          },
+        );
+
+        const terms = taxonomies.map(termId => {
           return {
             term_taxonomy_id: termId,
             ref_id: job.id,
             assignee_id: assignee ? assignee.value : null, // assignee_id must be not null
-            version: old ? old.version + 1 : 1,
-            latestVersion: old ? old.version + 1 : 1,
+            version: allOldTaxonomies.length + 1,
+            latestVersion: allOldTaxonomies.length + 1,
           };
         });
 
@@ -90,7 +94,10 @@ export const Mutation = {
       JobMeta.destroy({
         where: { job_id: id },
       });
-      const x = Job.destroy({
+      JobTerm.destroy({
+        where: { ref_id: id },
+      });
+      Job.destroy({
         where: { id: id },
       });
     },

@@ -21,6 +21,7 @@ import JOB_SETTING from '~/constants/jobSettings';
 import { smallerThan } from '~/shared/antdHelper';
 import moment from 'moment';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
+import { isEmpty } from '~/shared/objectHelper';
 
 interface IProps {
   initialValues?: any;
@@ -99,12 +100,15 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
     form
       .validateFields()
       .then(values => {
+        console.log('values', values);
+
         const job = initialValues
           ? { id: initialValues.id, ...values.job }
           : values.job;
 
         const metadata = fieldsToMetadata(values.metadata);
-        const taxonomies = values.taxonomies
+
+        const taxonomies = !isEmpty(values.taxonomies)
           ? Object.values(values.taxonomies)
           : [];
 
