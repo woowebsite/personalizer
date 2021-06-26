@@ -26,6 +26,7 @@ export const jobQuery = {
         status
         isDemoColor
         isDemoLayout
+        priority
         metadata {
           key
           type
@@ -41,10 +42,6 @@ export const jobQuery = {
           value
         }
         leader {
-          name
-          value
-        }
-        job_priority {
           name
           value
         }
@@ -83,10 +80,7 @@ export const jobQuery = {
             id
             title
             description
-            job_priority {
-              name
-              value
-            }
+            priority
           }
         }
       }

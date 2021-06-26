@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         taxonomy: 'job_status',
-        slug: 'job_priority',
+        slug: 'job_status',
         term_id: 5,
       },
       {

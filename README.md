@@ -235,10 +235,10 @@ const formSetFields = job => {
     { name: ['job', 'dueDate'], value: job.image },
 
     // taxonomies
-    { name: ['taxonomies', 'job_priority'], value: job.job_priority },
     { name: ['taxonomies', 'job_status'], value: job.job_status },
 
     // metadata
+    { name: ['metadata', 'priority'], value: job.priority },
     { name: ['metadata', 'link'], value: job.link },
   ]);
 };

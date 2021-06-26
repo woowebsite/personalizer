@@ -74,6 +74,9 @@ export class Job extends Model<Job> {
 
   // metadata
   @Column(DataType.VIRTUAL)
+  priority: any;
+
+  @Column(DataType.VIRTUAL)
   link: string;
   
   @Column(DataType.VIRTUAL)
@@ -101,9 +104,6 @@ export class Job extends Model<Job> {
   customer: any;
 
   // taxonomies
-  @Column(DataType.VIRTUAL)
-  job_priority: any;
-
   @Column(DataType.VIRTUAL)
   job_status: any;
 }

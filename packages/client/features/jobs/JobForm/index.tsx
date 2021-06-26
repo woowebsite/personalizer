@@ -55,10 +55,6 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
 
       // taxonomies
       {
-        name: ['taxonomies', 'job_priority'],
-        value: job.job_priority ? parseInt(job.job_priority.value, 10) : null,
-      },
-      {
         name: ['taxonomies', 'job_status'],
         value: job.job_status ? parseInt(job.job_status.value, 10) : null,
       },
@@ -70,6 +66,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         name: ['metadata', 'isDemoLayout'],
         value: !!job.isDemoLayout,
       },
+      { name: ['metadata', 'priority'], value: job.priority },
       // {
       //   name: ['metadata', 'customer'],
       //   value: parseInt(job.metadata.find(x => x.key === 'customer').value, 10),
@@ -138,10 +135,9 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
         metadata: {
           isDemoColor: false,
           isDemoLayout: false,
+          priority: 4, // Normal
         },
-        taxonomies: {
-          job_priority: 4, // Normal
-        },
+        taxonomies: {},
       }}
       onFinish={submit}
       layout="vertical"
@@ -191,7 +187,7 @@ const JobForm = forwardRef<any, IProps>((props, ref) => {
       </Form.Item>
 
       <Form.Item
-        name={['taxonomies', 'job_priority']}
+        name={['metadata', 'priority']}
         label={t('jobCreateform.label.priority')}
       >
         <ComboBoxTaxonomy type={TaxonomyType.Job_Priority} />

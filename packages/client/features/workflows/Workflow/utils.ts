@@ -17,7 +17,7 @@ export const cardDecorator = workflows => {
     ...lane,
     cards: lane.cards.map(card => ({
       ...card,
-      className: card.job_priority ? getClass(card.job_priority.value) : null,
+      className: card.priority ? getClass(card.priority.value) : null,
     })),
   }));
   return { lanes };

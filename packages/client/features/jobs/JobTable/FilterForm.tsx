@@ -64,7 +64,7 @@ const FilterForm = ({ values, onFilter }) => {
           placeholder={t('jobTable.columns.status')}
         />
       </Form.Item>
-      <Form.Item name={['taxonomies', 'job_priority']}>
+      <Form.Item name={['metadata', 'priority']}>
         <ComboBoxTaxonomy
           placeholder={t('jobTable.columns.priority')}
           type={TaxonomyType.Job_Priority}

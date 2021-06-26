@@ -26,7 +26,7 @@ export const Query = {
           include: [
             {
               model: TermTaxonomy,
-              where: { taxonomy: ['job_priority', 'job_status'] },
+              where: { taxonomy: ['job_status'] },
               require: true,
               include: [
                 {
@@ -162,7 +162,7 @@ export const Query = {
                   include: [
                     {
                       model: TermTaxonomy,
-                      where: { taxonomy: ['job_priority', 'job_status'] },
+                      where: { taxonomy: ['job_status'] },
                       require: true,
                       include: [
                         {
