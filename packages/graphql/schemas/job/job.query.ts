@@ -60,13 +60,21 @@ export const Query = {
         job = whereCurrentUser(ctx, job);
 
         // metadata
-        let include: Array<any> = [{ model: JobMeta }];
+        const whereMetadata = where.metadata
+          ? { [Op.and]: where.metadata }
+          : null;
+
+        let include: Array<any> = [
+          {
+            model: JobMeta,
+            where: whereMetadata,
+          },
+        ];
 
         // taxonomies
-        if (where.taxonomies) {
+        if (where.taxonomies && where.taxonomies.length) {
           include.push({
             model: JobTerm,
-            require: true,
             where: {
               term_taxonomy_id: where.taxonomies,
               version: { [Op.col]: 'latestVersion' },
@@ -144,6 +152,10 @@ export const Query = {
       }
 
       // Include
+      const whereMetadata = where.metadata
+        ? { [Op.and]: where.metadata }
+        : null;
+
       findOptions.include = [
         {
           model: Term,
@@ -156,7 +168,7 @@ export const Query = {
               model: Job,
               where: jobQuery,
               include: [
-                { model: JobMeta, where: where.metadata },
+                { model: JobMeta, where: whereMetadata },
                 {
                   model: JobTerm,
                   include: [

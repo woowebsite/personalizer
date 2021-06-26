@@ -8,6 +8,7 @@ import ComboBoxEnum from 'components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
 import JobPriority from '~/models/JobPriority';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 const FilterForm = ({ values, onFilter }) => {
   // DEFINE
@@ -34,7 +35,13 @@ const FilterForm = ({ values, onFilter }) => {
           queries.taxonomies = _.values(_.pickBy(values.taxonomies));
         }
 
-        // metadata
+        // metadata fields
+        if (values.metadata) {
+          queries.metadata = fieldsToMetadata(values.metadata).map(x => ({
+            key: x.key,
+            value: x.value,
+          }));
+        }
 
         // execute
         onFilter(queries);

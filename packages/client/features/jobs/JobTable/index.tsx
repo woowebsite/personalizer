@@ -19,7 +19,11 @@ const JobTable = props => {
   const tableFilterRef = React.useRef(null);
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
-  const [updateJob] = jobService.upsert();
+  const [updateJob] = jobService.upsert({
+    onCompleted: () => {
+      tableFilterRef.current.refetch();
+    },
+  });
   const [deleteJob] = jobService.delete({
     onCompleted: () => {
       tableFilterRef.current.refetch();
