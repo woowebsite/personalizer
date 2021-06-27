@@ -1,6 +1,7 @@
 import { resolver } from 'graphql-sequelize';
 import { Sequelize } from 'sequelize';
 import { Op } from 'sequelize';
+import JobTaxonomy from '../../constants/JobTaxonomy';
 import {
   Job,
   JobMeta,
@@ -140,6 +141,7 @@ export const Query = {
       // Find
       findOptions.where = {
         taxonomy: 'job_status',
+        id: {[Op.not]: JobTaxonomy.New }
       };
 
       let jobQuery: any = {};
@@ -199,9 +201,7 @@ export const Query = {
         where: {
           id: {
             [Op.in]: Sequelize.literal(
-              `(SELECT DISTINCT a.id FROM JobTerms a
-                INNER JOIN (SELECT ref_id, MAX(updatedAt) latestUpdated
-                FROM JobTerms GROUP BY ref_id) b ON a.updatedAt = b.latestUpdated AND a.ref_id = b.ref_id)`,
+              `(SELECT DISTINCT a.id FROM JobTerms a WHERE version = latestVersion)`,
             ),
           },
         },
@@ -217,6 +217,7 @@ export const Query = {
             .filter(x => latestJobTermIds.includes(x.id))
             .map(x => {
               if (x) {
+                // convert jobTerms into fields of job
                 const jobTransfer = taxonomyToField(
                   x.dataValues.job,
                   'jobTerms',

@@ -78,11 +78,12 @@ const FilterForm = forwardRef<any, any>(({ onFilter }, ref) => {
       </Form.Item>
 
       <Form.Item name="title">
-        <Input placeholder={t('filter.labels.title')} />
+        <Input placeholder={t('filter.labels.title')} allowClear />
       </Form.Item>
 
       <Form.Item name={['metadata', 'priority']}>
         <ComboBoxTaxonomy
+          allowClear
           placeholder={t('jobTable.columns.priority')}
           type={TaxonomyType.Job_Priority}
         />
