@@ -48,6 +48,15 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        title: 'Hoàn thành',
+        conditions: '{"job": {"status": "A"}, "taxonomies":[8]}',    // 13 is term_taxonomy id, with 'New' status
+        model_name: 'Job',
+        status: 'A',
+        user_id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 

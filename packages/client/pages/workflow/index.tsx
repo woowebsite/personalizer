@@ -19,7 +19,7 @@ const { Content } = Layout;
 
 const Workflow = props => {
   // DECLARE
-  const { messages, t, query } = props;
+  const { messages, session, t, query } = props;
   const weekRef: any = React.createRef();
   const dayRef: any = React.createRef();
   const formRef: any = React.createRef();
@@ -59,12 +59,12 @@ const Workflow = props => {
 
       <Content>
         <FilterForm onFilter={handleFilter} ref={formRef} />
-        <div className="position-relative">
+        <div className="position-relative mt-2">
           <DividerVertical text={t('dividers.today')} />
           <WorkflowBoard prior="day" ref={dayRef} onCardClick={showJobDetail} />
         </div>
 
-        <div className="position-relative">
+        <div className="position-relative mt-2">
           <DividerVertical text={t('dividers.thisWeek')} />
           <WorkflowBoard
             ref={weekRef}
@@ -76,6 +76,7 @@ const Workflow = props => {
       </Content>
       {currentJobId && (
         <JobDrawer
+          session={session}
           key={currentJobId}
           id={currentJobId}
           ref={jobDrawerRef}

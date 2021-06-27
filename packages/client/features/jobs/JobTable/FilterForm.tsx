@@ -63,16 +63,18 @@ const FilterForm = ({ values, onFilter }) => {
       labelAlign="left"
     >
       <Form.Item name={['job', 'title']}>
-        <Input placeholder={t('jobTable.columns.title')} />
+        <Input placeholder={t('jobTable.columns.title')} allowClear />
       </Form.Item>
       <Form.Item name={['taxonomies', 'job_status']}>
         <ComboBoxTaxonomy
+          allowClear
           type={TaxonomyType.Job_Status}
           placeholder={t('jobTable.columns.status')}
         />
       </Form.Item>
       <Form.Item name={['metadata', 'priority']}>
         <ComboBoxTaxonomy
+          allowClear
           placeholder={t('jobTable.columns.priority')}
           type={TaxonomyType.Job_Priority}
         />
