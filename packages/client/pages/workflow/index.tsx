@@ -58,7 +58,7 @@ const Workflow = props => {
       />
 
       <Content>
-        <FilterForm onFilter={handleFilter} ref={formRef} />
+        <FilterForm session={session} onFilter={handleFilter} ref={formRef} />
         <div className="position-relative mt-2">
           <DividerVertical text={t('dividers.today')} />
           <WorkflowBoard prior="day" ref={dayRef} onCardClick={showJobDetail} />

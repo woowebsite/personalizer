@@ -5,8 +5,11 @@ import { Form, Input, Button } from 'antd';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
+import AuthorizedWrapper from '~/components/AuthorizedWrapper';
+import workflowAuthConfig from '~/features/jobs/authorized/workflow';
+import updateJobAuthConfig from '~/features/jobs/authorized/updateJob';
 
-const FilterForm = forwardRef<any, any>(({ onFilter }, ref) => {
+const FilterForm = forwardRef<any, any>(({ onFilter, session }, ref) => {
   // DEFINE
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
@@ -55,27 +58,37 @@ const FilterForm = forwardRef<any, any>(({ onFilter }, ref) => {
       size="small"
       onFinish={handleFinish}
     >
-      <Form.Item name={['metadata', 'employee']}>
-        <ComboBox
-          placeholder={t('filter.labels.employee')}
-          type={ComboBoxType.Employee}
-          allowClear
-          textField="name"
-          valueField="id"
-          style={{ width: 150 }}
-        />
-      </Form.Item>
+      <AuthorizedWrapper
+        config={workflowAuthConfig.FilterForm}
+        session={session}
+      >
+        <Form.Item name={['metadata', 'employee']}>
+          <ComboBox
+            placeholder={t('filter.labels.employee')}
+            type={ComboBoxType.Employee}
+            allowClear
+            textField="name"
+            valueField="id"
+            style={{ width: 150 }}
+          />
+        </Form.Item>
+      </AuthorizedWrapper>
 
-      <Form.Item data-type="object" name={['metadata', 'customer']}>
-        <ComboBox
-          placeholder={t('filter.labels.customer')}
-          type={ComboBoxType.Customer}
-          allowClear
-          textField="name"
-          valueField="id"
-          style={{ width: 150 }}
-        />
-      </Form.Item>
+      <AuthorizedWrapper
+        config={workflowAuthConfig.FilterForm}
+        session={session}
+      >
+        <Form.Item data-type="object" name={['metadata', 'customer']}>
+          <ComboBox
+            placeholder={t('filter.labels.customer')}
+            type={ComboBoxType.Customer}
+            allowClear
+            textField="name"
+            valueField="id"
+            style={{ width: 150 }}
+          />
+        </Form.Item>
+      </AuthorizedWrapper>
 
       <Form.Item name="title">
         <Input placeholder={t('filter.labels.title')} allowClear />
