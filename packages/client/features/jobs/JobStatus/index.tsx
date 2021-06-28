@@ -52,6 +52,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
         name: ['metadata', 'customer'],
         value: job.customer,
       },
+      { name: ['metadata', 'priority'], value: job.priority },
     ]);
   };
 
@@ -233,6 +234,12 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
                 />
               )}
             />
+          </Form.Item>
+          <Form.Item
+            name={['metadata', 'priority']}
+            label={t('jobCreateform.label.priority')}
+          >
+            <ComboBoxTaxonomy type={TaxonomyType.Job_Priority} />
           </Form.Item>
         </Card>
       </Form>

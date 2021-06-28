@@ -193,13 +193,6 @@ const JobForm = forwardRef<any, IProps & React.HTMLAttributes<HTMLDivElement>>(
         </Form.Item>
 
         <Form.Item
-          name={['metadata', 'priority']}
-          label={t('jobCreateform.label.priority')}
-        >
-          <ComboBoxTaxonomy type={TaxonomyType.Job_Priority} />
-        </Form.Item>
-
-        <Form.Item
           name={['job', 'publishDate']}
           label={t('jobCreateform.label.publishDate')}
         >

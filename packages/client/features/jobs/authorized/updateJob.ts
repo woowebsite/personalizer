@@ -4,6 +4,9 @@ const updateJobAuthConfig = {
   JobStatusBox: {
     roles: [RoleType.SysAdmin],
   },
+  JobForm: {
+    roles: [RoleType.SysAdmin],
+  },
 };
 
 export default updateJobAuthConfig;
