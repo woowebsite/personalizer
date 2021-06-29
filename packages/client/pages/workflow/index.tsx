@@ -14,6 +14,8 @@ import FilterForm from 'features/workflows/FilterForm';
 import JobDrawer from 'features/workflows/JobDrawer';
 import WorkflowBoard from 'features/workflows/Workflow';
 import DividerVertical from '~/features/workflows/DividerVertical';
+import { hasPermission } from '~/shared/authHelper';
+import workflowAuthConfig from '~/features/workflows/authorized/workflow';
 
 const { Content } = Layout;
 
@@ -25,6 +27,10 @@ const Workflow = props => {
   const formRef: any = React.createRef();
   const jobDrawerRef: any = React.createRef();
   const [currentJobId, setCurrentJob] = useState(null);
+  const isCardDraggable = hasPermission(
+    workflowAuthConfig.CardDraggable,
+    session,
+  );
 
   // EVENTS
   const handleFilter = values => {
@@ -61,7 +67,12 @@ const Workflow = props => {
         <FilterForm session={session} onFilter={handleFilter} ref={formRef} />
         <div className="position-relative mt-2">
           <DividerVertical text={t('dividers.today')} />
-          <WorkflowBoard prior="day" ref={dayRef} onCardClick={showJobDetail} />
+          <WorkflowBoard
+            isCardDraggable={isCardDraggable}
+            prior="day"
+            ref={dayRef}
+            onCardClick={showJobDetail}
+          />
         </div>
 
         <div className="position-relative mt-2">
@@ -69,6 +80,7 @@ const Workflow = props => {
           <WorkflowBoard
             ref={weekRef}
             prior="week"
+            isCardDraggable={isCardDraggable}
             hiddenLaneHeader={true}
             onCardClick={showJobDetail}
           />

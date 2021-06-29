@@ -6,8 +6,7 @@ import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 import AuthorizedWrapper from '~/components/AuthorizedWrapper';
-import workflowAuthConfig from '~/features/jobs/authorized/workflow';
-import updateJobAuthConfig from '~/features/jobs/authorized/updateJob';
+import workflowAuthConfig from '~/features/workflows/authorized/workflow';
 
 const FilterForm = forwardRef<any, any>(({ onFilter, session }, ref) => {
   // DEFINE

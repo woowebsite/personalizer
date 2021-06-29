@@ -58,13 +58,15 @@ interface WorkflowProps {
   hiddenLaneHeader?: boolean;
   onCardClick?: any;
   onDragEnd?: any;
+  isCardDraggable?: boolean;
 }
 const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   // DECLARE
   const { formatMessage } = useIntl();
   const [eventBus, setEventBus] = useState(undefined);
-  const { prior, onCardClick, onDragEnd } = props;
+  const { prior, onCardClick, isCardDraggable, onDragEnd } = props;
   const t = id => formatMessage({ id });
+
   const priorConditions = {
     startDueDate: moment()
       .startOf(prior)
@@ -141,7 +143,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
         onCardClick={onCardClick}
         handleDragEnd={handleDragEnd}
         data={JSON.parse(JSON.stringify(workflows))}
-        cardDraggable={true}
+        cardDraggable={isCardDraggable}
         eventBusHandle={setEventBus}
       />
     </>
