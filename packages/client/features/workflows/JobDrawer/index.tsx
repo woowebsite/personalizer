@@ -53,12 +53,14 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   });
   const [upsertJob, result] = jobService.upsert();
 
+  // EFFECT
   useEffect(() => {
     if (props.id) {
       setVisible(true);
     } else setVisible(false);
   }, []);
 
+  // METHOD
   useImperativeHandle(ref, () => ({
     showDetail,
   }));
@@ -66,6 +68,8 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   const showDetail = id => {
     setVisible(true);
   };
+
+  // EVENTS
   const onClose = () => {
     setVisible(false);
   };
@@ -100,6 +104,14 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
     });
   };
 
+  const initialTitle = data.job.title || t('pageHeader.title');
+  const [title, setTitle] = useState(initialTitle);
+
+  const handleFieldChanged = (path, title: string) => {
+    setTitle(title);
+  };
+
+  // RENDER
   if (loading) return <div />;
   if (result.data) {
     props.onSaveCompleted();
@@ -108,7 +120,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   return (
     <>
       <Drawer
-        title={t('jobDrawer.title')}
+        title={title}
         width={520}
         onClose={onClose}
         visible={visible}
@@ -137,6 +149,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
                 labelCol: { span: 24 },
                 wrapperCol: { span: 24 },
               }}
+              onFieldChange={handleFieldChanged}
             />
           </div>
 
