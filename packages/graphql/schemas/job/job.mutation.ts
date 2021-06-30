@@ -15,12 +15,22 @@ export const Mutation = {
         returning: true,
       });
 
-      // update `code` field
+      // create mode
       if (!job.code) {
         const updateCodeJob: any = {
           id: job.getDataValue('id'),
           code: `C${job.userId}J${job.id}`,
         };
+        // Customer
+        metadata.push({
+          data: JSON.stringify({
+            value: currentUser.id,
+            name: currentUser.name,
+          }),
+          type: 'object',
+          key: 'customer',
+          value: currentUser.id,
+        });
         Job.upsert(updateCodeJob);
       }
 

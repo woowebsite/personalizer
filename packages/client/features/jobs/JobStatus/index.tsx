@@ -90,6 +90,13 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
 
+  const fCustomer = initialValues.metadata.find(x => x.key === 'customer');
+  const customer = fCustomer && JSON.parse(fCustomer.data);
+  const fLeader = initialValues.metadata.find(x => x.key === 'leader');
+  const leader = fLeader && JSON.parse(fLeader.data);
+  const fEmployee = initialValues.metadata.find(x => x.key === 'employee');
+  const employee = fEmployee && JSON.parse(fEmployee.data);
+
   return (
     <>
       <Form form={form}>
@@ -139,16 +146,8 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             ]}
           >
             <TextEditable
-              defaultValue={
-                initialValues && initialValues.employee
-                  ? parseInt(initialValues.employee.value, 10)
-                  : null
-              }
-              defaultText={
-                initialValues && initialValues.employee
-                  ? initialValues.employee.name
-                  : null
-              }
+              defaultValue={employee && employee.value}
+              defaultText={employee && employee.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBox
                   onChange={handleOnChange}
@@ -175,16 +174,8 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             ]}
           >
             <TextEditable
-              defaultValue={
-                initialValues && initialValues.leader
-                  ? parseInt(initialValues.leader.value, 10)
-                  : null
-              }
-              defaultText={
-                initialValues && initialValues.leader
-                  ? initialValues.leader.name
-                  : null
-              }
+              defaultValue={leader && leader.value}
+              defaultText={leader && leader.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBox
                   onChange={handleOnChange}
@@ -198,7 +189,6 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
               )}
             />
           </Form.Item>
-
           <Form.Item
             name={['metadata', 'customer']}
             label={t('jobStatus.label.customer')}
@@ -212,16 +202,8 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             ]}
           >
             <TextEditable
-              defaultValue={
-                initialValues && initialValues.customer // initialValues.customer must be not null
-                  ? parseInt(initialValues.customer.value, 10)
-                  : null
-              }
-              defaultText={
-                initialValues && initialValues.customer
-                  ? initialValues.customer.name
-                  : null
-              }
+              defaultValue={customer && customer.value}
+              defaultText={customer && customer.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBox
                   onChange={handleOnChange}
