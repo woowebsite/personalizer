@@ -20,7 +20,7 @@ type Job {
   customer: NameValue
   employee: NameValue
   leader: NameValue
-  priority: Int
+  priority: NameValue
   
   job_status: NameValue
 }

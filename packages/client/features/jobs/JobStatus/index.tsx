@@ -15,7 +15,7 @@ import { fieldsToMetadata } from '~/shared/metadataHelper';
 const JobStatusBox = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
   const { initialValues } = props;
-  const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
+  const [upsertJob] = jobService.upsert(); 
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
 
@@ -63,7 +63,8 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
     validateFields,
   }));
 
-  const submit = job => {
+  const submit = () => {
+    const { id } = initialValues;
     form
       .validateFields()
       .then(values => {
@@ -80,7 +81,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
         const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
 
         upsertJob({
-          variables: { job, metadata, taxonomies },
+          variables: { job: { id }, metadata, taxonomies },
         });
       })
       .catch(errorInfo => {
@@ -92,10 +93,15 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
 
   const fCustomer = initialValues.metadata.find(x => x.key === 'customer');
   const customer = fCustomer && JSON.parse(fCustomer.data);
+
   const fLeader = initialValues.metadata.find(x => x.key === 'leader');
   const leader = fLeader && JSON.parse(fLeader.data);
+
   const fEmployee = initialValues.metadata.find(x => x.key === 'employee');
   const employee = fEmployee && JSON.parse(fEmployee.data);
+
+  const fPriority = initialValues.metadata.find(x => x.key === 'priority');
+  const priority = fPriority && JSON.parse(fPriority.data);
 
   return (
     <>
@@ -221,7 +227,21 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             name={['metadata', 'priority']}
             label={t('jobCreateform.label.priority')}
           >
-            <ComboBoxTaxonomy type={TaxonomyType.Job_Priority} />
+            <TextEditable
+              defaultValue={priority && priority.value}
+              defaultText={priority && priority.name}
+              renderComboBox={({ handleOnChange, ...rest }) => (
+                <ComboBoxTaxonomy
+                  type={TaxonomyType.Job_Priority}
+                  onChange={handleOnChange}
+                  textField="name"
+                  valueField="id"
+                  labelInValue
+                  width="200"
+                  {...rest}
+                />
+              )}
+            />
           </Form.Item>
         </Card>
       </Form>

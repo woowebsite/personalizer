@@ -68,10 +68,6 @@ const JobForm = forwardRef<any, IProps & React.HTMLAttributes<HTMLDivElement>>(
           value: !!job.isDemoLayout,
         },
         { name: ['metadata', 'priority'], value: job.priority },
-        // {
-        //   name: ['metadata', 'customer'],
-        //   value: parseInt(job.metadata.find(x => x.key === 'customer').value, 10),
-        // },
       ]);
     };
 
@@ -98,8 +94,6 @@ const JobForm = forwardRef<any, IProps & React.HTMLAttributes<HTMLDivElement>>(
       form
         .validateFields()
         .then(values => {
-          console.log('values', values);
-
           const job = initialValues
             ? { id: initialValues.id, ...values.job }
             : values.job;
@@ -148,25 +142,6 @@ const JobForm = forwardRef<any, IProps & React.HTMLAttributes<HTMLDivElement>>(
         onFinish={submit}
         layout="vertical"
       >
-        {/* <Form.Item
-        name={['metadata', 'customer']}
-        label={t('jobStatus.label.customer')}
-        rules={[
-          {
-            required: true,
-            message: useTranslate('validator.required', {
-              field: 'jobStatus.label.customer',
-            }),
-          },
-        ]}
-      >
-        <ComboBox
-          textField="name"
-          valueField="id"
-          type={ComboBoxType.Customer}
-          width="200"
-        />
-      </Form.Item> */}
         <Form.Item name={['job', 'code']} label={t('jobCreateform.label.code')}>
           <Input disabled />
         </Form.Item>

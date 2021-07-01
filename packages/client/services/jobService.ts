@@ -26,7 +26,10 @@ export const jobQuery = {
         status
         isDemoColor
         isDemoLayout
-        priority
+        priority {
+          name
+          value
+        }
         metadata {
           key
           type

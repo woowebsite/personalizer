@@ -39,8 +39,24 @@ const JobDetail = (props: PageProps & any) => {
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
 
   // EVENTS
-  const onSave2 = () => {
+  const onSave2 = async () => {
+    // check if valid all forms
+    let isValid = true;
+    await formRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+    await formStatusRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+    await formMoneyRef.current.validateFields().catch(() => {
+      isValid = false;
+    });
+    if (!isValid) return;
+    
+    // submit
     formRef.current.submit();
+    formStatusRef.current.submit();
+    formMoneyRef.current.submit();
   };
   const onSave = async () => {
     // check if valid all forms

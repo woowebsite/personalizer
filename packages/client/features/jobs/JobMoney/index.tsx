@@ -9,12 +9,16 @@ import { useIntl } from 'react-intl';
 import { formatMoney } from '~/shared/formatHelper';
 import TextEditable from '~/components/TextEditable';
 import useTranslate from 'hooks/useTranslate';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
+
 // graphql
+import jobService from '~/services/jobService';
 
 const JobMoney = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
   const { initialValues } = props;
   const t = (id, values?) => formatMessage({ id }, values);
+  const [upsertJob] = jobService.upsert(); 
   const [form] = Form.useForm();
   const [dept, setDept] = useState(0);
 
@@ -32,7 +36,34 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   useImperativeHandle(ref, () => ({
     getFieldsValue,
     validateFields,
+    submit
   }));
+
+  const submit = () => {
+    const { id } = initialValues;
+    form
+      .validateFields()
+      .then(values => {
+        // metadata fields
+        const metadataFields = {
+          ...values.metadata,
+        };
+
+        // taxonomies fields
+        const taxonomyFields = values.taxonomies;
+
+        // parse
+        const metadata = fieldsToMetadata(metadataFields);
+        const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
+
+        upsertJob({
+          variables: { job: { id }, metadata, taxonomies },
+        });
+      })
+      .catch(errorInfo => {
+        console.log('Error: ', errorInfo);
+      });
+  };
 
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
