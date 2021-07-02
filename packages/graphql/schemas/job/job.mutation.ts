@@ -4,6 +4,7 @@ import to from 'await-to-js';
 import { JobTerm } from '../../models/jobTerm.model';
 import { JobMeta } from '../../models/jobMeta.model';
 import JobTaxonomy from '../../constants/JobTaxonomy';
+import { upsertMetadata } from './job.utils';
 
 export const Mutation = {
   upsertJob: resolver(Job, {
@@ -84,15 +85,7 @@ export const Mutation = {
 
       // Metadata
       if (job && metadata) {
-        const meta = metadata.map(x => ({
-          ...x,
-          job_id: job.id,
-        }));
-
-        await JobMeta.destroy({
-          where: { job_id: job.id },
-        });
-        await JobMeta.bulkCreate(meta);
+        upsertMetadata(metadata, job.id);
       }
       findOptions.where = { id: job.id };
       return findOptions;

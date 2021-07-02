@@ -15,7 +15,7 @@ import { fieldsToMetadata } from '~/shared/metadataHelper';
 const JobStatusBox = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
   const { initialValues } = props;
-  const [upsertJob] = jobService.upsert(); 
+  const [upsertJob] = jobService.upsert();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
 
@@ -88,6 +88,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
         console.log('Error: ', errorInfo);
       });
   };
+
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
 
