@@ -9,7 +9,7 @@ import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import jobService from '~/services/jobService';
 import JobStatus from '~/constants/jobStatus';
 import useTranslate from '~/hooks/useTranslate';
-import { fieldsToMetadata } from '~/shared/metadataHelper';
+import { fieldsToMetadata, fieldsToTaxonomies } from '~/shared/metadataHelper';
 
 // utils
 const JobStatusBox = forwardRef<any, any>((props, ref) => {
@@ -78,7 +78,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
 
         // parse
         const metadata = fieldsToMetadata(metadataFields);
-        const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
+        const taxonomies = fieldsToTaxonomies(taxonomyFields);
 
         upsertJob({
           variables: { job: { id }, metadata, taxonomies },
@@ -91,6 +91,8 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
 
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
+
+  const job_status = initialValues.job_status;
 
   const fCustomer = initialValues.metadata.find(x => x.key === 'customer');
   const customer = fCustomer && JSON.parse(fCustomer.data);
@@ -121,20 +123,13 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             ]}
           >
             <TextEditable
-              defaultValue={
-                initialValues && initialValues.job_status
-                  ? parseInt(initialValues.job_status.value, 10)
-                  : null
-              }
-              defaultText={
-                initialValues && initialValues.job_status
-                  ? initialValues.job_status.name
-                  : null
-              }
+              defaultValue={job_status && job_status.value}
+              defaultText={job_status && job_status.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBoxTaxonomy
-                  onChange={handleOnChange}
                   type={TaxonomyType.Job_Status}
+                  labelInValue
+                  onChange={handleOnChange}
                   {...rest}
                 />
               )}

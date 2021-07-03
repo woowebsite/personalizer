@@ -153,7 +153,6 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
             />
           </Form.Item>
           <Form.Item
-            name={['metadata', 'debt']}
             className="field-number"
             label={t('jobMoney.label.debt')}
           >

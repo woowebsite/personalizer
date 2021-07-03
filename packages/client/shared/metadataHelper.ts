@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash';
+
 /**
  * Convert Form values into Metadata to put into Graphql mutation
  * @param fields Object fields: example {address: 'abc', phone: '1234'}
@@ -6,6 +8,7 @@ export const fieldsToMetadata = (fields: object) => {
   if (!fields) return;
   let result = [];
   for (const prop in fields) {
+    if (isEmpty(fields[prop])) continue; //skip
     let data;
     let value;
     if (typeof fields[prop] === 'object') {
@@ -28,20 +31,16 @@ export const fieldsToMetadata = (fields: object) => {
 };
 
 /**
- * Convert Form values into Metadata to put into Graphql mutation
- * @param fields Object fields: example {address: 'abc', phone: '1234'}
+ * Convert Form values into Taxonomies to put into Graphql mutation
+ * @param fields Object fields: example [{name: 'abc', value: '1234'}]
  */
-export const fieldsToTaxonomies = (fields: object) => {
+export const fieldsToTaxonomies = (fields: Array<any>) => {
   if (!fields) return;
+  console.log('fieldsToTaxonomies fields: ', fields);
   let result = [];
   for (const prop in fields) {
-    let value;
-
-    if (typeof fields[prop] === 'object') value = JSON.stringify(fields[prop]);
-    else if (typeof fields[prop] === 'number') value = parseFloat(fields[prop]);
-    else value = fields[prop].toString();
-
-    result.push({ key: prop, value, type: typeof fields[prop] });
+    result.push(fields[prop].value);
   }
+  console.log('fieldsToTaxonomies result: ', result);
   return result;
 };
