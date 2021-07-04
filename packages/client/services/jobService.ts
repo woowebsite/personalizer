@@ -83,7 +83,10 @@ export const jobQuery = {
             id
             title
             description
-            priority
+            priority {
+              name
+              value
+            }
           }
         }
       }

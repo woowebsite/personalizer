@@ -45,18 +45,20 @@ const JobDetail = (props: PageProps & any) => {
     await formRef.current.validateFields().catch(() => {
       isValid = false;
     });
-    await formStatusRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-    await formMoneyRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
+    formStatusRef.current &&
+      (await formStatusRef.current.validateFields().catch(() => {
+        isValid = false;
+      }));
+    formMoneyRef.current &&
+      (await formMoneyRef.current.validateFields().catch(() => {
+        isValid = false;
+      }));
     if (!isValid) return;
-    
+
     // submit
     formRef.current.submit();
-    formStatusRef.current.submit();
-    formMoneyRef.current.submit();
+    formStatusRef.current && formStatusRef.current.submit();
+    formMoneyRef.current && formMoneyRef.current.submit();
   };
   const onSave = async () => {
     // check if valid all forms
@@ -130,9 +132,14 @@ const JobDetail = (props: PageProps & any) => {
                 onFieldChange={handleFieldChanged}
               />
             </Card>
-            <Card className="pt-3">
-              <JobAssignee ref={formRef} jobTerms={data.jobTerms} />
-            </Card>
+            <AuthorizedWrapper
+              config={updateJobAuthConfig.JobAssignee}
+              session={props.session}
+            >
+              <Card className="pt-3">
+                <JobAssignee ref={formRef} jobTerms={data.jobTerms} />
+              </Card>
+            </AuthorizedWrapper>
           </Col>
           <Col span="8">
             <AuthorizedWrapper
@@ -140,8 +147,8 @@ const JobDetail = (props: PageProps & any) => {
               session={props.session}
             >
               <JobStatus ref={formStatusRef} initialValues={data.job} />
+              <JobMoney ref={formMoneyRef} initialValues={data.job} />
             </AuthorizedWrapper>
-            <JobMoney ref={formMoneyRef} initialValues={data.job} />
           </Col>
         </Row>
       </Content>

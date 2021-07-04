@@ -8,6 +8,7 @@ import {
   Typography,
   message,
 } from 'antd';
+import Router from 'next/router';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
@@ -48,76 +49,32 @@ const JobNew = props => {
 
   // EVENTS
   const onPublish = () => {};
-  const onSave2 = () => {
+  const onSave = () => {
     formRef.current.submit();
   };
-  const onSave = async () => {
-    // check if valid all forms
-    let isValid = true;
-    await formRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-    if (formStatusRef.current) {
-      await formStatusRef.current.validateFields().catch(() => {
-        isValid = false;
-      });
-    }
-    if (formMoneyRef.current) {
-      await formMoneyRef.current.validateFields().catch(() => {
-        isValid = false;
-      });
-    }
-
-    if (!isValid) return;
-
-    // prepare data
-    const formValues = formRef.current.getFieldsValue();
-    const statusValues = formStatusRef.current.getFieldsValue();
-    const moneyValues = formMoneyRef.current.getFieldsValue();
-
-    // metadata fields
-    const metadataFields = {
-      ...formValues.metadata,
-      ...statusValues.metadata,
-      ...moneyValues.metadata,
-    };
-
-    // taxonomies fields
-    const taxonomyFields = {
-      ...formValues.taxonomies,
-      ...statusValues.taxonomies,
-      ...moneyValues.taxonomies,
-    };
-
-    // parse
-    const job = formValues.job;
-    const metadata = fieldsToMetadata(metadataFields);
-    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
-
-    upsertJob({
-      variables: { job, metadata, taxonomies },
-    });
-  };
-
   // EVENTS
   const handleFieldChanged = (path, title: string) => {
     pageTitleRef.current.setTitle(title);
   };
 
+  const onSaveCompleted = ({ upsertJob }) => {
+    // redirect
+    Router.push('/customer/jobs/' + upsertJob.id);
+  };
+
   // RENDER
   return (
     <>
-      <PageTitle
-        ref={pageTitleRef}
-        messages={messages}
-        t={t}
-        onSave={onSave2}
-      />
+      <PageTitle ref={pageTitleRef} messages={messages} t={t} onSave={onSave} />
       <Content>
         <Row gutter={24}>
           <Col span="16">
             <Card className="pt-3">
-              <JobForm ref={formRef} onFieldChange={handleFieldChanged} />
+              <JobForm
+                ref={formRef}
+                onSaveCompleted={onSaveCompleted}
+                onFieldChange={handleFieldChanged}
+              />
             </Card>
           </Col>
         </Row>

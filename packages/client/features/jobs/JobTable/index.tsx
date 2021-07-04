@@ -12,6 +12,7 @@ import jobService from 'services/jobService';
 import StatusType from '~/models/StatusType';
 import { defaultFilter } from './constants';
 import JobTaxonomy from '~/models/JobTaxonomy';
+import { notification } from 'antd';
 
 const JobTable = props => {
   // DEFINES
@@ -21,11 +22,27 @@ const JobTable = props => {
   const t = id => formatMessage({ id });
   const [updateJob] = jobService.upsert({
     onCompleted: () => {
+      notification.success({
+        message: 'Notification Success',
+        description: 'Send successfully',
+        placement: 'bottomLeft',
+        onClick: () => {
+          console.log('Notification Clicked!');
+        },
+      });
       tableFilterRef.current.refetch();
     },
   });
   const [deleteJob] = jobService.delete({
     onCompleted: () => {
+      notification.success({
+        message: 'Notification Success',
+        description: 'Save successfully',
+        placement: 'bottomLeft',
+        onClick: () => {
+          console.log('Notification Clicked!');
+        },
+      });
       tableFilterRef.current.refetch();
     },
   });
@@ -44,10 +61,10 @@ const JobTable = props => {
     });
   };
 
-  const handleSendJob = id => {
+  const handleSendJob = job => {
     updateJob({
       variables: {
-        job: { id },
+        job: { id: job.id, code: job.code },
         taxonomies: [JobTaxonomy.Todo],
       },
     });

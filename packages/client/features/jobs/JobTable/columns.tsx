@@ -84,7 +84,7 @@ export const columns = (t, handlers): ColumnsType<any> => {
 
           <Dropdown
             placement="bottomRight"
-            overlay={menu(t, { send: () => handlers.send(record.id) })}
+            overlay={menu(t, { send: () => handlers.send(record) })}
           >
             <Button type="text">
               <MenuOutlined />

@@ -27,6 +27,7 @@ interface IProps {
   initialValues?: any;
   layout?: any;
   onFieldChange?: (path: string | string[], value: string) => void;
+  onSaveCompleted?: (resp: any) => void;
 }
 
 const defaultLayout = {
@@ -37,9 +38,9 @@ const JobForm = forwardRef<any, IProps & React.HTMLAttributes<HTMLDivElement>>(
   (props, ref) => {
     // DECLARES
     const { formatMessage } = useIntl();
-    const { initialValues } = props;
+    const { initialValues, onSaveCompleted } = props;
     const t = (id, values?) => formatMessage({ id }, values);
-    const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
+    const [upsertJob] = jobService.upsert({ onCompleted: onSaveCompleted }); //(userQueries.UPSERT_USER);
     const [form] = Form.useForm();
     const layout = props.layout || defaultLayout;
 

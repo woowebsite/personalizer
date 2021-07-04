@@ -7,6 +7,9 @@ const updateJobAuthConfig = {
   JobForm: {
     roles: [RoleType.SysAdmin],
   },
+  JobAssignee: {
+    roles: [RoleType.SysAdmin],
+  },
 };
 
 export default updateJobAuthConfig;
