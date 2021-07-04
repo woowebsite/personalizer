@@ -54,16 +54,20 @@ export const vi = {
       filter: 'Lọc',
       payment: 'Thanh toán',
       deposit: 'Nạp tiền',
-      send: 'Gửi đi'
+      send: 'Gửi đi',
+      publish: 'Gửi đi',
     },
     enum: {
+      StatusType: {
+        Actived: 'Hoạt động',
+        Deactive: 'Vô hiệu',
+      },
       JobStatus: {
-        Active: 'Mở',
-        Dective: 'Đóng',
+        Deactive: 'Vô hiệu', // delete
         Finish: 'Hoàn thành',
         Publish: 'Đã gửi',
-        Draft: 'Hoàn thành'
-      }
+        Draft: 'Đã lưu',
+      },
     },
     userTable: {
       columns: {
@@ -153,7 +157,7 @@ export const vi = {
       },
     },
     tableQuickEdit: {
-      btnQuickEdit: 'Sửa',
+      btnQuickEdit: 'Sửa nhanh',
     },
     tableFilter: {
       tabFilter: {
@@ -173,6 +177,9 @@ export const vi = {
       connectToTwitter: 'Twitter',
       connectToGoogle: 'Google',
     },
+  },
+  '/': {
+    title: 'Index',
   },
   '/login': {
     signin: 'Đăng nhập',

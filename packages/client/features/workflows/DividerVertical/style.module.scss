@@ -1,0 +1,17 @@
+.dividerVertical {
+  left: -8px;
+  position: absolute;
+  height: 100%;
+  & > span {
+    height: 100%;
+    width: 100%;
+    color: #999;
+    display: block;
+    font-size: 80%;
+    text-align: center;
+    left: -30px;
+    position: relative;
+    writing-mode: sideways-lr;
+    text-orientation: mixed;
+  }
+}

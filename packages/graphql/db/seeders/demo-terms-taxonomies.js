@@ -23,10 +23,9 @@ module.exports = {
         slug: 'job_priority',
         term_id: 4,
       },
-
       {
         taxonomy: 'job_status',
-        slug: 'job_priority',
+        slug: 'job_status',
         term_id: 5,
       },
       {
@@ -43,6 +42,11 @@ module.exports = {
         taxonomy: 'job_status',
         slug: 'job_status',
         term_id: 8,
+      },
+      {
+        taxonomy: 'job_status',
+        slug: 'job_status',
+        term_id: 9,
       },
       {
         taxonomy: 'account_deposit',

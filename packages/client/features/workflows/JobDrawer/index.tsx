@@ -27,10 +27,16 @@ import { withApollo } from 'apollo/apollo';
 import { useRouter } from 'next/dist/client/router';
 import jobService from 'services/jobService';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
+import AuthorizedWrapper from '~/components/AuthorizedWrapper';
+import updateJobAuthConfig from '~/features/jobs/authorized/updateJob';
+
+// utils
+import style from './style.module.scss';
 
 interface JobDrawerProps {
   id: number;
   onSaveCompleted: any;
+  session: any;
 }
 
 const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
@@ -47,12 +53,14 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   });
   const [upsertJob, result] = jobService.upsert();
 
+  // EFFECT
   useEffect(() => {
     if (props.id) {
       setVisible(true);
     } else setVisible(false);
   }, []);
 
+  // METHOD
   useImperativeHandle(ref, () => ({
     showDetail,
   }));
@@ -60,10 +68,16 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   const showDetail = id => {
     setVisible(true);
   };
+
+  // EVENTS
   const onClose = () => {
     setVisible(false);
   };
 
+  const onSave2 = () => {
+    formRef.current.submit();
+    props.onSaveCompleted();
+  };
   const onSave = () => {
     const formValues = formRef.current.getFieldsValue();
     const statusValues = formStatusRef.current.getFieldsValue();
@@ -90,6 +104,14 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
     });
   };
 
+  const initialTitle = data.job.title || t('pageHeader.title');
+  const [title, setTitle] = useState(initialTitle);
+
+  const handleFieldChanged = (path, title: string) => {
+    setTitle(title);
+  };
+
+  // RENDER
   if (loading) return <div />;
   if (result.data) {
     props.onSaveCompleted();
@@ -98,7 +120,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   return (
     <>
       <Drawer
-        title={t('jobDrawer.title')}
+        title={title}
         width={520}
         onClose={onClose}
         visible={visible}
@@ -112,28 +134,33 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
             <Button onClick={onClose} style={{ marginRight: 8 }}>
               {t('buttons.cancel')}
             </Button>
-            <Button key="1" type="primary" onClick={onSave}>
+            <Button key="1" type="primary" onClick={onSave2}>
               {t('buttons.save')}
             </Button>
           </div>
         }
       >
-        <Form layout="vertical" hideRequiredMark>
-          <Row gutter={24}>
-            <Col span="16">
-              <JobForm
-                ref={formRef}
-                initialValues={data.job}
-                layout={{
-                  labelCol: { span: 24 },
-                  wrapperCol: { span: 24 },
-                }}
-              />
-            </Col>
-            <Col span="8">
+        <Form layout="vertical" className="jobDrawer d-flex" hideRequiredMark>
+          <div className={style.jobDrawerForm}>
+            <JobForm
+              ref={formRef}
+              initialValues={data.job}
+              layout={{
+                labelCol: { span: 24 },
+                wrapperCol: { span: 24 },
+              }}
+              onFieldChange={handleFieldChanged}
+            />
+          </div>
+
+          <AuthorizedWrapper
+            config={updateJobAuthConfig.JobStatusBox}
+            session={props.session}
+          >
+            <div className="pl-4">
               <JobStatus ref={formStatusRef} initialValues={data.job} />
-            </Col>
-          </Row>
+            </div>
+          </AuthorizedWrapper>
         </Form>
       </Drawer>
     </>

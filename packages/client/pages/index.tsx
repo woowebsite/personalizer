@@ -1,14 +1,9 @@
 import React from 'react';
 import { withApollo } from '../apollo/apollo';
-import BasicLayout from '../layout/BasicLayout';
-
+import withUserLayout from 'layout/UserLayout';
 
 const NOSSR = () => {
-  return (
-    <BasicLayout>
-      <h1>This should be rendered on client side</h1>
-    </BasicLayout>
-  );
+  return <h1>This should be rendered on client side</h1>;
 };
 
-export default withApollo({ ssr: false })(NOSSR);
+export default withUserLayout(withApollo({ ssr: false })(NOSSR));

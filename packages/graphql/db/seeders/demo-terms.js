@@ -19,7 +19,10 @@ module.exports = {
         name: 'Thấp',
         slug: 'thap',
       },
-
+      {
+        name: 'Mới tạo',
+        slug: 'moi-tao',
+      },
       {
         name: 'Todo',
         slug: 'todo',

@@ -14,6 +14,7 @@ export const jobQuery = {
     query GetJob($where: JobWhere) {
       job(where: $where) {
         id
+        code
         title
         description
         dueDate
@@ -25,6 +26,16 @@ export const jobQuery = {
         status
         isDemoColor
         isDemoLayout
+        priority {
+          name
+          value
+        }
+        metadata {
+          key
+          type
+          data
+          value
+        }
         customer {
           name
           value
@@ -34,10 +45,6 @@ export const jobQuery = {
           value
         }
         leader {
-          name
-          value
-        }
-        job_priority {
           name
           value
         }
@@ -76,7 +83,7 @@ export const jobQuery = {
             id
             title
             description
-            job_priority {
+            priority {
               name
               value
             }

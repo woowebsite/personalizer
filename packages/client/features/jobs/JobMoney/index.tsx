@@ -9,25 +9,24 @@ import { useIntl } from 'react-intl';
 import { formatMoney } from '~/shared/formatHelper';
 import TextEditable from '~/components/TextEditable';
 import useTranslate from 'hooks/useTranslate';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
+
 // graphql
+import jobService from '~/services/jobService';
 
 const JobMoney = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
-  const { job } = props;
+  const { initialValues } = props;
   const t = (id, values?) => formatMessage({ id }, values);
+  const [upsertJob] = jobService.upsert(); 
   const [form] = Form.useForm();
-  const initialValues = {
-    cost: job ? job.cost : 0,
-    paid: job.paid,
-    debt: 0,
-  };
   const [dept, setDept] = useState(0);
 
   // EFFECTS
   useEffect(() => {
-    if (job) {
-      const cost = parseInt(job.cost);
-      const paid = parseInt(job.paid);
+    if (initialValues) {
+      const cost = parseInt(initialValues.cost);
+      const paid = parseInt(initialValues.paid);
 
       setDept(cost - paid);
     }
@@ -37,7 +36,34 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   useImperativeHandle(ref, () => ({
     getFieldsValue,
     validateFields,
+    submit
   }));
+
+  const submit = () => {
+    const { id } = initialValues;
+    form
+      .validateFields()
+      .then(values => {
+        // metadata fields
+        const metadataFields = {
+          ...values.metadata,
+        };
+
+        // taxonomies fields
+        const taxonomyFields = values.taxonomies;
+
+        // parse
+        const metadata = fieldsToMetadata(metadataFields);
+        const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
+
+        upsertJob({
+          variables: { job: { id }, metadata, taxonomies },
+        });
+      })
+      .catch(errorInfo => {
+        console.log('Error: ', errorInfo);
+      });
+  };
 
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
@@ -58,7 +84,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
     <>
       <Form form={form}>
         <Card
-          className="mt-4 status-form card-required-title"
+          className="mb-4 status-form card-required-title"
           title={t('jobMoney.title')}
           extra={
             <Form.Item
@@ -127,7 +153,6 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
             />
           </Form.Item>
           <Form.Item
-            name={['metadata', 'debt']}
             className="field-number"
             label={t('jobMoney.label.debt')}
           >

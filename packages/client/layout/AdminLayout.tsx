@@ -24,7 +24,7 @@ function withAdminLayout(WrappedComponent) {
         </Header>
         <Layout>
           <Sider width={200} className="site-layout-background">
-            <MenuLeft data={getMenuData()} />
+            <MenuLeft data={getMenuData()} session={props.session} />
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
             <WrappedComponent t={t} messages={messages} {...props} />

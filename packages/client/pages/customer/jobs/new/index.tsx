@@ -8,6 +8,7 @@ import {
   Typography,
   message,
 } from 'antd';
+import Router from 'next/router';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
@@ -21,98 +22,60 @@ import { fieldsToMetadata } from '~/shared/metadataHelper';
 
 // inner components
 import JobForm from '~/features/jobs/JobForm';
-import JobStatus from '~/features/jobs/JobStatus';
+import JobStatusBox from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
 
-const { Content } = Layout;
+// utils
+import JobStatus from '~/constants/jobStatus';
+import PageTitle from '~/features/jobs/PageTitle';
+import newJobAuthConfig from '~/features/jobs/authorized/newJob';
+import AuthorizedWrapper from '~/components/AuthorizedWrapper';
 
+const { Content } = Layout;
 const JobNew = props => {
   // DECLARE
   const { messages, t } = props;
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
   const formMoneyRef: any = React.createRef();
+  const pageTitleRef: any = React.createRef();
   const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
-  const [title, setTitle] = useState(messages.title);
-
-  // EVENTS
-  const onSave = async () => {
-    // check if valid all forms
-    let isValid = true;
-    await formRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-    await formStatusRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-    await formMoneyRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-    console.log('isValid', isValid);
-
-    if (!isValid) return;
-
-    // prepare data
-    const formValues = formRef.current.getFieldsValue();
-    const statusValues = formStatusRef.current.getFieldsValue();
-    const moneyValues = formMoneyRef.current.getFieldsValue();
-
-    // metadata fields
-    const metadataFields = {
-      ...formValues.metadata,
-      ...statusValues.metadata,
-      ...moneyValues.metadata,
-    };
-
-    // taxonomies fields
-    const taxonomyFields = {
-      ...formValues.taxonomies,
-      ...statusValues.taxonomies,
-      ...moneyValues.taxonomies,
-    };
-
-    // parse
-    const job = formValues.job;
-    const metadata = fieldsToMetadata(metadataFields);
-    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
-
-    upsertJob({
-      variables: { job, metadata, taxonomies },
-    });
+  const initialValues = {
+    cost: 0,
+    paid: 0,
+    status: JobStatus.Draft,
+    job_status: JobStatus.Publish,
   };
 
   // EVENTS
+  const onPublish = () => {};
+  const onSave = () => {
+    formRef.current.submit();
+  };
+  // EVENTS
   const handleFieldChanged = (path, title: string) => {
-    setTitle(title);
+    pageTitleRef.current.setTitle(title);
+  };
+
+  const onSaveCompleted = ({ upsertJob }) => {
+    // redirect
+    Router.push('/customer/jobs/' + upsertJob.id);
   };
 
   // RENDER
   return (
     <>
-      <PageHeader
-        className="mb-4 pl-0 pr-0"
-        title={title}
-        extra={[
-          <RedirectButton url={'/customer/jobs'}>
-            {messages['pageHeader.buttons.all']}
-          </RedirectButton>,
-          <Button key="1" type="primary" onClick={onSave}>
-            {t('buttons.save')}
-          </Button>,
-        ]}
-      />
+      <PageTitle ref={pageTitleRef} messages={messages} t={t} onSave={onSave} />
       <Content>
         <Row gutter={24}>
           <Col span="16">
             <Card className="pt-3">
-              <JobForm ref={formRef} onFieldChange={handleFieldChanged} />
+              <JobForm
+                ref={formRef}
+                onSaveCompleted={onSaveCompleted}
+                onFieldChange={handleFieldChanged}
+              />
             </Card>
-          </Col>
-          <Col span="8">
-            <Card className="status-form" title={t('jobStatus.title')}>
-              <JobStatus ref={formStatusRef} />
-            </Card>
-            <JobMoney ref={formMoneyRef} />
           </Col>
         </Row>
       </Content>

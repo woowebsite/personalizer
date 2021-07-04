@@ -1,6 +1,7 @@
 import { resolver } from 'graphql-sequelize';
 import { Sequelize } from 'sequelize';
 import { Op } from 'sequelize';
+import JobTaxonomy from '../../constants/JobTaxonomy';
 import {
   Job,
   JobMeta,
@@ -11,6 +12,7 @@ import {
 } from '../../models';
 import { Term } from '../../models/term.model';
 import { metadataToField, taxonomyToField } from '../../utils/dataUtil';
+import { whereCurrentUser } from '../../utils/queryUtil';
 
 export const Query = {
   job: resolver(Job, {
@@ -25,7 +27,7 @@ export const Query = {
           include: [
             {
               model: TermTaxonomy,
-              where: { taxonomy: ['job_priority', 'job_status'] },
+              where: { taxonomy: ['job_status'] },
               require: true,
               include: [
                 {
@@ -48,22 +50,36 @@ export const Query = {
   }),
   jobs: resolver(Job, {
     list: true,
-    before: async (findOptions, { where }, context) => {
+    before: async (findOptions, { where }, ctx) => {
       if (where) {
         // job
         let { job } = where;
-        if (where && where.job.title)
+        if (where.job && where.job.title)
           job.title = { [Op.like]: where.job.title };
 
+        // filter by current user
+        job = whereCurrentUser(ctx, job);
+
         // metadata
-        let include: Array<any> = [{ model: JobMeta }];
+        const whereMetadata = where.metadata
+          ? { [Op.and]: where.metadata }
+          : null;
+
+        let include: Array<any> = [
+          {
+            model: JobMeta,
+            where: whereMetadata,
+          },
+        ];
 
         // taxonomies
-        if (where.taxonomies) {
+        if (where.taxonomies && where.taxonomies.length) {
           include.push({
             model: JobTerm,
-            require: true,
-            where: { term_taxonomy_id: where.taxonomies },
+            where: {
+              term_taxonomy_id: where.taxonomies,
+              version: { [Op.col]: 'latestVersion' },
+            },
           });
         }
 
@@ -88,16 +104,16 @@ export const Query = {
       const { job, taxonomyNames } = where;
       const whereTaxonomies = taxonomyNames ? { taxonomy: taxonomyNames } : {};
 
+      // findOptions.logging = console.log;
       findOptions.where = {
         ref_id: job.id,
         id: {
           [Op.in]: Sequelize.literal(
-            `(SELECT DISTINCT a.id FROM JobTerms a
+            `( SELECT a.id FROM JobTerms a
             INNER JOIN (SELECT id, MAX(updatedAt) latestUpdated
             FROM JobTerms WHERE ref_id=${
               job.id
-            } GROUP BY term_taxonomy_id) b ON a.updatedAt = b.latestUpdated
-            WHERE ref_id=${job.id})`,
+            } GROUP BY term_taxonomy_id) b ON a.id = b.id )`,
           ),
         },
       };
@@ -125,18 +141,23 @@ export const Query = {
       // Find
       findOptions.where = {
         taxonomy: 'job_status',
+        id: { [Op.not]: JobTaxonomy.New },
       };
 
-      let query: any = {};
-      if (where && where.title) query.title = { [Op.like]: where.title };
+      let jobQuery: any = {};
+      if (where && where.title) jobQuery.title = { [Op.like]: where.title };
 
       if (where && where.startDueDate && where.endDueDate) {
-        query.dueDate = {
+        jobQuery.dueDate = {
           [Op.between]: [where.startDueDate, where.endDueDate],
         };
       }
 
       // Include
+      const whereMetadata = where.metadata
+        ? { [Op.and]: where.metadata }
+        : null;
+
       findOptions.include = [
         {
           model: Term,
@@ -147,15 +168,15 @@ export const Query = {
           include: [
             {
               model: Job,
-              where: query,
+              where: jobQuery,
               include: [
-                { model: JobMeta, where: where.metadata },
+                { model: JobMeta, where: whereMetadata },
                 {
                   model: JobTerm,
                   include: [
                     {
                       model: TermTaxonomy,
-                      where: { taxonomy: ['job_priority', 'job_status'] },
+                      where: { taxonomy: ['job_status'] },
                       require: true,
                       include: [
                         {
@@ -175,13 +196,12 @@ export const Query = {
       return findOptions;
     },
     after: async (termTaxonomies, args) => {
+      // get JobTerm that updatedAt is max
       const jobTerms = await JobTerm.findAll({
         where: {
           id: {
             [Op.in]: Sequelize.literal(
-              `(SELECT DISTINCT a.id FROM JobTerms a
-              INNER JOIN (SELECT id, MAX(updatedAt) latestUpdated
-              FROM JobTerms GROUP BY ref_id) b ON a.updatedAt = b.latestUpdated)`,
+              `(SELECT DISTINCT a.id FROM JobTerms a WHERE version = latestVersion)`,
             ),
           },
         },
@@ -197,6 +217,7 @@ export const Query = {
             .filter(x => latestJobTermIds.includes(x.id))
             .map(x => {
               if (x) {
+                // convert jobTerms into fields of job
                 const jobTransfer = taxonomyToField(
                   x.dataValues.job,
                   'jobTerms',

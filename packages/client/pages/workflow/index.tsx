@@ -13,17 +13,24 @@ import { withApollo } from 'apollo/apollo';
 import FilterForm from 'features/workflows/FilterForm';
 import JobDrawer from 'features/workflows/JobDrawer';
 import WorkflowBoard from 'features/workflows/Workflow';
+import DividerVertical from '~/features/workflows/DividerVertical';
+import { hasPermission } from '~/shared/authHelper';
+import workflowAuthConfig from '~/features/workflows/authorized/workflow';
 
 const { Content } = Layout;
 
 const Workflow = props => {
   // DECLARE
-  const { messages, t, query } = props;
+  const { messages, session, t, query } = props;
   const weekRef: any = React.createRef();
   const dayRef: any = React.createRef();
   const formRef: any = React.createRef();
   const jobDrawerRef: any = React.createRef();
   const [currentJobId, setCurrentJob] = useState(null);
+  const isCardDraggable = hasPermission(
+    workflowAuthConfig.CardDraggable,
+    session,
+  );
 
   // EVENTS
   const handleFilter = values => {
@@ -57,23 +64,31 @@ const Workflow = props => {
       />
 
       <Content>
-        <FilterForm onFilter={handleFilter} ref={formRef} />
-        <Divider orientation="left" plain>
-          {t('dividers.today')}
-        </Divider>
-        <WorkflowBoard prior="day" ref={dayRef} onCardClick={showJobDetail} />
-        <Divider orientation="left" plain>
-          {t('dividers.thisWeek')}
-        </Divider>
-        <WorkflowBoard
-          ref={weekRef}
-          prior="week"
-          hiddenLaneHeader={true}
-          onCardClick={showJobDetail}
-        />
+        <FilterForm session={session} onFilter={handleFilter} ref={formRef} />
+        <div className="position-relative mt-2">
+          <DividerVertical text={t('dividers.today')} />
+          <WorkflowBoard
+            isCardDraggable={isCardDraggable}
+            prior="day"
+            ref={dayRef}
+            onCardClick={showJobDetail}
+          />
+        </div>
+
+        <div className="position-relative mt-2">
+          <DividerVertical text={t('dividers.thisWeek')} />
+          <WorkflowBoard
+            ref={weekRef}
+            prior="week"
+            isCardDraggable={isCardDraggable}
+            hiddenLaneHeader={true}
+            onCardClick={showJobDetail}
+          />
+        </div>
       </Content>
       {currentJobId && (
         <JobDrawer
+          session={session}
           key={currentJobId}
           id={currentJobId}
           ref={jobDrawerRef}

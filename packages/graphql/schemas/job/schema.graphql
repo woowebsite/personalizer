@@ -1,5 +1,6 @@
 type Job {
   id: Int
+  code: String
   title: String
   description: String
   dueDate: Date
@@ -19,8 +20,8 @@ type Job {
   customer: NameValue
   employee: NameValue
   leader: NameValue
+  priority: NameValue
   
-  job_priority: NameValue
   job_status: NameValue
 }
 
@@ -33,6 +34,7 @@ input JobWhere {
 
 input JobInput {
   id: Int
+  code: String
   title: String
   description: String
   publishDate: Date

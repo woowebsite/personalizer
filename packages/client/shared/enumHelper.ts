@@ -26,8 +26,6 @@ export const enumToObject = (type, reverse: boolean = false) => {
 };
 
 export const enumToTranslate = (type, enumName, value, t) => {
-  console.log('type', typeof type);
-  
   const e = enumToObject(type, true);
   const label = e[value];
   return t(`enum.${enumName}.${label}`);

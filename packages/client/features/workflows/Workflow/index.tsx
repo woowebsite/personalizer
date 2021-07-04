@@ -1,4 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import NProgress from 'nprogress';
 import Board from 'react-trello';
@@ -53,13 +58,15 @@ interface WorkflowProps {
   hiddenLaneHeader?: boolean;
   onCardClick?: any;
   onDragEnd?: any;
+  isCardDraggable?: boolean;
 }
-let eventBus = undefined;
 const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   // DECLARE
   const { formatMessage } = useIntl();
-  const { prior, onCardClick, onDragEnd } = props;
+  const [eventBus, setEventBus] = useState(undefined);
+  const { prior, onCardClick, isCardDraggable, onDragEnd } = props;
   const t = id => formatMessage({ id });
+
   const priorConditions = {
     startDueDate: moment()
       .startOf(prior)
@@ -79,9 +86,16 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     ignoreResults: true,
   });
 
+  // METHODS
   useImperativeHandle(ref, () => ({
     filter: handleFilter,
   }));
+
+  const handleFilter = values => {
+    const hasValue = Object.values(values).some(x => x !== undefined);
+    if (hasValue) refetch({ where: { ...priorConditions, ...values } });
+    else refetch();
+  };
 
   // browser code
   if (typeof window !== 'undefined') {
@@ -89,19 +103,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
     if (data) NProgress.done();
   }
 
-  if (loading) return <div />;
-  const workflows = cardDecorator(data.workflows);
-
   // EVENTS
-  const handleFilter = values => {
-    const hasValue = Object.values(values).some(x => x !== undefined);
-    if (hasValue) refetch({ where: { ...priorConditions, ...values } });
-    else refetch();
-  };
-
-  const setEventBus = handle => {
-    eventBus = handle;
-  };
   const handleDragEnd = (cardId, sourceLandId, targetLaneId, card) => {
     upsertJob({
       variables: {
@@ -112,20 +114,19 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
       },
     });
 
-    setTimeout(() => {
-      if (eventBus) {
-        eventBus.publish({
-          type: 'MOVE_CARD',
-          fromLaneId: sourceLandId,
-          toLaneId: targetLaneId,
-          cardId,
-          index: card,
-        });
-      }
-    });
+    // eventBus.publish({
+    //   type: 'MOVE_CARD',
+    //   fromLaneId: sourceLandId,
+    //   toLaneId: targetLaneId,
+    //   cardId,
+    //   index: card,
+    // });
   };
 
   // RENDER
+  if (loading) return <div />;
+  const workflows = cardDecorator(data.workflows);
+
   return (
     <>
       <Board
@@ -142,7 +143,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
         onCardClick={onCardClick}
         handleDragEnd={handleDragEnd}
         data={JSON.parse(JSON.stringify(workflows))}
-        cardDraggable={true}
+        cardDraggable={isCardDraggable}
         eventBusHandle={setEventBus}
       />
     </>

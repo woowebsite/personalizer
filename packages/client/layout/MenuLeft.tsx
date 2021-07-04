@@ -9,6 +9,8 @@ const { SubMenu } = Menu;
 const MenuLeft = props => {
   const { formatMessage } = useIntl();
   const f = id => formatMessage({ id });
+  const { session } = props;
+  const { user } = session;
 
   return (
     <Menu
@@ -18,7 +20,7 @@ const MenuLeft = props => {
       style={{ height: '100%', borderRight: 0 }}
     >
       {props.data
-        .filter(x => x.position === 'left')
+        .filter(x => x.position === 'left' && x.roles.includes(user.role_id))
         .map((menu, i) => {
           //Group menu
           if (menu.children) {

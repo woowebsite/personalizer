@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 
 // components
@@ -11,20 +11,61 @@ import { columns } from './columns';
 import jobService from 'services/jobService';
 import StatusType from '~/models/StatusType';
 import { defaultFilter } from './constants';
+import JobTaxonomy from '~/models/JobTaxonomy';
+import { notification } from 'antd';
 
 const JobTable = props => {
   // DEFINES
   const tableRef = React.useRef(null);
+  const tableFilterRef = React.useRef(null);
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
-  const [upsertUser] = jobService.upsert();
-  const [deleteJob] = jobService.delete();
+  const [updateJob] = jobService.upsert({
+    onCompleted: () => {
+      notification.success({
+        message: 'Notification Success',
+        description: 'Send successfully',
+        placement: 'bottomLeft',
+        onClick: () => {
+          console.log('Notification Clicked!');
+        },
+      });
+      tableFilterRef.current.refetch();
+    },
+  });
+  const [deleteJob] = jobService.delete({
+    onCompleted: () => {
+      notification.success({
+        message: 'Notification Success',
+        description: 'Save successfully',
+        placement: 'bottomLeft',
+        onClick: () => {
+          console.log('Notification Clicked!');
+        },
+      });
+      tableFilterRef.current.refetch();
+    },
+  });
+
+  // EFFECTS
+  useEffect(() => {
+    tableFilterRef.current.refetch();
+  }, []);
 
   // EVENTS
   const handleDeleteJob = id => {
     deleteJob({
       variables: {
         id,
+      },
+    });
+  };
+
+  const handleSendJob = job => {
+    updateJob({
+      variables: {
+        job: { id: job.id, code: job.code },
+        taxonomies: [JobTaxonomy.Todo],
       },
     });
   };
@@ -47,7 +88,7 @@ const JobTable = props => {
           }
         />
       )}
-      columns={columns(t, handleDeleteJob)}
+      columns={columns(t, { delete: handleDeleteJob, send: handleSendJob })}
       {...props}
     />
   );
@@ -55,6 +96,7 @@ const JobTable = props => {
   return (
     <>
       <TableFilter
+        ref={tableFilterRef}
         filterOptions={{
           modelName: 'Job',
         }}

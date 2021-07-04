@@ -130,6 +130,7 @@ export type FilterWhere = {
 export type Job = {
   __typename?: 'Job';
   id?: Maybe<Scalars['Int']>;
+  code?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   dueDate?: Maybe<Scalars['Date']>;
@@ -138,6 +139,7 @@ export type Job = {
   user?: Maybe<User>;
   metadata?: Maybe<Array<Maybe<JobMeta>>>;
   jobTerms?: Maybe<Array<Maybe<JobTerm>>>;
+  status?: Maybe<Scalars['String']>;
   link?: Maybe<Scalars['String']>;
   cost?: Maybe<Scalars['Int']>;
   paid?: Maybe<Scalars['Int']>;
@@ -147,7 +149,7 @@ export type Job = {
   customer?: Maybe<NameValue>;
   employee?: Maybe<NameValue>;
   leader?: Maybe<NameValue>;
-  job_priority?: Maybe<NameValue>;
+  priority?: Maybe<NameValue>;
   job_status?: Maybe<NameValue>;
 };
 
@@ -165,6 +167,7 @@ export type JobAssignee = {
 
 export type JobInput = {
   id?: Maybe<Scalars['Int']>;
+  code?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   publishDate?: Maybe<Scalars['Date']>;

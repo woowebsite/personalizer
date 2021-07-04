@@ -10,6 +10,7 @@ export default function getMenuData() {
       icon: 'fe fe-home',
       count: 4,
       position: 'left',
+      roles: [RoleType.SysAdmin],
       children: [
         {
           title: 'menu.users.allUsers',
@@ -41,9 +42,9 @@ export default function getMenuData() {
       title: 'menu.customers.title',
       key: 'dashboards',
       icon: 'fe fe-home',
-      roles: ['admin'],
       count: 4,
       position: 'left',
+      roles: [RoleType.SysAdmin],
       children: [
         {
           title: 'menu.customers.allCustomers',
@@ -70,7 +71,7 @@ export default function getMenuData() {
       title: 'menu.jobs.title',
       key: 'dashboards',
       icon: 'fe fe-home',
-      roles: ['admin'],
+      roles: [RoleType.SysAdmin, RoleType.Customer],
       count: 4,
       position: 'left',
       children: [
@@ -112,6 +113,13 @@ export default function getMenuData() {
       icon: 'fe fe-home',
       count: 1,
       position: 'left',
+      roles: [
+        RoleType.SysAdmin,
+        RoleType.Customer,
+        RoleType.Employee,
+        RoleType.HelpDesk,
+        RoleType.Leader,
+      ],
       children: [
         {
           title: 'menu.settings.profile',
@@ -139,6 +147,7 @@ export default function getMenuData() {
       title: 'topbar',
       key: 'topbar',
       position: 'top',
+      roles: [RoleType.SysAdmin],
       children: [
         {
           title: 'topbar.workflow',
@@ -208,6 +217,10 @@ export function getMenuByUrl(url) {
 }
 
 export function hasPemission(session, url) {
+  if (url === '/') {
+    return true;
+  }
+
   const menu = getMenuByUrl(url);
   const hasRole = menu.roles.includes(session.user.role_id);
   const userPermissions: any[] = session.user.role.permissions;

@@ -34,17 +34,16 @@ function baseService(options: {
     upsert: options => {
       return withMutation(baseGql.upsert, options);
     },
-    create: () => {
-      return withMutation(baseGql.create);
+    create: options => {
+      return withMutation(baseGql.create, options);
     },
-    update: variables => {
-      return withMutation(baseGql.update);
+    update: options => {
+      return withMutation(baseGql.update, options);
     },
-    delete: () => {
-      return withMutation(baseGql.delete);
+    delete: options => {
+      return withMutation(baseGql.delete, options);
     },
   };
-
 
   return { ...definitions, ...baseDefinitions };
 }

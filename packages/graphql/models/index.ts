@@ -16,6 +16,7 @@ export const sequelize = new Sequelize(
     define: {
       freezeTableName: false, // Make plural database table
     },
+    // logging: console.log,      // log SQL query
     logging: false,
     storage: ':memory:',
     models: [__dirname + '/*.model.ts'],

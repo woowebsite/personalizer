@@ -4,7 +4,8 @@ import { Table, Space, Menu, Dropdown, Modal, Button } from 'antd';
 import {
   DownOutlined,
   UserOutlined,
-  MoreOutlined,
+  SendOutlined,
+  MenuOutlined,
   CloseCircleFilled,
 } from '@ant-design/icons';
 import Avatar from 'components/Avatar';
@@ -12,27 +13,24 @@ import ComboBoxEnum from '~/components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
 import ButtonModal from '~/components/ButtonModal';
 
-const menu = (
+const menu = (t, actions) => (
   <Menu>
-    <Menu.Item key="1" icon={<UserOutlined />}>
-      Reset Password
+    <Menu.Item key="1" icon={<SendOutlined />} onClick={actions.send}>
+      {t('buttons.send')}
     </Menu.Item>
-    <Menu.Item key="2" icon={<UserOutlined />}>
-      2nd menu item
-    </Menu.Item>
-    <Menu.Item key="3" icon={<UserOutlined />}>
-      3rd menu item
+    <Menu.Item key="2" icon={<SendOutlined />}>
+      ...
     </Menu.Item>
   </Menu>
 );
 
-export const columns = (t, onDeleteJob): ColumnsType<any> => {
+export const columns = (t, handlers): ColumnsType<any> => {
   const configDeleteModal = record => ({
     icon: <CloseCircleFilled style={{ color: 'rgb(244, 85, 53)' }} />,
     title: t('jobTable.deleteModal.title'),
     content: t('jobTable.deleteModal.content'),
     onOk() {
-      onDeleteJob(record.id);
+      handlers.delete(record.id);
     },
   });
 
@@ -84,10 +82,12 @@ export const columns = (t, onDeleteJob): ColumnsType<any> => {
             {t('buttons.delete')}
           </ButtonModal>
 
-          <Dropdown placement="bottomRight" overlay={menu}>
-            <Button>
-              {t('buttons.actions')}
-              <DownOutlined />
+          <Dropdown
+            placement="bottomRight"
+            overlay={menu(t, { send: () => handlers.send(record) })}
+          >
+            <Button type="text">
+              <MenuOutlined />
             </Button>
           </Dropdown>
         </Button.Group>

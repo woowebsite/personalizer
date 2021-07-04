@@ -49,6 +49,7 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>(
     // METHODS ================================================================================================
     useImperativeHandle(ref, () => ({
       filter: handleFilter,
+      refetch,
     }));
 
     // HANDLERS ================================================================================================
