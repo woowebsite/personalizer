@@ -104,16 +104,16 @@ export const Query = {
       const { job, taxonomyNames } = where;
       const whereTaxonomies = taxonomyNames ? { taxonomy: taxonomyNames } : {};
 
+      // findOptions.logging = console.log;
       findOptions.where = {
         ref_id: job.id,
         id: {
           [Op.in]: Sequelize.literal(
-            `(SELECT DISTINCT a.id FROM JobTerms a
+            `( SELECT a.id FROM JobTerms a
             INNER JOIN (SELECT id, MAX(updatedAt) latestUpdated
             FROM JobTerms WHERE ref_id=${
               job.id
-            } GROUP BY term_taxonomy_id) b ON a.updatedAt = b.latestUpdated
-            WHERE ref_id=${job.id})`,
+            } GROUP BY term_taxonomy_id) b ON a.id = b.id )`,
           ),
         },
       };
@@ -141,7 +141,7 @@ export const Query = {
       // Find
       findOptions.where = {
         taxonomy: 'job_status',
-        id: {[Op.not]: JobTaxonomy.New }
+        id: { [Op.not]: JobTaxonomy.New },
       };
 
       let jobQuery: any = {};
