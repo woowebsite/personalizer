@@ -51,10 +51,10 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
-    onSubmit,
+    submit,
   }));
 
-  const onSubmit = () => {
+  const submit = () => {
     form
       .validateFields()
       .then(values => {
@@ -78,7 +78,7 @@ const UserForm = forwardRef<any, IProps>((props, ref) => {
       form={form}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
-      onFinish={onSubmit}
+      onFinish={submit}
       layout="vertical"
     >
       <Form.Item

@@ -91,6 +91,16 @@ export const vi = {
         read: 'Đọc',
       },
     },
+    accountMoney: {
+      title: 'Tài khoản',
+      placeholder: {
+        deposit: 'Nhập số tiền cần nạp',
+      },
+      label: {
+        holding: 'Tạm giữ',
+        dept: 'Nợ',
+      },
+    },
     customerTable: {
       columns: {
         id: 'Id',
@@ -324,6 +334,7 @@ export const vi = {
     pageHeader: {
       buttons: {
         save: 'Lưu',
+        all: 'Danh sách người dùng'
       },
     },
     changePasswordBox: {
@@ -341,16 +352,6 @@ export const vi = {
     },
     socialBox: {
       title: 'Liên kết mạng xã hội',
-    },
-    accountMoney: {
-      title: 'Tài khoản',
-      placeholder: {
-        deposit: 'Nhập số tiền cần nạp',
-      },
-      label: {
-        holding: 'Tạm giữ',
-        dept: 'Nợ',
-      },
     },
   },
   '/workflow': {
