@@ -52,17 +52,17 @@ export const Query = {
     list: true,
     before: async (findOptions, { where }, ctx) => {
       if (where) {
-        // job
-        let { job } = where;
-        if (where.job && where.job.title)
-          job.title = { [Op.like]: where.job.title };
-
         // filter by current user
-        job = whereCurrentUser(ctx, job);
+        let where2 = whereCurrentUser(ctx, where);
+
+        // job
+        let { job } = where2;
+        if (where2.job && where2.job.title)
+          job.title = { [Op.like]: where2.job.title };
 
         // metadata
-        const whereMetadata = where.metadata
-          ? { [Op.and]: where.metadata }
+        const whereMetadata = where2.metadata
+          ? { [Op.and]: where2.metadata }
           : null;
 
         let include: Array<any> = [
@@ -73,11 +73,11 @@ export const Query = {
         ];
 
         // taxonomies
-        if (where.taxonomies && where.taxonomies.length) {
+        if (where2.taxonomies && where2.taxonomies.length) {
           include.push({
             model: JobTerm,
             where: {
-              term_taxonomy_id: where.taxonomies,
+              term_taxonomy_id: where2.taxonomies,
               version: { [Op.col]: 'latestVersion' },
             },
           });
