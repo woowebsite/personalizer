@@ -52,7 +52,7 @@ function withUserLayout(WrappedComponent) {
       Router.push('/login');
     }
 
-    if (!hasPemission(session, ctx.req.url)) {
+    if (ctx && ctx.req && ctx.req.url && !hasPemission(session, ctx.req.url)) {
       console.error('Error: You have not permission to access', session.user);
       ctx.res.writeHead(302, { Location: '/login' });
       ctx.res.end();

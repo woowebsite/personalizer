@@ -68,7 +68,7 @@ type Mutation {
   upsertUser(
     data: UserInput
     metadata: [UserMetaInput]
-    taxonomies: UserTaxonomies
+    taxonomies: [Int]
   ): User
 
   accountTransactionMoney(

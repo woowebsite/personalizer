@@ -29,6 +29,17 @@ export default function getMenuData() {
           permission: { featureName: 'User', code: PermissionActions.Create },
         },
         {
+          title: 'menu.users.updateUser',
+          key: 'update',
+          url: '/admin/users/{id}',
+          roles: [RoleType.SysAdmin],
+          visible: false,
+          permission: {
+            featureName: 'User',
+            code: PermissionActions.Update,
+          },
+        },
+        {
           title: 'menu.users.authorized',
           key: 'permission',
           url: '/admin/authorized/groups',
