@@ -37,7 +37,7 @@ const JobTable = props => {
     onCompleted: () => {
       notification.success({
         message: 'Notification Success',
-        description: 'Save successfully',
+        description: 'Delete successfully',
         placement: 'bottomLeft',
         onClick: () => {
           console.log('Notification Clicked!');

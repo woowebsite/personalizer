@@ -61,6 +61,7 @@ const Profile = props => {
           <Col span="8">
             <AccountMoney
               ref={formAccountMoneyRef}
+              session={session}
               user={user}
               className="mb-3"
             />

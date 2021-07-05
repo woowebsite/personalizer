@@ -9,21 +9,24 @@ import {
 } from 'antd';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { useIntl } from 'react-intl';
+import AuthorizedWrapper from '~/components/AuthorizedWrapper';
 import { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import TextEditable from '~/components/TextEditable';
 import UserMetaType from '~/features/users/constants/UserMetaType';
 import userService from '~/services/userService';
 import { formatMoney } from '~/shared/formatHelper';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
-
+import settingProfileConfig from '../authorized/profile';
+import { hasPermission } from '~/shared/authHelper';
 interface AccountMoneyProps {
   className?: string;
   user: any;
+  session: any;
 }
 const { Search } = Input;
 
 const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
-  const { className, ...rest } = props;
+  const { className, session, ...rest } = props;
   const [user, setUser] = useState(props.user);
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
@@ -39,7 +42,7 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
     // update balance
     setUser(result.accountTransactionMoney);
     form.resetFields();
-    
+
     notification.success({
       message: 'Notification Success',
       description: 'Save successfully',
@@ -68,6 +71,23 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
     });
   };
 
+  // RENDER
+  const actions = hasPermission(settingProfileConfig.AccountMoney, session) && [
+    <>
+      <Input.Group className="d-flex">
+        <Form.Item
+          name={['taxonomies', TaxonomyType.Account_Deposit]}
+          className="field-number"
+        >
+          <InputNumber style={{ width: '100%' }} step={1000} />
+        </Form.Item>
+        <Button type="primary" onClick={handleDeposit}>
+          {t('buttons.deposit')}
+        </Button>
+      </Input.Group>
+    </>,
+  ];
+
   return (
     <Form form={form}>
       <Card
@@ -75,29 +95,10 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
         className={`${className} status-form`}
         extra={
           <span className="h5 text-primary">
-            {' '}
-            {formatMoney(user[UserMetaType.AccountMoney])}
+            {formatMoney(user[UserMetaType.AccountMoney] || 0)}
           </span>
         }
-        actions={[
-          <>
-            <Input.Group compact>
-              <Form.Item
-                name={['taxonomies', TaxonomyType.Account_Deposit]}
-                className="field-number"
-              >
-                <InputNumber style={{ width: '100%' }} step={1000} />
-              </Form.Item>
-              <Button
-                type="primary"
-                onClick={handleDeposit}
-                style={{ width: '30%' }}
-              >
-                {t('buttons.deposit')}
-              </Button>
-            </Input.Group>
-          </>,
-        ]}
+        actions={actions}
         {...rest}
       >
         <Form.Item
@@ -105,15 +106,16 @@ const AccountMoney = forwardRef<any, AccountMoneyProps>((props, ref) => {
           className="field-number"
           label={t('accountMoney.label.holding')}
         >
-          {formatMoney(user[UserMetaType.AccountHolding])}
+          {formatMoney(user[UserMetaType.AccountHolding] || 0)}
         </Form.Item>
+
         <Form.Item
           name={['metadata', 'account_dept']}
           className="field-number"
           label={t('accountMoney.label.dept')}
         >
           <span className="text-danger">
-            {formatMoney(user[UserMetaType.AccountDept])}
+            {formatMoney(user[UserMetaType.AccountDept] || 0)}
           </span>
         </Form.Item>
       </Card>
