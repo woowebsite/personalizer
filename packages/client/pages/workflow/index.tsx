@@ -41,11 +41,12 @@ const Workflow = props => {
   const showJobDetail = (jobId, metadata, laneId) => {
     setCurrentJob(jobId);
     if (jobDrawerRef.current) {
-      jobDrawerRef.current.showDetail(jobId);
+      jobDrawerRef.current.showDetail();
     }
   };
 
   const onSaveJobCompleted = () => {
+    // reload workflow
     formRef.current.submit();
   };
 

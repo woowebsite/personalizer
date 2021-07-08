@@ -1,6 +1,7 @@
 import RoleType from '../constants/RoleType';
 
 export const whereCurrentUser = (ctx, where) => {
+  const metadata = where.metadata || [];
   const { currentUser } = ctx;
   switch (currentUser.role_id) {
     case RoleType.SysAdmin:
@@ -12,7 +13,7 @@ export const whereCurrentUser = (ctx, where) => {
       break;
     case RoleType.Employee:
       where.metadata = [
-        ...where.metadata,
+        ...metadata,
         {
           key: 'employee',
           value: currentUser.id,
@@ -21,7 +22,7 @@ export const whereCurrentUser = (ctx, where) => {
       break;
     case RoleType.Leader:
       where.metadata = [
-        ...where.metadata,
+        ...metadata,
         {
           key: 'leader',
           value: currentUser.id,
