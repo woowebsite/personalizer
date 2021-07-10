@@ -85,7 +85,11 @@ export const Mutation = {
 
       // Metadata
       if (job && metadata) {
-        upsertMetadata(metadata, job.id);
+        const old_jobMeta = await JobMeta.findAll({
+          where: { job_id: job.id },
+          raw: true,
+        });
+        upsertMetadata(metadata, old_jobMeta, job.id);
       }
       findOptions.where = { id: job.id };
       return findOptions;

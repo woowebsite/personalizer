@@ -5,7 +5,10 @@ const workflowAuthConfig = {
     roles: [RoleType.SysAdmin],
   },
   CardDraggable: {
-    roles: [RoleType.SysAdmin],
+    roles: [RoleType.Employee, RoleType.SysAdmin, RoleType.Leader],
+  },
+  JobDrawer: {
+    roles: [RoleType.Employee, RoleType.SysAdmin, RoleType.Leader],
   },
 };
 

@@ -5,33 +5,19 @@ import React, {
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import {
-  Drawer,
-  Form,
-  Button,
-  Col,
-  Row,
-  Input,
-  Select,
-  DatePicker,
-} from 'antd';
+import { Drawer, Button } from 'antd';
 
 // inner components
-import Card from 'components/Card';
 import JobForm from '~/features/jobs/JobForm';
-import JobStatus from '~/features/jobs/JobStatus';
-import JobMoney from '~/features/jobs/JobMoney';
+import JobStatus from '../JobStatus';
 
 // graphql
-import { withApollo } from 'apollo/apollo';
-import { useRouter } from 'next/dist/client/router';
 import jobService from 'services/jobService';
-import { fieldsToMetadata } from '~/shared/metadataHelper';
 import AuthorizedWrapper from '~/components/AuthorizedWrapper';
-import updateJobAuthConfig from '~/features/jobs/authorized/updateJob';
 
 // utils
 import style from './style.module.scss';
+import workflowAuthConfig from '../authorized/workflow';
 
 interface JobDrawerProps {
   id: number;
@@ -125,7 +111,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
           </div>
 
           <AuthorizedWrapper
-            config={updateJobAuthConfig.JobStatusBox}
+            config={workflowAuthConfig.JobDrawer}
             session={props.session}
           >
             <div className="pl-4">
