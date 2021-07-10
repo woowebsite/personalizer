@@ -5,33 +5,19 @@ import React, {
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import {
-  Drawer,
-  Form,
-  Button,
-  Col,
-  Row,
-  Input,
-  Select,
-  DatePicker,
-} from 'antd';
+import { Drawer, Button } from 'antd';
 
 // inner components
-import Card from 'components/Card';
 import JobForm from '~/features/jobs/JobForm';
-import JobStatus from '~/features/jobs/JobStatus';
-import JobMoney from '~/features/jobs/JobMoney';
+import JobStatus from '../JobStatus';
 
 // graphql
-import { withApollo } from 'apollo/apollo';
-import { useRouter } from 'next/dist/client/router';
 import jobService from 'services/jobService';
-import { fieldsToMetadata } from '~/shared/metadataHelper';
 import AuthorizedWrapper from '~/components/AuthorizedWrapper';
-import updateJobAuthConfig from '~/features/jobs/authorized/updateJob';
 
 // utils
 import style from './style.module.scss';
+import workflowAuthConfig from '../authorized/workflow';
 
 interface JobDrawerProps {
   id: number;
@@ -47,11 +33,11 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   const formRef: any = React.createRef();
   const formStatusRef: any = React.createRef();
   const { data, loading, refetch } = jobService.getJob({
+    fetchPolicy: 'no-cache',
     variables: {
       where: { job: { id: props.id } },
     },
   });
-  const [upsertJob, result] = jobService.upsert();
 
   // EFFECT
   useEffect(() => {
@@ -65,7 +51,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
     showDetail,
   }));
 
-  const showDetail = id => {
+  const showDetail = () => {
     setVisible(true);
   };
 
@@ -74,38 +60,12 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
     setVisible(false);
   };
 
-  const onSave2 = () => {
+  const onSave = () => {
     formRef.current.submit();
     props.onSaveCompleted();
   };
-  const onSave = () => {
-    const formValues = formRef.current.getFieldsValue();
-    const statusValues = formStatusRef.current.getFieldsValue();
-
-    // metadata fields
-    const metadataFields = { ...formValues.metadata, ...statusValues.metadata };
-
-    // taxonomies fields
-    const taxonomyFields = {
-      ...formValues.taxonomies,
-      ...statusValues.taxonomies,
-    };
-
-    // parse
-    const job = data.job
-      ? { id: data.job.id, ...formValues.job }
-      : formValues.job;
-
-    const metadata = fieldsToMetadata(metadataFields);
-    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
-
-    upsertJob({
-      variables: { job, metadata, taxonomies },
-    });
-  };
-
-  const initialTitle = data.job.title || t('pageHeader.title');
-  const [title, setTitle] = useState(initialTitle);
+  const initialTitle = (data && data.job.title) || t('pageHeader.title');
+  const [title, setTitle] = useState(null);
 
   const handleFieldChanged = (path, title: string) => {
     setTitle(title);
@@ -113,14 +73,11 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
 
   // RENDER
   if (loading) return <div />;
-  if (result.data) {
-    props.onSaveCompleted();
-  }
 
   return (
     <>
       <Drawer
-        title={title}
+        title={title || initialTitle}
         width={520}
         onClose={onClose}
         visible={visible}
@@ -134,13 +91,13 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
             <Button onClick={onClose} style={{ marginRight: 8 }}>
               {t('buttons.cancel')}
             </Button>
-            <Button key="1" type="primary" onClick={onSave2}>
+            <Button key="1" type="primary" onClick={onSave}>
               {t('buttons.save')}
             </Button>
           </div>
         }
       >
-        <Form layout="vertical" className="jobDrawer d-flex" hideRequiredMark>
+        <div className="jobDrawer d-flex">
           <div className={style.jobDrawerForm}>
             <JobForm
               ref={formRef}
@@ -154,14 +111,14 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
           </div>
 
           <AuthorizedWrapper
-            config={updateJobAuthConfig.JobStatusBox}
+            config={workflowAuthConfig.JobDrawer}
             session={props.session}
           >
             <div className="pl-4">
               <JobStatus ref={formStatusRef} initialValues={data.job} />
             </div>
           </AuthorizedWrapper>
-        </Form>
+        </div>
       </Drawer>
     </>
   );

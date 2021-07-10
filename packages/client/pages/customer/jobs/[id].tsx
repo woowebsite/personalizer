@@ -60,51 +60,6 @@ const JobDetail = (props: PageProps & any) => {
     formStatusRef.current && formStatusRef.current.submit();
     formMoneyRef.current && formMoneyRef.current.submit();
   };
-  const onSave = async () => {
-    // check if valid all forms
-    let isValid = true;
-    await formRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-    await formStatusRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-    await formMoneyRef.current.validateFields().catch(() => {
-      isValid = false;
-    });
-
-    if (!isValid) return;
-
-    // prepare data
-    const formValues = formRef.current.getFieldsValue();
-    const statusValues = formStatusRef.current.getFieldsValue();
-    const moneyValues = formMoneyRef.current.getFieldsValue();
-
-    // metadata fields
-    const metadataFields = {
-      ...formValues.metadata,
-      ...statusValues.metadata,
-      ...moneyValues.metadata,
-    };
-    const metadata = fieldsToMetadata(metadataFields);
-
-    // taxonomies fields
-    const taxonomyFields = {
-      ...formValues.taxonomies,
-      ...statusValues.taxonomies,
-      ...moneyValues.taxonomies,
-    };
-    const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
-
-    // parse
-    const job = data.job
-      ? { id: data.job.id, ...formValues.job }
-      : formValues.job;
-
-    upsertJob({
-      variables: { job, metadata, taxonomies },
-    });
-  };
 
   // EVENTS
   const handleFieldChanged = (path, title: string) => {

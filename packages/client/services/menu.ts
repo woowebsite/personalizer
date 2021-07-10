@@ -82,7 +82,7 @@ export default function getMenuData() {
       title: 'menu.jobs.title',
       key: 'dashboards',
       icon: 'fe fe-home',
-      roles: [RoleType.SysAdmin, RoleType.Customer],
+      roles: [RoleType.SysAdmin, RoleType.Customer, RoleType.Employee],
       count: 4,
       position: 'left',
       children: [
@@ -91,7 +91,7 @@ export default function getMenuData() {
           key: 'all',
           url: '/customer/jobs',
           visible: true,
-          roles: [RoleType.SysAdmin, RoleType.Customer],
+          roles: [RoleType.SysAdmin, RoleType.Customer, RoleType.Employee],
           permission: { featureName: 'Job', code: PermissionActions.Read },
         },
         {
@@ -109,7 +109,7 @@ export default function getMenuData() {
           title: 'menu.jobs.updateJob',
           key: 'update',
           url: '/customer/jobs/{id}',
-          roles: [RoleType.SysAdmin, RoleType.Customer],
+          roles: [RoleType.SysAdmin, RoleType.Customer, RoleType.Employee],
           visible: false,
           permission: {
             featureName: 'Customer',

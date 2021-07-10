@@ -123,7 +123,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             ]}
           >
             <TextEditable
-              defaultValue={job_status && job_status.value}
+              defaultValue={job_status}
               defaultText={job_status && job_status.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBoxTaxonomy
@@ -148,7 +148,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             ]}
           >
             <TextEditable
-              defaultValue={employee && employee.value}
+              defaultValue={employee}
               defaultText={employee && employee.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBox
@@ -176,7 +176,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             ]}
           >
             <TextEditable
-              defaultValue={leader && leader.value}
+              defaultValue={leader}
               defaultText={leader && leader.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBox
@@ -204,7 +204,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             ]}
           >
             <TextEditable
-              defaultValue={customer && customer.value}
+              defaultValue={customer}
               defaultText={customer && customer.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBox
@@ -224,7 +224,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
             label={t('jobCreateform.label.priority')}
           >
             <TextEditable
-              defaultValue={priority && priority.value}
+              defaultValue={priority}
               defaultText={priority && priority.name}
               renderComboBox={({ handleOnChange, ...rest }) => (
                 <ComboBoxTaxonomy

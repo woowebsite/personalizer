@@ -4,4 +4,6 @@ export const defaultFilter = {
   job: {
     status: StatusType.Actived,
   },
+  metadata: [],
+  taxonomies: [],
 };
