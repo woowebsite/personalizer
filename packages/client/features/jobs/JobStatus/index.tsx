@@ -104,7 +104,9 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
   const employee = fEmployee && JSON.parse(fEmployee.data);
 
   const fPriority = initialValues.metadata.find(x => x.key === 'priority');
-  const priority = fPriority && JSON.parse(fPriority.data);
+  const priority = fPriority
+    ? JSON.parse(fPriority.data)
+    : { name: 'Normal', value: 4 };
 
   return (
     <>
