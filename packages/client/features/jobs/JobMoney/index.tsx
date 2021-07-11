@@ -18,7 +18,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
   const { initialValues } = props;
   const t = (id, values?) => formatMessage({ id }, values);
-  const [upsertJob] = jobService.upsert(); 
+  const [upsertJob] = jobService.upsert();
   const [form] = Form.useForm();
   const [dept, setDept] = useState(0);
 
@@ -36,7 +36,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   useImperativeHandle(ref, () => ({
     getFieldsValue,
     validateFields,
-    submit
+    submit,
   }));
 
   const submit = () => {
@@ -100,7 +100,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
             >
               <TextEditable
                 defaultValue={initialValues.cost}
-                defaultText={formatMoney(initialValues.cost)}
+                defaultText={formatMoney(initialValues.cost || 0)}
                 renderInput={({ handleOnChange, ref, ...rest }) => {
                   return (
                     <Input
@@ -109,7 +109,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
                       onChange={e =>
                         handleOnChange(
                           e.target.value,
-                          formatMoney(e.target.value),
+                          formatMoney(e.target.value || 0),
                         )
                       }
                       style={{ width: '150px', textAlign: 'right' }}
@@ -133,7 +133,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
           >
             <TextEditable
               defaultValue={initialValues.paid}
-              defaultText={formatMoney(initialValues.paid)}
+              defaultText={formatMoney(initialValues.paid || 0)}
               renderInput={({ handleOnChange, ref, ...rest }) => {
                 return (
                   <Input
@@ -142,7 +142,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
                     onChange={e =>
                       handleOnChange(
                         e.target.value,
-                        formatMoney(e.target.value),
+                        formatMoney(e.target.value || 0),
                       )
                     }
                     style={{ width: '150px', textAlign: 'right' }}
@@ -152,11 +152,8 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
               }}
             />
           </Form.Item>
-          <Form.Item
-            className="field-number"
-            label={t('jobMoney.label.debt')}
-          >
-            <span className="text-danger">{formatMoney(dept)}</span>
+          <Form.Item className="field-number" label={t('jobMoney.label.debt')}>
+            <span className="text-danger">{formatMoney(dept || 0)}</span>
           </Form.Item>
         </Card>
       </Form>

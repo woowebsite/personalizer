@@ -89,7 +89,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
             }}
           >
             <Button onClick={onClose} style={{ marginRight: 8 }}>
-              {t('buttons.cancel')}
+              {t('buttons.close')}
             </Button>
             <Button key="1" type="primary" onClick={onSave}>
               {t('buttons.save')}

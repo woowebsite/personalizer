@@ -203,7 +203,7 @@ export const Query = {
           id: {
             [Op.in]: Sequelize.literal(
               `( SELECT a.id FROM JobTerms a 
-                INNER JOIN (SELECT MAX(createdAt) latestUpdated FROM JobTerms GROUP BY term_taxonomy_id) b 
+                INNER JOIN (SELECT MAX(createdAt) latestUpdated FROM JobTerms GROUP BY ref_id) b 
                 ON a.createdAt = b.latestUpdated  )`,
             ),
           },
