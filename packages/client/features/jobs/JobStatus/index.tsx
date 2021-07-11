@@ -34,9 +34,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
       // taxonomies
       {
         name: ['taxonomies', 'job_status'],
-        value: parseInt(
-          job.job_status ? job.job_status.value : JobStatus.Active,
-        ),
+        value: job.job_status,
       },
 
       // metadata
@@ -75,7 +73,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
 
         // taxonomies fields
         const taxonomyFields = values.taxonomies;
-
+        console.log('taxonomyFields', taxonomyFields);
         // parse
         const metadata = fieldsToMetadata(metadataFields);
         const taxonomies = fieldsToTaxonomies(taxonomyFields);
