@@ -110,7 +110,7 @@ export const Query = {
         id: {
           [Op.in]: Sequelize.literal(
             `( SELECT a.id FROM JobTerms a
-            INNER JOIN (SELECT id, MAX(updatedAt) latestUpdated
+            INNER JOIN (SELECT id, MAX(createdAt) latestUpdated
             FROM JobTerms WHERE ref_id=${
               job.id
             } GROUP BY term_taxonomy_id) b ON a.id = b.id )`,
@@ -137,8 +137,9 @@ export const Query = {
   }),
   workflows: resolver(TermTaxonomy, {
     list: true,
-    before: async (findOptions, { where }, context) => {
+    before: async (findOptions, { where: originalWhere }, context) => {
       // Find
+      let where = whereCurrentUser(context, originalWhere);
       findOptions.where = {
         taxonomy: 'job_status',
         id: { [Op.not]: JobTaxonomy.New },
@@ -201,7 +202,9 @@ export const Query = {
         where: {
           id: {
             [Op.in]: Sequelize.literal(
-              `(SELECT DISTINCT a.id FROM JobTerms a WHERE version = latestVersion)`,
+              `( SELECT a.id FROM JobTerms a 
+                INNER JOIN (SELECT MAX(createdAt) latestUpdated FROM JobTerms GROUP BY term_taxonomy_id) b 
+                ON a.createdAt = b.latestUpdated  )`,
             ),
           },
         },

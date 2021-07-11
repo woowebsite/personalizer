@@ -62,6 +62,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
 
   const onSave = () => {
     formRef.current.submit();
+    formStatusRef.current.submit();
     props.onSaveCompleted();
   };
   const initialTitle = (data && data.job.title) || t('pageHeader.title');
