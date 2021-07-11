@@ -110,6 +110,7 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
         job: {
           id: cardId,
         },
+        metadata: [],
         taxonomies: [targetLaneId],
       },
     });
