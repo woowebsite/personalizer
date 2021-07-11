@@ -151,6 +151,13 @@ export default function getMenuData() {
           key: 'changePassword',
           url: '/settings/changePassword',
           visible: true,
+          roles: [
+            RoleType.SysAdmin,
+            RoleType.Customer,
+            RoleType.Employee,
+            RoleType.HelpDesk,
+            RoleType.Leader,
+          ],
         },
       ],
     },
