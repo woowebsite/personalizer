@@ -220,12 +220,16 @@ export const Query = {
             .filter(x => latestJobTermIds.includes(x.id))
             .map(x => {
               if (x) {
+                // convert metadata into fields of job
+                let metadataTransfer = metadataToField(x.dataValues.job);
+
                 // convert jobTerms into fields of job
-                const jobTransfer = taxonomyToField(
-                  x.dataValues.job,
+                let taxonomyTransfer = taxonomyToField(
+                  metadataTransfer,
                   'jobTerms',
                 );
-                return jobTransfer;
+
+                return taxonomyTransfer;
               }
             }),
         };

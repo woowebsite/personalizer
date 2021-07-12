@@ -73,7 +73,6 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
 
         // taxonomies fields
         const taxonomyFields = values.taxonomies;
-        console.log('taxonomyFields', taxonomyFields);
         // parse
         const metadata = fieldsToMetadata(metadataFields);
         const taxonomies = fieldsToTaxonomies(taxonomyFields);
