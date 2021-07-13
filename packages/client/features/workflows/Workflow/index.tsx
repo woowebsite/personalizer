@@ -19,40 +19,6 @@ import { MyCard, MyLaneHeader, HiddenLaneHeader, GlobalStyled } from './styled';
 import moment from 'moment';
 import { cardDecorator } from './utils';
 
-const dataWorkflow = {
-  lanes: [
-    {
-      id: 'lane1',
-      style: { backgroundColor: '#a5a9ae45' }, // Style of Lane
-      title: 'Planned Tasks',
-      label: '2/2',
-      cards: [
-        {
-          id: 'Card1',
-          title: 'Write Blog',
-          description: 'Can AI make memes',
-          label: '30 mins',
-          draggable: false,
-          className: 'card-important',
-        },
-        {
-          id: 'Card2',
-          title: 'Pay Rent',
-          description: 'Transfer via NEFT',
-          label: '5 mins',
-          metadata: { sha: 'be312a1' },
-        },
-      ],
-    },
-    {
-      id: 'lane2',
-      title: 'Completed',
-      label: '0/0',
-      cards: [],
-    },
-  ],
-};
-
 interface WorkflowProps {
   prior: moment.unitOfTime.StartOf;
   hiddenLaneHeader?: boolean;
@@ -104,11 +70,18 @@ const WorkflowToday = forwardRef<any, WorkflowProps>((props, ref) => {
   }
 
   // EVENTS
-  const handleDragEnd = (cardId, sourceLandId, targetLaneId, card) => {
+  const handleDragEnd = (
+    cardId,
+    sourceLandId,
+    targetLaneId,
+    position,
+    card,
+  ) => {
     upsertJob({
       variables: {
         job: {
           id: cardId,
+          code: card.code,
         },
         metadata: [],
         taxonomies: [targetLaneId],

@@ -10,17 +10,17 @@ export const Mutation = {
   upsertJob: resolver(Job, {
     before: async (findOptions, { data, metadata, taxonomies }, ctx) => {
       const { currentUser } = ctx;
-      const obj = { ...data, userId: currentUser.id };
 
-      const [job, createJob] = await Job.upsert(obj, {
+      const [job, createJob] = await Job.upsert(data, {
         returning: true,
       });
 
-      // create mode
+      // Update after create 'new'
       if (!job.code) {
         const updateCodeJob: any = {
           id: job.getDataValue('id'),
           code: `C${job.userId}J${job.id}`,
+          userId: currentUser.id,
         };
         // Customer
         metadata.push({
