@@ -78,7 +78,6 @@ export const Query = {
             model: JobTerm,
             where: {
               term_taxonomy_id: where2.taxonomies,
-              version: { [Op.col]: 'latestVersion' },
             },
           });
         }

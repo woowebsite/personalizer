@@ -51,7 +51,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
   }));
 
   const submit = () => {
-    const { id } = initialValues;
+    const { id, code } = initialValues;
     form
       .validateFields()
       .then(values => {
@@ -64,7 +64,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
         const metadata = fieldsToMetadata(metadataFields);
 
         upsertJob({
-          variables: { job: { id }, metadata, taxonomies: [] },
+          variables: { job: { id, code }, metadata, taxonomies: [] },
         });
       })
       .catch(errorInfo => {

@@ -13,8 +13,6 @@ export const Query = {
       return findOptions;
     },
     after: async (user, args, context) => {
-      const total = await User.count(args.where);
-
       const transferData = metadataToField(user, 'metadata'); //user.map(u => metadataToField(u, 'userMeta'));
       return transferData;
     },

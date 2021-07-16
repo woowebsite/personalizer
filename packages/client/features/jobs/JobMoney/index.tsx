@@ -40,7 +40,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   }));
 
   const submit = () => {
-    const { id } = initialValues;
+    const { id, code } = initialValues;
     form
       .validateFields()
       .then(values => {
@@ -57,7 +57,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
         const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
 
         upsertJob({
-          variables: { job: { id }, metadata, taxonomies },
+          variables: { job: { id, code }, metadata, taxonomies },
         });
       })
       .catch(errorInfo => {
