@@ -1,5 +1,6 @@
+import JobStatus from '../../constants/jobStatus';
 import JobTaxonomy from '../../constants/JobTaxonomy';
-import { JobMeta, JobTerm, TermTaxonomy } from '../../models';
+import { Job, JobMeta, JobTerm, TermTaxonomy } from '../../models';
 
 export const upsertMetadata = (metadata: JobMeta[], old: JobMeta[], job_id) => {
   metadata.map((meta: JobMeta) => {
@@ -34,4 +35,21 @@ export const upsertTaxonomies = (
 
     JobTerm.upsert(updateObj);
   });
+};
+
+export const getJobStatusByTaxonomies = (
+  taxonomies: any[],
+  initialStatus: string | JobStatus = JobStatus.Active,
+) => {
+  let status = initialStatus;
+  if (taxonomies.includes(JobTaxonomy.New)) status = JobStatus.Active;
+  else if (
+    taxonomies.includes(JobTaxonomy.Todo) ||
+    taxonomies.includes(JobTaxonomy.Blend) ||
+    taxonomies.includes(JobTaxonomy.Retouch)
+  )
+    status = JobStatus.InProgress;
+  else if (taxonomies.includes(JobTaxonomy.Finish)) status = JobStatus.Finish;
+
+  return status;
 };

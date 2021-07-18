@@ -4,7 +4,12 @@ import to from 'await-to-js';
 import { JobTerm } from '../../models/jobTerm.model';
 import { JobMeta } from '../../models/jobMeta.model';
 import JobTaxonomy from '../../constants/JobTaxonomy';
-import { upsertMetadata, upsertTaxonomies } from './job.utils';
+import {
+  getJobStatusByTaxonomies,
+  upsertMetadata,
+  upsertTaxonomies,
+} from './job.utils';
+import JobStatus from '../../constants/jobStatus';
 
 export const Mutation = {
   upsertJob: resolver(Job, {
@@ -43,6 +48,14 @@ export const Mutation = {
           latestVersion: 1,
         };
         JobTerm.create(jt);
+      }
+      // Update job status by Taxonomies
+      else if (taxonomies && taxonomies.length) {
+        const updateCodeJob: any = {
+          id: job.getDataValue('id'),
+          status: getJobStatusByTaxonomies(taxonomies, job.status),
+        };
+        Job.upsert(updateCodeJob);
       }
 
       // 2. Update taxonomies
