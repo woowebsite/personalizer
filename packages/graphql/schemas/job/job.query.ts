@@ -1,6 +1,7 @@
 import { resolver } from 'graphql-sequelize';
 import { Sequelize } from 'sequelize';
 import { Op } from 'sequelize';
+import JobStatus from '../../constants/jobStatus';
 import JobTaxonomy from '../../constants/JobTaxonomy';
 import {
   Job,
@@ -57,6 +58,7 @@ export const Query = {
 
         // job
         let { job } = where2;
+        job.status = { [Op.not]: JobStatus.Deactive };    // not query Deleted job
         if (where2.job && where2.job.title)
           job.title = { [Op.like]: where2.job.title };
 
