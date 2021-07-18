@@ -14,6 +14,7 @@ import { UserMeta } from '../../models/userMeta.model';
 import RoleType from '../../constants/RoleType';
 import { enumToDitionary, getEnumLabel } from '../../utils/enumUtil';
 import JobStatus from '../../constants/jobStatus';
+import { getAccountHolding } from './user.utils';
 
 export const Query = {
   user: resolver(User, {
@@ -26,34 +27,34 @@ export const Query = {
       const transferData = metadataToField(user, 'metadata'); //user.map(u => metadataToField(u, 'userMeta'));
 
       // canculate total of jobs's price are in progress
-      const roleName = getEnumLabel(RoleType, user.role_id);
-      let include: Array<any> = [
-        { model: Job, where: { status: JobStatus.InProgress } },
-      ];
-      const q = await JobMeta.findAll({
-        where: {
-          job_id: {
-            [Op.in]: Sequelize.literal(
-              `( SELECT j.id FROM JobMeta jm
-              INNER JOIN Jobs j ON jm.job_id = j.id 
-              WHERE jm.key='customer' AND jm.value='` +
-                user.id +
-                `' AND j.Status='` +
-                JobStatus.InProgress +
-                `' )`,
-            ),
-          },
-          key: 'cost',
-        },
-        raw: true,
-      });
+      // const roleName = getEnumLabel(RoleType, user.role_id);
+      // let include: Array<any> = [
+      //   { model: Job, where: { status: JobStatus.InProgress } },
+      // ];
+      // const q = await JobMeta.findAll({
+      //   where: {
+      //     job_id: {
+      //       [Op.in]: Sequelize.literal(
+      //         `( SELECT j.id FROM JobMeta jm
+      //         INNER JOIN Jobs j ON jm.job_id = j.id 
+      //         WHERE jm.key='customer' AND jm.value='` +
+      //           user.id +
+      //           `' AND j.Status='` +
+      //           JobStatus.InProgress +
+      //           `' )`,
+      //       ),
+      //     },
+      //     key: 'cost',
+      //   },
+      //   raw: true,
+      // });
 
-      const account_holding = q.reduce(
-        (total: number, x) => total + parseInt(x.value),
-        0,
-      );
+      // const account_holding = q.reduce(
+      //   (total: number, x) => total + parseInt(x.value),
+      //   0,
+      // );
 
-      transferData.account_holding = account_holding;
+      transferData.account_holding = getAccountHolding(user);
       return transferData;
     },
   }),
