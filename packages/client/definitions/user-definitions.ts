@@ -39,8 +39,14 @@ export const GET_USER = gql`
           code
         }
       }
+      metadata {
+        key
+        type
+        value
+      }
       havePassword
       account_money
+      account_holding
       phone
       address
       facebookUrl

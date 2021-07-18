@@ -7,7 +7,6 @@ import TextEditable from '~/components/TextEditable';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import jobService from '~/services/jobService';
-import JobStatus from '~/constants/jobStatus';
 import useTranslate from '~/hooks/useTranslate';
 import { fieldsToMetadata, fieldsToTaxonomies } from '~/shared/metadataHelper';
 

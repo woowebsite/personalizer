@@ -4,6 +4,7 @@ enum JobStatus {
   Finish = 'F',
   Publish = 'P',
   Draft = 'T',
+  InProgress = 'I',
 }
 
 export default JobStatus;

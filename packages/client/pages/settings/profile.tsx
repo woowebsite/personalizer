@@ -48,6 +48,7 @@ const Profile = props => {
           </Button>,
         ]}
       />
+      {JSON.stringify(user)}
       <Content>
         <Row gutter={24}>
           <Col span="16">

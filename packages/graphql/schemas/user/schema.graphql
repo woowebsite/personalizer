@@ -13,6 +13,7 @@ type User {
 
   metadata: [UserMeta]
   account_money: Int
+  account_holding: Int
   phone: String
   address: String
   customerType: Int

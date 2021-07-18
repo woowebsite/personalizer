@@ -26,7 +26,7 @@ import JobStatusBox from '~/features/jobs/JobStatus';
 import JobMoney from '~/features/jobs/JobMoney';
 
 // utils
-import JobStatus from '~/constants/jobStatus';
+import JobStatus from '~/features/jobs/constants/jobStatus';
 import PageTitle from '~/features/jobs/PageTitle';
 import newJobAuthConfig from '~/features/jobs/authorized/newJob';
 import AuthorizedWrapper from '~/components/AuthorizedWrapper';
