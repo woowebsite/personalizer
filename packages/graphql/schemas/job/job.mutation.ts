@@ -1,4 +1,5 @@
 import { resolver } from 'graphql-sequelize';
+import { isEmpty } from 'lodash';
 import { Job } from '../../models';
 import to from 'await-to-js';
 import { JobTerm } from '../../models/jobTerm.model';
@@ -9,7 +10,9 @@ import {
   upsertMetadata,
   upsertTaxonomies,
 } from './job.utils';
-import JobStatus from '../../constants/jobStatus';
+import { Op, Sequelize } from 'sequelize';
+import { transactionMoney } from '../user/user.utils';
+import UserTaxonomy from '../../constants/\u001DUserTaxonomy';
 
 export const Mutation = {
   upsertJob: resolver(Job, {
@@ -59,13 +62,33 @@ export const Mutation = {
       }
 
       // 2. Update taxonomies
-      const jobMeta = await JobMeta.findOne({
+      const newAssignee = metadata.find(x => x.key === 'employee');
+      const jobMeta_employee = await JobMeta.findOne({
         where: { job_id: job.id, key: 'employee' },
+        raw: true,
+      });
+      const jobMeta_customer = await JobMeta.findOne({
+        where: { job_id: job.id, key: 'customer' },
+        raw: true,
+      });
+      const jobMeta_leader = await JobMeta.findOne({
+        where: { job_id: job.id, key: 'leader' },
+        raw: true,
+      });
+      const jobMeta_cost = await JobMeta.findOne({
+        where: { job_id: job.id, key: 'cost' },
+        raw: true,
+      });
+      const blender_user = await JobTerm.findOne({
+        where: { ref_id: job.id, term_taxonomy_id: JobTaxonomy.Blend },
+        raw: true,
+      });
+      const retoucher_user = await JobTerm.findOne({
+        where: { ref_id: job.id, term_taxonomy_id: JobTaxonomy.Retouch },
+        raw: true,
       });
 
-      const assignee = metadata
-        ? metadata.find(x => x.key === 'employee') || jobMeta
-        : jobMeta;
+      const assignee = newAssignee || jobMeta_employee;
 
       if (job && taxonomies) {
         const old_jobTerms = await JobTerm.findAll({
@@ -83,6 +106,64 @@ export const Mutation = {
         });
 
         upsertTaxonomies(jobTerms, old_jobTerms, job.id);
+
+        // Account money canculate
+        if (taxonomies.includes(JobTaxonomy.Finish)) {
+          // for customer
+          await transactionMoney(
+            parseInt(jobMeta_customer.value),
+            UserTaxonomy.Pay,
+            parseInt(jobMeta_cost.value),
+          );
+
+          // for blender
+          await transactionMoney(
+            blender_user.assignee_id,
+            UserTaxonomy.Earning,
+            parseInt(jobMeta_cost.value) * 0.3,
+          );
+
+          // for retoucher
+          await transactionMoney(
+            blender_user.assignee_id,
+            UserTaxonomy.Earning,
+            parseInt(jobMeta_cost.value) * 0.4,
+          );
+
+          // for leader
+          await transactionMoney(
+            parseInt(jobMeta_leader.value),
+            UserTaxonomy.Earning,
+            parseInt(jobMeta_cost.value) * 0.3,
+          );
+        }
+      }
+
+      // 3. Assignee only
+      if (newAssignee && isEmpty(taxonomies)) {
+        // current status
+        const latest_jobTerm = await JobTerm.findOne({
+          where: {
+            ref_id: job.id,
+            id: {
+              [Op.in]: Sequelize.literal(
+                `( SELECT a.id FROM JobTerms a 
+                INNER JOIN (SELECT MAX(createdAt) latestUpdated FROM JobTerms WHERE ref_id=${
+                  job.id
+                }) b 
+                ON a.createdAt = b.latestUpdated  )`,
+              ),
+            },
+          },
+          raw: true,
+        });
+
+        const updateJobTerm: any = {
+          ...latest_jobTerm,
+          assignee_id: parseInt(newAssignee.value),
+        };
+
+        JobTerm.upsert(updateJobTerm);
       }
 
       // 4. Metadata

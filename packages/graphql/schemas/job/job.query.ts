@@ -1,7 +1,7 @@
 import { resolver } from 'graphql-sequelize';
 import { Sequelize } from 'sequelize';
 import { Op } from 'sequelize';
-import JobStatus from '../../constants/jobStatus';
+import JobStatus from '../../constants/JobStatus';
 import JobTaxonomy from '../../constants/JobTaxonomy';
 import {
   Job,

@@ -13,7 +13,6 @@ import { metadataToField } from '../../utils/dataUtil';
 import { UserMeta } from '../../models/userMeta.model';
 import RoleType from '../../constants/RoleType';
 import { enumToDitionary, getEnumLabel } from '../../utils/enumUtil';
-import JobStatus from '../../constants/jobStatus';
 import { getAccountHolding } from './user.utils';
 
 export const Query = {

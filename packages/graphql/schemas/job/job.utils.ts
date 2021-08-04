@@ -1,4 +1,4 @@
-import JobStatus from '../../constants/jobStatus';
+import JobStatus from '../../constants/JobStatus';
 import JobTaxonomy from '../../constants/JobTaxonomy';
 import { Job, JobMeta, JobTerm, TermTaxonomy } from '../../models';
 
