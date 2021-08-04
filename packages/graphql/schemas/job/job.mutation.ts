@@ -12,7 +12,7 @@ import {
 } from './job.utils';
 import { Op, Sequelize } from 'sequelize';
 import { transactionMoney } from '../user/user.utils';
-import UserTaxonomy from '../../constants/\u001DUserTaxonomy';
+import UserTaxonomy from '../../constants/UserTaxonomy';
 
 export const Mutation = {
   upsertJob: resolver(Job, {

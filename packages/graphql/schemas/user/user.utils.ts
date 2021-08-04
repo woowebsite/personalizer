@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
-import UserTaxonomy from '../../constants/\u001DUserTaxonomy';
+import UserTaxonomy from '../../constants/UserTaxonomy';
 import JobStatus from '../../constants/JobStatus';
 import RoleType from '../../constants/RoleType';
 import StatusType from '../../constants/StatusType';
