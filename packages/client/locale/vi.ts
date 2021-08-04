@@ -254,6 +254,9 @@ export const vi = {
         debt: 'Công nợ',
       },
     },
+    socialBox: {
+      title: 'Mạng xã hội',
+    },
   },
   '/customer/jobs': {
     title: 'Danh sách công việc',

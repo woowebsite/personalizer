@@ -58,7 +58,7 @@ export const Query = {
 
         // job
         let { job } = where2;
-        job.status = { [Op.not]: JobStatus.Deactive };    // not query Deleted job
+        job.status = job.status || { [Op.not]: JobStatus.Deactive }; // default not query Deleted job
         if (where2.job && where2.job.title)
           job.title = { [Op.like]: where2.job.title };
 

@@ -80,7 +80,7 @@ const JobDetail = (props: PageProps & any) => {
       <Content>
         <Row gutter={24}>
           <Col span="16">
-            <Card className="pt-3 mb-4">
+            <Card className="pt-3 mb-4" title="Thông tin cơ bản">
               <JobForm
                 ref={formRef}
                 initialValues={data.job}
@@ -91,7 +91,7 @@ const JobDetail = (props: PageProps & any) => {
               config={updateJobAuthConfig.JobAssignee}
               session={props.session}
             >
-              <Card className="pt-3">
+              <Card className="pt-3" title="Chi tiết thực hiện">
                 <JobAssignee ref={formRef} jobTerms={data.jobTerms} />
               </Card>
             </AuthorizedWrapper>
