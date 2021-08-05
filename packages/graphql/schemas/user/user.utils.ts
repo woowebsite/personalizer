@@ -18,7 +18,6 @@ import { getEnumLabel } from '../../utils/enumUtil';
 
 export const getAccountHolding = async (user: User) => {
   const roleName = getEnumLabel(RoleType, user.role_id).toLowerCase();
-  console.log('roleName', roleName);
 
   const q = await JobMeta.findAll({
     where: {

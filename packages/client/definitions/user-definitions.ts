@@ -47,6 +47,7 @@ export const GET_USER = gql`
       havePassword
       account_money
       account_holding
+      account_dept
       phone
       address
       facebookUrl

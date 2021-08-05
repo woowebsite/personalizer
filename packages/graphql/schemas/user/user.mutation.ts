@@ -34,6 +34,7 @@ export const Mutation = {
           user_id: user.id,
         }));
 
+        // updat UserMeta instead destroy
         await UserMeta.destroy({
           where: { user_id: user.id },
         });

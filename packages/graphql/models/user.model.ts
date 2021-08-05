@@ -62,6 +62,9 @@ export class User extends Model<User> {
   
   @Column(DataType.VIRTUAL)
   account_holding: number;
+  
+  @Column(DataType.VIRTUAL)
+  account_dept: number;
 
   @Column(DataType.VIRTUAL)
   phone: String;

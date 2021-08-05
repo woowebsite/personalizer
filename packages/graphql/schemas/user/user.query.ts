@@ -35,7 +35,7 @@ export const Query = {
       //     job_id: {
       //       [Op.in]: Sequelize.literal(
       //         `( SELECT j.id FROM JobMeta jm
-      //         INNER JOIN Jobs j ON jm.job_id = j.id 
+      //         INNER JOIN Jobs j ON jm.job_id = j.id
       //         WHERE jm.key='customer' AND jm.value='` +
       //           user.id +
       //           `' AND j.Status='` +
@@ -52,8 +52,9 @@ export const Query = {
       //   (total: number, x) => total + parseInt(x.value),
       //   0,
       // );
-
-      transferData.account_holding = getAccountHolding(user);
+      const account_holding = await getAccountHolding(user);
+      transferData.account_holding = account_holding;
+      transferData.account_dept = transferData.account_money - account_holding;
       return transferData;
     },
   }),
