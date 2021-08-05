@@ -80,7 +80,7 @@ const ProductBaseCreate = props => {
       />
       <Content>
         <Row gutter={24}>
-          <Col span="16">
+          <Col span="12">
             <Card className="pt-3">
               <ProductBaseBasicForm
                 ref={formRef}
@@ -88,7 +88,7 @@ const ProductBaseCreate = props => {
               />
             </Card>
           </Col>
-          <Col span="8">
+          <Col span="12">
             <ProductBaseStatus />
             <ProductBasePrintArea />
             <ProductBaseMockup />

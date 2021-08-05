@@ -103,7 +103,7 @@ const ProductBaseDetail = props => {
               />
             </Card>
           </Col>
-          <Col span="8">
+          <Col span="12">
             <ProductBaseStatus
               initialValues={data.productBase}
               ref={formStatusRef}

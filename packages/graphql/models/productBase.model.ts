@@ -14,6 +14,7 @@ import { Image } from './image.model';
 import StatusType from '../constants/StatusType';
 import { ProductBaseMeta } from './productBaseMeta.model';
 import { TermRelationship } from './termRelationship.model';
+import ProductBaseVisibility from '../constants/ProductBaseVisibility';
 
 @Table({ timestamps: true })
 export class ProductBase extends Model<ProductBase> {
@@ -36,6 +37,7 @@ export class ProductBase extends Model<ProductBase> {
   @Column
   providerId: string;
 
+  @Default(ProductBaseVisibility.Public)
   @Column
   visibility: string;
 

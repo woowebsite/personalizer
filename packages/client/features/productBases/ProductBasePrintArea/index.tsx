@@ -8,9 +8,13 @@ import AddPrintAreaForm from './AddPrintAreaForm';
 import EntityType from '~/constants/EntityType';
 import TaxonomyType from '~/constants/TaxonomyType';
 
+interface IProps {
+  initialValues?: any;
+}
+
 const formRender = props => <AddPrintAreaForm {...props} />;
 
-const ProductBasePrintArea = () => {
+const ProductBasePrintArea = (props: IProps) => {
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [isShowForm, showForm] = useState(false);
@@ -24,9 +28,7 @@ const ProductBasePrintArea = () => {
         entityType={EntityType.ProductBase}
         taxonomyType={TaxonomyType.ProductBase_PrintArea}
         formRender={formRender}
-        mutation={
-          metadataFactory(EntityType.ProductBase).upsertMetadata
-        }
+        mutation={metadataFactory(EntityType.ProductBase).upsertMetadata}
         title={t('printAreaBox.title')}
       >
         <PrintAreaTable />
