@@ -31,7 +31,9 @@ const MenuLeft = props => {
                 title={f(menu.title)}
               >
                 {menu.children
-                  .filter(x => x.visible === true)
+                  .filter(
+                    x => x.visible === true && x.roles.includes(user.role_id),
+                  )
                   .map((child, c) => (
                     <Menu.Item key={`child-menu-${i}-${c}`}>
                       <Link href={child.url}>{f(child.title)}</Link>

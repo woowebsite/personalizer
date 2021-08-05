@@ -12,6 +12,9 @@ import Avatar from 'components/Avatar';
 import ComboBoxEnum from '~/components/ComboBoxEnum';
 import CustomerType from '~/models/CustomerType';
 import ButtonModal from '~/components/ButtonModal';
+import managementJobAuthConfig from '../authorized/managementJob';
+import React from 'react';
+import AuthorizedWrapper from '~/components/AuthorizedWrapper';
 
 const menu = (t, actions) => (
   <Menu>
@@ -19,12 +22,12 @@ const menu = (t, actions) => (
       {t('buttons.send')}
     </Menu.Item>
     <Menu.Item key="2" icon={<SendOutlined />}>
-      ...
+      {t('buttons.payment')}
     </Menu.Item>
   </Menu>
 );
 
-export const columns = (t, handlers): ColumnsType<any> => {
+export const columns = (session, t, handlers): ColumnsType<any> => {
   const configDeleteModal = record => ({
     icon: <CloseCircleFilled style={{ color: 'rgb(244, 85, 53)' }} />,
     title: t('jobTable.deleteModal.title'),
@@ -81,6 +84,13 @@ export const columns = (t, handlers): ColumnsType<any> => {
           <ButtonModal config={configDeleteModal(record)} type="link">
             {t('buttons.delete')}
           </ButtonModal>
+
+          <AuthorizedWrapper
+            config={managementJobAuthConfig.PaymentButton}
+            session={session}
+          >
+            <Button>{t('buttons.payment')}</Button>
+          </AuthorizedWrapper>
 
           <Dropdown
             placement="bottomRight"

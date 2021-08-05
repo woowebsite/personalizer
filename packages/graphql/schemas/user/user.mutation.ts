@@ -34,6 +34,7 @@ export const Mutation = {
           user_id: user.id,
         }));
 
+        // updat UserMeta instead destroy
         await UserMeta.destroy({
           where: { user_id: user.id },
         });
@@ -72,9 +73,12 @@ export const Mutation = {
       let action = '';
       let money = 0;
       if (data && taxonomies) {
+        // 1. get taxonomy id by action
         action = Object.keys(taxonomies)[0];
         const allTaxonomies = await TermTaxonomy.findAll({ raw: true });
         const taxonomy = allTaxonomies.find(x => x.taxonomy === action);
+
+        // 2. get money of action: - if withdraw, holding, + if deposit, earning
         money = parseInt(taxonomies[action]);
 
         switch (action) {
@@ -83,6 +87,7 @@ export const Mutation = {
             break;
         }
 
+        // 3. add UserTerm
         const userTerm: any = {
           term_taxonomy_id: taxonomy.id,
           user_id: data.id,
@@ -92,6 +97,7 @@ export const Mutation = {
 
         await UserTerm.create(userTerm);
 
+        // 4. update account_money to metadata to use directly in session.user
         const accountMoneyMetadata = await UserMeta.findOne({
           where: {
             user_id: data.id,

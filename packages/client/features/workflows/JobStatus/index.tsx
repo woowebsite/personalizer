@@ -7,7 +7,6 @@ import TextEditable from '~/components/TextEditable';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import jobService from '~/services/jobService';
-import JobStatus from '~/constants/jobStatus';
 import useTranslate from '~/hooks/useTranslate';
 import { fieldsToMetadata, fieldsToTaxonomies } from '~/shared/metadataHelper';
 
@@ -51,7 +50,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
   }));
 
   const submit = () => {
-    const { id } = initialValues;
+    const { id, code } = initialValues;
     form
       .validateFields()
       .then(values => {
@@ -64,7 +63,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
         const metadata = fieldsToMetadata(metadataFields);
 
         upsertJob({
-          variables: { job: { id }, metadata, taxonomies: [] },
+          variables: { job: { id, code }, metadata, taxonomies: [] },
         });
       })
       .catch(errorInfo => {

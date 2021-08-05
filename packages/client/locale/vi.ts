@@ -50,6 +50,7 @@ export const vi = {
       edit: 'Sửa',
       actions: 'Tác vụ',
       more: 'Thêm nữa',
+      close: 'Đóng',
       cancel: 'Tạm hoãn',
       filter: 'Lọc',
       payment: 'Thanh toán',
@@ -252,6 +253,9 @@ export const vi = {
         money: 'Tiền',
         debt: 'Công nợ',
       },
+    },
+    socialBox: {
+      title: 'Mạng xã hội',
     },
   },
   '/customer/jobs': {
