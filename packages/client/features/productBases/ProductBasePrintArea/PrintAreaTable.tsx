@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import _ from 'lodash';
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
 import metadataFactory from '~/services/metadataService';
 import EntityType from '~/constants/EntityType';
 import TaxonomyType from '~/constants/TaxonomyType';
 import { metadata2Fields } from '~/shared/metadataHelper';
+
+interface IProps {
+  entityId?: number;
+}
 
 const EditableCell = ({
   editing,
@@ -41,14 +45,15 @@ const EditableCell = ({
   );
 };
 
-const PrintAreaTable = () => {
+const PrintAreaTable = (props: IProps, ref) => {
+  const { entityId } = props;
   const [form] = Form.useForm();
   const { data, loading, refetch, error } = metadataFactory(
     EntityType.ProductBase,
   ).getMetadata({
     variables: {
       where: {
-        entityId: 1,
+        entityId: entityId,
         entityType: EntityType.ProductBase,
         taxonomy: TaxonomyType.ProductBase_PrintArea,
       },
@@ -91,6 +96,11 @@ const PrintAreaTable = () => {
       console.log('Validate Failed:', errInfo);
     }
   };
+
+  /// EVENTS
+  useImperativeHandle(ref, () => ({
+    refetch,
+  }));
 
   const columns = [
     {
@@ -197,4 +207,6 @@ const PrintAreaTable = () => {
   );
 };
 
-export default PrintAreaTable;
+export default forwardRef<any, IProps & React.HTMLAttributes<HTMLDivElement>>(
+  PrintAreaTable,
+);

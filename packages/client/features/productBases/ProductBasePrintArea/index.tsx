@@ -9,29 +9,36 @@ import EntityType from '~/constants/EntityType';
 import TaxonomyType from '~/constants/TaxonomyType';
 
 interface IProps {
-  initialValues?: any;
+  initialValues: any;
 }
 
 const formRender = props => <AddPrintAreaForm {...props} />;
 
 const ProductBasePrintArea = (props: IProps) => {
+  const { id } = props.initialValues;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [isShowForm, showForm] = useState(false);
   const [form] = Form.useForm();
+  const tableRef: any = React.createRef();
+
+  const onSaveCompleted = () => {
+    tableRef.current.refetch();
+  };
 
   return (
     <>
       <CardForm
         className="mt-4"
-        entityId={1} // productBaseId
+        entityId={id}
         entityType={EntityType.ProductBase}
         taxonomyType={TaxonomyType.ProductBase_PrintArea}
         formRender={formRender}
         mutation={metadataFactory(EntityType.ProductBase).upsertMetadata}
+        onSaveCompleted={onSaveCompleted}
         title={t('printAreaBox.title')}
       >
-        <PrintAreaTable />
+        <PrintAreaTable ref={tableRef} entityId={id} />
       </CardForm>
     </>
   );
