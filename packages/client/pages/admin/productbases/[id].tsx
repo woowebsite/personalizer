@@ -109,8 +109,8 @@ const ProductBaseDetail = props => {
               ref={formStatusRef}
             />
             <ProductBasePrintArea initialValues={data.productBase} />
-            {/* <ProductBaseMockup initialValues={data.productBase} />
-            <ProductBaseCombinePrintArea initialValues={data.productBase} /> */}
+            <ProductBaseMockup initialValues={data.productBase} />
+            <ProductBaseCombinePrintArea initialValues={data.productBase} />
           </Col>
         </Row>
       </Content>

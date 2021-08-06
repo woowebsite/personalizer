@@ -14,7 +14,7 @@ interface CardFormProps extends CardProps {
   entityId: number,
   entityType: EntityType,
   taxonomyType: TaxonomyType,
-  onSaveCompleted: any,
+  onSaveCompleted?: any,
   mutation: (options?: any) => MutationTuple<any, OperationVariables>;
   okText?: string;
   cancelText?: string;
@@ -38,7 +38,7 @@ const CardForm = forwardRef<any, CardFormProps>(({ title, ...props }, ref) => {
         },
       });
       
-      onSaveCompleted();
+      onSaveCompleted?.();
     }
   });
   const [form] = Form.useForm();

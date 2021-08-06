@@ -8,8 +8,7 @@ const Thumbnail = ({ title, desc, image, url, href, localName }) => {
     <Link as={url} href={href}>
       <Card
         hoverable
-        style={{ width: 240 }}
-        cover={<img alt={title} src={image} />}
+        cover={<img alt={title} src={url} />}
       >
         <Meta title={title + localName} description={desc} />
       </Card>

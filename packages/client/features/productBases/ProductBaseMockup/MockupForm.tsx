@@ -10,21 +10,8 @@ const AddPrintAreaForm = ({ form, initialValues, onSubmit }) => {
   const t = (id, values?) => formatMessage({ id }, values);
 
   // EVENTS
-  const handleFinish = () => {
-    form
-      .validateFields()
-      .then(values => {
-        let queries = values;
-        if (values.name || !!!values.name) queries.name = `%${values.name}%`;
-        onSubmit(queries);
-      })
-      .catch(errorInfo => {
-        console.log('Error: ', errorInfo);
-      });
-  };
-
   const onSetImageUrl = filename => {
-    form.setFieldsValue({ image: filename });
+    form.setFields([{ name: ['metadata', 'image'], value: filename }]);
   };
 
   return (
@@ -33,11 +20,11 @@ const AddPrintAreaForm = ({ form, initialValues, onSubmit }) => {
       layout="vertical"
       className="vertical-compact"
       initialValues={initialValues}
-      onFinish={handleFinish}
     >
       <Row gutter={12}>
         <Col span={8}>
           <Form.Item
+            name={['term', 'name']}
             label={t('mockupBox.fields.name')}
             tooltip="This is a required field"
           >
@@ -46,6 +33,7 @@ const AddPrintAreaForm = ({ form, initialValues, onSubmit }) => {
         </Col>
         <Col span={8}>
           <Form.Item
+            name={['metadata', 'background']}
             label={t('mockupBox.fields.background')}
             tooltip="This is a required field"
           >
@@ -59,12 +47,12 @@ const AddPrintAreaForm = ({ form, initialValues, onSubmit }) => {
           >
             <Row gutter={12}>
               <Col span={12}>
-                <Form.Item name="width">
+                <Form.Item name={['metadata', 'width']}>
                   <Input />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item name="height">
+                <Form.Item name={['metadata', 'height']}>
                   <Input />
                 </Form.Item>
               </Col>
@@ -74,12 +62,18 @@ const AddPrintAreaForm = ({ form, initialValues, onSubmit }) => {
       </Row>
       <Row>
         <Col span={12}>
-          <Form.Item name="preview" label={t('mockupBox.fields.preview')}>
+          <Form.Item
+            name={['metadata', 'image']}
+            label={t('mockupBox.fields.preview')}
+          >
             <UploadImage setImageUrl={onSetImageUrl} />
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="noise" label={t('mockupBox.fields.noise')}>
+          <Form.Item
+            name={['metadata', 'noise']}
+            label={t('mockupBox.fields.noise')}
+          >
             <Checkbox>{t('mockupBox.fields.renderNoise')}</Checkbox>
             <span>{t('mockupBox.fields.renderNoiseDesc')}</span>
           </Form.Item>
