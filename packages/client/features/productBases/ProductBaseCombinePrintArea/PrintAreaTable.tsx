@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import _ from 'lodash';
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
-const originData = [];
+import metadataFactory from '~/services/metadataService';
+import EntityType from '~/constants/EntityType';
+import TaxonomyType from '~/constants/TaxonomyType';
+import { metadata2Fields } from '~/shared/metadataHelper';
 
-for (let i = 0; i < 4; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
+interface IProps {
+  entityId?: number;
 }
 
 const EditableCell = ({
@@ -46,9 +45,21 @@ const EditableCell = ({
   );
 };
 
-const PrintAreaTable = () => {
+const PrintAreaTable = (props: IProps, ref) => {
+  const { entityId } = props;
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
+  const { data, loading, refetch, error } = metadataFactory(
+    EntityType.ProductBase,
+  ).getMetadata({
+    variables: {
+      where: {
+        entityId: entityId,
+        entityType: EntityType.ProductBase,
+        taxonomy: TaxonomyType.ProductBase_CombinePrintArea,
+      },
+    },
+  });
+
   const [editingKey, setEditingKey] = useState('');
 
   const isEditing = record => record.key === editingKey;
@@ -76,17 +87,20 @@ const PrintAreaTable = () => {
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
-        setData(newData);
         setEditingKey('');
       } else {
         newData.push(row);
-        setData(newData);
         setEditingKey('');
       }
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }
   };
+
+  /// EVENTS
+  useImperativeHandle(ref, () => ({
+    refetch,
+  }));
 
   const columns = [
     {
@@ -96,14 +110,14 @@ const PrintAreaTable = () => {
       editable: true,
     },
     {
-      title: 'age',
-      dataIndex: 'age',
-      width: '15%',
+      title: 'width',
+      dataIndex: 'width',
+      width: '40%',
       editable: true,
     },
     {
-      title: 'address',
-      dataIndex: 'address',
+      title: 'height',
+      dataIndex: 'height',
       width: '40%',
       editable: true,
     },
@@ -154,6 +168,21 @@ const PrintAreaTable = () => {
       }),
     };
   });
+
+  const transformData = data => {
+    if (!data || !data.termRelationships) return [];
+    const result = _.map(data.termRelationships.rows, 'termTaxonomy.term').map(
+      t => {
+        const term = {
+          ...t,
+          ...metadata2Fields(t.metadata),
+        };
+        return term;
+      },
+    );
+
+    return result;
+  };
   return (
     <Form form={form} component={false}>
       <Table
@@ -163,7 +192,7 @@ const PrintAreaTable = () => {
           },
         }}
         size="small"
-        dataSource={data}
+        dataSource={transformData(data)}
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={false}
@@ -172,4 +201,6 @@ const PrintAreaTable = () => {
   );
 };
 
-export default PrintAreaTable;
+export default forwardRef<any, IProps & React.HTMLAttributes<HTMLDivElement>>(
+  PrintAreaTable,
+);
