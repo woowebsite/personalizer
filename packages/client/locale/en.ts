@@ -84,6 +84,23 @@ export const en = {
         tags: 'Tags',
       },
     },
+    productBaseVariation: {
+      title: 'Variation box',
+      tabs: {
+        general: {
+          title: 'General',
+          label: {
+            sku: 'SKU',
+            basePrice: 'Base Price',
+            retailPrice: 'Retail Price',
+            quantity: 'Quantity',
+          }
+        },
+        attributes: 'Attributes',
+        variations: 'Variations',
+        swatches: 'Swatches',
+      },
+    },
     userCreateform: {
       label: {
         name: 'Name',

@@ -19,6 +19,7 @@ import ProductBaseStatus from '~/features/productBases/ProductBaseStatus';
 import ProductBasePrintArea from '~/features/productBases/ProductBasePrintArea';
 import ProductBaseMockup from '~/features/productBases/ProductBaseMockup';
 import ProductBaseCombinePrintArea from '~/features/productBases/ProductBaseCombinePrintArea';
+import ProductBaseVariation from '~/features/productBases/ProductBaseVariations';
 
 const { Content } = Layout;
 
@@ -101,6 +102,9 @@ const ProductBaseDetail = props => {
                 onFieldChange={handleFieldChanged}
                 data={data.productBase}
               />
+            </Card>
+            <Card title={t('productBaseVariation.title')} className="mt-4 pt-3">
+              <ProductBaseVariation />
             </Card>
           </Col>
           <Col span="12">
