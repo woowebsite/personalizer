@@ -104,7 +104,7 @@ const ProductBaseDetail = props => {
               />
             </Card>
             <Card title={t('productBaseVariation.title')} className="mt-4 pt-3">
-              <ProductBaseVariation />
+              <ProductBaseVariation initialValues={data.productBase}/>
             </Card>
           </Col>
           <Col span="12">

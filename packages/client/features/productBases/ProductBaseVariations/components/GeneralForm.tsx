@@ -1,16 +1,52 @@
 import { Form, Input, InputNumber, Select } from 'antd';
 import { useIntl } from 'react-intl';
-import React from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import useTranslate from '~/hooks/useTranslate';
-interface IProps {}
+import metadataFactory from '~/services/metadataService';
+import EntityType from '~/constants/EntityType';
+import TaxonomyType from '~/constants/TaxonomyType';
+import { fieldsToMetadata } from '~/shared/metadataHelper';
+interface IProps {
+  initialValues: any;
+}
 
 const { Option } = Select;
 
-const GeneralForm = (props: IProps) => {
+const GeneralForm = (props: IProps, ref) => {
   // DECLARES
+  const { entityId } = props.initialValues;
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
+  const [mutate, result] = metadataFactory(
+    EntityType.ProductBase,
+  ).upsertMetadata;
+
+  const save = () => {
+    form
+      .validateFields()
+      .then(values => {
+        const term = { name: 'General' };
+        const termMeta = fieldsToMetadata(values.metadata);
+        mutate({
+          variables: {
+            entityId,
+            entityType: EntityType.ProductBase,
+            taxonomy: TaxonomyType.ProductBase_Data,
+            termMeta,
+            term,
+          },
+        });
+      })
+      .catch(errorInfo => {
+        console.log('Error: ', errorInfo);
+      });
+  };
+
+  /// METHODS
+  useImperativeHandle(ref, () => ({
+    save,
+  }));
 
   return (
     <Form
@@ -65,4 +101,6 @@ const GeneralForm = (props: IProps) => {
   );
 };
 
-export default GeneralForm;
+export default forwardRef<any, IProps & React.HTMLAttributes<HTMLDivElement>>(
+  GeneralForm,
+);

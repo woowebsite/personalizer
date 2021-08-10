@@ -2,12 +2,16 @@ import React, { forwardRef } from 'react';
 import { useIntl } from 'react-intl';
 import { Card, Tabs } from 'antd';
 import GeneralForm from './components/GeneralForm';
+import AttributeForm from './components/AttributeForm';
 
 const { TabPane } = Tabs;
 
-interface IProps {}
+interface IProps {
+  initialValues: any;
+}
 const ProductBaseVariation = (props: IProps) => {
   const { formatMessage } = useIntl();
+  const { initialValues } = props;
   const t = (id, values?) => formatMessage({ id }, values);
 
   const callback = key => {
@@ -17,10 +21,10 @@ const ProductBaseVariation = (props: IProps) => {
   return (
     <Tabs defaultActiveKey="1" onChange={callback}>
       <TabPane tab={t('productBaseVariation.tabs.general.title')} key="1">
-        <GeneralForm />
+        <GeneralForm initialValues={initialValues} />
       </TabPane>
       <TabPane tab={t('productBaseVariation.tabs.attributes')} key="2">
-        Content of Tab Pane 2
+        <AttributeForm initialValues={initialValues} />
       </TabPane>
       <TabPane tab={t('productBaseVariation.tabs.variations')} key="3">
         Content of Tab Pane 3

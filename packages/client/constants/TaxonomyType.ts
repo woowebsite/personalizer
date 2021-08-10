@@ -4,6 +4,7 @@ enum TaxonomyType {
   ProductBase_PrintArea = 'ProductBase_PrintArea',
   ProductBase_CombinePrintArea = 'ProductBase_CombinePrintArea',
   ProductBase_Mockup = 'ProductBase_Mockup',
+  ProductBase_Data = 'ProductBase_Data',
 }
 
 export default TaxonomyType;
