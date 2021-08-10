@@ -20,7 +20,7 @@ const GeneralForm = (props: IProps, ref) => {
   const [form] = Form.useForm();
   const [mutate, result] = metadataFactory(
     EntityType.ProductBase,
-  ).upsertMetadata;
+  ).upsertMetadata();
 
   const save = () => {
     form

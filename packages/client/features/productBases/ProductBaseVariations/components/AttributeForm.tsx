@@ -31,7 +31,7 @@ const AttributeForm = (props: IProps, ref) => {
   const [form] = Form.useForm();
   const [mutate, result] = metadataFactory(
     EntityType.ProductBase,
-  ).upsertMetadata;
+  ).upsertMetadata();
 
   function callback(key) {
     console.log(key);
@@ -77,8 +77,8 @@ const AttributeForm = (props: IProps, ref) => {
             <>
               <div className="mb-4">
                 <Select placeholder="Custom Attribute">
-                  <Option value="Zhejiang">Zhejiang</Option>
-                  <Option value="Jiangsu">Jiangsu</Option>
+                  <Option value="Zhejiang">Size</Option>
+                  <Option value="Jiangsu">Color</Option>
                 </Select>
                 <Button type="primary" className="ml-2" onClick={() => add()}>
                   Add
@@ -87,7 +87,7 @@ const AttributeForm = (props: IProps, ref) => {
               {fields.map(({ key, name, fieldKey, ...restField }) => (
                 <Collapse onChange={callback}>
                   <Panel
-                    header="This is panel header 1"
+                    header="Size"
                     key="1"
                     className="mb-3"
                   >
