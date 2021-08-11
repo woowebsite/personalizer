@@ -9,7 +9,7 @@ import {
   Col,
 } from 'antd';
 import { useIntl } from 'react-intl';
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import useTranslate from '~/hooks/useTranslate';
 import metadataFactory from '~/services/metadataService';
 import EntityType from '~/constants/EntityType';
@@ -26,6 +26,8 @@ const { Panel } = Collapse;
 const AttributeForm = (props: IProps, ref) => {
   // DECLARES
   const { entityId } = props.initialValues;
+  const [selectedAttribute, setAttribute] = useState<any>();
+  const [fields, setFields] = useState<any>([]);
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
@@ -33,9 +35,9 @@ const AttributeForm = (props: IProps, ref) => {
     EntityType.ProductBase,
   ).upsertMetadata();
 
-  function callback(key) {
-    console.log(key);
-  }
+  const add = () => {
+    setFields(prev => [...prev, selectedAttribute]);
+  };
 
   // METHODS
   const save = () => {
@@ -72,61 +74,52 @@ const AttributeForm = (props: IProps, ref) => {
         wrapperCol={{ span: 24 }}
         labelAlign="left"
       >
-        <Form.List name="attributes">
-          {(fields, { add, remove }) => (
-            <>
-              <div className="mb-4">
-                <Select placeholder="Custom Attribute">
-                  <Option value="Zhejiang">Size</Option>
-                  <Option value="Jiangsu">Color</Option>
-                </Select>
-                <Button type="primary" className="ml-2" onClick={() => add()}>
-                  Add
-                </Button>
-              </div>
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
-                <Collapse onChange={callback}>
-                  <Panel
-                    header="Size"
-                    key="1"
-                    className="mb-3"
+        <div className="mb-4">
+          <Select
+            placeholder="Custom Attribute"
+            onChange={value => setAttribute(value)}
+            labelInValue
+            allowClear
+            style={{ width: 170 }}
+          >
+            <Option value="size">Size</Option>
+            <Option value="color">Color</Option>
+          </Select>
+          <Button type="primary" className="ml-2" onClick={() => add()}>
+            Add
+          </Button>
+        </div>
+
+        {fields.map(field => (
+          <Collapse>
+            <Panel header={field.label} key="1" className="mb-3">
+              <Row gutter={12}>
+                <Col span="8">
+                  <Form.Item
+                    label="Name"
+                    name={[field.value, 'name']}
+                    tooltip="This is a required field"
+                    rules={[{ required: true, message: 'Missing field name' }]}
                   >
-                    <Row gutter={12}>
-                      <Col span="8">
-                        <Form.Item
-                          {...restField}
-                          label="Name"
-                          name={[name, 'last']}
-                          tooltip="This is a required field"
-                          fieldKey={[fieldKey, 'last']}
-                          rules={[
-                            { required: true, message: 'Missing last name' },
-                          ]}
-                        >
-                          <Input placeholder="Last Name" />
-                        </Form.Item>
-                      </Col>
-                      <Col span="16">
-                        <Form.Item
-                          {...restField}
-                          label="Values"
-                          name={[name, 'last']}
-                          tooltip="This is a required field"
-                          fieldKey={[fieldKey, 'last']}
-                          rules={[
-                            { required: true, message: 'Missing last name' },
-                          ]}
-                        >
-                          <Input placeholder="Last Name" />
-                        </Form.Item>
-                      </Col>
-                    </Row>
-                  </Panel>
-                </Collapse>
-              ))}
-            </>
-          )}
-        </Form.List>
+                    <Input placeholder="Name" />
+                  </Form.Item>
+                </Col>
+                <Col span="16">
+                  <Form.Item
+                    label="Values"
+                    name={[field.value, 'values']}
+                    tooltip="This is a required field"
+                    rules={[
+                      { required: true, message: 'Missing field values' },
+                    ]}
+                  >
+                    <Input placeholder="Values" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Panel>
+          </Collapse>
+        ))}
       </Form>
     </>
   );
