@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl';
 import { Card, Tabs } from 'antd';
 import GeneralForm from './components/GeneralForm';
 import AttributeForm from './components/AttributeForm';
+import VariationForm from './components/VariationForm';
 
 const { TabPane } = Tabs;
 
@@ -27,7 +28,7 @@ const ProductBaseVariation = (props: IProps) => {
         <AttributeForm initialValues={initialValues} />
       </TabPane>
       <TabPane tab={t('productBaseVariation.tabs.variations')} key="3">
-        Content of Tab Pane 3
+        <VariationForm initialValues={initialValues} />
       </TabPane>
       <TabPane tab={t('productBaseVariation.tabs.swatches')} key="4">
         Content of Tab Pane 3
