@@ -18,7 +18,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   const { formatMessage } = useIntl();
   const { initialValues } = props;
   const t = (id, values?) => formatMessage({ id }, values);
-  const [upsertJob] = jobService.upsert(); 
+  const [upsertJob] = jobService.upsert();
   const [form] = Form.useForm();
   const [dept, setDept] = useState(0);
 
@@ -36,7 +36,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   useImperativeHandle(ref, () => ({
     getFieldsValue,
     validateFields,
-    submit
+    submit,
   }));
 
   const submit = () => {
@@ -82,58 +82,24 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   // Render
   return (
     <>
-      <Form form={form}>
-        <Card
-          className="mb-4 status-form card-required-title"
-          title={t('jobMoney.title')}
-          extra={
-            <Form.Item
-              name={['metadata', 'cost']}
-              rules={[
-                {
-                  required: true,
-                  message: useTranslate('validator.required', {
-                    field: 'jobMoney.label.cost',
-                  }),
-                },
-              ]}
-            >
-              <TextEditable
-                defaultValue={initialValues.cost}
-                defaultText={formatMoney(initialValues.cost)}
-                renderInput={({ handleOnChange, ref, ...rest }) => {
-                  return (
-                    <Input
-                      ref={ref}
-                      onPressEnter={onFieldBlur}
-                      onChange={e =>
-                        handleOnChange(
-                          e.target.value,
-                          formatMoney(e.target.value),
-                        )
-                      }
-                      style={{ width: '150px', textAlign: 'right' }}
-                      {...rest}
-                    />
-                  );
-                }}
-              />
-            </Form.Item>
-          }
-          actions={[
-            <Button type="primary" size="small">
-              {t('buttons.payment')}
-            </Button>,
-          ]}
-        >
+      <Form form={form} labelAlign="left">
+        <Card className="mb-4 status-form">
           <Form.Item
-            name={['metadata', 'paid']}
-            className="field-number"
-            label={t('jobMoney.label.paid')}
+            label={t('jobMoney.title')}
+            name={['metadata', 'cost']}
+            rules={[
+              {
+                required: true,
+                message: useTranslate('validator.required', {
+                  field: 'jobMoney.label.cost',
+                }),
+              },
+            ]}
           >
             <TextEditable
-              defaultValue={initialValues.paid}
-              defaultText={formatMoney(initialValues.paid)}
+              style={{ textAlign: 'right' }}
+              defaultValue={initialValues.cost}
+              defaultText={formatMoney(initialValues.cost)}
               renderInput={({ handleOnChange, ref, ...rest }) => {
                 return (
                   <Input
@@ -151,12 +117,6 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
                 );
               }}
             />
-          </Form.Item>
-          <Form.Item
-            className="field-number"
-            label={t('jobMoney.label.debt')}
-          >
-            <span className="text-danger">{formatMoney(dept)}</span>
           </Form.Item>
         </Card>
       </Form>

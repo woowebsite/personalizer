@@ -9,7 +9,11 @@ export const whereCurrentUser = (ctx, where) => {
     case RoleType.HelpDesk:
       break;
     case RoleType.Customer:
-      where.job.userId = currentUser.id;
+      where.job = {
+        ...where.job,
+        userId: currentUser.id,
+      };
+      // where.job.userId = currentUser.id;
       break;
     case RoleType.Employee:
       where.metadata = [

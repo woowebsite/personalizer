@@ -18,6 +18,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
   defaultText = 'Text',
   defaultValue = null,
   onChange,
+  style,
   ...others
 }) => {
   // Define
@@ -140,7 +141,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
     }
   };
   return (
-    <>
+    <div style={style}>
       <span className={styles.text2combo}>
         {isEditable && renderEditInput()}
         {!isEditable && (
@@ -158,7 +159,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
       >
         {btnText}
       </Button>
-    </>
+    </div>
   );
 };
 
