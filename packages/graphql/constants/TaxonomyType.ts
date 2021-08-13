@@ -7,6 +7,7 @@ enum TaxonomyType {
   Account_Withdraw='account_withdraw',
   Account_Earning='account_earning',
   Account_Hoding='account_holding',
+  Account_Pay='account_pay',
 }
 
 export default TaxonomyType;

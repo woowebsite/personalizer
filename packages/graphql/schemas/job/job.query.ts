@@ -1,6 +1,7 @@
 import { resolver } from 'graphql-sequelize';
 import { Sequelize } from 'sequelize';
 import { Op } from 'sequelize';
+import JobStatus from '../../constants/JobStatus';
 import JobTaxonomy from '../../constants/JobTaxonomy';
 import {
   Job,
@@ -57,6 +58,7 @@ export const Query = {
 
         // job
         let { job } = where2;
+        job.status = job.status || { [Op.not]: JobStatus.Deactive }; // default not query Deleted job
         if (where2.job && where2.job.title)
           job.title = { [Op.like]: where2.job.title };
 
@@ -78,7 +80,6 @@ export const Query = {
             model: JobTerm,
             where: {
               term_taxonomy_id: where2.taxonomies,
-              version: { [Op.col]: 'latestVersion' },
             },
           });
         }
@@ -203,7 +204,7 @@ export const Query = {
           id: {
             [Op.in]: Sequelize.literal(
               `( SELECT a.id FROM JobTerms a 
-                INNER JOIN (SELECT MAX(createdAt) latestUpdated FROM JobTerms GROUP BY term_taxonomy_id) b 
+                INNER JOIN (SELECT MAX(createdAt) latestUpdated FROM JobTerms GROUP BY ref_id) b 
                 ON a.createdAt = b.latestUpdated  )`,
             ),
           },
@@ -220,12 +221,16 @@ export const Query = {
             .filter(x => latestJobTermIds.includes(x.id))
             .map(x => {
               if (x) {
+                // convert metadata into fields of job
+                let metadataTransfer = metadataToField(x.dataValues.job);
+
                 // convert jobTerms into fields of job
-                const jobTransfer = taxonomyToField(
-                  x.dataValues.job,
+                let taxonomyTransfer = taxonomyToField(
+                  metadataTransfer,
                   'jobTerms',
                 );
-                return jobTransfer;
+
+                return taxonomyTransfer;
               }
             }),
         };

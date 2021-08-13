@@ -47,12 +47,16 @@ const SocialConenct = props => {
         />
       )}
 
+      <br />
+
       {visibleTwitter && (
         <TwitterConnect
           account={twitterAccount}
           buttonConnectText={t('socialConnect.connectToTwitter')}
         />
       )}
+
+      <br />
 
       {visibleGoogle && (
         <GoogleConnect

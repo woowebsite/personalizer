@@ -27,7 +27,7 @@ const ManagementJobs = props => {
         ]}
       />
       <Content>
-        <JobTable />
+        <JobTable session={props.session} />
       </Content>
     </>
   );

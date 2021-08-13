@@ -11,5 +11,5 @@ type TermRelationship {
 
 type NameValue {
   name: String
-  value: String
+  value: Int
 }

@@ -40,7 +40,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
   }));
 
   const submit = () => {
-    const { id } = initialValues;
+    const { id, code } = initialValues;
     form
       .validateFields()
       .then(values => {
@@ -57,7 +57,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
         const taxonomies = taxonomyFields ? Object.values(taxonomyFields) : [];
 
         upsertJob({
-          variables: { job: { id }, metadata, taxonomies },
+          variables: { job: { id, code }, metadata, taxonomies },
         });
       })
       .catch(errorInfo => {
@@ -99,7 +99,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
             <TextEditable
               style={{ textAlign: 'right' }}
               defaultValue={initialValues.cost}
-              defaultText={formatMoney(initialValues.cost)}
+              defaultText={formatMoney(initialValues.paid || 0)}
               renderInput={({ handleOnChange, ref, ...rest }) => {
                 return (
                   <Input
@@ -108,7 +108,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
                     onChange={e =>
                       handleOnChange(
                         e.target.value,
-                        formatMoney(e.target.value),
+                        formatMoney(e.target.value || 0),
                       )
                     }
                     style={{ width: '150px', textAlign: 'right' }}

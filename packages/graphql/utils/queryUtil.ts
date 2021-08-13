@@ -13,7 +13,6 @@ export const whereCurrentUser = (ctx, where) => {
         ...where.job,
         userId: currentUser.id,
       };
-      // where.job.userId = currentUser.id;
       break;
     case RoleType.Employee:
       where.metadata = [

@@ -7,7 +7,6 @@ import TextEditable from '~/components/TextEditable';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 import jobService from '~/services/jobService';
-import JobStatus from '~/constants/jobStatus';
 import useTranslate from '~/hooks/useTranslate';
 import { fieldsToMetadata, fieldsToTaxonomies } from '~/shared/metadataHelper';
 
@@ -34,9 +33,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
       // taxonomies
       {
         name: ['taxonomies', 'job_status'],
-        value: parseInt(
-          job.job_status ? job.job_status.value : JobStatus.Active,
-        ),
+        value: job.job_status,
       },
 
       // metadata
@@ -64,7 +61,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
   }));
 
   const submit = () => {
-    const { id } = initialValues;
+    const { id, code } = initialValues;
     form
       .validateFields()
       .then(values => {
@@ -75,13 +72,12 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
 
         // taxonomies fields
         const taxonomyFields = values.taxonomies;
-
         // parse
         const metadata = fieldsToMetadata(metadataFields);
         const taxonomies = fieldsToTaxonomies(taxonomyFields);
 
         upsertJob({
-          variables: { job: { id }, metadata, taxonomies },
+          variables: { job: { id, code }, metadata, taxonomies },
         });
       })
       .catch(errorInfo => {
@@ -104,7 +100,9 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
   const employee = fEmployee && JSON.parse(fEmployee.data);
 
   const fPriority = initialValues.metadata.find(x => x.key === 'priority');
-  const priority = fPriority && JSON.parse(fPriority.data);
+  const priority = fPriority
+    ? JSON.parse(fPriority.data)
+    : { name: 'Normal', value: 4 };
 
   return (
     <>

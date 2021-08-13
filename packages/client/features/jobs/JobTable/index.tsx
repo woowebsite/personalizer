@@ -16,6 +16,7 @@ import { notification } from 'antd';
 
 const JobTable = props => {
   // DEFINES
+  const { session } = props;
   const tableRef = React.useRef(null);
   const tableFilterRef = React.useRef(null);
   const { formatMessage } = useIntl();
@@ -88,7 +89,10 @@ const JobTable = props => {
           }
         />
       )}
-      columns={columns(t, { delete: handleDeleteJob, send: handleSendJob })}
+      columns={columns(session, t, {
+        delete: handleDeleteJob,
+        send: handleSendJob,
+      })}
       {...props}
     />
   );
