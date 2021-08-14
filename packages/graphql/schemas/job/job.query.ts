@@ -150,7 +150,7 @@ export const Query = {
       if (where && where.title) jobQuery.title = { [Op.like]: where.title };
 
       if (where && where.startDueDate && where.endDueDate) {
-        jobQuery.dueDate = {
+        jobQuery.publishDate = {
           [Op.between]: [where.startDueDate, where.endDueDate],
         };
       }
