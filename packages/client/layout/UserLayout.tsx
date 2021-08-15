@@ -1,3 +1,4 @@
+import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import Router from 'next/router';
 import { useIntl } from 'react-intl';
@@ -11,6 +12,8 @@ import TopBar from '~/components/TopBar';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
+export const UserContext = React.createContext(null);
+
 function withUserLayout(WrappedComponent) {
   const UserLayout = props => {
     const { formatMessage, messages } = useIntl();
@@ -18,17 +21,19 @@ function withUserLayout(WrappedComponent) {
 
     return (
       <Layout>
-        <Header className="header">
-          <TopBar data={getMenuData()} />
-        </Header>
-        <Layout>
-          <Sider width={200} className="site-layout-background">
-            <MenuLeft data={getMenuData()} session={props.session} />
-          </Sider>
-          <Layout style={{ padding: '0 24px 24px' }}>
-            <WrappedComponent t={t} messages={messages} {...props} />
+        <UserContext.Provider value={props.session}>
+          <Header className="header">
+            <TopBar data={getMenuData()} />
+          </Header>
+          <Layout>
+            <Sider width={200} className="site-layout-background">
+              <MenuLeft data={getMenuData()} session={props.session} />
+            </Sider>
+            <Layout style={{ padding: '0 24px 24px' }}>
+              <WrappedComponent t={t} messages={messages} {...props} />
+            </Layout>
           </Layout>
-        </Layout>
+        </UserContext.Provider>
       </Layout>
     );
   };
@@ -36,6 +41,7 @@ function withUserLayout(WrappedComponent) {
   UserLayout.getInitialProps = async context => {
     const { ctx } = context;
     const session = await getSession({ req: ctx.req });
+
     /*
      * This happens on server only, ctx.req is available means it's being
      * rendered on server. If we are on server and token is not available,

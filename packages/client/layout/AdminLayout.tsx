@@ -1,16 +1,18 @@
+import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import Router from 'next/router';
 import { useIntl } from 'react-intl';
 import MenuLeft from './MenuLeft';
 import getMenuData, { hasPemission } from 'services/menu';
 import { getSession } from 'next-auth/client';
-import RoleType from '~/models/RoleType';
 
 // components
 import TopBar from '~/components/TopBar';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
+
+export const UserContext = React.createContext(null);
 
 function withAdminLayout(WrappedComponent) {
   const AdminLayout = props => {
@@ -19,17 +21,19 @@ function withAdminLayout(WrappedComponent) {
 
     return (
       <Layout>
-        <Header className="header">
-          <TopBar data={getMenuData()} />
-        </Header>
-        <Layout>
-          <Sider width={200} className="site-layout-background">
-            <MenuLeft data={getMenuData()} session={props.session} />
-          </Sider>
-          <Layout style={{ padding: '0 24px 24px' }}>
-            <WrappedComponent t={t} messages={messages} {...props} />
+        <UserContext.Provider value={props.session}>
+          <Header className="header">
+            <TopBar data={getMenuData()} />
+          </Header>
+          <Layout>
+            <Sider width={200} className="site-layout-background">
+              <MenuLeft data={getMenuData()} session={props.session} />
+            </Sider>
+            <Layout style={{ padding: '0 24px 24px' }}>
+              <WrappedComponent t={t} messages={messages} {...props} />
+            </Layout>
           </Layout>
-        </Layout>
+        </UserContext.Provider>
       </Layout>
     );
   };

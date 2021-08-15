@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
 
 // components
-import withUserLayout from 'layout/UserLayout';
+import withAdminLayout from 'layout/AdminLayout';
 import Card from 'components/Card';
 
 // graphql
@@ -78,4 +78,4 @@ const Profile = props => {
   );
 };
 
-export default withUserLayout(withApollo({ ssr: false })(Profile));
+export default withAdminLayout(withApollo({ ssr: false })(Profile));
