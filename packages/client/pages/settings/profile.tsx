@@ -12,6 +12,7 @@ import { withApollo } from 'apollo/apollo';
 import SocialConenct from '~/features/SocialConnect';
 import ChangePasswordForm from '~/features/ChangePasswordForm';
 import AccountMoney from '~/features/users/AccountMoney';
+import ProfileBasicForm from '~/features/users/ProfileBasicForm';
 
 const { Content } = Layout;
 
@@ -20,19 +21,19 @@ const Profile = props => {
   const { messages, t, session } = props;
   const { user } = session;
   const formRef: any = React.createRef();
-  const formAccountMoneyRef: any = React.createRef();
+  const formBasicRef: any = React.createRef();
 
   // EVENTS
   const onSave = async () => {
-    // check if valid all forms
     let isValid = true;
-    await formAccountMoneyRef.current.validateFields().catch(() => {
+
+    await formBasicRef.current.validateFields().catch(() => {
       isValid = false;
     });
     if (!isValid) return;
 
-    // get account money
-    const accountMoneyValues = formAccountMoneyRef.current.getFieldsValue();
+    // submit
+    formBasicRef.current && formBasicRef.current.submit();
   };
 
   // RENDER
@@ -42,15 +43,13 @@ const Profile = props => {
         className="mb-4 pl-0 pr-0"
         title={t('title')}
         subTitle={messages.subTitle}
-        extra={[
-          <Button key="1" type="primary" onClick={onSave}>
-            {t('buttons.save')}
-          </Button>,
-        ]}
       />
       <Content>
         <Row gutter={24}>
           <Col span="16">
+            <Card className="pt-3 mb-3">
+              <ProfileBasicForm ref={formBasicRef} user={user} />
+            </Card>
             <Card className="pt-3">
               <Typography.Title level={5} className="mb-3">
                 {t('changePassword.title')}
@@ -58,13 +57,9 @@ const Profile = props => {
               <ChangePasswordForm ref={formRef} user={user} />
             </Card>
           </Col>
+
           <Col span="8">
-            <AccountMoney
-              ref={formAccountMoneyRef}
-              session={session}
-              user={user}
-              className="mb-3"
-            />
+            <AccountMoney session={session} user={user} className="mb-3" />
             <Card>
               <Typography.Title level={5} className="mb-3">
                 {t('socialBox.title')}
