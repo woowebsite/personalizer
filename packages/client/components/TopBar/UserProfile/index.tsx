@@ -1,19 +1,15 @@
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { Menu, Dropdown, Badge, Avatar } from 'antd';
+import { Menu, Dropdown, Badge } from 'antd';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import { UserContext } from '~/layout/AdminLayout';
+import Link from 'next/link';
+import Avatar from '~/components/Avatar';
 
 const menu = t => (
   <Menu>
     <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="http://www.taobao.com/"
-      >
-        {t('topBar.profileMenu.profile')}
-      </a>
+      <Link href={'/settings/profile'}>{t('topBar.profileMenu.profile')}</Link>
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item>
@@ -35,12 +31,7 @@ const UserProfile = () => {
       <div>
         <span className="text-white mr-3">{session.user.name}</span>
         <Badge>
-          <Avatar
-            shape="circle"
-            size="default"
-            icon="user"
-            src={session.user.image}
-          />
+          <Avatar src={session.user.image} />
         </Badge>
       </div>
     </Dropdown>

@@ -10,9 +10,19 @@ const Avatar = ({ src, ...others }) => {
       ? src
       : '/images/' + src;
 
-  if (_src) {
-    return <AntdAvatar {...others} src={_src} />;
-  }
+  // if (_src) {
+  //   return <AntdAvatar {...others} src={_src} />;
+  // }
+
+  return (
+    <AntdAvatar
+      {...others}
+      shape="circle"
+      size="default"
+      icon="user"
+      src={'/images/' + src}
+    />
+  );
 };
 
 export default Avatar;
