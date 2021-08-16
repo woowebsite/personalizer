@@ -98,3 +98,21 @@ export const transactionMoney = async (
 
   await UserMeta.upsert(userMeta);
 };
+
+export const upsertMetadata = (
+  metadata: UserMeta[],
+  old: UserMeta[],
+  user_id,
+) => {
+  metadata.map((meta: UserMeta) => {
+    const m = old.find(x => x.user_id === user_id && x.key === meta.key);
+    const updateCodeJob: any = {
+      id: m && m.id,
+      user_id: user_id,
+      key: meta.key,
+      ...meta,
+    };
+
+    UserMeta.upsert(updateCodeJob);
+  });
+};

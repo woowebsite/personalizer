@@ -6,6 +6,7 @@ import StatusType from '../../constants/StatusType';
 import UserMetaType from '../../constants/UserMetaType';
 import TaxonomyType from '../../constants/TaxonomyType';
 import { metadataToField } from '../../utils/dataUtil';
+import { upsertMetadata } from './user.utils';
 
 export const Mutation = {
   createUser: resolver(User, {
@@ -29,16 +30,11 @@ export const Mutation = {
 
       // Metadata
       if (user && metadata) {
-        const userMeta = metadata.map(x => ({
-          ...x,
-          user_id: user.id,
-        }));
-
-        // updat UserMeta instead destroy
-        await UserMeta.destroy({
+        const oldUserMeta = await UserMeta.findAll({
           where: { user_id: user.id },
+          raw: true,
         });
-        await UserMeta.bulkCreate(userMeta);
+        upsertMetadata(metadata, oldUserMeta, user.id);
       }
 
       // Taxonomies is object
