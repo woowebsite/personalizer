@@ -36,19 +36,9 @@ const JobNew = props => {
   // DECLARE
   const { messages, t } = props;
   const formRef: any = React.createRef();
-  const formStatusRef: any = React.createRef();
-  const formMoneyRef: any = React.createRef();
   const pageTitleRef: any = React.createRef();
-  const [upsertJob] = jobService.upsert(); //(userQueries.UPSERT_USER);
-  const initialValues = {
-    cost: 0,
-    paid: 0,
-    status: JobStatus.Draft,
-    job_status: JobStatus.Publish,
-  };
-
+  
   // EVENTS
-  const onPublish = () => {};
   const onSave = () => {
     formRef.current.submit();
   };
