@@ -25,7 +25,8 @@ export const vi = {
       },
       jobs: {
         title: 'Công việc',
-        allJobs: 'Danh sách công việc',
+        allJobs: 'Quản lý công việc',
+        myJobs: 'Danh sách công việc',
         createJob: 'Tạo công việc',
       },
     },
@@ -123,6 +124,7 @@ export const vi = {
         link: 'Link',
         status: 'Trạng thái',
         description: 'Mô tả',
+        cost: 'Chi phí',
         priority: 'Ưu tiên',
         createdAt: 'Ngày tạo',
       },

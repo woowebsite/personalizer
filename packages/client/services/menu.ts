@@ -91,7 +91,15 @@ export default function getMenuData() {
           key: 'all',
           url: '/customer/jobs',
           visible: true,
-          roles: [RoleType.SysAdmin, RoleType.Customer, RoleType.Leader],
+          roles: [RoleType.SysAdmin, RoleType.HelpDesk],
+          permission: { featureName: 'Job', code: PermissionActions.Read },
+        },
+        {
+          title: 'menu.jobs.myJobs',
+          key: 'all',
+          url: '/user/myjobs',
+          visible: true,
+          roles: [RoleType.Employee, RoleType.Customer, RoleType.Leader],
           permission: { featureName: 'Job', code: PermissionActions.Read },
         },
         {

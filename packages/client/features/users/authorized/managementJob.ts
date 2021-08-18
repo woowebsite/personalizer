@@ -5,7 +5,7 @@ const managementJobAuthConfig = {
     roles: [RoleType.SysAdmin],
   },
   DeleteButton: {
-    roles: [RoleType.SysAdmin, RoleType.HelpDesk],
+    roles: [RoleType.Customer],
   },
 };
 

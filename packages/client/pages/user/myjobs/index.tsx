@@ -3,7 +3,7 @@ import { Layout, Button, PageHeader } from 'antd';
 
 // components
 import withAdminLayout from 'layout/AdminLayout';
-import JobTable from 'features/jobs/JobTable';
+import JobTable from 'features/users/JobTable';
 import RedirectButton from '~/components/RedirectButton';
 
 // graphql
@@ -11,7 +11,7 @@ import { withApollo } from 'apollo/apollo';
 
 const { Content } = Layout;
 
-const MyJobs = props => {
+const ManagementJobs = props => {
   const { messages, t } = props;
   return (
     <>
@@ -20,7 +20,6 @@ const MyJobs = props => {
         title={messages.title}
         subTitle={messages.subTitle}
         extra={[
-          <Button key="2">{t('pageHeader.buttons.all')}</Button>,
           <RedirectButton type="primary" url={'/customer/jobs/new'}>
             {t('buttons.create')}
           </RedirectButton>,
@@ -33,4 +32,4 @@ const MyJobs = props => {
   );
 };
 
-export default withAdminLayout(withApollo({ ssr: false })(MyJobs));
+export default withAdminLayout(withApollo({ ssr: false })(ManagementJobs));
