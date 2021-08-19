@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { ColumnsType } from 'antd/lib/table';
-import { Table, Space, Menu, Dropdown, Modal, Button } from 'antd';
+import { Button } from 'antd';
 import { CloseCircleFilled } from '@ant-design/icons';
 import ButtonModal from '~/components/ButtonModal';
 import managementJobAuthConfig from '../authorized/managementJob';
 import React from 'react';
 import AuthorizedWrapper from '~/components/AuthorizedWrapper';
+import { formatMoney } from '~/shared/formatHelper';
 
 export const columns = (session, t, handlers): ColumnsType<any> => {
   const configDeleteModal = record => ({
@@ -43,6 +44,11 @@ export const columns = (session, t, handlers): ColumnsType<any> => {
       dataIndex: 'cost',
       key: 'cost',
       width: '25%',
+      render(text, record) {
+        return (
+          <div className="text-danger">{text ? formatMoney(text) : ''} </div>
+        );
+      },
     },
     {
       title: t('jobTable.columns.link'),
