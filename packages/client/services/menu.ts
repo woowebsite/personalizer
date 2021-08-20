@@ -82,7 +82,13 @@ export default function getMenuData() {
       title: 'menu.jobs.title',
       key: 'dashboards',
       icon: 'fe fe-home',
-      roles: [RoleType.SysAdmin, RoleType.Customer, RoleType.Leader],
+      roles: [
+        RoleType.SysAdmin,
+        RoleType.HelpDesk,
+        RoleType.Customer,
+        RoleType.Leader,
+        RoleType.Employee,
+      ],
       count: 4,
       position: 'left',
       children: [

@@ -99,7 +99,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
             <TextEditable
               style={{ textAlign: 'right' }}
               defaultValue={initialValues.cost}
-              defaultText={formatMoney(initialValues.paid || 0)}
+              defaultText={formatMoney(initialValues.cost || 0)}
               renderInput={({ handleOnChange, ref, ...rest }) => {
                 return (
                   <Input
@@ -107,7 +107,7 @@ const JobMoney = forwardRef<any, any>((props, ref) => {
                     onPressEnter={onFieldBlur}
                     onChange={e =>
                       handleOnChange(
-                        e.target.value,
+                        parseInt(e.target.value),
                         formatMoney(e.target.value || 0),
                       )
                     }

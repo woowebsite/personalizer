@@ -270,6 +270,16 @@ export const vi = {
       },
     },
   },
+  '/user/myjobs': {
+    title: 'Danh sách công việc',
+    subTitle: 'Những công việc bạn đang tham gia',
+    pageHeader: {
+      buttons: {
+        create: 'Tạo mới',
+        all: 'Danh sách công việc',
+      },
+    },
+  },
   '/customer/jobs/new': {
     title: 'Tạo công việc',
     subTitle: 'This is subtitle',

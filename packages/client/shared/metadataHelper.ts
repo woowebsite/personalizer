@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isNull } from 'lodash';
 
 /**
  * Convert Form values into Metadata to put into Graphql mutation
@@ -8,7 +8,7 @@ export const fieldsToMetadata = (fields: object) => {
   if (!fields) return;
   let result = [];
   for (const prop in fields) {
-    if (isEmpty(fields[prop])) continue; //skip
+    if (isNull(fields[prop])) continue; //skip
     let data;
     let value;
     if (typeof fields[prop] === 'object') {
