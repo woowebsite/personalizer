@@ -2,8 +2,10 @@ import { Layout, Button, PageHeader, Row, Col, Typography } from 'antd';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 
 import RedirectButton from '~/components/RedirectButton';
+import { hasPermission } from '~/shared/authHelper';
+import updateJobAuthConfig from '../authorized/updateJob';
 
-const PageTitle = ({ data = null, messages, t, onSave }, ref) => {
+const PageTitle = ({ data = null, messages, t, onSave, session }, ref) => {
   const initialTitle = (data && data.job.title) || t('title');
   const [title, setTitle] = useState(initialTitle);
 
@@ -12,6 +14,8 @@ const PageTitle = ({ data = null, messages, t, onSave }, ref) => {
   }));
 
   // RENDER
+  const isCreator = hasPermission(updateJobAuthConfig.ButtonGroup, session);
+
   const createJobButtons = [
     <RedirectButton url={'/customer/jobs'}>
       {t('pageHeader.buttons.all')}
@@ -40,7 +44,7 @@ const PageTitle = ({ data = null, messages, t, onSave }, ref) => {
       title={title}
       className="mb-4 pl-0 pr-0"
       subTitle={messages.subTitle}
-      extra={data ? updateJobButtons : createJobButtons}
+      extra={data && isCreator ? updateJobButtons : createJobButtons}
     />
   );
 };

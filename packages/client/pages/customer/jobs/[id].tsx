@@ -71,10 +71,11 @@ const JobDetail = (props: PageProps & any) => {
   return (
     <>
       <PageTitle
+        t={t}
         data={data}
         ref={pageTitleRef}
         messages={messages}
-        t={t}
+        session={props.session}
         onSave={onSave}
       />
       <Content>

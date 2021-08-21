@@ -10,6 +10,9 @@ const updateJobAuthConfig = {
   JobAssignee: {
     roles: [RoleType.SysAdmin],
   },
+  ButtonGroup: {
+    roles: [RoleType.SysAdmin, RoleType.HelpDesk, RoleType.Customer],
+  },
 };
 
 export default updateJobAuthConfig;
