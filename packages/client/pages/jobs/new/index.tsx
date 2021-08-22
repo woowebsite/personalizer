@@ -37,7 +37,7 @@ const JobNew = props => {
   const { messages, t } = props;
   const formRef: any = React.createRef();
   const pageTitleRef: any = React.createRef();
-  
+
   // EVENTS
   const onSave = () => {
     formRef.current.submit();
@@ -55,7 +55,13 @@ const JobNew = props => {
   // RENDER
   return (
     <>
-      <PageTitle ref={pageTitleRef} messages={messages} t={t} onSave={onSave} />
+      <PageTitle
+        session={props.session}
+        ref={pageTitleRef}
+        messages={messages}
+        t={t}
+        onSave={onSave}
+      />
       <Content>
         <Row gutter={24}>
           <Col span="16">

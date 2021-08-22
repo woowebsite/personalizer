@@ -138,6 +138,15 @@ export const vi = {
         content: 'Bạn thực sự muốn xoá công việc này?',
       },
     },
+    jobStatus: {
+      title: 'Tình trạng',
+      label: {
+        status: 'Trạng thái',
+        employee: 'Thợ ảnh',
+        leader: 'Leader',
+        customer: 'Khách hàng',
+      },
+    },
     jobCreateform: {
       label: {
         code: 'Mã số',

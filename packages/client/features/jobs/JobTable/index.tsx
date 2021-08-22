@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 // components
@@ -12,13 +12,16 @@ import jobService from 'services/jobService';
 import StatusType from '~/models/StatusType';
 import { defaultFilter } from './constants';
 import JobTaxonomy from '~/models/JobTaxonomy';
-import { notification } from 'antd';
+import { notification, Table } from 'antd';
+import JobDrawer from '../JobDrawer';
 
 const JobTable = props => {
   // DEFINES
   const { session } = props;
   const tableRef = React.useRef(null);
   const tableFilterRef = React.useRef(null);
+  const jobDrawerRef: any = React.useRef();
+  const [currentJobId, setCurrentJob] = useState(null);
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
   const [updateJob] = jobService.upsert({
@@ -54,6 +57,18 @@ const JobTable = props => {
   }, []);
 
   // EVENTS
+  const onSaveJobCompleted = () => {
+    // reload workflow
+    setCurrentJob(null);
+  };
+
+  const showJobDetail = job => {
+    setCurrentJob(job.id);
+    if (jobDrawerRef.current) {
+      jobDrawerRef.current.showDetail();
+    }
+  };
+
   const handleDeleteJob = id => {
     deleteJob({
       variables: {
@@ -74,24 +89,14 @@ const JobTable = props => {
   // RENDER
   const renderFilter = props => <FilterForm {...props} />;
   const renderTable = props => (
-    <TableQuickEdit
+    <Table
       ref={tableRef}
       rowKey="id"
       mutation={jobService.upsert}
-      quickForm={(record, mutate) => (
-        <QuickForm
-          values={record}
-          onCancel={tableRef.current.collapseAll}
-          onSave={values =>
-            mutate({
-              variables: values,
-            })
-          }
-        />
-      )}
       columns={columns(session, t, {
         delete: handleDeleteJob,
         send: handleSendJob,
+        view: showJobDetail,
       })}
       {...props}
     />
@@ -111,6 +116,15 @@ const JobTable = props => {
         filterRender={props => renderFilter(props)}
         tableRender={props => renderTable(props)}
       />
+      {currentJobId && (
+        <JobDrawer
+          session={session}
+          key={currentJobId}
+          id={currentJobId}
+          ref={jobDrawerRef}
+          onSaveCompleted={onSaveJobCompleted}
+        />
+      )}
     </>
   );
 };

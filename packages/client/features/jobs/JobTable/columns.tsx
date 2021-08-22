@@ -52,11 +52,7 @@ export const columns = (session, t, handlers): ColumnsType<any> => {
       key: 'title',
       width: '25%',
       render: (text, record) => {
-        return text ? (
-          <Link href={`/jobs/${record.id}`}>{text}</Link>
-        ) : (
-          text
-        );
+        return text ? <Link href={`/jobs/${record.id}`}>{text}</Link> : text;
       },
     },
     {
@@ -91,12 +87,9 @@ export const columns = (session, t, handlers): ColumnsType<any> => {
             {t('buttons.delete')}
           </ButtonModal>
 
-          <AuthorizedWrapper
-            config={managementJobAuthConfig.PaymentButton}
-            session={session}
-          >
-            <Button>{t('buttons.payment')}</Button>
-          </AuthorizedWrapper>
+          <Button onClick={() => handlers.view(record)} type="link">
+            {t('buttons.edit')}
+          </Button>
 
           <Dropdown
             placement="bottomRight"

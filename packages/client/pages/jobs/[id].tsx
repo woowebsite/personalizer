@@ -102,7 +102,9 @@ const JobDetail = (props: PageProps & any) => {
               config={updateJobAuthConfig.JobStatusBox}
               session={props.session}
             >
-              <JobStatus ref={formStatusRef} initialValues={data.job} />
+              <Card className="mb-4" title={t('jobStatus.title')}>
+                <JobStatus ref={formStatusRef} initialValues={data.job} />
+              </Card>
               <JobMoney ref={formMoneyRef} initialValues={data.job} />
             </AuthorizedWrapper>
           </Col>

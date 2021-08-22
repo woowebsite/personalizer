@@ -3,22 +3,24 @@ import React, { useEffect, useState } from 'react';
 import styles from './style.module.scss';
 import KeyCode from 'rc-util/lib/KeyCode';
 
-interface TextEditable {
+interface TextEditableProps {
   defaultText?: string;
   btnText?: string;
   value?: any;
   onChange?: (value: any) => void;
   renderComboBox?: (value: any) => React.ReactElement;
   renderInput?: (value: any) => React.ReactElement;
+  showEdit?: boolean
 }
 
-const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
+const TextEditable: React.FC<TextEditableProps & SelectProps<any>> = ({
   btnText = 'Edit',
   value = {},
   defaultText = 'Text',
   defaultValue = null,
   onChange,
   style,
+  showEdit=false,
   ...others
 }) => {
   // Define
@@ -153,12 +155,14 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
           </span>
         )}
       </span>
-      <Button
+      {showEdit && 
+      (<Button
         type="link"
         onClick={() => setEditable((preState: boolean) => !preState)}
-      >
-        {btnText}
-      </Button>
+        >
+          {btnText}
+        </Button>)
+      }
     </div>
   );
 };

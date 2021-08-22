@@ -106,138 +106,136 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
 
   return (
     <>
-      <Form form={form}>
-        <Card className="status-form mb-4" title={t('jobStatus.title')}>
-          <Form.Item
-            name={['taxonomies', 'job_status']}
-            label={t('jobStatus.label.status')}
-            rules={[
-              {
-                required: true,
-                message: useTranslate('validator.required', {
-                  field: 'jobStatus.label.status',
-                }),
-              },
-            ]}
-          >
-            <TextEditable
-              defaultValue={job_status}
-              defaultText={job_status && job_status.name}
-              renderComboBox={({ handleOnChange, ...rest }) => (
-                <ComboBoxTaxonomy
-                  type={TaxonomyType.Job_Status}
-                  labelInValue
-                  onChange={handleOnChange}
-                  {...rest}
-                />
-              )}
-            />
-          </Form.Item>
-          <Form.Item
-            name={['metadata', 'employee']}
-            label={t('jobStatus.label.employee')}
-            rules={[
-              {
-                required: true,
-                message: useTranslate('validator.required', {
-                  field: 'jobStatus.label.employee',
-                }),
-              },
-            ]}
-          >
-            <TextEditable
-              defaultValue={employee}
-              defaultText={employee && employee.name}
-              renderComboBox={({ handleOnChange, ...rest }) => (
-                <ComboBox
-                  onChange={handleOnChange}
-                  textField="name"
-                  valueField="id"
-                  labelInValue
-                  type={ComboBoxType.Employee}
-                  width="200"
-                  {...rest}
-                />
-              )}
-            />
-          </Form.Item>
-          <Form.Item
-            name={['metadata', 'leader']}
-            label={t('jobStatus.label.leader')}
-            rules={[
-              {
-                required: true,
-                message: useTranslate('validator.required', {
-                  field: 'jobStatus.label.leader',
-                }),
-              },
-            ]}
-          >
-            <TextEditable
-              defaultValue={leader}
-              defaultText={leader && leader.name}
-              renderComboBox={({ handleOnChange, ...rest }) => (
-                <ComboBox
-                  onChange={handleOnChange}
-                  textField="name"
-                  valueField="id"
-                  type={ComboBoxType.Leader}
-                  width="200"
-                  labelInValue
-                  {...rest}
-                />
-              )}
-            />
-          </Form.Item>
-          <Form.Item
-            name={['metadata', 'customer']}
-            label={t('jobStatus.label.customer')}
-            rules={[
-              {
-                required: true,
-                message: useTranslate('validator.required', {
-                  field: 'jobStatus.label.customer',
-                }),
-              },
-            ]}
-          >
-            <TextEditable
-              defaultValue={customer}
-              defaultText={customer && customer.name}
-              renderComboBox={({ handleOnChange, ...rest }) => (
-                <ComboBox
-                  onChange={handleOnChange}
-                  textField="name"
-                  valueField="id"
-                  type={ComboBoxType.Customer}
-                  width="200"
-                  labelInValue
-                  {...rest}
-                />
-              )}
-            />
-          </Form.Item>
-          <Form.Item
-            name={['metadata', 'priority']}
-            label={t('jobCreateform.label.priority')}
-          >
-            <TextEditable
-              defaultValue={priority}
-              defaultText={priority && priority.name}
-              renderComboBox={({ handleOnChange, ...rest }) => (
-                <ComboBoxTaxonomy
-                  type={TaxonomyType.Job_Priority}
-                  onChange={handleOnChange}
-                  textField="name"
-                  valueField="id"
-                  labelInValue
-                  width="200"
-                  {...rest}
-                />
-              )}
-            />
-          </Form.Item>
-        </Card>
+      <Form form={form} className="status-form">
+        <Form.Item
+          name={['taxonomies', 'job_status']}
+          label={t('jobStatus.label.status')}
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                field: 'jobStatus.label.status',
+              }),
+            },
+          ]}
+        >
+          <TextEditable
+            defaultValue={job_status}
+            defaultText={job_status && job_status.name}
+            renderComboBox={({ handleOnChange, ...rest }) => (
+              <ComboBoxTaxonomy
+                type={TaxonomyType.Job_Status}
+                labelInValue
+                onChange={handleOnChange}
+                {...rest}
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          name={['metadata', 'employee']}
+          label={t('jobStatus.label.employee')}
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                field: 'jobStatus.label.employee',
+              }),
+            },
+          ]}
+        >
+          <TextEditable
+            defaultValue={employee}
+            defaultText={employee && employee.name}
+            renderComboBox={({ handleOnChange, ...rest }) => (
+              <ComboBox
+                onChange={handleOnChange}
+                textField="name"
+                valueField="id"
+                labelInValue
+                type={ComboBoxType.Employee}
+                width="200"
+                {...rest}
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          name={['metadata', 'leader']}
+          label={t('jobStatus.label.leader')}
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                field: 'jobStatus.label.leader',
+              }),
+            },
+          ]}
+        >
+          <TextEditable
+            defaultValue={leader}
+            defaultText={leader && leader.name}
+            renderComboBox={({ handleOnChange, ...rest }) => (
+              <ComboBox
+                onChange={handleOnChange}
+                textField="name"
+                valueField="id"
+                type={ComboBoxType.Leader}
+                width="200"
+                labelInValue
+                {...rest}
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          name={['metadata', 'customer']}
+          label={t('jobStatus.label.customer')}
+          rules={[
+            {
+              required: true,
+              message: useTranslate('validator.required', {
+                field: 'jobStatus.label.customer',
+              }),
+            },
+          ]}
+        >
+          <TextEditable
+            defaultValue={customer}
+            defaultText={customer && customer.name}
+            renderComboBox={({ handleOnChange, ...rest }) => (
+              <ComboBox
+                onChange={handleOnChange}
+                textField="name"
+                valueField="id"
+                type={ComboBoxType.Customer}
+                width="200"
+                labelInValue
+                {...rest}
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          name={['metadata', 'priority']}
+          label={t('jobCreateform.label.priority')}
+        >
+          <TextEditable
+            defaultValue={priority}
+            defaultText={priority && priority.name}
+            renderComboBox={({ handleOnChange, ...rest }) => (
+              <ComboBoxTaxonomy
+                type={TaxonomyType.Job_Priority}
+                onChange={handleOnChange}
+                textField="name"
+                valueField="id"
+                labelInValue
+                width="200"
+                {...rest}
+              />
+            )}
+          />
+        </Form.Item>
       </Form>
     </>
   );

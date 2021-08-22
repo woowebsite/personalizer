@@ -22,10 +22,10 @@ const { Content } = Layout;
 const Workflow = props => {
   // DECLARE
   const { messages, session, t, query } = props;
-  const weekRef: any = React.createRef();
-  const dayRef: any = React.createRef();
-  const formRef: any = React.createRef();
-  const jobDrawerRef: any = React.createRef();
+  const weekRef: any = React.useRef();
+  const dayRef: any = React.useRef();
+  const formRef: any = React.useRef();
+  const jobDrawerRef: any = React.useRef();
   const [currentJobId, setCurrentJob] = useState(null);
   const isCardDraggable = hasPermission(
     workflowAuthConfig.CardDraggable,
