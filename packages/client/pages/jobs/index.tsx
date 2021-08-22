@@ -21,7 +21,7 @@ const MyJobs = props => {
         subTitle={messages.subTitle}
         extra={[
           <Button key="2">{t('pageHeader.buttons.all')}</Button>,
-          <RedirectButton type="primary" url={'/customer/jobs/new'}>
+          <RedirectButton type="primary" url={'/jobs/new'}>
             {t('buttons.create')}
           </RedirectButton>,
         ]}

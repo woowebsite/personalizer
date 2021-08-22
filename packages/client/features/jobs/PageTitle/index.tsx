@@ -17,7 +17,7 @@ const PageTitle = ({ data = null, messages, t, onSave, session }, ref) => {
   const isCreator = hasPermission(updateJobAuthConfig.ButtonGroup, session);
 
   const createJobButtons = [
-    <RedirectButton url={'/customer/jobs'}>
+    <RedirectButton url={'/jobs'}>
       {t('pageHeader.buttons.all')}
     </RedirectButton>,
     <Button key="1" type="primary" onClick={onSave}>
@@ -26,13 +26,13 @@ const PageTitle = ({ data = null, messages, t, onSave, session }, ref) => {
   ];
 
   const updateJobButtons = [
-    <RedirectButton url={'/customer/jobs'}>
+    <RedirectButton url={'/jobs'}>
       {t('pageHeader.buttons.all')}
     </RedirectButton>,
     <Button key="2" danger>
       {t('buttons.delete')}
     </Button>,
-    <RedirectButton url={'/customer/jobs/new'} type="primary" ghost>
+    <RedirectButton url={'/jobs/new'} type="primary" ghost>
       {t('buttons.create')}
     </RedirectButton>,
     <Button key="1" type="primary" onClick={onSave}>

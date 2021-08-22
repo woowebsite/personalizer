@@ -128,6 +128,11 @@ export const vi = {
         priority: 'Ưu tiên',
         createdAt: 'Ngày tạo',
       },
+      filter: {
+        customer: 'Khách hàng',
+        leader: 'Leader',
+        employee: 'Nhân viên',
+      },
       deleteModal: {
         title: 'Xoá công việc',
         content: 'Bạn thực sự muốn xoá công việc này?',
@@ -260,7 +265,7 @@ export const vi = {
       title: 'Mạng xã hội',
     },
   },
-  '/customer/jobs': {
+  '/jobs': {
     title: 'Danh sách công việc',
     subTitle: 'This is subtitle',
     pageHeader: {
@@ -280,7 +285,7 @@ export const vi = {
       },
     },
   },
-  '/customer/jobs/new': {
+  '/jobs/new': {
     title: 'Tạo công việc',
     subTitle: 'This is subtitle',
     pageHeader: {
@@ -307,7 +312,7 @@ export const vi = {
       },
     },
   },
-  '/customer/jobs/[id]': {
+  '/jobs/[id]': {
     title: 'Chưa đặt tiêu đề',
     subTitle: 'This is subtitle',
     pageHeader: {

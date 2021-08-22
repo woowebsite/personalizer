@@ -33,7 +33,7 @@ export const columns = (session, t, handlers): ColumnsType<any> => {
       width: '25%',
       render: (text, record) => {
         return text ? (
-          <Link href={`/customer/jobs/${record.id}`}>{text}</Link>
+          <Link href={`/jobs/${record.id}`}>{text}</Link>
         ) : (
           text
         );

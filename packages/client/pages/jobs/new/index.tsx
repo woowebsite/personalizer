@@ -49,7 +49,7 @@ const JobNew = props => {
 
   const onSaveCompleted = ({ upsertJob }) => {
     // redirect
-    Router.push('/customer/jobs/' + upsertJob.id);
+    Router.push('/jobs/' + upsertJob.id);
   };
 
   // RENDER

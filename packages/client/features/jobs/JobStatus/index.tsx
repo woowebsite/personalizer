@@ -181,7 +181,7 @@ const JobStatusBox = forwardRef<any, any>((props, ref) => {
                   onChange={handleOnChange}
                   textField="name"
                   valueField="id"
-                  type={ComboBoxType.Employee}
+                  type={ComboBoxType.Leader}
                   width="200"
                   labelInValue
                   {...rest}

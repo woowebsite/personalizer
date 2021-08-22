@@ -26,6 +26,14 @@ const ComboBox = ({ type, textField, valueField, ...others }) => {
         },
       };
       break;
+    case ComboBoxType.Leader:
+      query = userQueries.GET_USERS;
+      options = {
+        variables: {
+          where: { role_id: RoleType.Leader },
+        },
+      };
+      break;
 
     case ComboBoxType.Employee:
       query = userQueries.GET_USERS;
@@ -49,6 +57,9 @@ const ComboBox = ({ type, textField, valueField, ...others }) => {
       dataSource = data.users.rows;
       break;
     case ComboBoxType.Customer:
+      dataSource = data.users.rows;
+      break;
+    case ComboBoxType.Leader:
       dataSource = data.users.rows;
       break;
     case ComboBoxType.Employee:

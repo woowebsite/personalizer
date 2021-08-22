@@ -169,7 +169,7 @@ export const en = {
       },
     },
   },
-  '/customer/jobs': {
+  '/jobs': {
     title: 'Job',
     subTitle: 'This is subtitle',
     pageHeader: {
@@ -179,7 +179,7 @@ export const en = {
       },
     },
   },
-  '/customer/jobs/new': {
+  '/jobs/new': {
     title: 'Create a job',
     subTitle: 'This is subtitle',
     pageHeader: {

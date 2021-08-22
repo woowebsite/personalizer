@@ -15,6 +15,7 @@ import ButtonModal from '~/components/ButtonModal';
 import managementJobAuthConfig from '../authorized/managementJob';
 import React from 'react';
 import AuthorizedWrapper from '~/components/AuthorizedWrapper';
+import { formatMoney } from '~/shared/formatHelper';
 
 const menu = (t, actions) => (
   <Menu>
@@ -52,17 +53,22 @@ export const columns = (session, t, handlers): ColumnsType<any> => {
       width: '25%',
       render: (text, record) => {
         return text ? (
-          <Link href={`/customer/jobs/${record.id}`}>{text}</Link>
+          <Link href={`/jobs/${record.id}`}>{text}</Link>
         ) : (
           text
         );
       },
     },
     {
-      title: t('jobTable.columns.description'),
-      dataIndex: 'description',
-      key: 'description',
+      title: t('jobTable.columns.cost'),
+      dataIndex: 'cost',
+      key: 'cost',
       width: '25%',
+      render(text, record) {
+        return (
+          <div className="text-danger">{text ? formatMoney(text) : ''} </div>
+        );
+      },
     },
     {
       title: t('jobTable.columns.link'),

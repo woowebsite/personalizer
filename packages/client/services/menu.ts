@@ -95,7 +95,7 @@ export default function getMenuData() {
         {
           title: 'menu.jobs.allJobs',
           key: 'all',
-          url: '/customer/jobs',
+          url: '/jobs',
           visible: true,
           roles: [RoleType.SysAdmin, RoleType.HelpDesk],
           permission: { featureName: 'Job', code: PermissionActions.Read },
@@ -111,7 +111,7 @@ export default function getMenuData() {
         {
           title: 'menu.jobs.createJob',
           key: 'new',
-          url: '/customer/jobs/new',
+          url: '/jobs/new',
           visible: true,
           roles: [RoleType.SysAdmin, RoleType.Customer],
           permission: {
@@ -122,7 +122,7 @@ export default function getMenuData() {
         {
           title: 'menu.jobs.updateJob',
           key: 'update',
-          url: '/customer/jobs/{id}',
+          url: '/jobs/{id}',
           roles: [RoleType.SysAdmin, RoleType.Customer, RoleType.Employee],
           visible: false,
           permission: {

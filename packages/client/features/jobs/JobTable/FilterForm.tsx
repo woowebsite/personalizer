@@ -9,6 +9,7 @@ import CustomerType from '~/models/CustomerType';
 import JobPriority from '~/models/JobPriority';
 import ComboBoxTaxonomy, { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
+import ComboBox, { ComboBoxType } from '~/components/ComboBox';
 
 const FilterForm = ({ values, onFilter }) => {
   // DEFINE
@@ -62,28 +63,70 @@ const FilterForm = ({ values, onFilter }) => {
       form={form}
       labelAlign="left"
     >
-      <Form.Item name={['job', 'title']}>
-        <Input placeholder={t('jobTable.columns.title')} allowClear />
-      </Form.Item>
-      <Form.Item name={['taxonomies', 'job_status']}>
-        <ComboBoxTaxonomy
-          allowClear
-          type={TaxonomyType.Job_Status}
-          placeholder={t('jobTable.columns.status')}
-        />
-      </Form.Item>
-      <Form.Item name={['metadata', 'priority']}>
-        <ComboBoxTaxonomy
-          allowClear
-          placeholder={t('jobTable.columns.priority')}
-          type={TaxonomyType.Job_Priority}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          {t('buttons.filter')}
-        </Button>
-      </Form.Item>
+      <Col span="24">
+        <Row>
+          <Form.Item name={['job', 'title']}>
+            <Input placeholder={t('jobTable.columns.title')} allowClear />
+          </Form.Item>
+          <Form.Item name={['taxonomies', 'job_status']}>
+            <ComboBoxTaxonomy
+              allowClear
+              type={TaxonomyType.Job_Status}
+              placeholder={t('jobTable.columns.status')}
+            />
+          </Form.Item>
+          <Form.Item name={['metadata', 'priority']}>
+            <ComboBoxTaxonomy
+              allowClear
+              placeholder={t('jobTable.columns.priority')}
+              type={TaxonomyType.Job_Priority}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              {t('buttons.filter')}
+            </Button>
+          </Form.Item>
+        </Row>
+      </Col>
+
+      <Col span="24" className="mt-2">
+        <Row>
+          <Form.Item name={['metadata', 'customer']}>
+            <ComboBox
+              textField="name"
+              valueField="id"
+              type={ComboBoxType.Customer}
+              width="200"
+              labelInValue
+              placeholder={t('jobTable.filter.customer')}
+              allowClear
+            />
+          </Form.Item>
+          <Form.Item name={['metadata', 'leader']}>
+            <ComboBox
+              textField="name"
+              valueField="id"
+              type={ComboBoxType.Leader}
+              width="200"
+              labelInValue
+              placeholder={t('jobTable.filter.leader')}
+              allowClear
+            />
+          </Form.Item>
+          <Form.Item name={['metadata', 'employee']}>
+            <ComboBox
+              textField="name"
+              valueField="id"
+              type={ComboBoxType.Employee}
+              width="200"
+              labelInValue
+              placeholder={t('jobTable.filter.employee')}
+              allowClear
+            />
+          </Form.Item>
+        </Row>
+      </Col>
     </Form>
   );
 };
