@@ -132,6 +132,7 @@ export const vi = {
         customer: 'Khách hàng',
         leader: 'Leader',
         employee: 'Nhân viên',
+        month: 'Tháng',
       },
       deleteModal: {
         title: 'Xoá công việc',

@@ -40,6 +40,8 @@ input JobInput {
   publishDate: Date
   finishDate: Date
   dueDate: Date
+  startPublishDate: String
+  endPublishDate: String
   user_id: Int
   status: String
 }

@@ -62,6 +62,14 @@ export const Query = {
         if (where2.job && where2.job.title)
           job.title = { [Op.like]: where2.job.title };
 
+        if (job && job.startPublishDate && job.endPublishDate) {
+          job.publishDate = {
+            [Op.between]: [job.startPublishDate, job.endPublishDate],
+          };
+          delete job.startPublishDate;
+          delete job.endPublishDate;
+        }
+
         // metadata
         const whereMetadata = where2.metadata
           ? { [Op.and]: where2.metadata }

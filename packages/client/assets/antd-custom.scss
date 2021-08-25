@@ -56,6 +56,10 @@ html {
   }
 }
 
+.no-space-form .ant-form-item {
+  margin-bottom: 0;
+}
+
 .ant-form-vertical.vertical-compact {
   .ant-form-item {
     margin-bottom: 0;

@@ -59,6 +59,7 @@ const JobTable = props => {
   // EVENTS
   const onSaveJobCompleted = () => {
     // reload workflow
+    tableFilterRef.current.refetch();
     setCurrentJob(null);
   };
 
