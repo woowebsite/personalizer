@@ -125,7 +125,7 @@ export const Mutation = {
 
           // for retoucher
           await transactionMoney(
-            blender_user.assignee_id,
+            retoucher_user.assignee_id,
             UserTaxonomy.Earning,
             parseInt(jobMeta_cost.value) * 0.4,
           );

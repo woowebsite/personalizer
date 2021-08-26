@@ -47,7 +47,8 @@ const Workflow = props => {
 
   const onSaveJobCompleted = () => {
     // reload workflow
-    formRef.current.submit();
+    const filterValues = formRef.current.getFieldsValue();
+    handleFilter(filterValues);
   };
 
   // RENDER

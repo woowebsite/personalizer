@@ -49,6 +49,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
   // METHOD
   useImperativeHandle(ref, () => ({
     showDetail,
+    save
   }));
 
   const showDetail = () => {
@@ -60,9 +61,10 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
     setVisible(false);
   };
 
-  const onSave = () => {
-    formRef.current.submit();
-    formStatusRef.current.submit();
+  const save = () => {
+    formRef && formRef.current && formRef.current.submit();
+    formStatusRef && formStatusRef.current && formStatusRef.current.submit();
+    setVisible(false);
   };
   const initialTitle = (data && data.job.title) || t('pageHeader.title');
   const [title, setTitle] = useState(null);
@@ -91,7 +93,7 @@ const JobDrawer = forwardRef<any, JobDrawerProps>((props, ref) => {
             <Button onClick={onClose} style={{ marginRight: 8 }}>
               {t('buttons.close')}
             </Button>
-            <Button key="1" type="primary" onClick={onSave}>
+            <Button key="1" type="primary" onClick={save}>
               {t('buttons.save')}
             </Button>
           </div>

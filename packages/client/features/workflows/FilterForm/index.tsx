@@ -17,7 +17,10 @@ const FilterForm = forwardRef<any, any>(({ onFilter, session }, ref) => {
   // EVENTS
   useImperativeHandle(ref, () => ({
     submit: handleFinish,
+    getFieldsValue
   }));
+
+  const getFieldsValue = () => form.getFieldsValue();
 
   const handleFinish = () => {
     form
