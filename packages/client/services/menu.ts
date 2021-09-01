@@ -147,6 +147,17 @@ export default function getMenuData() {
       ],
       children: [
         {
+          title: 'menu.settings.configuration',
+          key: 'configuration',
+          url: '/settings/configuration',
+          visible: true,
+          roles: [
+            RoleType.SysAdmin,
+            RoleType.HelpDesk,
+          ],
+          permission: {},
+        },
+        {
           title: 'menu.settings.profile',
           key: 'profile',
           url: '/settings/profile',

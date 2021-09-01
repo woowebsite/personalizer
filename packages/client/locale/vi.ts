@@ -11,6 +11,7 @@ export const vi = {
         title: 'Cài đặt',
         changePassword: 'Đổi mật khẩu',
         profile: 'Thông tin cá nhân',
+        configuration: 'Cài đặt chung',
       },
       users: {
         title: 'Người dùng',
@@ -205,6 +206,22 @@ export const vi = {
       connectToTwitter: 'Twitter',
       connectToGoogle: 'Google',
     },
+    salarySetting: {
+      title: 'Lương',
+      labels: {
+        retoucher: 'Nhân viên chấm sửa',
+        blend: 'Nhân viên blend màu',
+        leader: 'Trưởng nhóm',
+      }
+    },
+    kpiSetting: {
+      title: 'KPI',
+      labels: {
+        leader: 'Thưởng KPI',
+        leaderDesc: 'Thưởng KPI',
+        employee: 'Nhân viên',
+      }
+    }
   },
   '/': {
     title: 'Index',
@@ -212,6 +229,7 @@ export const vi = {
   '/login': {
     signin: 'Đăng nhập',
   },
+  
   '/admin/users': {
     title: 'Danh sách người dùng',
     subTitle: 'This is subtitle',
@@ -384,6 +402,9 @@ export const vi = {
     socialBox: {
       title: 'Liên kết mạng xã hội',
     },
+  },
+  '/settings/configuration': {
+    title: 'Cài đặt chung',
   },
   '/workflow': {
     title: 'Bảng điều phối công việc',
