@@ -15,6 +15,7 @@ import AccountMoney from '~/features/users/AccountMoney';
 import ProfileBasicForm from '~/features/users/ProfileBasicForm';
 import SalarySetting from '~/features/configuration/SalarySetting';
 import KPISetting from '~/features/configuration/KPISetting';
+import PriceSetting from '~/features/configuration/PriceSetting';
 
 const { Content } = Layout;
 
@@ -51,6 +52,7 @@ const ConfigurationPage = props => {
           <Col span="16">
             <SalarySetting className="mb-3" />
             <KPISetting className="mb-3" />
+            <PriceSetting className="mb-3" />
           </Col>
         </Row>
       </Content>

@@ -1,4 +1,12 @@
-import { Button, Card, Form, Input, InputNumber, notification } from 'antd';
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  InputNumber,
+  notification,
+  Typography,
+} from 'antd';
 import React, {
   forwardRef,
   useContext,
@@ -15,9 +23,9 @@ import { formatMoney } from '~/shared/formatHelper';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 import { hasPermission } from '~/shared/authHelper';
 import { UserContext } from '~/layout/AdminLayout';
-import PercentInput from '~/components/PercentInput';
+import MoneyInput from '~/components/MoneyInput';
 
-interface SalarySettingProps {
+interface PriceSetting {
   className?: string;
 }
 const { Search } = Input;
@@ -26,7 +34,7 @@ const layoutForm = {
   wrapperCol: { span: 12 },
 };
 
-const SalarySetting = forwardRef<any, SalarySettingProps>((props, ref) => {
+const PriceSetting = forwardRef<any, PriceSetting>((props, ref) => {
   const { className, ...rest } = props;
   const session = useContext(UserContext);
   const [user, setUser] = useState(session.user);
@@ -76,33 +84,19 @@ const SalarySetting = forwardRef<any, SalarySettingProps>((props, ref) => {
   return (
     <Form form={form} {...layoutForm}>
       <Card
-        title={t('salarySetting.title')}
-        className={`${className} status-form`}
+        title={t('priceSetting.title')}
+        className={`${className}`}
         {...rest}
       >
-        <Form.Item
-          name={['metadata', 'account_holding']}
-          label={t('salarySetting.labels.retoucher')}
-        >
-          <PercentInput />
+        <Form.Item label={t('priceSetting.labels.single')}>
+          <MoneyInput style={{ width: '70%' }} />
         </Form.Item>
-
-        <Form.Item
-          name={['metadata', 'account_dept']}
-          label={t('salarySetting.labels.blend')}
-        >
-          <PercentInput />
-        </Form.Item>
-
-        <Form.Item
-          name={['metadata', 'account_dept']}
-          label={t('salarySetting.labels.leader')}
-        >
-          <PercentInput />
+        <Form.Item label={t('priceSetting.labels.zoom')}>
+          <MoneyInput style={{ width: '70%' }} />
         </Form.Item>
       </Card>
     </Form>
   );
 });
 
-export default SalarySetting;
+export default PriceSetting;

@@ -23,6 +23,8 @@ import { formatMoney } from '~/shared/formatHelper';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 import { hasPermission } from '~/shared/authHelper';
 import { UserContext } from '~/layout/AdminLayout';
+import MoneyInput from '~/components/MoneyInput';
+import PercentInput from '~/components/PercentInput';
 
 interface KPISettingProps {
   className?: string;
@@ -82,24 +84,41 @@ const KPISetting = forwardRef<any, KPISettingProps>((props, ref) => {
 
   return (
     <Form form={form} {...layoutForm}>
-      <Card
-        title={t('kpiSetting.title')}
-        className={`${className} status-form`}
-        {...rest}
-      >
+      <Card title={t('kpiSetting.title')} className={`${className}`} {...rest}>
         <Form.Item
-          extra="We must make sure that your are a human."
-          name={['metadata', 'account_dept']}
+          extra={t('kpiSetting.labels.leaderDesc')}
           label={t('kpiSetting.labels.leader')}
         >
-          <InputNumber style={{ width: '100%' }} step={1000} />
+          <Form.Item
+            name={['metadata', 'leader_amount']}
+            style={{ display: 'inline-block; margin: 0 8px 0 0' }}
+          >
+            <MoneyInput style={{ width: '150px' }} />
+          </Form.Item>
+          <Form.Item
+            name={['metadata', 'leader_percent']}
+            style={{ display: 'inline-block; margin: 0 8px 0 0' }}
+          >
+            <PercentInput />
+          </Form.Item>
         </Form.Item>
 
         <Form.Item
-          name={['metadata', 'account_dept']}
           label={t('kpiSetting.labels.employee')}
+          extra={t('kpiSetting.labels.employeeDesc')}
         >
-          <InputNumber style={{ width: '100%' }} step={1000} />
+          <Form.Item
+            name={['metadata', 'account_dept']}
+            style={{ display: 'inline-block; margin: 0 8px 0 0' }}
+          >
+            <MoneyInput style={{ width: '150px' }} />
+          </Form.Item>
+          <Form.Item
+            name={['metadata', 'account_dept']}
+            style={{ display: 'inline-block; margin: 0 8px 0 0' }}
+          >
+            <PercentInput />
+          </Form.Item>
         </Form.Item>
       </Card>
     </Form>

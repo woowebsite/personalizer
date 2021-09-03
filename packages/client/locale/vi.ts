@@ -217,9 +217,17 @@ export const vi = {
     kpiSetting: {
       title: 'KPI',
       labels: {
-        leader: 'Thưởng KPI',
-        leaderDesc: 'Thưởng KPI',
+        leader: 'Thưởng leader',
+        leaderDesc: 'Thưởng phần trăm trên doanh thu đạt được',
         employee: 'Nhân viên',
+        employeeDesc: 'Thưởng phần trăm trên doanh thu đạt được',
+      }
+    },
+    priceSetting: {
+      title: 'Giá trên mỗi sản phẩm',
+      labels: {
+        single: 'Ảnh lẻ',
+        zoom: 'Ảnh phóng',
       }
     }
   },
