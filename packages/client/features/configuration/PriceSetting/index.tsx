@@ -84,6 +84,7 @@ const PriceSetting = forwardRef<any, PriceSetting>((props, ref) => {
   return (
     <Form form={form} {...layoutForm}>
       <Card
+        extra={[<Button type="primary">{t('buttons.save')}</Button>]}
         title={t('priceSetting.title')}
         className={`${className}`}
         {...rest}

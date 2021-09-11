@@ -18,13 +18,14 @@ import AuthorizedWrapper from '~/components/AuthorizedWrapper';
 import { TaxonomyType } from '~/components/ComboBoxTaxonomy';
 import TextEditable from '~/components/TextEditable';
 import UserMetaType from '~/features/users/constants/UserMetaType';
-import userService from '~/services/userService';
+import optionService from '~/services/optionService';
 import { formatMoney } from '~/shared/formatHelper';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
 import { hasPermission } from '~/shared/authHelper';
 import { UserContext } from '~/layout/AdminLayout';
 import MoneyInput from '~/components/MoneyInput';
 import PercentInput from '~/components/PercentInput';
+import KPISettingConstant from '../constants/KPISettingConstant';
 
 interface KPISettingProps {
   className?: string;
@@ -49,11 +50,7 @@ const KPISetting = forwardRef<any, KPISettingProps>((props, ref) => {
     validateFields,
   }));
 
-  const handleDepositCompleted = result => {
-    // update balance
-    setUser(result.accountTransactionMoney);
-    form.resetFields();
-
+  const handleSaveCompleted = result => {
     notification.success({
       message: 'Notification Success',
       description: 'Save successfully',
@@ -64,39 +61,48 @@ const KPISetting = forwardRef<any, KPISettingProps>((props, ref) => {
     });
   };
 
-  const [transactionMoney] = userService.accountTransactionMoney({
-    onCompleted: handleDepositCompleted,
+  const [upsert] = optionService.upsertOption({
+    onCompleted: handleSaveCompleted,
   });
 
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
 
-  const handleDeposit = () => {
+  const handleSave = () => {
     const fieldsValue = form.getFieldsValue();
+    const data = fieldsToMetadata(fieldsValue.data);
 
-    transactionMoney({
+    upsert({
       variables: {
-        user: { id: user.id, email: user.email },
-        taxonomies: fieldsValue.taxonomies,
+        data: data,
       },
     });
   };
 
   return (
     <Form form={form} {...layoutForm}>
-      <Card title={t('kpiSetting.title')} className={`${className}`} {...rest}>
+      <Card
+        title={t('kpiSetting.title')}
+        className={`${className}`}
+        extra={[
+          <Button type="primary" onClick={handleSave}>
+            {t('buttons.save')}
+          </Button>,
+        ]}
+        {...rest}
+      >
         <Form.Item
           extra={t('kpiSetting.labels.leaderDesc')}
           label={t('kpiSetting.labels.leader')}
         >
           <Form.Item
-            name={['metadata', 'leader_amount']}
+            name={['data', KPISettingConstant.Leader_Money]}
             style={{ display: 'inline-block; margin: 0 8px 0 0' }}
           >
             <MoneyInput style={{ width: '150px' }} />
           </Form.Item>
           <Form.Item
-            name={['metadata', 'leader_percent']}
+            name={['data', KPISettingConstant.Leader_Percent]}
             style={{ display: 'inline-block; margin: 0 8px 0 0' }}
           >
             <PercentInput />
@@ -108,13 +114,13 @@ const KPISetting = forwardRef<any, KPISettingProps>((props, ref) => {
           extra={t('kpiSetting.labels.employeeDesc')}
         >
           <Form.Item
-            name={['metadata', 'account_dept']}
+            name={['data', KPISettingConstant.Employee_Money]}
             style={{ display: 'inline-block; margin: 0 8px 0 0' }}
           >
             <MoneyInput style={{ width: '150px' }} />
           </Form.Item>
           <Form.Item
-            name={['metadata', 'account_dept']}
+            name={['data', KPISettingConstant.Employee_Percent]}
             style={{ display: 'inline-block; margin: 0 8px 0 0' }}
           >
             <PercentInput />

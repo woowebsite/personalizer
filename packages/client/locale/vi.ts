@@ -224,7 +224,7 @@ export const vi = {
       }
     },
     priceSetting: {
-      title: 'Giá trên mỗi sản phẩm',
+      title: 'Báo giá',
       labels: {
         single: 'Ảnh lẻ',
         zoom: 'Ảnh phóng',

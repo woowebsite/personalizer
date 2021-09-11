@@ -1,0 +1,42 @@
+type Option {
+  id: Int
+  key: String
+  type: String
+  value: String
+  data: String
+}
+
+input OptionWhere {
+  id: Int
+  userId: Int
+  key: String
+}
+
+input OptionInput {
+  key: String
+  type: String
+  value: String
+  data: String
+}
+input OptionMetaInput {
+  optionId: Int
+  key: String
+  value: String
+  data: String
+  type: String
+}
+
+type OptionsPaged {
+  rows: [Option]
+  count: Int
+}
+
+type Query {
+  option(where: OptionWhere): Option
+  options(where: OptionWhere, limit: Int, offset: Int): OptionsPaged
+}
+
+type Mutation {
+  upsertOption(data: [OptionInput], metadata: [OptionMetaInput], taxonomies: [Int]): [Option]
+  deleteOption(id: Int): Boolean
+}

@@ -40,3 +40,4 @@ export { Job } from './job.model';
 export { JobMeta } from './jobMeta.model';
 export { JobTerm } from './jobTerm.model';
 export { TermTaxonomy } from './termTaxonomy.model';
+export { Option } from './option.model';

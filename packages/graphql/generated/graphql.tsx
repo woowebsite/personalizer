@@ -173,6 +173,8 @@ export type JobInput = {
   publishDate?: Maybe<Scalars['Date']>;
   finishDate?: Maybe<Scalars['Date']>;
   dueDate?: Maybe<Scalars['Date']>;
+  startPublishDate?: Maybe<Scalars['String']>;
+  endPublishDate?: Maybe<Scalars['String']>;
   user_id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
 };
@@ -235,6 +237,8 @@ export type Mutation = {
   uploadFile: File;
   upsertJob?: Maybe<Job>;
   deleteJob?: Maybe<Scalars['Boolean']>;
+  upsertOption?: Maybe<Option>;
+  deleteOption?: Maybe<Scalars['Boolean']>;
   upsertPermission?: Maybe<Permission>;
   deletePermission?: Maybe<Scalars['Int']>;
   createRole?: Maybe<Role>;
@@ -279,6 +283,18 @@ export type MutationDeleteJobArgs = {
 };
 
 
+export type MutationUpsertOptionArgs = {
+  data?: Maybe<OptionInput>;
+  metadata?: Maybe<Array<Maybe<OptionMetaInput>>>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
+};
+
+
+export type MutationDeleteOptionArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
 export type MutationUpsertPermissionArgs = {
   data?: Maybe<PermissionInput>;
   metadata?: Maybe<Array<Maybe<PermissionMetaInput>>>;
@@ -314,7 +330,7 @@ export type MutationCreateUserArgs = {
 export type MutationUpsertUserArgs = {
   data?: Maybe<UserInput>;
   metadata?: Maybe<Array<Maybe<UserMetaInput>>>;
-  taxonomies?: Maybe<UserTaxonomies>;
+  taxonomies?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
 
@@ -332,7 +348,43 @@ export type MutationChangePasswordArgs = {
 export type NameValue = {
   __typename?: 'NameValue';
   name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type Option = {
+  __typename?: 'Option';
+  id?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
+  data?: Maybe<Scalars['String']>;
+};
+
+export type OptionInput = {
+  key?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  data?: Maybe<Scalars['String']>;
+};
+
+export type OptionMetaInput = {
+  optionId?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  data?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type OptionsPaged = {
+  __typename?: 'OptionsPaged';
+  rows?: Maybe<Array<Maybe<Option>>>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type OptionWhere = {
+  id?: Maybe<Scalars['Int']>;
+  userId?: Maybe<Scalars['Int']>;
+  key?: Maybe<Scalars['String']>;
 };
 
 export type PaginationInfo = {
@@ -393,6 +445,8 @@ export type Query = {
   jobs?: Maybe<JobsPaged>;
   workflows?: Maybe<Workflow>;
   jobTerms?: Maybe<Array<Maybe<JobAssignee>>>;
+  option?: Maybe<Option>;
+  options?: Maybe<OptionsPaged>;
   permissions?: Maybe<PermissionsPaged>;
   role?: Maybe<Role>;
   roles?: Maybe<Array<Maybe<Role>>>;
@@ -459,6 +513,18 @@ export type QueryWorkflowsArgs = {
 
 export type QueryJobTermsArgs = {
   where?: Maybe<JobWhere>;
+};
+
+
+export type QueryOptionArgs = {
+  where?: Maybe<OptionWhere>;
+};
+
+
+export type QueryOptionsArgs = {
+  where?: Maybe<OptionWhere>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -592,6 +658,8 @@ export type User = {
   havePassword?: Maybe<Scalars['Boolean']>;
   metadata?: Maybe<Array<Maybe<UserMeta>>>;
   account_money?: Maybe<Scalars['Int']>;
+  account_holding?: Maybe<Scalars['Int']>;
+  account_dept?: Maybe<Scalars['Int']>;
   phone?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
   customerType?: Maybe<Scalars['Int']>;

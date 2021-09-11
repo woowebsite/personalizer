@@ -78,6 +78,7 @@ const SalarySetting = forwardRef<any, SalarySettingProps>((props, ref) => {
       <Card
         title={t('salarySetting.title')}
         className={`${className} status-form`}
+        extra={[<Button type="primary">{t('buttons.save')}</Button>]}
         {...rest}
       >
         <Form.Item
