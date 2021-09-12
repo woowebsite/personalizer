@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, InputNumber, notification } from 'antd';
+import { Button, Card, Form, Input, notification } from 'antd';
 import React, {
   forwardRef,
   useContext,
@@ -6,16 +6,11 @@ import React, {
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import AuthorizedWrapper from '~/components/AuthorizedWrapper';
-import { TaxonomyType } from '~/components/ComboBoxTaxonomy';
-import TextEditable from '~/components/TextEditable';
-import UserMetaType from '~/features/users/constants/UserMetaType';
-import userService from '~/services/userService';
-import { formatMoney } from '~/shared/formatHelper';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
-import { hasPermission } from '~/shared/authHelper';
 import { UserContext } from '~/layout/AdminLayout';
 import PercentInput from '~/components/PercentInput';
+import optionService from '~/services/optionService';
+import SalarySettingConstant from '../constants/SalarySettingConstant';
 
 interface SalarySettingProps {
   className?: string;
@@ -40,7 +35,7 @@ const SalarySetting = forwardRef<any, SalarySettingProps>((props, ref) => {
     validateFields,
   }));
 
-  const handleDepositCompleted = result => {
+  const handleSaveCompleted = result => {
     // update balance
     setUser(result.accountTransactionMoney);
     form.resetFields();
@@ -55,20 +50,20 @@ const SalarySetting = forwardRef<any, SalarySettingProps>((props, ref) => {
     });
   };
 
-  const [transactionMoney] = userService.accountTransactionMoney({
-    onCompleted: handleDepositCompleted,
+  const [upsert] = optionService.upsertOption({
+    onCompleted: handleSaveCompleted,
   });
 
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
 
-  const handleDeposit = () => {
+  const handleSave = () => {
     const fieldsValue = form.getFieldsValue();
+    const data = fieldsToMetadata(fieldsValue.data);
 
-    transactionMoney({
+    upsert({
       variables: {
-        user: { id: user.id, email: user.email },
-        taxonomies: fieldsValue.taxonomies,
+        data: data,
       },
     });
   };
@@ -78,25 +73,29 @@ const SalarySetting = forwardRef<any, SalarySettingProps>((props, ref) => {
       <Card
         title={t('salarySetting.title')}
         className={`${className} status-form`}
-        extra={[<Button type="primary">{t('buttons.save')}</Button>]}
+        extra={[
+          <Button type="primary" onClick={handleSave}>
+            {t('buttons.save')}
+          </Button>,
+        ]}
         {...rest}
       >
         <Form.Item
-          name={['metadata', 'account_holding']}
+          name={['data', SalarySettingConstant.Retoucher]}
           label={t('salarySetting.labels.retoucher')}
         >
           <PercentInput />
         </Form.Item>
 
         <Form.Item
-          name={['metadata', 'account_dept']}
+          name={['data', SalarySettingConstant.Blender]}
           label={t('salarySetting.labels.blend')}
         >
           <PercentInput />
         </Form.Item>
 
         <Form.Item
-          name={['metadata', 'account_dept']}
+          name={['data', SalarySettingConstant.Leader]}
           label={t('salarySetting.labels.leader')}
         >
           <PercentInput />

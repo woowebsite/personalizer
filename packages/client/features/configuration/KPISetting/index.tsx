@@ -39,7 +39,6 @@ const layoutForm = {
 const KPISetting = forwardRef<any, KPISettingProps>((props, ref) => {
   const { className, ...rest } = props;
   const session = useContext(UserContext);
-  const [user, setUser] = useState(session.user);
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();

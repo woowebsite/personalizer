@@ -14,16 +14,11 @@ import React, {
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import AuthorizedWrapper from '~/components/AuthorizedWrapper';
-import { TaxonomyType } from '~/components/ComboBoxTaxonomy';
-import TextEditable from '~/components/TextEditable';
-import UserMetaType from '~/features/users/constants/UserMetaType';
-import userService from '~/services/userService';
-import { formatMoney } from '~/shared/formatHelper';
 import { fieldsToMetadata } from '~/shared/metadataHelper';
-import { hasPermission } from '~/shared/authHelper';
 import { UserContext } from '~/layout/AdminLayout';
 import MoneyInput from '~/components/MoneyInput';
+import optionService from '~/services/optionService';
+import PriceSettingConstant from '../constants/PriceSettingConstant';
 
 interface PriceSetting {
   className?: string;
@@ -48,7 +43,7 @@ const PriceSetting = forwardRef<any, PriceSetting>((props, ref) => {
     validateFields,
   }));
 
-  const handleDepositCompleted = result => {
+  const handleSaveCompleted = result => {
     // update balance
     setUser(result.accountTransactionMoney);
     form.resetFields();
@@ -62,21 +57,20 @@ const PriceSetting = forwardRef<any, PriceSetting>((props, ref) => {
       },
     });
   };
-
-  const [transactionMoney] = userService.accountTransactionMoney({
-    onCompleted: handleDepositCompleted,
+  const [upsert] = optionService.upsertOption({
+    onCompleted: handleSaveCompleted,
   });
 
   const getFieldsValue = () => form.getFieldsValue();
   const validateFields = () => form.validateFields();
 
-  const handleDeposit = () => {
+  const handleSave = () => {
     const fieldsValue = form.getFieldsValue();
+    const data = fieldsToMetadata(fieldsValue.data);
 
-    transactionMoney({
+    upsert({
       variables: {
-        user: { id: user.id, email: user.email },
-        taxonomies: fieldsValue.taxonomies,
+        data: data,
       },
     });
   };
@@ -84,15 +78,25 @@ const PriceSetting = forwardRef<any, PriceSetting>((props, ref) => {
   return (
     <Form form={form} {...layoutForm}>
       <Card
-        extra={[<Button type="primary">{t('buttons.save')}</Button>]}
+        extra={[
+          <Button type="primary" onClick={handleSave}>
+            {t('buttons.save')}
+          </Button>,
+        ]}
         title={t('priceSetting.title')}
         className={`${className}`}
         {...rest}
       >
-        <Form.Item label={t('priceSetting.labels.single')}>
+        <Form.Item
+          name={['data', PriceSettingConstant.Single]}
+          label={t('priceSetting.labels.single')}
+        >
           <MoneyInput style={{ width: '70%' }} />
         </Form.Item>
-        <Form.Item label={t('priceSetting.labels.zoom')}>
+        <Form.Item
+          name={['data', PriceSettingConstant.Zoom]}
+          label={t('priceSetting.labels.zoom')}
+        >
           <MoneyInput style={{ width: '70%' }} />
         </Form.Item>
       </Card>
