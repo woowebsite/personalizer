@@ -10,6 +10,7 @@ import {
 import React, {
   forwardRef,
   useContext,
+  useEffect,
   useImperativeHandle,
   useState,
 } from 'react';
@@ -28,6 +29,7 @@ import PercentInput from '~/components/PercentInput';
 import KPISettingConstant from '../constants/KPISettingConstant';
 
 interface KPISettingProps {
+  initialValues?: any;
   className?: string;
 }
 const { Search } = Input;
@@ -37,17 +39,48 @@ const layoutForm = {
 };
 
 const KPISetting = forwardRef<any, KPISettingProps>((props, ref) => {
-  const { className, ...rest } = props;
+  const { className, initialValues, ...rest } = props;
   const session = useContext(UserContext);
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
+
+  // EFFECT
+  useEffect(
+    () => {
+      if (initialValues) {
+        formSetFields(initialValues);
+      }
+    },
+    [initialValues],
+  );
 
   /// EVENTS
   useImperativeHandle(ref, () => ({
     getFieldsValue,
     validateFields,
   }));
+
+  const formSetFields = data => {
+    form.setFields([
+      {
+        name: ['data', KPISettingConstant.Employee_Money],
+        value: data[KPISettingConstant.Employee_Money],
+      },
+      {
+        name: ['data', KPISettingConstant.Employee_Percent],
+        value: data[KPISettingConstant.Employee_Percent],
+      },
+      {
+        name: ['data', KPISettingConstant.Leader_Money],
+        value: data[KPISettingConstant.Leader_Money],
+      },
+      {
+        name: ['data', KPISettingConstant.Leader_Percent],
+        value: data[KPISettingConstant.Leader_Percent],
+      },
+    ]);
+  };
 
   const handleSaveCompleted = result => {
     notification.success({

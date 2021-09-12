@@ -10,6 +10,7 @@ import {
 import React, {
   forwardRef,
   useContext,
+  useEffect,
   useImperativeHandle,
   useState,
 } from 'react';
@@ -21,6 +22,7 @@ import optionService from '~/services/optionService';
 import PriceSettingConstant from '../constants/PriceSettingConstant';
 
 interface PriceSetting {
+  initialValues?: any;
   className?: string;
 }
 const { Search } = Input;
@@ -30,18 +32,41 @@ const layoutForm = {
 };
 
 const PriceSetting = forwardRef<any, PriceSetting>((props, ref) => {
-  const { className, ...rest } = props;
+  const { className, initialValues, ...rest } = props;
   const session = useContext(UserContext);
   const [user, setUser] = useState(session.user);
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
 
+  // EFFECT
+  useEffect(
+    () => {
+      if (initialValues) {
+        formSetFields(initialValues);
+      }
+    },
+    [initialValues],
+  );
+
   /// EVENTS
   useImperativeHandle(ref, () => ({
     getFieldsValue,
     validateFields,
   }));
+
+  const formSetFields = data => {
+    form.setFields([
+      {
+        name: ['data', PriceSettingConstant.Single],
+        value: data[PriceSettingConstant.Single],
+      },
+      {
+        name: ['data', PriceSettingConstant.Zoom],
+        value: data[PriceSettingConstant.Zoom],
+      },
+    ]);
+  };
 
   const handleSaveCompleted = result => {
     // update balance

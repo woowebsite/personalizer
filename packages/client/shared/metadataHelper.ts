@@ -31,6 +31,34 @@ export const fieldsToMetadata = (fields: object) => {
 };
 
 /**
+ * Convert metadata array into fields of object
+ * Example: from {user: {name, password, sex, userMeta: [{key: 'phone', value: '1234'}, {key: 'address', value: '123 Street ABC'}]}}
+ * Into {user: {name, password, sex, phone: '1234', address: '123 Street ABC' }
+ * @param metadata name of metadata field, eg: userMeta
+ */
+export const metadataToField = (meta: Array<any>) => {
+  let obj = {};
+  if (meta && meta.length > 0) {
+    meta.forEach(x => {
+      let { value, data, type } = x;
+      if (type === 'boolean') value = !!JSON.parse(value);
+      if (type === 'number') value = parseFloat(value);
+      if (type === 'object') {
+        const m = JSON.parse(data);
+        value = {
+          name: m.name,
+          value: m.value,
+        };
+      }
+
+      // setValue
+      obj[x.key] = value;
+    });
+  }
+  return obj;
+};
+
+/**
  * Convert Form values into Taxonomies to put into Graphql mutation
  * @param fields Object fields: example [{name: 'abc', value: '1234'}]
  */

@@ -16,6 +16,8 @@ import ProfileBasicForm from '~/features/users/ProfileBasicForm';
 import SalarySetting from '~/features/configuration/SalarySetting';
 import KPISetting from '~/features/configuration/KPISetting';
 import PriceSetting from '~/features/configuration/PriceSetting';
+import optionService from '~/services/optionService';
+import { metadataToField } from '~/shared/metadataHelper';
 
 const { Content } = Layout;
 
@@ -25,6 +27,7 @@ const ConfigurationPage = props => {
   const { user } = session;
   const formRef: any = React.createRef();
   const formBasicRef: any = React.createRef();
+  const { data, loading, fetch } = optionService.getAll();
 
   // EVENTS
   const onSave = async () => {
@@ -39,6 +42,7 @@ const ConfigurationPage = props => {
     formBasicRef.current && formBasicRef.current.submit();
   };
 
+  const configuration = !loading && metadataToField(data.options.rows);
   // RENDER
   return (
     <>
@@ -50,9 +54,9 @@ const ConfigurationPage = props => {
       <Content>
         <Row gutter={24}>
           <Col span="16">
-            <SalarySetting className="mb-3" />
-            <KPISetting className="mb-3" />
-            <PriceSetting className="mb-3" />
+            <SalarySetting className="mb-3" initialValues={configuration} />
+            <KPISetting className="mb-3" initialValues={configuration} />
+            <PriceSetting className="mb-3" initialValues={configuration} />
           </Col>
         </Row>
       </Content>

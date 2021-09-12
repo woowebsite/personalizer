@@ -2,6 +2,7 @@ import { Button, Card, Form, Input, notification } from 'antd';
 import React, {
   forwardRef,
   useContext,
+  useEffect,
   useImperativeHandle,
   useState,
 } from 'react';
@@ -13,6 +14,7 @@ import optionService from '~/services/optionService';
 import SalarySettingConstant from '../constants/SalarySettingConstant';
 
 interface SalarySettingProps {
+  initialValues?: any;
   className?: string;
 }
 const { Search } = Input;
@@ -22,18 +24,45 @@ const layoutForm = {
 };
 
 const SalarySetting = forwardRef<any, SalarySettingProps>((props, ref) => {
-  const { className, ...rest } = props;
+  const { className, initialValues, ...rest } = props;
   const session = useContext(UserContext);
   const [user, setUser] = useState(session.user);
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
   const [form] = Form.useForm();
 
+  // EFFECT
+  useEffect(
+    () => {
+      if (initialValues) {
+        formSetFields(initialValues);
+      }
+    },
+    [initialValues],
+  );
+
   /// EVENTS
   useImperativeHandle(ref, () => ({
     getFieldsValue,
     validateFields,
   }));
+
+  const formSetFields = data => {
+    form.setFields([
+      {
+        name: ['data', SalarySettingConstant.Retoucher],
+        value: data[SalarySettingConstant.Retoucher],
+      },
+      {
+        name: ['data', SalarySettingConstant.Blender],
+        value: data[SalarySettingConstant.Blender],
+      },
+      {
+        name: ['data', SalarySettingConstant.Leader],
+        value: data[SalarySettingConstant.Leader],
+      },
+    ]);
+  };
 
   const handleSaveCompleted = result => {
     // update balance
