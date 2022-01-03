@@ -16,12 +16,16 @@ export const en = {
         title: 'Users',
         allUsers: 'All users',
         createUser: 'Create an user',
+        authorized: 'Permission',
       },
       productBases: {
         title: 'Product bases',
         allProductBase: 'All Product bases',
         createProductBase: 'Create product base',
       },
+    },
+    topbar: {
+      report: 'Report',
     },
     validator: {
       required: 'Please input {field}',

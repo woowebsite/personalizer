@@ -111,6 +111,18 @@ export default function getMenuData() {
   ];
 }
 
+export const topMenu = [
+  {
+    title: 'topbar.report',
+    key: 'report',
+    icon: 'fe fe-home',
+    url: '/report',
+    position: 'top',
+    roles: [RoleType.SysAdmin],
+    permission: {},
+  },
+];
+
 export function getMenuByUrl(url) {
   const menus = getMenuData().reduce((arr: any[], m) => {
     arr.push(...m.children);
@@ -122,7 +134,7 @@ export function getMenuByUrl(url) {
 }
 
 export function hasPemission(session, url) {
-  return true;    // TODO
+  return true; // TODO
   const menu = getMenuByUrl(url);
   const hasRole = menu.roles.includes(session.user.role_id);
   const userPermissions: any[] = session.user.role.permissions;
