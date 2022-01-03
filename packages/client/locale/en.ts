@@ -9,6 +9,7 @@ export const en = {
     menu: {
       settings: {
         title: 'Settings',
+        configuration: 'General',
         changePassword: 'Change password',
         profile: 'Basic information',
       },
@@ -45,6 +46,7 @@ export const en = {
       cancel: 'Cancel',
       filter: 'Filter',
       create: 'Create',
+      upload: 'Upload',
     },
     userTable: {
       columns: {

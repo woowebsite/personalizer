@@ -1,46 +1,76 @@
-import { Menu, Breadcrumb } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import { useIntl } from 'react-intl';
-
 import Link from 'next/link';
+import { useRouter } from 'next/dist/client/router';
 
-const { SubMenu } = Menu;
+import Menu from 'components/Menu';
+import Icon from 'components/Icon';
+
+import style from './style.module.scss';
+
+const { Item, SubMenu } = Menu;
 
 const MenuLeft = props => {
   const { formatMessage } = useIntl();
   const f = id => formatMessage({ id });
+  const { session, data } = props;
+  const { user } = session;
+  const router = useRouter();
+  const pathname = router?.pathname;
+  
+  const filterMenu = data
+  .filter(x => x.position === 'left' && x.roles.includes(user.role_id));
+
+  const activeKey = () => {
+    let openKeys = '';
+    let selectedKeys = '';
+    filterMenu.map((menu) => {
+      if (menu.children){
+        menu.children.forEach(child => {
+          if(pathname === child.url){
+            openKeys = menu.key;
+            selectedKeys = child.key;
+          }
+        })
+      }
+    })
+    return { openKeys, selectedKeys };
+  }
 
   return (
     <Menu
       mode="inline"
-      defaultSelectedKeys={['0']}
-      defaultOpenKeys={['menu0']}
       style={{ height: '100%', borderRight: 0 }}
+      className={style["menu-left"]}
+      defaultOpenKeys={[activeKey().openKeys]}
+      selectedKeys={[activeKey().selectedKeys]}
     >
-      {props.data
-        .filter(x => x.position === 'left')
+      {filterMenu
         .map((menu, i) => {
           //Group menu
           if (menu.children) {
             return (
               <SubMenu
-                key={`sub-menu-${i}`}
-                icon={<UserOutlined />}
+                key={menu.key}
+                icon={<Icon icon={menu.icon} />}
                 title={f(menu.title)}
               >
-                {menu.children.map((child, c) => (
-                  <Menu.Item key={`child-menu-${c}`}>
-                    <Link href={child.url}>{f(child.title)}</Link>
-                  </Menu.Item>
-                ))}
+                {menu.children
+                  .filter(
+                    x => x.visible === true && x.roles.includes(user.role_id),
+                  )
+                  .map((child, c) => (
+                    <Item key={child.key}>
+                      <Link href={child.url}>{f(child.title)}</Link>
+                    </Item>
+                  ))}
               </SubMenu>
             );
           } else {
-            // single menu
+            // Single menu
             return (
-              <Menu.Item key={`menu${i}`}>
+              <Item key={menu.key}>
                 <Link href={menu.url}>{f(menu.title)}</Link>
-              </Menu.Item>
+              </Item>
             );
           }
         })}
