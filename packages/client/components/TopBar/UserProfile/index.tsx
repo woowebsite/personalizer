@@ -1,42 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { Menu, Dropdown, Badge, Avatar } from 'antd';
+import { signOut } from 'next-auth/client';
+import { UserContext } from '~/layout/AdminLayout';
+import Link from 'next/link';
+
+import Menu from 'components/Menu';
+import Avatar from 'components/Avatar';
+import Dropdown from 'components/Dropdown';
+
+const { Item, Divider } = Menu;
 
 const menu = t => (
   <Menu>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="http://www.taobao.com/"
-      >
-        {t('topBar.profileMenu.profile')}
-      </a>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item>
-      <a href="javascript: void(0);">
+    <Item>
+      <Link href={'/settings/profile'}>{t('topBar.profileMenu.profile')}</Link>
+    </Item>
+    <Divider />
+    <Item>
+      <a href="javascript: void(0);" onClick={() => signOut()}>
         <i className={`icmn-exit`} />
         {t('topBar.profileMenu.logout')}
       </a>
-    </Menu.Item>
+    </Item>
   </Menu>
 );
 
 const UserProfile = () => {
   const { formatMessage } = useIntl();
   const t = (id, values?) => formatMessage({ id }, values);
+  const session = useContext(UserContext);
 
   return (
     <Dropdown overlay={menu(t)} placement="topLeft">
-      <Badge count={3}>
-        <Avatar
-          shape="circle"
-          size="default"
-          icon="user"
-          src="/images/avatars/2.jpg"
-        />
-      </Badge>
+      <div className="user-info">
+          <Avatar src={session.user.image} />
+          <strong>{session.user.name}</strong>
+      </div>
     </Dropdown>
   );
 };

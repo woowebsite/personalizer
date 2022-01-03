@@ -1,0 +1,16 @@
+@import "assets/variables.scss";
+
+.custom-inputnumber {
+  border-radius: 5px;
+  outline: none;
+  box-shadow: unset;
+  border: 1px solid $border-color-control;
+  width: 100%;
+  &:hover {
+    border: 1px solid $border-color-control !important;
+  }
+  &:focus {
+    box-shadow: unset;
+    border: 1px solid $border-color-control !important;
+  }
+}

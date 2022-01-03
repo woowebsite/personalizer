@@ -3,7 +3,7 @@ import * as userQueries from 'definitions/user-definitions';
 import * as roleQueries from 'definitions/role-definitions';
 
 import ComboBoxType from './ComboBoxType';
-import { Select } from 'antd';
+import Select from 'components/Select';
 
 // graphql
 import withQuery from 'shared/withQuery';

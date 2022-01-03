@@ -17,13 +17,14 @@ class ACL extends React.PureComponent {
     if (!authorized && redirect) {
       const url = typeof redirect === 'boolean' ? defaultRedirect : redirect
       notification.error({
-        message: 'Unauthorized Access',
+        message: (
+          <FormattedMessage id="messages.notification.error.unauthorized" />
+        ),
         description: (
-          <div>
-            You have no rights to access this page.
-            <br />
-            Redirected to "{url}"
-          </div>
+          <>
+            <FormattedMessage id="messages.notification.error.unauthorizedDesc" />{" "}
+            "{url}"
+          </>
         ),
       })
       history.push(url)

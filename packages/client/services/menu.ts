@@ -85,13 +85,7 @@ export default function getMenuData() {
           icon: 'fe fe-home',
           position: 'top',
           url: '/workflow',
-          roles: [
-            RoleType.SysAdmin,
-            RoleType.Customer,
-            RoleType.Employee,
-            RoleType.HelpDesk,
-            RoleType.Leader,
-          ],
+          roles: [RoleType.SysAdmin],
           permission: {},
         },
         {
@@ -100,13 +94,7 @@ export default function getMenuData() {
           icon: 'fe fe-home',
           url: '/salary',
           position: 'top',
-          roles: [
-            RoleType.SysAdmin,
-            RoleType.Customer,
-            RoleType.Employee,
-            RoleType.HelpDesk,
-            RoleType.Leader,
-          ],
+          roles: [RoleType.SysAdmin],
           permission: {},
         },
         {
@@ -115,7 +103,7 @@ export default function getMenuData() {
           icon: 'fe fe-home',
           url: '/report',
           position: 'top',
-          roles: [RoleType.SysAdmin, RoleType.HelpDesk],
+          roles: [RoleType.SysAdmin],
           permission: {},
         },
       ],
@@ -134,6 +122,7 @@ export function getMenuByUrl(url) {
 }
 
 export function hasPemission(session, url) {
+  return true;    // TODO
   const menu = getMenuByUrl(url);
   const hasRole = menu.roles.includes(session.user.role_id);
   const userPermissions: any[] = session.user.role.permissions;

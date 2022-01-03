@@ -1,5 +1,6 @@
-import { Tabs } from 'antd';
 import { useIntl } from 'react-intl';
+
+import Tabs from 'components/Tabs';
 
 const { TabPane } = Tabs;
 

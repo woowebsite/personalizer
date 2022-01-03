@@ -1,0 +1,10 @@
+@import "assets/variables.scss";
+
+.custom-avatar :global {
+  .anticon {
+    vertical-align: 0;
+    svg {
+      margin-top: -4px;
+    }
+  }
+}

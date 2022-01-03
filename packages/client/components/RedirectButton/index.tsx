@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Layout, Button, PageHeader } from 'antd';
+
+import Button from 'components/Button';
 
 const RedirectButton = (props) => {
   const { children, url, ...other } = props;

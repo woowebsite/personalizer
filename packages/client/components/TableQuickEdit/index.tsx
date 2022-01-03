@@ -1,12 +1,13 @@
 import React, {
   forwardRef,
   useImperativeHandle,
-  useEffect,
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import { notification, Table as AntdTable, TableProps, Button } from 'antd';
-import { FetchResult, MutationTuple, OperationVariables } from '@apollo/client';
+import { notification, Table as AntdTable, TableProps } from 'antd';
+import { MutationTuple, OperationVariables } from '@apollo/client';
+
+import Button from "components/Button";
 
 export declare type QuickForm<RecordType> = (
   record: RecordType,
@@ -21,6 +22,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
   (props, ref) => {
     // DECLARES
     const { formatMessage } = useIntl();
+    const t = id => formatMessage({ id });
     const [expandedRowKeys, setExpandedRowKeys] = useState([]);
     const { children, quickForm, columns, ...others } = props;
 
@@ -39,8 +41,9 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
     const onSaveCompleted = () => {
       collapseAll();
       notification.success({
-        message: 'Notification Success',
-        description: 'Save successfully',
+        message: t('messages.notification.success.message'),
+        description: t('messages.notification.success.save'),
+        placement: 'bottomLeft',
         onClick: () => {
           console.log('Notification Clicked!');
         },
@@ -48,7 +51,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
     };
 
     // GRAPHQL
-    const [mutate, result] = props.mutation({
+    const [mutate] = props.mutation({
       onCompleted: onSaveCompleted,
     });
 
@@ -67,7 +70,7 @@ const TableQuickEdit = forwardRef<any, TableQuickEditProps<any>>(
                 e.stopPropagation();
               }}
             >
-              {formatMessage({ id: 'tableQuickEdit.btnQuickEdit' })}
+              {t('tableQuickEdit.btnQuickEdit')}
             </Button>
           ),
           expandIconColumnIndex: columns.length - 1,

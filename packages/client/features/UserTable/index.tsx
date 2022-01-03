@@ -67,6 +67,9 @@ const UserTable = props => {
   return (
     <>
       <TableFilter
+        filterOptions={{
+          modelName: 'User',
+        }}
         modelName="User"
         pluralName="Users"
         query={userService.getAll}

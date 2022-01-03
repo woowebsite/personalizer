@@ -1,0 +1,26 @@
+@import "assets/variables.scss";
+
+.custom-tabs :global {
+  .ant-tabs-nav {
+    margin-bottom: 8px;
+    &:before {
+      border: none;
+    }
+    .ant-tabs-nav-list {
+      .ant-tabs-tab {
+        color: $text-level1;
+        font-weight: bold;
+        &.ant-tabs-tab-active,
+        &:hover {
+          color: $primary-color;
+          .ant-tabs-tab-btn {
+            color: $primary-color;
+          }
+        }
+      }
+      .ant-tabs-ink-bar {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import "assets/variables.scss";
+
+.custom-drawer :global {
+  .ant-drawer-content {
+    .ant-drawer-wrapper-body {
+      .ant-drawer-header {
+        .ant-drawer-title {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

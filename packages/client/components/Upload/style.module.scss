@@ -1,0 +1,22 @@
+@import "assets/variables.scss";
+
+.custom-upload :global {
+  .ant-upload {
+    border: 1px dashed $border-color-control;
+
+    &:hover {
+      border: 1px dashed $primary-color !important;
+      .anticon,
+      .ant-upload-text {
+        color: $primary-color;
+      }
+    }
+    &:focus {
+      border: 1px dashed $primary-color !important;
+      .anticon,
+      .ant-upload-text {
+        color: $primary-color;
+      }
+    }
+  }
+}

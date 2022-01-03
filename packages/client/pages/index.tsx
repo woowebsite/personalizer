@@ -1,14 +1,15 @@
 import React from 'react';
 import { withApollo } from '../apollo/apollo';
-import BasicLayout from '../layout/BasicLayout';
+import withAdminLayout from 'layout/AdminLayout';
+import Icon from '~/components/Icon';
 
-
-const NOSSR = () => {
+const IndexPage = () => {
   return (
-    <BasicLayout>
-      <h1>This should be rendered on client side</h1>
-    </BasicLayout>
+    <h1>
+      This should be rendered on client side
+      <Icon icon="Refresh" />
+    </h1>
   );
 };
 
-export default withApollo({ ssr: false })(NOSSR);
+export default withAdminLayout(withApollo({ ssr: false })(IndexPage));
