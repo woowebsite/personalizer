@@ -21,8 +21,9 @@ Goto `http://localhost:3001/graphql` to generate database structure
 Go to `graphql` folder and run command line
 
 ```console
-npx sequelize-cli db:seed --seed 20200822034804-demo-role.js
-npx sequelize-cli db:seed --seed 20200124071616-demo-users.js
+npx sequelize-cli db:seed --seed demo-role.js
+npx sequelize-cli db:seed --seed demo-users.js
+npx sequelize-cli db:seed --seed demo-permissions.js
 ```
 
 Goto `http://localhost:3001/api/auth/signin` input Email to signin

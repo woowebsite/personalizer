@@ -43,6 +43,8 @@ export const en = {
       actions: 'Actions',
       more: 'More',
       cancel: 'Cancel',
+      filter: 'Filter',
+      create: 'Create',
     },
     userTable: {
       columns: {
@@ -54,6 +56,16 @@ export const en = {
         phone: 'Phone',
         role: 'Role',
         createdAt: 'Created At',
+      },
+    },
+    authorizedTable: {
+      columns: {
+        featureName: 'Feature',
+        full: 'Full',
+        create: 'Create',
+        update: 'Update',
+        delete: 'Delete',
+        read: 'Read',
       },
     },
     productBaseTable: {

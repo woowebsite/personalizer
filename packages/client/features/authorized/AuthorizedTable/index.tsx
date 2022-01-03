@@ -4,21 +4,20 @@ import { Table } from 'antd';
 
 // components
 import { columns } from './columns';
-import TableFilter from '~/components/TableFilter';
+import TableFilter from 'components/TableFilter';
 import FilterForm from './FilterForm';
 import {
   defaultFilter,
   PermissionActions,
   PermissionFullAccessCode,
 } from './constants';
-import { enumToDitionary } from '~/shared/enumHelper';
+import { enumToDitionary } from 'shared/enumHelper';
 
 // graphql
 import permissionService from 'services/permissionService';
 
-const AuthorizedTable = props => {
+const AuthorizedTable = () => {
   // DEFINES
-  const tableRef = React.useRef(null);
   const { formatMessage } = useIntl();
   const t = id => formatMessage({ id });
   const [upsertPermission] = permissionService.upsert();
@@ -57,7 +56,6 @@ const AuthorizedTable = props => {
     const { dataSource, ...rest } = props;
     return (
       <Table
-        ref={tableRef}
         rowKey="id"
         dataSource={transformData(props.dataSource)}
         columns={columns(t, onCheckboxChanged, onCheckAllChanged)}
@@ -67,7 +65,7 @@ const AuthorizedTable = props => {
   };
 
   const transformData = (dataSource): any[] => {
-    const rows = dataSource.map(p => {
+    const rows = dataSource?.map(p => {
       const bitFields = enumToDitionary(PermissionActions).reduce(
         (obj, x) => ({
           ...obj,
