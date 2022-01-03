@@ -1,0 +1,20 @@
+@import "assets/variables.scss";
+
+.custom-checkbox :global {
+  .ant-checkbox {
+    outline: none;
+    .ant-checkbox-inner {
+      outline: none;
+      border: 1px solid $border-color-control;
+    }
+
+    &.ant-checkbox-checked {
+      .ant-checkbox-inner {
+        background-color: $primary-color;
+      }
+      &:after {
+        border: none;
+      }
+    }
+  }
+}

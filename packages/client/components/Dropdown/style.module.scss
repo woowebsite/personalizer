@@ -1,0 +1,16 @@
+@import "assets/variables.scss";
+
+.custom-overlay-dropdown :global {
+  .ant-dropdown-menu {
+    .ant-dropdown-menu-item {
+      &:hover {
+        color: $primary-color;
+      }
+      .anticon {
+        svg {
+          margin-top: -6px;
+        }
+      }
+    }
+  }
+}

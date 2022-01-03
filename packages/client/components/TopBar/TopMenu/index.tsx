@@ -1,21 +1,30 @@
-import { Menu } from 'antd';
+import React, { FC } from 'react';
 import Link from 'next/link';
 import { useIntl } from 'react-intl';
 
-const TopMenu = props => {
+import Menu from 'components/Menu';
+
+import style from '../style.module.scss';
+
+const { Item } = Menu;
+
+interface TopMenuProps {
+  menus: any[];
+}
+const TopMenu: FC<TopMenuProps> = ({ menus }) => {
   const { formatMessage } = useIntl();
   const f = id => formatMessage({ id });
   return (
-    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-      {props.data
-        .filter(x => x.position === 'top')
-        .map((menu, i) => {
-          return menu.children.map((child, c) => (
-            <Menu.Item key={`child-menu-${c}`}>
-              <Link href={child.url}>{f(child.title)}</Link>
-            </Menu.Item>
-          ));
-        })}
+    <Menu
+      mode="horizontal"
+      defaultSelectedKeys={['2']}
+      className={style['top-menu']}
+    >
+      {menus.map((child, c) => (
+        <Item key={`child-menu-${c}`}>
+          <Link href={child.url}>{f(child.title)}</Link>
+        </Item>
+      ))}
     </Menu>
   );
 };

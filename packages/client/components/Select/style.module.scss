@@ -1,0 +1,23 @@
+@import "assets/variables.scss";
+
+.custom-select {
+  border-radius: 5px;
+  border: 1px solid $border-color-control;
+  outline: none;
+  box-shadow: unset;
+  overflow: hidden;
+
+  :global(.ant-select-selector) {
+    outline: none;
+    box-shadow: unset;
+    border: none !important;
+  }
+
+  &:hover {
+    border: 1px solid $border-color-control;
+  }
+
+  &:global.ant-select-focused {
+    border: 1px solid $border-color-control;
+  }
+}

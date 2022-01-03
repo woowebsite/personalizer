@@ -1,6 +1,6 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { Table as AntdTable, TableProps } from 'antd';
+import React, { forwardRef, useImperativeHandle, useState, useEffect } from 'react';
+import { TableProps } from 'antd';
+import NProgress from 'nprogress';
 import Card from 'components/Card';
 import filterService from 'services/filterService';
 import { OperationVariables, QueryResult } from '@apollo/client';
@@ -26,29 +26,37 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>(
   ({ defaultFilter = defaultConditions, filterOptions, ...props }, ref) => {
     // DECLARES ================================================================================================
     const {
-      children,
       filterRender,
       tableRender,
-      modelName,
       pluralName,
-      ...others
     } = props;
     const { data, loading, refetch } = props.query({
       variables: { where: defaultFilter },
+      notifyOnNetworkStatusChange: true
     });
 
     // tabs
     const [tabFilterCondition, setTabFilterCondition] = useState({});
-    const { data: tabs, loading: tabLoading } = filterService.getFiltersByModel(
+
+    const { data: tabs } = filterService.getFiltersByModel(
       {
         variables: { where: { model_name: filterOptions.modelName } },
       },
     );
     const [selectedTab, setSelectedTab] = useState(0);
 
+    useEffect(() => {
+      refetch();
+    }, [])
+
+    useEffect(() => {
+      loading ? NProgress.start() : NProgress.done();
+    }, [loading])
+
     // METHODS ================================================================================================
     useImperativeHandle(ref, () => ({
       filter: handleFilter,
+      refetch,
     }));
 
     // HANDLERS ================================================================================================
@@ -76,8 +84,6 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>(
     };
 
     // RENDER
-    if (loading) return <AntdTable />;
-
     return (
       <>
         <Card>
@@ -88,9 +94,7 @@ const TableFilter = forwardRef<any, TableFilterProps<any>>(
               tabs={tabs.filters.rows}
             />
           )}
-          <div className="filter-form-wrapper">
-            {filterRender({ onFilter: handleFilter })}
-          </div>
+          {filterRender({ onFilter: handleFilter })}
           <div className="table-wrapper">
             {tableRender({
               dataSource: data && data[camelCase(pluralName)].rows,

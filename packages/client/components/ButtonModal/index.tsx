@@ -1,5 +1,7 @@
 import React from 'react';
-import { Modal, Button, ButtonProps } from 'antd';
+import { Modal, ButtonProps } from 'antd';
+
+import Button from "components/Button";
 
 interface ButtonModalProps {
   config: any;

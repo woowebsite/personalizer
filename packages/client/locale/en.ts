@@ -9,6 +9,7 @@ export const en = {
     menu: {
       settings: {
         title: 'Settings',
+        configuration: 'General',
         changePassword: 'Change password',
         profile: 'Basic information',
       },
@@ -16,12 +17,16 @@ export const en = {
         title: 'Users',
         allUsers: 'All users',
         createUser: 'Create an user',
+        authorized: 'Permission',
       },
       productBases: {
         title: 'Product bases',
         allProductBase: 'All Product bases',
         createProductBase: 'Create product base',
       },
+    },
+    topbar: {
+      report: 'Report',
     },
     validator: {
       required: 'Please input {field}',
@@ -39,6 +44,9 @@ export const en = {
       actions: 'Actions',
       more: 'More',
       cancel: 'Cancel',
+      filter: 'Filter',
+      create: 'Create',
+      upload: 'Upload',
     },
     userTable: {
       columns: {
@@ -50,6 +58,16 @@ export const en = {
         phone: 'Phone',
         role: 'Role',
         createdAt: 'Created At',
+      },
+    },
+    authorizedTable: {
+      columns: {
+        featureName: 'Feature',
+        full: 'Full',
+        create: 'Create',
+        update: 'Update',
+        delete: 'Delete',
+        read: 'Read',
       },
     },
     productBaseTable: {

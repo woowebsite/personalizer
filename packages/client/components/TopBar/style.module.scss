@@ -1,21 +1,58 @@
-.topbar {
-  padding: 0 rem(16);
+@import "assets/variables.scss";
+
+.top-bar {
   min-height: 64px;
   height: 64px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  justify-content: center;
 
-  .pageTitle {
-    margin: 0;
-    font-size: 18px;
-    color: #3b3f5c;
-    font-weight: 600;
-    letter-spacing: 0px;
+  .logo {
+    background: url(/assets/logo-jy.png) center no-repeat;
+    width: 200px;
+    background-size: contain;
+    height: 64px;
+    border-right: 1px solid $border-color;
   }
 
-  .logo{
-    width: 100px;
+  .top-menu {
+    height: 63px;
+    :global(.ant-menu-item) {
+      color: $text-level3;
+      border: none;
+    }
+    :global(.ant-menu-item.ant-menu-item-active) {
+      border: none;
+      a {
+        color: $primary-color;
+        text-decoration: none;
+      }
+    }
+    :global(.ant-menu-item.ant-menu-item-selected) {
+      border: none;
+      a {
+        color: $primary-color;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .user-profile {
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :global(.user-info) {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 32px;
+      :global(.ant-avatar) {
+        margin-right: 8px;
+      }
+    }
   }
 }

@@ -1,25 +1,28 @@
-import { Button, Select, Typography, SelectProps } from 'antd';
 import React, { useEffect, useState } from 'react';
-import ComboBoxEnum from '~/components/ComboBoxEnum';
-import ProductBaseStatus from '~/models/ProductBaseStatus';
-import styles from './style.module.scss';
 import KeyCode from 'rc-util/lib/KeyCode';
+import { SelectProps } from 'antd';
 
-interface TextEditable {
+import Button from "components/Button";
+
+import styles from './style.module.scss';
+interface TextEditableProps {
   defaultText?: string;
   btnText?: string;
   value?: any;
   onChange?: (value: any) => void;
   renderComboBox?: (value: any) => React.ReactElement;
   renderInput?: (value: any) => React.ReactElement;
+  showEdit?: boolean
 }
 
-const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
+const TextEditable: React.FC<TextEditableProps & SelectProps<any>> = ({
   btnText = 'Edit',
   value = {},
   defaultText = 'Text',
   defaultValue = null,
   onChange,
+  style,
+  showEdit=false,
   ...others
 }) => {
   // Define
@@ -31,8 +34,9 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
 
   // Effect
   useEffect(() => {
-    if (defaultValue) {
+    if (defaultValue !== null) {
       setSelectedValue(defaultValue);
+      onChange?.(defaultValue);
     }
   }, []);
 
@@ -141,7 +145,7 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
     }
   };
   return (
-    <>
+    <div style={style}>
       <span className={styles.text2combo}>
         {isEditable && renderEditInput()}
         {!isEditable && (
@@ -153,13 +157,15 @@ const TextEditable: React.FC<TextEditable & SelectProps<any>> = ({
           </span>
         )}
       </span>
-      <Button
+      {showEdit && 
+      (<Button
         type="link"
         onClick={() => setEditable((preState: boolean) => !preState)}
-      >
-        {btnText}
-      </Button>
-    </>
+        >
+          {btnText}
+        </Button>)
+      }
+    </div>
   );
 };
 

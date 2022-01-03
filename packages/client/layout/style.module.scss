@@ -1,0 +1,57 @@
+@import "assets/variables.scss";
+
+.menu-left :global {
+  background-color: $background-main;
+
+  .ant-menu-submenu {
+    color: $text-level1;
+    font-weight: bold;
+    .ant-menu-submenu-title {
+      border-left: 5px solid transparent;
+      padding-left: 16px !important;
+      display: flex;
+      align-items: center;
+      .ant-menu-submenu-arrow {
+        display: none;
+      }
+      svg {
+        stroke-width: 2;
+        margin-right: 8px;
+      }
+    }
+
+    &.ant-menu-submenu-open,
+    &:hover {
+      .ant-menu-submenu-title {
+        color: $primary-color;
+        border-left: 5px solid $primary-color;
+      }
+    }
+    .ant-menu-sub {
+      background-color: $background-main;
+      .ant-menu-item {
+        padding-left: 50px !important;
+        color: $text-level2;
+        a {
+          color: $text-level2;
+          font-weight: normal;
+        }
+        &:hover,
+        &.ant-menu-item-selected {
+          color: $primary-color;
+          a {
+            text-decoration: none;
+            color: $primary-color;
+          }
+        }
+        &::after {
+          border: none;
+          color: $text-level2;
+        }
+        &.ant-menu-item-selected {
+          background: none;
+        }
+      }
+    }
+  }
+}
