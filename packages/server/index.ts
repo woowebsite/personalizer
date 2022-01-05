@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import nextFrontPage from '@monorepo/frontpage';
 import nextApp from '@monorepo/client';
 import apolloServer from '@monorepo/graphql';
 
@@ -10,16 +11,21 @@ async function main() {
 
   await bootstrapApolloServer(app);
   await bootstrapClientApp(app);
+  await bootstrapFrontPage(app);
 
-  app.listen(PORT, (err) => {
+  app.listen(PORT, err => {
     if (err) throw err;
     console.log(`[ server ] ready on port ${PORT}`);
   });
 }
 
+async function bootstrapFrontPage(expressApp) {
+  await nextFrontPage.prepare();
+  expressApp.all('*', nextFrontPage.getRequestHandler());
+}
 async function bootstrapClientApp(expressApp) {
   await nextApp.prepare();
-  expressApp.all('*', nextApp.getRequestHandler());
+  expressApp.all('/admin/*', nextApp.getRequestHandler());
 }
 
 async function bootstrapApolloServer(expressApp) {

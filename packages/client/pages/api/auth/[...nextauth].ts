@@ -8,7 +8,8 @@ import Adapters from 'next-auth/adapters';
 import Models from 'models';
 
 const options = {
-  site: process.env.VERCEL_URL,
+  site: process.env.NEXTAUTH_URL,
+  basePath: '/admin/api/auth',
   providers: [
     Providers.Credentials({
       // The name to display on the sign in form (e.g. 'Sign in with...')

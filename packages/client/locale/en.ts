@@ -119,7 +119,19 @@ export const en = {
     },
   },
   '/login': {
-    signin: 'Sign In',
+    signin: {
+      title: 'Sign In',
+      noAccount: 'Did you have an account',
+      placeholder: {
+        email: 'Email',
+        password: 'Password',
+      },
+      buttons: {
+        login: 'Login',
+        loginWithEmail: 'Login with Email',
+        forgotPass: 'Forgot your password?',
+      },
+    },
   },
   '/admin/users': {
     title: 'All users',
