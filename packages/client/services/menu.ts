@@ -48,7 +48,7 @@ export default function getMenuData() {
         {
           title: 'menu.users.allUsers',
           key: 'allUsers',
-          url: '/admin/users',
+          url: '/users',
           visible: true,
           roles: [RoleType.SysAdmin],
           permission: { featureName: 'User', code: PermissionActions.Read },
@@ -56,7 +56,7 @@ export default function getMenuData() {
         {
           title: 'menu.users.createUser',
           key: 'createUser',
-          url: '/admin/users/new',
+          url: '/users/new',
           visible: true,
           roles: [RoleType.SysAdmin],
           permission: { featureName: 'User', code: PermissionActions.Create },
@@ -64,7 +64,7 @@ export default function getMenuData() {
         {
           title: 'menu.users.updateUser',
           key: 'updateUser',
-          url: '/admin/users/{id}',
+          url: '/users/{id}',
           roles: [RoleType.SysAdmin],
           visible: false,
           permission: {
@@ -75,7 +75,7 @@ export default function getMenuData() {
         {
           title: 'menu.users.authorized',
           key: 'permission',
-          url: '/admin/authorized/groups',
+          url: '/authorized/groups',
           visible: true,
           roles: [RoleType.SysAdmin],
           permission: { featureName: 'User', code: PermissionActions.Create },
@@ -93,12 +93,16 @@ export default function getMenuData() {
         {
           title: 'menu.productBases.allProductBase',
           key: 'allProductBase',
-          url: '/admin/productbases',
+          url: '/productbases',
+          visible: true,
+          roles: [RoleType.SysAdmin],
         },
         {
           title: 'menu.productBases.createProductBase',
           key: 'createProductBase',
-          url: '/admin/productbases/new',
+          url: '/productbases/new',
+          visible: true,
+          roles: [RoleType.SysAdmin],
         },
       ],
     },

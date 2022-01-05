@@ -23,7 +23,7 @@ const ManagementMembers = (props) => {
           <Button key='3'>Operation</Button>,
           <Button key='2'>Operation</Button>,
           <RedirectButton type='primary' url={'/admin/users/new'}>
-            {t('pageHeader.buttons.create')}
+            {t('buttons.create')}
           </RedirectButton>,
         ]}
       />
