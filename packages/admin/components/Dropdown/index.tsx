@@ -3,9 +3,13 @@ import { Dropdown as AntdDropdown } from 'antd';
 
 import style from './style.module.scss';
 
-const Dropdown = ({ placement="bottomLeft", children, ...props}) => {
+const Dropdown = ({ children, overlay, ...props }) => {
   return (
-    <AntdDropdown placement={placement} {...props} overlayClassName={style['custom-overlay-dropdown']} >
+    <AntdDropdown
+      {...props}
+      overlay={overlay}
+      overlayClassName={style['custom-overlay-dropdown']}
+    >
       {children}
     </AntdDropdown>
   );

@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import nextFrontPage from '@monorepo/frontpage';
-import nextApp from '@monorepo/client';
+import nextApp from '@monorepo/admin';
 import apolloServer from '@monorepo/graphql';
 
 const PORT = process.env.PORT || '3001';
@@ -10,7 +10,7 @@ async function main() {
   const app = express();
 
   await bootstrapApolloServer(app);
-  await bootstrapClientApp(app);
+  await bootstrapAdminApp(app);
   await bootstrapFrontPage(app);
 
   app.listen(PORT, err => {
@@ -23,7 +23,7 @@ async function bootstrapFrontPage(expressApp) {
   await nextFrontPage.prepare();
   expressApp.all('*', nextFrontPage.getRequestHandler());
 }
-async function bootstrapClientApp(expressApp) {
+async function bootstrapAdminApp(expressApp) {
   await nextApp.prepare();
   expressApp.all('/admin/*', nextApp.getRequestHandler());
 }

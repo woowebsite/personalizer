@@ -73,11 +73,14 @@ const options = {
       clientSecret: process.env.TWITTER_SECRET,
     }),
   ],
-  adapter: Adapters.TypeORM.Adapter(process.env.DATABASE_URL, {
-    models: {
-      User: Models.User,
-    },
-  }),
+  // adapter: Adapters.TypeORM.Adapter(
+  //   { type: 'mssql', database: process.env.DATABASE_URL },
+  //   {
+  //     models: {
+  //       User: Models.User,
+  //     },
+  //   },
+  // ),
   // The 'database' option should be a connection string or TypeORM
   // configuration object https://typeorm.io/#/connection-options
   //
