@@ -58,7 +58,7 @@
     "node-sass": "4.14.1",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
-    "qs": "^6.9.1",
+    "qs": "^6.9.7",
     "react": "^16.13.1",
     "react-c3js": "^0.1.20",
     "react-chartist": "^0.13.3",
